@@ -1,0 +1,75 @@
+Knight Capital
+Notes from whiteboard.
+
+Roles:
+	Myles
+		-Rendering
+		-UI
+	Neal
+		-Networking
+		-UI
+	Selemon
+		-Networking
+		-Data Storage
+	Ewan
+		-UI
+		-Data Storage
+	Aaron
+		-Battle/Overworld Systems (Game Logic)
+		-Map Editor
+
+Essential Features
+	Containers
+		Heroes can pick up items
+	Inventory
+		Heroes can pick up items
+	Different kinds of items
+		Potions, Weapons, etc
+	Movement
+		Click to move between tiles
+		Scroll/ Arrows to move camera
+	4 Orientations
+		Rotate game world via UI buttons
+	Sense of Perspective
+		Draw game world from back to front
+	Networked
+		Different players with different cities
+	Data Storage
+		Store Data
+	Save Games
+		...
+
+Possible Packages
+	Tools
+		-Animation
+		-Constants
+		-Sound
+	World
+		-Event
+		-Party
+		-Scenario
+		-World System
+	Battle
+		-AI
+		-Battle System
+	Network
+		-Master
+		-Slave
+	GUI
+		-Battle UI
+		-World UI
+		-Town UI
+	Render
+		-Battle Renderer
+		-World Renderer
+		-Town Renderer
+	Storage
+		-?!!!
+	Game
+		-Heroes
+		-Town
+		-Unit
+		-Tile
+		-Item
+		-Iventory
+		-Buldings
