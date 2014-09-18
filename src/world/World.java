@@ -8,7 +8,7 @@ package world;
 public class World {
 
 	// for now I will represent this with a 2d array.
-	// We may wish to move to something like a QuadMap if time and space permits.
+	// We may wish to move to something like a QuadMap if time and space permits. - Aaron
 	private AbstractTile[][] tiles;
 	public final int width;
 	public final int height;

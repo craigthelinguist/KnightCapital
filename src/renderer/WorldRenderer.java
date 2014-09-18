@@ -17,19 +17,22 @@ import world.World;
 
 public class WorldRenderer {
 	
+	// perhaps in the real thing this should be stored somewhere else - Aaron
 	private static int origin_x = 0;
 	private static int origin_y = 0;
 	
 	/**
 	 * Draw the world on the given graphics object.
-	 * @param world
+	 * @param world: the world to draw
+	 * @param graphics: thing on which you're drawing
+	 * @param resolution: size of screen being drawn to
 	 */
 	public static void render(World world, Graphics graphics, Dimension resolution){
 		final int TILE_WD = GlobalConstants.TILE_WD;
 		final int TILE_HT = GlobalConstants.TILE_HT;
 		AbstractTile[][] tiles = world.getTiles();		
-		for (int y = 0; y < tiles.length; y++){
-			for (int x = 0; x < tiles[y].length; x++){
+		for (int y = 0; y < world.width; y++){
+			for (int x = 0; x < world.height; x++){
 				BufferedImage bi = tiles[x][y].getImage();
 				int isoX = origin_x + (TILE_WD/2)*x - (TILE_WD/2)*y;
 				int isoY = origin_y + (TILE_HT/2)*x + (TILE_HT/2)*y;
@@ -38,7 +41,7 @@ public class WorldRenderer {
 		}
 	}
 
-	// for testing purposes - Aaron
+	// for testing purposes, creates a frame and lets you key around in it - Aaron
 	public static void main(String[] args){
 		final World world = TemporaryLoader.loadWorld("world_temporary.txt");
 		final JFrame frame = new JFrame();

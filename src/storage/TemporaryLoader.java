@@ -20,6 +20,9 @@ public class TemporaryLoader {
 	// TemporaryLoader is a singleton - you cannot instantiate it, only use its static methods.
 	private TemporaryLoader(){}
 	
+	private static final char GRASS_TILE = 'G';
+	private static final char DIRT_TILE = 'D';
+	
 	/**
 	 * Loads, creates, and returns the specified World.
 	 * @param filename: name of file containing the World.
@@ -56,10 +59,10 @@ public class TemporaryLoader {
 				for (int x = 0; x < across; x++){
 						
 					switch (line[x]){
-						case 'G':
+						case GRASS_TILE:
 							tiles[x][y] = TileImpl.newGrassTile();
 							break;
-						case 'D':
+						case DIRT_TILE:
 							tiles[x][y] = TileImpl.newDirtTile();
 							break;
 						default:
