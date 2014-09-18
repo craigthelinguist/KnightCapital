@@ -8,6 +8,9 @@ import tools.ImageLoader;
  */
 public class TileImpl extends AbstractTile{
 
+	// instantiate using static methods - avoids typos and other things
+	private TileImpl(){}
+	
 	public static TileImpl newDirtTile(){
 		TileImpl t = new TileImpl();
 		t.image = ImageLoader.load("tile_dirt.png");

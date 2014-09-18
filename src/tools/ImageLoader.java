@@ -9,6 +9,8 @@ import java.util.Map;
 import javax.imageio.ImageIO;
 
 public class ImageLoader {
+	
+	// use the static methods
 	private ImageLoader(){}
 	
 	private static Map<String, BufferedImage> images = new HashMap<String, BufferedImage>();

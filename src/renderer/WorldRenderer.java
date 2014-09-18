@@ -17,6 +17,9 @@ import world.World;
 
 public class WorldRenderer {
 	
+	// use the static methods
+	private WorldRenderer(){}
+	
 	// perhaps in the real thing this should be stored somewhere else - Aaron
 	private static int origin_x = 0;
 	private static int origin_y = 0;
@@ -31,8 +34,8 @@ public class WorldRenderer {
 		final int TILE_WD = GlobalConstants.TILE_WD;
 		final int TILE_HT = GlobalConstants.TILE_HT;
 		AbstractTile[][] tiles = world.getTiles();		
-		for (int y = 0; y < world.width; y++){
-			for (int x = 0; x < world.height; x++){
+		for (int y = 0; y < world.NUM_TILES_ACROSS; y++){
+			for (int x = 0; x < world.NUM_TILES_DOWN; x++){
 				BufferedImage bi = tiles[x][y].getImage();
 				int isoX = origin_x + (TILE_WD/2)*x - (TILE_WD/2)*y;
 				int isoY = origin_y + (TILE_HT/2)*x + (TILE_HT/2)*y;
@@ -66,18 +69,17 @@ public class WorldRenderer {
 			public void keyPressed(KeyEvent arg0) {
 				int code = arg0.getKeyCode();
 				if (code == KeyEvent.VK_LEFT){
-					origin_x+=4;
+					origin_x += 10;
 				}
 				else if (code == KeyEvent.VK_RIGHT){
-					origin_x-=4;
+					origin_x -= 10;
 				}
 				else if (code == KeyEvent.VK_DOWN){
-					origin_y-=4;
+					origin_y -= 10;
 				}
 				else if (code == KeyEvent.VK_UP){
-					origin_y+=4;
+					origin_y += 10;
 				}
-				System.out.println(origin_x + "," + origin_y);
 				panel.repaint();
 			}
 

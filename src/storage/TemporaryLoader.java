@@ -17,9 +17,10 @@ import world.World;
  */
 public class TemporaryLoader {
 
-	// TemporaryLoader is a singleton - you cannot instantiate it, only use its static methods.
+	// use the static methods
 	private TemporaryLoader(){}
 	
+	// the different kinds of tiles
 	private static final char GRASS_TILE = 'G';
 	private static final char DIRT_TILE = 'D';
 	
@@ -71,6 +72,7 @@ public class TemporaryLoader {
 						
 				}
 			}
+			
 		}
 		catch (IOException e){
 			e.printStackTrace();

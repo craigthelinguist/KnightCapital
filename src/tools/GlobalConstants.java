@@ -9,7 +9,8 @@ public class GlobalConstants {
 
 	// GlobalConstants cannot be instantiated
 	private GlobalConstants(){}
-	
+
+	// all images are stored in this relative filepath
 	public static final String ASSETS = "assets" + File.separatorChar;
 	
 	// these are temporary values for WorldRenderer prototype - Aaron
