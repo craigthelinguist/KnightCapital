@@ -1,0 +1,16 @@
+
+#
+#
+# this is a temporary file that i'm loading for the prototype world renderer
+
+10 10
+GGGGGGGGGG
+GGGDDGGGGG
+GGGGGDDGGG
+GGGGGDGGGG
+GGGGGDGGGG
+GGGGGDGGGG
+GGGGDDDDGG
+GGGGGDGGGG
+GGGGGGGGGG
+GGGGGGGDDD

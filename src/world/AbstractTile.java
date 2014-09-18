@@ -1,5 +1,7 @@
 package world;
 
+import java.awt.image.BufferedImage;
+
 
 /**
  * Represents one cell on the World. Different implementations of Tile might have different rules (e.g.:
@@ -7,4 +9,6 @@ package world;
  */
 public abstract class AbstractTile {
 
+	protected BufferedImage image;
+	
 }

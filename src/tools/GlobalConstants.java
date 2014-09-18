@@ -7,11 +7,12 @@ import java.io.File;
  */
 public class GlobalConstants {
 
-	private GlobalConstants(){} // don't instantiate this!
+	// GlobalConstants cannot be instantiated
+	private GlobalConstants(){}
 	
 	public static final String ASSETS = "assets" + File.separatorChar;
 	
-	// these are temporary values - Aaron
+	// these are temporary values for WorldRenderer prototype - Aaron
 	public static final int TILE_WD = 131;
 	public static final int TILE_HT = 77;
 	
