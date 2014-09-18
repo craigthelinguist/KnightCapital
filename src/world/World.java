@@ -19,4 +19,8 @@ public class World {
 		height = tiles[0].length;
 	}
 	
+	public AbstractTile[][] getTiles(){
+		return tiles;
+	}
+	
 }

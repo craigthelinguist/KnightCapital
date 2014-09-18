@@ -11,4 +11,8 @@ public abstract class AbstractTile {
 
 	protected BufferedImage image;
 	
+	public BufferedImage getImage(){
+		return image;
+	}
+	
 }
