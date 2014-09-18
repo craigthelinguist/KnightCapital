@@ -31,7 +31,7 @@ public class TemporaryLoader {
 		Scanner scan = null;
 		try{
 			
-			scan = new Scanner(new File(filename));
+			scan = new Scanner(new File(GlobalConstants.ASSETS + filename));
 				
 			// skip over comments
 			String regex = "\\s*#";
