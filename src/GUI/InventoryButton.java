@@ -27,17 +27,19 @@ public class InventoryButton extends JButton implements MouseListener {
 	 
 	public void mouseClicked(MouseEvent e) { }
 	 
-	public void mousePressed(MouseEvent e) { }
-	 
-	public void mouseReleased(MouseEvent e) { }
-	 
-	
-	
-	public void mouseEntered(MouseEvent e) {
+	public void mousePressed(MouseEvent e) { 
 		if(e.getSource()==this) { 
 			this.setIcon(this.mouseOverIcon);
 		}
 	}
+	 
+	public void mouseReleased(MouseEvent e) {
+		if(e.getSource()==this) { 
+			this.setIcon(this.defaultIcon);
+		}
+	}
+
+	public void mouseEntered(MouseEvent e) { }
 		 
 	public void mouseExited(MouseEvent e) {
 		if(e.getSource()==this) { 
