@@ -35,7 +35,7 @@ public class MainFrame extends JFrame {
 		/*This is only a test for custom buttons*/
 		BufferedImage inventoryDefaultIcon = ImageLoader.load(GlobalConstants.GUI_FILEPATH + "inventoryDefaultTemp.png");
 		BufferedImage inventoryHoverIcon = ImageLoader.load(GlobalConstants.GUI_FILEPATH + "inventoryHoverTemp.png");
-		inventoryButton = new InventoryButton("Inventory", inventoryDefaultIcon, inventoryHoverIcon);
+		inventoryButton = new InventoryButton(inventoryDefaultIcon, inventoryHoverIcon);
 		add(inventoryButton);
 	}
 	

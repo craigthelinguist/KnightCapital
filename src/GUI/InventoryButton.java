@@ -10,15 +10,17 @@ import javax.swing.JButton;
 
 public class InventoryButton extends JButton implements MouseListener {
 	
-	private ImageIcon defaultColor;
-	private ImageIcon mouseOverColor;
+	private ImageIcon defaultIcon;
+	private ImageIcon mouseOverIcon;
 	 
 		 		 
-	public InventoryButton(String text, BufferedImage inventoryDefaultIcon, BufferedImage inventoryHoverIcon) {
-		super(text);
-		this.defaultColor = new ImageIcon(inventoryDefaultIcon);
-		this.mouseOverColor = new ImageIcon(inventoryHoverIcon);
-		setIcon(defaultColor);
+	public InventoryButton( BufferedImage inventoryDefaultIcon, BufferedImage inventoryHoverIcon) {
+		
+		this.setOpaque(false);
+		this.setContentAreaFilled( false );
+		this.defaultIcon = new ImageIcon(inventoryDefaultIcon);
+		this.mouseOverIcon = new ImageIcon(inventoryHoverIcon);
+		setIcon(defaultIcon);
 		addMouseListener(this);
 	}
 		 
@@ -33,13 +35,13 @@ public class InventoryButton extends JButton implements MouseListener {
 	
 	public void mouseEntered(MouseEvent e) {
 		if(e.getSource()==this) { 
-			this.setIcon(this.mouseOverColor);
+			this.setIcon(this.mouseOverIcon);
 		}
 	}
 		 
 	public void mouseExited(MouseEvent e) {
 		if(e.getSource()==this) { 
-			this.setIcon(this.defaultColor);
+			this.setIcon(this.defaultIcon);
 		}
 	}
 }
