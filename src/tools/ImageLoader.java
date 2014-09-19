@@ -29,7 +29,7 @@ public class ImageLoader {
 		}else{
 			try{
 				//Loads the image
-				File file = new File(GlobalConstants.ASSETS+ File.separatorChar +filename);
+				File file = new File(filename);
 				if(file == null){
 					System.out.println(filename+" failed to load");
 					return new BufferedImage(1,1, BufferedImage.TYPE_INT_RGB);
