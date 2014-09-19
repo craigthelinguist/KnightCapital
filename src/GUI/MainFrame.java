@@ -36,9 +36,10 @@ public class MainFrame extends JFrame {
 		this.add(mainMenuPanel,BorderLayout.SOUTH);
 				
 		
-		/* These two statements make the frame full screen. (Commented out for now)
+		 /*These two statements make the frame full screen. (Commented out for now)
 		this.setExtendedState(this.MAXIMIZED_BOTH);  
 		this.setUndecorated(true);*/
+		
 		this.setResizable(true);
 
 		this.pack();
