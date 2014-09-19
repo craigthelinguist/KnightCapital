@@ -13,7 +13,7 @@ public class Canvas extends JPanel implements MouseListener{
 	private MainFrame mainFrame;
 	
 	public Canvas(MainFrame frame) {
-		this.setBorder(BorderFactory.createLineBorder(Color.red)); //draws a border around canvas just to show where the canvas is(delete later)
+		this.setBorder(BorderFactory.createLineBorder(Color.red)); //draws a border around canvas (just to show where the canvas is) (delete later)
 		mainFrame = frame;
 		this.setPreferredSize(new Dimension(frame.getWidth(),frame.getHeight()));
 	}

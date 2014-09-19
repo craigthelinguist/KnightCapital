@@ -16,10 +16,10 @@ public class InventoryButton extends JButton implements MouseListener {
 		 		 
 	public InventoryButton( BufferedImage inventoryDefaultIcon, BufferedImage inventoryHoverIcon) {
 		
-		this.setOpaque(false);
+		this.setOpaque(false); 
 		this.setContentAreaFilled( false );
-		this.defaultIcon = new ImageIcon(inventoryDefaultIcon);
-		this.mouseOverIcon = new ImageIcon(inventoryHoverIcon);
+		this.defaultIcon = new ImageIcon(inventoryDefaultIcon); //this is the image of the button (default)
+		this.mouseOverIcon = new ImageIcon(inventoryHoverIcon); //this is the image of the button when mouse is over button
 		setIcon(defaultIcon);
 		addMouseListener(this);
 	}

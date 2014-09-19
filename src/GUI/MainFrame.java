@@ -24,7 +24,7 @@ public class MainFrame extends JFrame {
 	
 	
 	public MainFrame() {
-		this.setSize(600,200);
+		this.setSize(600,200); 
 		this.setLayout(new BorderLayout());
 		
 		//Initialize the canvas and add it in the center
