@@ -1,6 +1,8 @@
 package GUI;
 
 
+
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -17,26 +19,32 @@ import tools.ImageLoader;
 
 public class MainFrame extends JFrame {
 	
-	/*This is only a test for custom buttons*/
-	private InventoryButton inventoryButton;
+	private MainMenuPanel mainMenuPanel;
+	private Canvas canvas;
+	
 	
 	public MainFrame() {
-
+		this.setSize(600,200);
+		this.setLayout(new BorderLayout());
+		
+		//Initialize the canvas and add it in the center
+		canvas = new Canvas(this);
+		this.add(canvas,BorderLayout.CENTER);
+		
+		//Initialize the main menu panel and add it to the south
+		mainMenuPanel = new MainMenuPanel(this);
+		this.add(mainMenuPanel,BorderLayout.SOUTH);
+				
+		
 		/* These two statements make the frame full screen. (Commented out for now)
 		this.setExtendedState(this.MAXIMIZED_BOTH);  
 		this.setUndecorated(true);*/
-		
 		this.setResizable(true);
-		this.setSize(500,500);
+
 		this.pack();
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
 		
-		/*This is only a test for custom buttons*/
-		BufferedImage inventoryDefaultIcon = ImageLoader.load(GlobalConstants.GUI_FILEPATH + "inventoryDefaultTemp.png");
-		BufferedImage inventoryHoverIcon = ImageLoader.load(GlobalConstants.GUI_FILEPATH + "inventoryHoverTemp.png");
-		inventoryButton = new InventoryButton(inventoryDefaultIcon, inventoryHoverIcon);
-		add(inventoryButton);
 	}
 	
 	
