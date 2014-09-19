@@ -4,8 +4,11 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
@@ -59,8 +62,6 @@ public class WorldRenderer {
 		
 		
 	}
-
-	
 	
 	private static void drawIcon(Graphics graphics, AbstractTile tile, int isoX, int isoY){
 		final int TILE_HT = GlobalConstants.TILE_HT;
@@ -73,17 +74,27 @@ public class WorldRenderer {
 		occupant.draw(graphics,iconX,iconY);
 	}
 	
-	// for testing purposes, creates a frame and lets you key around in it - Aaron
-	public static void setup(World w){
-		Party ovelia = new Party("icon_ovelia.png");
-		w.setIcon(ovelia, 1,0);
+	private static Point isoToCartesian(Point p){
+		int isoX = p.x;
+		int isoY = p.y;
+		final int HT = GlobalConstants.TILE_HT/2;
+		final int WD = GlobalConstants.TILE_WD/2;
+		
+		int x = ((HT)*(isoX-origin_x) + (WD)*(isoY-origin_y))/(2*HT*WD)-1;
+		int y = ((WD)*(isoY-origin_y) + (HT)*(origin_x-isoX))/(2*HT*WD);
+		
+		return new Point(x,y);
 	}
 	
+	// for testing purposes, creates a frame and lets you key around in it - Aaron
+	private static int oveliaX = 3;
+	private static int oveliaY = 0;
 	public static void main(String[] args){
 		
 		
 		final World world = TemporaryLoader.loadWorld("world_temporary.txt");
-		setup(world);
+		final Party ovelia = new Party("icon_ovelia.png");
+		world.setIcon(ovelia,oveliaX,oveliaY);
 		
 		final JFrame frame = new JFrame();
 		final JPanel panel = new JPanel(){
@@ -130,6 +141,50 @@ public class WorldRenderer {
 
 			@Override
 			public void keyTyped(KeyEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		
+		frame.addMouseListener(new MouseListener(){
+
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				int x = arg0.getX();
+				int y = arg0.getY();
+				Point p = isoToCartesian(new Point(x,y));
+				int arrayX = p.x;
+				int arrayY = p.y;
+				if (arrayX>=0 && arrayX<world.NUM_TILES_ACROSS
+						&& arrayY>=0 && arrayY<world.NUM_TILES_DOWN){
+					world.setIcon(null,oveliaX,oveliaY);
+					world.setIcon(ovelia, arrayX, arrayY);
+					oveliaX = arrayX; oveliaY = arrayY;
+				}
+				System.out.printf("(%d,%d)\n", p.x, p.y);
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
 				// TODO Auto-generated method stub
 				
 			}
