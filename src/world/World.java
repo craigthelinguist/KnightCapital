@@ -28,4 +28,8 @@ public class World {
 		return tiles;
 	}
 	
+	public void setIcon(WorldIcon i, int x, int y){
+		tiles[x][y].setIcon(i);
+	}
+	
 }

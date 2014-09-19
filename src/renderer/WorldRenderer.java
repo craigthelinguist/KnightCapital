@@ -3,6 +3,7 @@ package renderer;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
@@ -12,7 +13,10 @@ import javax.swing.JPanel;
 
 import storage.TemporaryLoader;
 import tools.GlobalConstants;
+import tools.ImageLoader;
 import world.AbstractTile;
+import world.Party;
+import world.WorldIcon;
 import world.World;
 
 public class WorldRenderer {
@@ -31,6 +35,7 @@ public class WorldRenderer {
 	 * @param resolution: size of screen being drawn to
 	 */
 	public static void render(World world, Graphics graphics, Dimension resolution){
+		
 		final int TILE_WD = GlobalConstants.TILE_WD;
 		final int TILE_HT = GlobalConstants.TILE_HT;
 		AbstractTile[][] tiles = world.getTiles();		
@@ -39,14 +44,47 @@ public class WorldRenderer {
 				BufferedImage bi = tiles[x][y].getImage();
 				int isoX = origin_x + (TILE_WD/2)*x - (TILE_WD/2)*y;
 				int isoY = origin_y + (TILE_HT/2)*x + (TILE_HT/2)*y;
-				graphics.drawImage(bi,isoX,isoY,null);
+				tiles[x][y].draw(graphics,isoX,isoY);
 			}
 		}
+		
+		for (int y = 0; y < world.NUM_TILES_ACROSS; y++){
+			for (int x = 0; x < world.NUM_TILES_DOWN; x++){
+				if (!tiles[x][y].occupied()) continue;
+				int isoX = origin_x + (TILE_WD/2)*x - (TILE_WD/2)*y;
+				int isoY = origin_y + (TILE_HT/2)*x + (TILE_HT/2)*y;
+				drawIcon(graphics,tiles[x][y],isoX,isoY);
+			}
+		}
+		
+		
 	}
 
+	
+	
+	private static void drawIcon(Graphics graphics, AbstractTile tile, int isoX, int isoY){
+		final int TILE_HT = GlobalConstants.TILE_HT;
+		final int TILE_WD = GlobalConstants.TILE_WD;
+		final int ICON_WD = GlobalConstants.ICON_WD;
+		final int ICON_HT = GlobalConstants.ICON_HT;
+		WorldIcon occupant = tile.occupant();	
+		int iconY = isoY - TILE_HT/4;
+		int iconX = isoX + TILE_WD/2 - ICON_WD/2;
+		occupant.draw(graphics,iconX,iconY);
+	}
+	
 	// for testing purposes, creates a frame and lets you key around in it - Aaron
+	public static void setup(World w){
+		Party ovelia = new Party("icon_ovelia.png");
+		w.setIcon(ovelia, 1,0);
+	}
+	
 	public static void main(String[] args){
+		
+		
 		final World world = TemporaryLoader.loadWorld("world_temporary.txt");
+		setup(world);
+		
 		final JFrame frame = new JFrame();
 		final JPanel panel = new JPanel(){
 			@Override
@@ -57,6 +95,7 @@ public class WorldRenderer {
 				this.repaint();
 			}
 		};
+		
 
 		panel.setPreferredSize(new Dimension(1000,800));
 		origin_x = panel.getPreferredSize().width/2;
