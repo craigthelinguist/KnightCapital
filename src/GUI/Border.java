@@ -42,7 +42,8 @@ public class Border extends AbstractBorder {
 	  public Insets getBorderInsets(Component c) {
 	    if (insets != null) {
 	      return insets;
-	    } else {
+	    } 
+	    else {
 	      return new Insets(topCenterImage.getHeight(null), leftCenterImage.getWidth(null), bottomCenterImage.getHeight(null), rightCenterImage.getWidth(null));
 	    }
 	  }
