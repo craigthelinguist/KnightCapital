@@ -74,6 +74,7 @@ public class WorldRenderer {
 		occupant.draw(graphics,iconX,iconY);
 	}
 	
+	// doesn't quite work
 	private static Point isoToCartesian(Point p){
 		int isoX = p.x;
 		int isoY = p.y;
@@ -81,7 +82,9 @@ public class WorldRenderer {
 		final int WD = GlobalConstants.TILE_WD/2;
 		
 		int x = ((HT)*(isoX-origin_x) + (WD)*(isoY-origin_y))/(2*HT*WD)-1;
-		int y = ((WD)*(isoY-origin_y) + (HT)*(origin_x-isoX))/(2*HT*WD);
+		int y = ( origin_x + WD*x - isoX)/(WD);
+		
+		//int y = ((WD)*(isoY-origin_y) + (HT)*(origin_x-isoX))/(2*HT*WD);
 		
 		return new Point(x,y);
 	}

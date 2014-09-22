@@ -1,5 +1,6 @@
 package world;
 
+import tools.GlobalConstants;
 import tools.ImageLoader;
 
 /**
@@ -13,13 +14,13 @@ public class TileImpl extends AbstractTile{
 	
 	public static TileImpl newDirtTile(){
 		TileImpl t = new TileImpl();
-		t.image = ImageLoader.load("tile_dirt.png");
+		t.image = ImageLoader.load(GlobalConstants.ASSETS + "tile_dirt.png");
 		return t;
 	}
 	
 	public static TileImpl newGrassTile(){
 		TileImpl t = new TileImpl();
-		t.image = ImageLoader.load("tile_grass.png");
+		t.image = ImageLoader.load(GlobalConstants.ASSETS + "tile_grass.png");
 		return t;
 	}
 	

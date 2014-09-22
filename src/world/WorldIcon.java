@@ -3,6 +3,7 @@ package world;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
+import tools.GlobalConstants;
 import tools.ImageLoader;
 
 /**
@@ -14,7 +15,7 @@ public abstract class WorldIcon {
 	private BufferedImage image;
 	
 	public WorldIcon(String imgname){
-		image = ImageLoader.load(imgname);
+		image = ImageLoader.load(GlobalConstants.ASSETS + imgname);
 	}
 	
 	public BufferedImage getImage(){
