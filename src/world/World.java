@@ -15,7 +15,7 @@ public class World {
 	public final int NUM_TILES_DOWN;
 	public final int WORLD_WD;
 	public final int WORLD_HT;
-	
+
 	public World(AbstractTile[][] tiles_){
 		tiles = tiles_;
 		NUM_TILES_ACROSS = tiles.length;
@@ -23,13 +23,13 @@ public class World {
 		WORLD_WD = NUM_TILES_ACROSS*(GlobalConstants.TILE_WD/2);
 		WORLD_HT = NUM_TILES_DOWN*(GlobalConstants.TILE_HT/2);
 	}
-	
+
 	public AbstractTile[][] getTiles(){
 		return tiles;
 	}
-	
+
 	public void setIcon(WorldIcon i, int x, int y){
 		tiles[x][y].setIcon(i);
 	}
-	
+
 }
