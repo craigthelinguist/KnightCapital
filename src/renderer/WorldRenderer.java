@@ -124,19 +124,34 @@ public class WorldRenderer {
 		occupant.draw(graphics,iconX,iconY);
 	}
 
-	// doesn't quite work
-	private static Point isoToCartesian(Point p){
-		int isoX = p.x;
-		int isoY = p.y;
-		final int HT = GlobalConstants.TILE_HT/2;
-		final int WD = GlobalConstants.TILE_WD/2;
+	/**
+	 * Convert a point (from a mouse click) on screen in isometric projection,
+	 * and return a new point converted to Cartesian coordinates.
+	 * Used to identify tiles.
+	 * @param Point to convert
+	 * @return Converted Cartesian Point
+	 */
+	private static Point isoToCartesian(float isoX, float isoY){
 
-		int x = ((HT)*(isoX-origin_x) + (WD)*(isoY-origin_y))/(2*HT*WD)-1;
-		int y = ( origin_x + WD*x - isoX)/(WD);
+		// Window widths and heights
+		int tileHeight = GlobalConstants.TILE_HT;
+		int tileWidth = GlobalConstants.TILE_WD;
 
-		//int y = ((WD)*(isoY-origin_y) + (HT)*(origin_x-isoX))/(2*HT*WD);
+		float yPos = isoY - origin_y;
+		float xPos = isoX - origin_x;
 
-		return new Point(x,y);
+		float offset = 0.13f; //this is super hacky, my bad FIXME
+
+		// Calculate Cartesian X
+		float cartX = (((2 * yPos) + xPos) / tileWidth) - 1;
+		cartX -= ((int)cartX * offset);
+
+		// Calculate Cartesian Y
+		float cartY = (((2 * yPos) - xPos) / tileWidth);
+		cartY -= ((int)cartY * offset);
+
+		Log.print("[World Renderer] Converted isometric point ("+isoX+","+isoY+") to cartesian point ("+(int)cartX+","+(int)cartY+")");
+		return new Point((int)cartX, (int)cartY);
 	}
 
 	// for testing purposes, creates a frame and lets you key around in it - Aaron
@@ -148,6 +163,7 @@ public class WorldRenderer {
 		final World world = TemporaryLoader.loadWorld("world_temporary.txt");
 		final Party ovelia = new Party("icon_ovelia.png");
 		world.setIcon(ovelia,oveliaX,oveliaY);
+
 
 		final JFrame frame = new JFrame();
 		final JPanel panel = new JPanel(){
@@ -188,6 +204,7 @@ public class WorldRenderer {
 					if(rotation == 3) rotation = 0;
 					else rotation = rotation + 1;
 				}
+
 				panel.repaint();
 			}
 
@@ -209,18 +226,33 @@ public class WorldRenderer {
 
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
+				// get mouse point x
 				int x = arg0.getX();
+
+				//get mouse point y
 				int y = arg0.getY();
-				Point p = isoToCartesian(new Point(x,y));
+
+				//create point, converting from iso to cart
+				Point p = isoToCartesian(x, y);
+
+				//
 				int arrayX = p.x;
 				int arrayY = p.y;
+
+				// if the point is within the world boundaries
 				if (arrayX>=0 && arrayX<world.NUM_TILES_ACROSS
 						&& arrayY>=0 && arrayY<world.NUM_TILES_DOWN){
+
+					// remove player icon from previous position
 					world.setIcon(null,oveliaX,oveliaY);
+
+					// add player icon to next position
 					world.setIcon(ovelia, arrayX, arrayY);
-					oveliaX = arrayX; oveliaY = arrayY;
+
+					// update icon position
+					oveliaX = arrayX;
+					oveliaY = arrayY;
 				}
-				System.out.printf("(%d,%d)\n", p.x, p.y);
 			}
 
 			@Override
