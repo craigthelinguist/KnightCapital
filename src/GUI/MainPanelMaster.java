@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -42,14 +43,14 @@ public class MainPanelMaster extends JPanel {
 	private PlayerInformationPanel playerInfoPanel;
 	
 	public MainPanelMaster(MainFrame frame) {
-		this.setBorder(BorderFactory.createLineBorder(Color.black)); //draws a border around canvas (just to show where the canvas is) (delete later)
+		//this.setBorder(BorderFactory.createLineBorder(Color.black)); //draws a border around canvas (just to show where the canvas is) (delete later)
 		this.setPreferredSize(new Dimension(frame.getWidth(),frame.getHeight()));  
 		mainFrame = frame;
 		
 		/*Initialize the layout and the insets*/
 		
 		/*GridBagLayout doesn't draw the panels very small find out later why it does this*/ //TODO
-		//this.setLayout(new GridBagLayout());
+		this.setLayout(new FlowLayout());
 
 		
 		GridBagConstraints c = new GridBagConstraints();
@@ -59,24 +60,24 @@ public class MainPanelMaster extends JPanel {
 		miniMapPanel = new MiniMapPanel();
 		c.gridx = 1;
 		c.gridy =0;
-		this.add(miniMapPanel,c);
+		this.add(miniMapPanel);
 
 		
 		buttonsPanel = new ButtonsPanel();
 		c.gridx = 2;
 		c.gridy = 0;
-		this.add(buttonsPanel,c);
+		this.add(buttonsPanel);
 				
 		playerInfoPanel = new PlayerInformationPanel();
 		c.gridx =3;
 		c.gridy =0;
-		this.add(playerInfoPanel,c);
+		this.add(playerInfoPanel);
 		
 		/*Initialize the inventory panel and place it bottom right*/
 		inventoryPanel = new InventoryPanel();
 		c.gridx = 4;
 		c.gridy = 0;
-		this.add(inventoryPanel,c);
+		this.add(inventoryPanel);
 	
 	}
 	

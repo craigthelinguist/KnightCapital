@@ -2,6 +2,7 @@ package GUI;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -10,6 +11,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
 import tools.GlobalConstants;
 import tools.ImageLoader;
 
@@ -18,7 +20,7 @@ public class Canvas extends JPanel implements MouseListener{
 	private MainFrame mainFrame;
 	
 	public Canvas(MainFrame frame) {
-		this.setBorder(BorderFactory.createLineBorder(Color.red)); //draws a border around canvas (just to show where the canvas is) (delete later)
+		//this.setBorder(BorderFactory.createLineBorder(Color.red)); //draws a border around canvas (just to show where the canvas is) (delete later)
 		mainFrame = frame;
 		this.setPreferredSize(new Dimension(frame.getWidth(),frame.getHeight()));
 		
@@ -52,5 +54,5 @@ public class Canvas extends JPanel implements MouseListener{
 	@Override
 	public void mouseReleased(MouseEvent arg0) {}
 	
-	
+
 }
