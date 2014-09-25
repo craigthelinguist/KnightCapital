@@ -1,6 +1,7 @@
 package GUI;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
@@ -22,12 +23,13 @@ public class CustomButton extends JButton implements MouseListener {
 	private ImageIcon mouseOverIcon;
 	 
 		 		 
-	public CustomButton( BufferedImage inventoryDefaultIcon, BufferedImage inventoryHoverIcon) {
-		
+	public CustomButton( BufferedImage buttonDefaultIcon, BufferedImage buttonHoverIcon) {
+		this.setBorderPainted(false); //removes the border around buttons
+        this.setPreferredSize(new Dimension(buttonDefaultIcon.getWidth(), buttonDefaultIcon.getHeight())); //set button size to image width/height
 		this.setOpaque(false); 
 		this.setContentAreaFilled( false );
-		this.defaultIcon = new ImageIcon(inventoryDefaultIcon); //this is the image of the button (default)
-		this.mouseOverIcon = new ImageIcon(inventoryHoverIcon); //this is the image of the button when mouse is over button
+		this.defaultIcon = new ImageIcon(buttonDefaultIcon); //this is the image of the button (default)
+		this.mouseOverIcon = new ImageIcon(buttonHoverIcon); //this is the image of the button when mouse is over button
 		setIcon(defaultIcon);
 		addMouseListener(this);
 	}

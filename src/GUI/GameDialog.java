@@ -27,8 +27,9 @@ public class GameDialog extends JDialog {
 	
 	public GameDialog (MainFrame frame,String msg) {
 		super(frame,true);
-		this.setSize(400,400);
-		//this.setUndecorated(true); //removes the border 
+		this.setSize(400,374); //height, width
+		this.setUndecorated(true); //removes the border 
+        this.setLocationRelativeTo(frame); //set location of dialog relative to frame
 		
 	    DialogLayeredPane dLayeredPane = new DialogLayeredPane(this,msg);
 		this.add(dLayeredPane);
