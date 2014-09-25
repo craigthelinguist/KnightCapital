@@ -8,6 +8,14 @@ import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
+
+/**
+ * Create a custom button that has a default icon and a hover icon for when the user
+ * clicks/hovers on the button.
+ * 
+ * @author Ewan Moshi
+ *
+ */
 public class CustomButton extends JButton implements MouseListener {
 	
 	private ImageIcon defaultIcon;

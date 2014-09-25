@@ -123,9 +123,7 @@ public class DialogBackground extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		 
 			gameDialog.dispose(); //this is not working why??? GUYS HELP //TODO
-			
 	}
 
 
