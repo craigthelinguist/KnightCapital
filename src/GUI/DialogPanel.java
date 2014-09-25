@@ -12,9 +12,15 @@ import javax.swing.JPanel;
 import tools.GlobalConstants;
 import tools.ImageLoader;
 
+/**
+ * Dispalys the border for the GameDialog
+ * 
+ * @author Ewan Moshi
+ *
+ */
+
 public class DialogPanel extends JPanel{
 
-	
 	private GameDialog  gd;
 	
 	public DialogPanel(GameDialog gd) {
@@ -31,7 +37,7 @@ public class DialogPanel extends JPanel{
 		        new ImageIcon(GlobalConstants.GUI_FILEPATH +"dBottomRight.png").getImage());
 	    this.setBorder(border);
 	    //this.setPreferredSize(new Dimension(410,410));
-	    this.setBackground(new Color(0,0,0,0));
+	    //this.setBackground(new Color(0,0,0,0));
 		
 	}
 	

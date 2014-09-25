@@ -12,6 +12,14 @@ import javax.swing.JPanel;
 import tools.GlobalConstants;
 import tools.ImageLoader;
 
+
+/**
+ * This class extends JDialog and contains a layeredPane to display a border and a panel 
+ * for the buttons.
+ * 
+ * @author Ewan Moshi
+ *
+ */
 public class GameDialog extends JDialog {
 
 	private DialogPanel panel;

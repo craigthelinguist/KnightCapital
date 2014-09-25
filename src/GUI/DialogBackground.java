@@ -15,8 +15,14 @@ import javax.swing.JPanel;
 import tools.GlobalConstants;
 import tools.ImageLoader;
 
-public class DialogBackground extends JPanel {
+/**
+ * This class draws a background image for the GameDialog
+ * 
+ * @author Ewan Moshi
+ *
+ */
 
+public class DialogBackground extends JPanel {
 
 	private BufferedImage backgroundImage;
 	
