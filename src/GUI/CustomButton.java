@@ -8,13 +8,13 @@ import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
-public class InventoryButton extends JButton implements MouseListener {
+public class CustomButton extends JButton implements MouseListener {
 	
 	private ImageIcon defaultIcon;
 	private ImageIcon mouseOverIcon;
 	 
 		 		 
-	public InventoryButton( BufferedImage inventoryDefaultIcon, BufferedImage inventoryHoverIcon) {
+	public CustomButton( BufferedImage inventoryDefaultIcon, BufferedImage inventoryHoverIcon) {
 		
 		this.setOpaque(false); 
 		this.setContentAreaFilled( false );
@@ -25,7 +25,11 @@ public class InventoryButton extends JButton implements MouseListener {
 	}
 		 
 	 
-	public void mouseClicked(MouseEvent e) { }
+	public void mouseClicked(MouseEvent e) { 
+		if(e.getSource()==this) { 
+			this.setIcon(this.defaultIcon);
+		}
+	}
 	 
 	public void mousePressed(MouseEvent e) { 
 		if(e.getSource()==this) { 

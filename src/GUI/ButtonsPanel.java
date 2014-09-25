@@ -21,7 +21,7 @@ import tools.ImageLoader;
  */
 public class ButtonsPanel extends JPanel {
 
-	private InventoryButton inventoryButton;
+	private CustomButton inventoryButton;
 	
 	/*Place holder buttons*/
 	private JButton b1;
@@ -40,7 +40,7 @@ public class ButtonsPanel extends JPanel {
 		/*Declare and initialize the images for the button */
 		BufferedImage inventoryDefaultIcon = ImageLoader.load(GlobalConstants.GUI_FILEPATH + "inventoryDefaultTemp.png");
 		BufferedImage inventoryHoverIcon = ImageLoader.load(GlobalConstants.GUI_FILEPATH + "inventoryHoverTemp.png");
-		inventoryButton = new InventoryButton(inventoryDefaultIcon, inventoryHoverIcon);
+		inventoryButton = new CustomButton(inventoryDefaultIcon, inventoryHoverIcon);
 		/*Place these buttons on a different panel and add that panel on this layeredPane(PanelMaster)*/
 		c.gridx = 0;
 		c.gridy = 0;

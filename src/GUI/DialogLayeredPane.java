@@ -25,7 +25,7 @@ public class DialogLayeredPane extends JLayeredPane {
 		this.add(dialogPanel,new Integer(0),0);
 		
 		/*Declare and initialise a new DialogBackground and set the layering position on top */
-		DialogBackground dialogBackground = new DialogBackground(msg);
+		DialogBackground dialogBackground = new DialogBackground(gd,msg);
 		dialogBackground.setBounds(12,12,376,351);
 		this.add(dialogBackground,new Integer(1),0);
 	}

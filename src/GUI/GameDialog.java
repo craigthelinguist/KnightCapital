@@ -34,7 +34,6 @@ public class GameDialog extends JDialog {
 		this.add(dLayeredPane);
 		this.setResizable(false);
 		this.setVisible(true);
-		
 	}
 
 	

@@ -19,7 +19,7 @@ public class MainMenuPanel extends JPanel implements ActionListener{
 	
 	private MainFrame mainFrame;
 	
-	private InventoryButton inventoryButton;
+	private CustomButton inventoryButton;
 	
 	public MainMenuPanel(MainFrame frame) {
 		this.setBorder(BorderFactory.createLineBorder(Color.black)); //draws a border around canvas (just to show where the canvas is) (delete later)
@@ -29,7 +29,7 @@ public class MainMenuPanel extends JPanel implements ActionListener{
 		/*Declare and initialize the images for the button */
 		BufferedImage inventoryDefaultIcon = ImageLoader.load(GlobalConstants.GUI_FILEPATH + "inventoryDefaultTemp.png");
 		BufferedImage inventoryHoverIcon = ImageLoader.load(GlobalConstants.GUI_FILEPATH + "inventoryHoverTemp.png");
-		inventoryButton = new InventoryButton(inventoryDefaultIcon, inventoryHoverIcon);
+		inventoryButton = new CustomButton(inventoryDefaultIcon, inventoryHoverIcon);
 		add(inventoryButton);
 		
 		/*Initialize the image for the main menu panel*/
