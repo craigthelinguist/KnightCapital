@@ -76,6 +76,10 @@ public class DialogBackground extends JPanel implements ActionListener {
 		c.gridx = 1;
 		c.gridy = 1;
 		this.add(declineButton,c);
+		
+		/*Set up the action listener for the buttons */
+		confirmButton.addActionListener(this);
+		declineButton.addActionListener(this);
 	}
 	
 	
@@ -123,7 +127,7 @@ public class DialogBackground extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-			gameDialog.dispose(); //this is not working why??? GUYS HELP //TODO
+			gameDialog.dispose(); 
 	}
 
 
