@@ -32,7 +32,7 @@ public class LayeredPanel extends JLayeredPane {
 	private CustomButton inventoryButton;
 	
 	public LayeredPanel(MainFrame frame) {
-		this.setPreferredSize(new Dimension(frame.getWidth(),frame.getHeight()));  
+		this.setPreferredSize(new Dimension(frame.getWidth(),200));  
 		mainFrame = frame;
 				
 		panelBorder = new MainPanelBorder(frame);

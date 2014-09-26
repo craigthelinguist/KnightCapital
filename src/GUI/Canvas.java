@@ -22,7 +22,7 @@ public class Canvas extends JPanel implements MouseListener{
 	public Canvas(MainFrame frame) {
 		//this.setBorder(BorderFactory.createLineBorder(Color.red)); //draws a border around canvas (just to show where the canvas is) (delete later)
 		mainFrame = frame;
-		this.setPreferredSize(new Dimension(frame.getWidth(),frame.getHeight()));
+		this.setPreferredSize(new Dimension(frame.getWidth(),frame.getHeight()-200));
 		
 		/*Load the images for the border*/
 	    Border border = new Border(new ImageIcon(GlobalConstants.GUI_FILEPATH +"upperCenter.png").getImage(),

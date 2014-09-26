@@ -37,12 +37,12 @@ public class MainFrame extends JFrame {
 	
 	
 	public MainFrame() {
-		/* These two statements make the frame full screen. (Commented out for now)
+		/* These two statements make the frame full screen. (Commented out for now) */
 		this.setExtendedState(this.MAXIMIZED_BOTH);  
-		this.setUndecorated(false); //true means borderless window*/
+		this.setUndecorated(false); //true means borderless window
 		
 
-		this.setSize(1300,200); 
+		//this.setSize(1300,200); 
 		this.setLayout(new BorderLayout());
 		//this.setVisible(true);
 		
