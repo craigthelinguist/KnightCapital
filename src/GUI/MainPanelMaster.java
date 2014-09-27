@@ -79,11 +79,21 @@ public class MainPanelMaster extends JPanel {
 		c.gridy = 0;
 		this.add(inventoryPanel);
 	
+		/*Initialize the image for the main menu panel*/
+		backgroundImage = ImageLoader.load(GlobalConstants.GUI_FILEPATH + "mainMenuPanelBackground.png");
+		
 	}
 	
 	public void actionPerformed(ActionEvent arg0) {
 		
 	}
 	
+	
+	  @Override
+	  protected void paintComponent(Graphics g) {
+	    super.paintComponent(g);
+	    // paint the background image and scale it to fill the entire space
+	    g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+	  }
 	
 }
