@@ -14,7 +14,9 @@ import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.OverlayLayout;
@@ -46,39 +48,40 @@ public class MainPanelMaster extends JPanel {
 		//this.setBorder(BorderFactory.createLineBorder(Color.black)); //draws a border around canvas (just to show where the canvas is) (delete later)
 		this.setPreferredSize(new Dimension(frame.getWidth(),frame.getHeight()));  
 		mainFrame = frame;
-		
+	
 		/*Initialize the layout and the insets*/
-		
-		/*GridBagLayout doesn't draw the panels very small find out later why it does this*/ //TODO
-		this.setLayout(new FlowLayout());
-
-		
+		this.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		c.insets = new Insets(0,1,0,1);
+		c.anchor = GridBagConstraints.FIRST_LINE_START;
+		c.fill = GridBagConstraints.NONE;
+		c.weightx = 1.0;
+		
 		
 		/*Initialize the minimap panel and palce it bottom left */
 		miniMapPanel = new MiniMapPanel();
-		c.gridx = 1;
+		c.gridx = 0;
 		c.gridy =0;
-		this.add(miniMapPanel);
+		this.add(miniMapPanel,c);
 
 		
 		buttonsPanel = new ButtonsPanel();
-		c.gridx = 2;
+		c.gridx = 1;
 		c.gridy = 0;
-		this.add(buttonsPanel);
+		this.add(buttonsPanel,c);
 				
 		playerInfoPanel = new PlayerInformationPanel();
-		c.gridx =3;
+		c.gridx =2;
 		c.gridy =0;
-		this.add(playerInfoPanel);
+		this.add(playerInfoPanel,c);
 		
 		/*Initialize the inventory panel and place it bottom right*/
 		inventoryPanel = new InventoryPanel();
-		c.gridx = 4;
+		c.weightx = 0.0;
+		c.gridx = 3;
 		c.gridy = 0;
-		this.add(inventoryPanel);
-	
+		this.add(inventoryPanel,c);
+		
 		/*Initialize the image for the main menu panel*/
 		backgroundImage = ImageLoader.load(GlobalConstants.GUI_FILEPATH + "mainMenuPanelBackground.png");
 		

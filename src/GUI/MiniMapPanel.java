@@ -19,6 +19,8 @@ public class MiniMapPanel extends JPanel {
 		this.setOpaque(true);
 		/*Initialize the image for the inventory panel*/
 		backgroundImage = ImageLoader.load(GlobalConstants.GUI_FILEPATH + "minimap.png");	
+		
+ 
 	}
 	
 	  @Override
