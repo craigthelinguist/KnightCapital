@@ -55,7 +55,6 @@ public class MainFrame extends JFrame {
 		layeredPanel = new LayeredPanel(this);
 		this.add(layeredPanel,BorderLayout.SOUTH);
 
-
 		this.setResizable(true);
 		this.pack();
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

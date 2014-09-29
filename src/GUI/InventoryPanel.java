@@ -124,14 +124,10 @@ public class InventoryPanel extends JPanel implements MouseListener {
 
 
 	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mouseClicked(MouseEvent e) {}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
 		repaint();
 		if(e.getSource() == slot1) {
 	        slot1.setBackground(Color.YELLOW);		
@@ -155,7 +151,6 @@ public class InventoryPanel extends JPanel implements MouseListener {
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
 		repaint();
 		if(e.getSource() == slot1) {
 	        slot1.setBackground(new Color(255,0,0,50));
@@ -177,19 +172,12 @@ public class InventoryPanel extends JPanel implements MouseListener {
 		}	
 	}
 
- 
 	
 	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mousePressed(MouseEvent e) {}
 
 	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mouseReleased(MouseEvent e) {}
 	
 	  
 
