@@ -13,6 +13,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import tools.GlobalConstants;
@@ -38,7 +40,7 @@ public class InventoryPanel extends JPanel implements MouseListener {
 	private MainFrame frame;
 	
 	/*The item slots*/
-	JPanel slot1;
+	ItemSlotPanel slot1;
 	JPanel slot2;
 	JPanel slot3;
 	JPanel slot4;
@@ -69,8 +71,7 @@ public class InventoryPanel extends JPanel implements MouseListener {
 		/*The top row panels */
 		
 		/*Declare and initialize slot1 (panel) */
-		slot1 = new JPanel();
-		slot1.setBackground(new Color(56,56,56,100)); 
+		slot1 = new ItemSlotPanel("epipenSlot.png");
 		c.insets = new Insets(15,15,10,10);
 		c.gridx = 0;
 		c.gridy = 0;

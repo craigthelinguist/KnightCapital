@@ -1,5 +1,6 @@
 package GUI;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -9,6 +10,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import tools.GlobalConstants;
@@ -19,15 +22,22 @@ public class ItemInfoPanel extends JPanel   {
 	private String message;
 	
 	private BufferedImage backgroundImage;
-	
+
 	Font F= new Font("Franklin Gothic Medium", Font.BOLD, 16);
 	FontMetrics FM=getFontMetrics(F);
 	
 	
 	public ItemInfoPanel(MainFrame frame, String msg) {
 		this.message = msg;
+		this.setLayout(new BorderLayout());
 		/*Initialize the image for the inventory panel*/
 		backgroundImage = ImageLoader.load(GlobalConstants.GUI_FILEPATH + "itemInfoBackground.png");
+
+	    ImageIcon itemImage = new ImageIcon(GlobalConstants.GUI_FILEPATH + "epipen.png");
+	    JLabel label = new JLabel(itemImage);
+		
+		JLabel itemIcon = new JLabel(itemImage);
+		this.add(itemIcon,BorderLayout.SOUTH);
 	}
 
 	
