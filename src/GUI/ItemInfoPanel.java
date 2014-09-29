@@ -37,7 +37,7 @@ public class ItemInfoPanel extends JPanel   {
 	    g.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 16));
 	    // paint the background image and scale it to fill the entire space
 	    g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
-	    drawOntoPanel(message,new Rectangle(10,10,180,180), g);
+	    drawOntoPanel(message,new Rectangle(10,10,175,180), g);
 	  }
 
 	  

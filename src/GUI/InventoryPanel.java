@@ -70,7 +70,7 @@ public class InventoryPanel extends JPanel implements MouseListener {
 		
 		/*Declare and initialize slot1 (panel) */
 		slot1 = new JPanel();
-		slot1.setBackground(new Color(255,0,0,50)); //this is just to test the position of this panel (third parameter is alpha value)
+		slot1.setBackground(new Color(56,56,56,100)); 
 		c.insets = new Insets(15,15,10,10);
 		c.gridx = 0;
 		c.gridy = 0;
@@ -78,7 +78,7 @@ public class InventoryPanel extends JPanel implements MouseListener {
 		
 		/*Declare and initialize slot2 */
 		slot2 = new JPanel();
-		slot2.setBackground(new Color(255,0,0,50));
+		slot2.setBackground(new Color(255,0,0,50)); //this is just to test the position of this panel (third parameter is alpha value)
 		c.gridx = 1;
 		c.gridy = 0;
 		this.add(slot2,c);
