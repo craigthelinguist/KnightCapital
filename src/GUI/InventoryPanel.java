@@ -26,6 +26,18 @@ import tools.ImageLoader;
  */
 public class InventoryPanel extends JPanel implements MouseListener {
 
+	/*The item dialogs/descriptions */
+	ItemSlotInformation dSlot1;
+	GameDialog dSlot2;
+	GameDialog dSlot3;
+	GameDialog dSlot4;
+	GameDialog dSlot5;
+	GameDialog dSlot6;
+	
+	/*The main frame */
+	private MainFrame frame;
+	
+	/*The item slots*/
 	JPanel slot1;
 	JPanel slot2;
 	JPanel slot3;
@@ -35,7 +47,9 @@ public class InventoryPanel extends JPanel implements MouseListener {
 	
 	private BufferedImage backgroundImage;
 	
-	public InventoryPanel() {
+	public InventoryPanel(MainFrame f) {
+		this.frame = f;
+		
 		/*set the size of this panel to be size of the image*/
 		this.setPreferredSize(new Dimension(375,200));
 		this.setOpaque(true);
@@ -110,7 +124,7 @@ public class InventoryPanel extends JPanel implements MouseListener {
 		slot4.addMouseListener(this);
 		slot5.addMouseListener(this);
 		slot6.addMouseListener(this);
-	
+			
 		
 	}
 		
@@ -130,7 +144,9 @@ public class InventoryPanel extends JPanel implements MouseListener {
 	public void mouseEntered(MouseEvent e) {
 		repaint();
 		if(e.getSource() == slot1) {
-	        slot1.setBackground(Color.YELLOW);		
+			dSlot1 = new ItemSlotInformation(frame,"Epinephrine Autoinjector. Used for intramuscular injection to revive unconscious casualties.");
+			dSlot1.setLocation(frame.getWidth()-425,frame.getHeight()-400);
+			dSlot1.setVisible(true);
 	    }
 		if(e.getSource() == slot2) {
 	        slot2.setBackground(Color.YELLOW);		
@@ -153,7 +169,9 @@ public class InventoryPanel extends JPanel implements MouseListener {
 	public void mouseExited(MouseEvent e) {
 		repaint();
 		if(e.getSource() == slot1) {
-	        slot1.setBackground(new Color(255,0,0,50));
+			dSlot1.dispose();
+			System.out.println("sdfsdf");
+			//dSlot1.setVisible(false);
 	    }
 		if(e.getSource() == slot2) {
 			slot2.setBackground(new Color(255,0,0,50));	    
@@ -179,6 +197,5 @@ public class InventoryPanel extends JPanel implements MouseListener {
 	@Override
 	public void mouseReleased(MouseEvent e) {}
 	
-	  
 
 }

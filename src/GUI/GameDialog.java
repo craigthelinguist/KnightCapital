@@ -2,6 +2,7 @@ package GUI;
 
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
@@ -30,7 +31,7 @@ public class GameDialog extends JDialog {
 		this.setSize(400,374); //height, width
 		this.setUndecorated(true); //removes the border 
         this.setLocationRelativeTo(frame); //set location of dialog relative to frame
-		
+        
 	    DialogLayeredPane dLayeredPane = new DialogLayeredPane(this,msg);
 		this.add(dLayeredPane);
 		this.setResizable(false);
