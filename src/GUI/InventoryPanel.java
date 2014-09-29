@@ -3,9 +3,14 @@ package GUI;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
@@ -19,8 +24,15 @@ import tools.ImageLoader;
  * @author Ewan Moshi
  *
  */
-public class InventoryPanel extends JPanel {
+public class InventoryPanel extends JPanel implements MouseListener {
 
+	JPanel slot1;
+	JPanel slot2;
+	JPanel slot3;
+	JPanel slot4;
+	JPanel slot5;
+	JPanel slot6;
+	
 	private BufferedImage backgroundImage;
 	
 	public InventoryPanel() {
@@ -29,9 +41,6 @@ public class InventoryPanel extends JPanel {
 		this.setOpaque(true);
 		/*Initialize the image for the inventory panel*/
 		backgroundImage = ImageLoader.load(GlobalConstants.GUI_FILEPATH + "inventory.png");	
-		
-		
-		/*started from here*/
 		
 		
 		/*Initialize the layout and the insets*/
@@ -46,7 +55,7 @@ public class InventoryPanel extends JPanel {
 		/*The top row panels */
 		
 		/*Declare and initialize slot1 (panel) */
-		JPanel slot1 = new JPanel();
+		slot1 = new JPanel();
 		slot1.setBackground(new Color(255,0,0,50)); //this is just to test the position of this panel (third parameter is alpha value)
 		c.insets = new Insets(15,15,10,10);
 		c.gridx = 0;
@@ -54,14 +63,14 @@ public class InventoryPanel extends JPanel {
 		this.add(slot1,c);
 		
 		/*Declare and initialize slot2 */
-		JPanel slot2 = new JPanel();
+		slot2 = new JPanel();
 		slot2.setBackground(new Color(255,0,0,50));
 		c.gridx = 1;
 		c.gridy = 0;
 		this.add(slot2,c);
 		
 		/*Declare and initialize slot3 */
-		JPanel slot3 = new JPanel();
+		slot3 = new JPanel();
 		slot3.setBackground(new Color(255,0,0,50));
 		c.insets = new Insets(15,10,10,16);
 		c.gridx = 2;
@@ -72,7 +81,7 @@ public class InventoryPanel extends JPanel {
 		/*The bottom row panels*/
 		
 		/*Declare and initialize slot4 */
-		JPanel slot4 = new JPanel();
+		slot4 = new JPanel();
 		slot4.setBackground(new Color(255,0,0,50));
 		c.insets = new Insets(10,15,15,10);
 		c.gridx = 0;
@@ -80,28 +89,107 @@ public class InventoryPanel extends JPanel {
 		this.add(slot4,c);
 		
 		/*Declare and initialize slot5 */
-		JPanel slot5 = new JPanel();
+		slot5 = new JPanel();
 		slot5.setBackground(new Color(255,0,0,50));
 		c.gridx = 1;
 		c.gridy = 1;
 		this.add(slot5,c);
 		
 		/*Declare and initialize slot6 */
-		JPanel slot6 = new JPanel();
+		slot6 = new JPanel();
 		slot6.setBackground(new Color(255,0,0,50));
 		c.insets = new Insets(10,10,15,16);
 		c.gridx = 2;
 		c.gridy = 1;
 		this.add(slot6,c);
 		
-	}
+		/*Add mouse listener for all slots */
+		slot1.addMouseListener(this);
+		slot2.addMouseListener(this);
+		slot3.addMouseListener(this);
+		slot4.addMouseListener(this);
+		slot5.addMouseListener(this);
+		slot6.addMouseListener(this);
 	
+		
+	}
+		
+		
 	  @Override
 	  protected void paintComponent(Graphics g) {
 	    super.paintComponent(g);
 	    // paint the background image and scale it to fill the entire space
 	    g.drawImage(backgroundImage, 0, 0, 375, 200, this);
 	  }
+
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		repaint();
+		if(e.getSource() == slot1) {
+	        slot1.setBackground(Color.YELLOW);		
+	    }
+		if(e.getSource() == slot2) {
+	        slot2.setBackground(Color.YELLOW);		
+	    }	
+		if(e.getSource() == slot3) {
+	        slot3.setBackground(Color.YELLOW);
+	    }
+		if(e.getSource() == slot4) {
+			slot4.setBackground(Color.YELLOW);	    
+		}	
+		if(e.getSource() == slot5) {
+	        slot5.setBackground(Color.YELLOW);
+	    }
+		if(e.getSource() == slot6) {
+			slot6.setBackground(Color.YELLOW);	    
+		}	
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		repaint();
+		if(e.getSource() == slot1) {
+	        slot1.setBackground(new Color(255,0,0,50));
+	    }
+		if(e.getSource() == slot2) {
+			slot2.setBackground(new Color(255,0,0,50));	    
+		}	
+		if(e.getSource() == slot3) {
+	        slot3.setBackground(new Color(255,0,0,50));
+	    }
+		if(e.getSource() == slot4) {
+			slot4.setBackground(new Color(255,0,0,50));	    
+		}	
+		if(e.getSource() == slot5) {
+	        slot5.setBackground(new Color(255,0,0,50));
+	    }
+		if(e.getSource() == slot6) {
+			slot6.setBackground(new Color(255,0,0,50));	    
+		}	
+	}
+
+ 
+	
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	  
 
