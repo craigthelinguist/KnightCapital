@@ -32,7 +32,9 @@ public class ItemInfoPanel extends JPanel   {
 		this.setLayout(new BorderLayout());
 		/*Initialize the image for the inventory panel*/
 		backgroundImage = ImageLoader.load(GlobalConstants.GUI_FILEPATH + "itemInfoBackground.png");
-
+		//this.setBackground(new Color(56,56,56,10));
+		
+		
 	    ImageIcon itemImage = new ImageIcon(GlobalConstants.GUI_FILEPATH + "epipen.png");
 	    JLabel label = new JLabel(itemImage);
 		

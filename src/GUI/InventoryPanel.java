@@ -30,7 +30,7 @@ public class InventoryPanel extends JPanel implements MouseListener {
 
 	/*The item dialogs/descriptions */
 	ItemSlotInformation dSlot1;
-	GameDialog dSlot2;
+	ItemSlotInformation dSlot2;
 	GameDialog dSlot3;
 	GameDialog dSlot4;
 	GameDialog dSlot5;
@@ -78,15 +78,14 @@ public class InventoryPanel extends JPanel implements MouseListener {
 		this.add(slot1,c);
 		
 		/*Declare and initialize slot2 */
-		slot2 = new JPanel();
-		slot2.setBackground(new Color(255,0,0,50)); //this is just to test the position of this panel (third parameter is alpha value)
+		slot2 = new ItemSlotPanel("potionSlot.png");
 		c.gridx = 1;
 		c.gridy = 0;
 		this.add(slot2,c);
 		
 		/*Declare and initialize slot3 */
 		slot3 = new JPanel();
-		slot3.setBackground(new Color(255,0,0,50));
+		slot3.setBackground(new Color(255,0,0,50));  //this is just to test the position of this panel (third parameter is alpha value)
 		c.insets = new Insets(15,10,10,16);
 		c.gridx = 2;
 		c.gridy = 0;
@@ -150,7 +149,9 @@ public class InventoryPanel extends JPanel implements MouseListener {
 			dSlot1.setVisible(true);
 	    }
 		if(e.getSource() == slot2) {
-	        slot2.setBackground(Color.YELLOW);		
+			dSlot2 = new ItemSlotInformation(frame,"Heals your hero for    100 health.");
+			dSlot2.setLocation(frame.getWidth()-425,frame.getHeight()-400);
+			dSlot2.setVisible(true);	
 	    }	
 		if(e.getSource() == slot3) {
 	        slot3.setBackground(Color.YELLOW);
@@ -171,11 +172,9 @@ public class InventoryPanel extends JPanel implements MouseListener {
 		repaint();
 		if(e.getSource() == slot1) {
 			dSlot1.dispose();
-			System.out.println("sdfsdf");
-			//dSlot1.setVisible(false);
 	    }
 		if(e.getSource() == slot2) {
-			slot2.setBackground(new Color(255,0,0,50));	    
+			dSlot2.dispose();
 		}	
 		if(e.getSource() == slot3) {
 	        slot3.setBackground(new Color(255,0,0,50));
