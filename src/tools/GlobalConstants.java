@@ -24,6 +24,8 @@ public class GlobalConstants {
 	public static final int TILE_HT = 77;
 	public static final int ICON_WD = 44;
 	public static final int ICON_HT = 70;
+	public static final int WORLD_WIDTH = 10;
+	public static final int WORLD_HEIGHT = 10;
 
 
 

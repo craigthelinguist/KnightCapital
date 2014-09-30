@@ -26,6 +26,24 @@ public class Converter {
 		float cartY = (((2 * yPos) - xPos) / GlobalConstants.TILE_WD) ;
 		cartY -= ((int)cartY * offset);
 
+		int camOrientation = camera.getOrientation();
+
+		switch(camOrientation) {
+			case Camera.NORTH:	break;
+			case Camera.SOUTH:	cartY = GlobalConstants.WORLD_HEIGHT - cartY;
+								cartX = GlobalConstants.WORLD_WIDTH - cartX;
+								break;
+			case Camera.EAST: 	float tempCartX = cartX;
+								cartX = cartY;
+								cartY = Math.abs(GlobalConstants.WORLD_WIDTH - tempCartX);
+								break;
+			case Camera.WEST: 	float tempCartY = cartY;
+								cartY = cartX;
+								cartX = GlobalConstants.WORLD_HEIGHT - tempCartY;
+								break;
+			default:			break;
+		}
+
 		Log.print("[Converter] Converted isometric point ("+iso.x+","+iso.y+") to cartesian point ("+(int)cartX+","+(int)cartY+")");
 		return new Point((int)cartX, (int)cartY);
 	}
