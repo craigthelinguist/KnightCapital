@@ -76,7 +76,7 @@ public class MainPanelMaster extends JPanel {
 		this.add(playerInfoPanel,c);
 		
 		/*Initialize the inventory panel and place it bottom right*/
-		inventoryPanel = new InventoryPanel();
+		inventoryPanel = new InventoryPanel(frame);
 		c.weightx = 0.0;
 		c.gridx = 3;
 		c.gridy = 0;

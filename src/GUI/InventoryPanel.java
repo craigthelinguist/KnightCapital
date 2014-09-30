@@ -13,6 +13,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import tools.GlobalConstants;
@@ -26,7 +28,19 @@ import tools.ImageLoader;
  */
 public class InventoryPanel extends JPanel implements MouseListener {
 
-	JPanel slot1;
+	/*The item dialogs/descriptions */
+	ItemSlotInformation dSlot1;
+	ItemSlotInformation dSlot2;
+	GameDialog dSlot3;
+	GameDialog dSlot4;
+	GameDialog dSlot5;
+	GameDialog dSlot6;
+	
+	/*The main frame */
+	private MainFrame frame;
+	
+	/*The item slots*/
+	ItemSlotPanel slot1;
 	JPanel slot2;
 	JPanel slot3;
 	JPanel slot4;
@@ -35,7 +49,9 @@ public class InventoryPanel extends JPanel implements MouseListener {
 	
 	private BufferedImage backgroundImage;
 	
-	public InventoryPanel() {
+	public InventoryPanel(MainFrame f) {
+		this.frame = f;
+		
 		/*set the size of this panel to be size of the image*/
 		this.setPreferredSize(new Dimension(375,200));
 		this.setOpaque(true);
@@ -55,23 +71,21 @@ public class InventoryPanel extends JPanel implements MouseListener {
 		/*The top row panels */
 		
 		/*Declare and initialize slot1 (panel) */
-		slot1 = new JPanel();
-		slot1.setBackground(new Color(255,0,0,50)); //this is just to test the position of this panel (third parameter is alpha value)
+		slot1 = new ItemSlotPanel("epipenSlot.png");
 		c.insets = new Insets(15,15,10,10);
 		c.gridx = 0;
 		c.gridy = 0;
 		this.add(slot1,c);
 		
 		/*Declare and initialize slot2 */
-		slot2 = new JPanel();
-		slot2.setBackground(new Color(255,0,0,50));
+		slot2 = new ItemSlotPanel("potionSlot.png");
 		c.gridx = 1;
 		c.gridy = 0;
 		this.add(slot2,c);
 		
 		/*Declare and initialize slot3 */
 		slot3 = new JPanel();
-		slot3.setBackground(new Color(255,0,0,50));
+		slot3.setBackground(new Color(255,0,0,50));  //this is just to test the position of this panel (third parameter is alpha value)
 		c.insets = new Insets(15,10,10,16);
 		c.gridx = 2;
 		c.gridy = 0;
@@ -110,7 +124,7 @@ public class InventoryPanel extends JPanel implements MouseListener {
 		slot4.addMouseListener(this);
 		slot5.addMouseListener(this);
 		slot6.addMouseListener(this);
-	
+			
 		
 	}
 		
@@ -124,20 +138,20 @@ public class InventoryPanel extends JPanel implements MouseListener {
 
 
 	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mouseClicked(MouseEvent e) {}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
 		repaint();
 		if(e.getSource() == slot1) {
-	        slot1.setBackground(Color.YELLOW);		
+			dSlot1 = new ItemSlotInformation(frame,"Epinephrine Autoinjector. Used for intramuscular injection to revive unconscious casualties.");
+			dSlot1.setLocation(frame.getWidth()-500,frame.getHeight()-400);
+			dSlot1.setVisible(true);
 	    }
 		if(e.getSource() == slot2) {
-	        slot2.setBackground(Color.YELLOW);		
+			dSlot2 = new ItemSlotInformation(frame,"Heals your hero for    100 health.");
+			dSlot2.setLocation(frame.getWidth()-425,frame.getHeight()-400);
+			dSlot2.setVisible(true);	
 	    }	
 		if(e.getSource() == slot3) {
 	        slot3.setBackground(Color.YELLOW);
@@ -155,13 +169,12 @@ public class InventoryPanel extends JPanel implements MouseListener {
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
 		repaint();
 		if(e.getSource() == slot1) {
-	        slot1.setBackground(new Color(255,0,0,50));
+			dSlot1.dispose();
 	    }
 		if(e.getSource() == slot2) {
-			slot2.setBackground(new Color(255,0,0,50));	    
+			dSlot2.dispose();
 		}	
 		if(e.getSource() == slot3) {
 	        slot3.setBackground(new Color(255,0,0,50));
@@ -177,20 +190,12 @@ public class InventoryPanel extends JPanel implements MouseListener {
 		}	
 	}
 
- 
 	
 	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mousePressed(MouseEvent e) {}
 
 	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mouseReleased(MouseEvent e) {}
 	
-	  
 
 }
