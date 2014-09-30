@@ -10,6 +10,10 @@ public class GlobalConstants {
 	// GlobalConstants cannot be instantiated
 	private GlobalConstants(){}
 
+	// Window Resolution
+	public static final int WINDOW_WD = 1300;
+	public static final int WINDOW_HT = 800;
+
 	// all images are stored in this relative filepath
 	public static final String ASSETS = "assets" + File.separatorChar;
 	// all images inside the GUIAssets
@@ -22,6 +26,9 @@ public class GlobalConstants {
 	public static final int ICON_HT = 70;
 
 
+
+	// These are for the Camera
+	public static final int CAMERA_PAN = 10;
 
 
 }
