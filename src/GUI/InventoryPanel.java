@@ -145,7 +145,7 @@ public class InventoryPanel extends JPanel implements MouseListener {
 		repaint();
 		if(e.getSource() == slot1) {
 			dSlot1 = new ItemSlotInformation(frame,"Epinephrine Autoinjector. Used for intramuscular injection to revive unconscious casualties.");
-			dSlot1.setLocation(frame.getWidth()-425,frame.getHeight()-400);
+			dSlot1.setLocation(frame.getWidth()-500,frame.getHeight()-400);
 			dSlot1.setVisible(true);
 	    }
 		if(e.getSource() == slot2) {

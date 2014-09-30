@@ -34,12 +34,12 @@ public class ItemInfoPanel extends JPanel   {
 		backgroundImage = ImageLoader.load(GlobalConstants.GUI_FILEPATH + "itemInfoBackground.png");
 		//this.setBackground(new Color(56,56,56,10));
 		
-		
-	    ImageIcon itemImage = new ImageIcon(GlobalConstants.GUI_FILEPATH + "epipen.png");
-	    JLabel label = new JLabel(itemImage);
-		
-		JLabel itemIcon = new JLabel(itemImage);
-		this.add(itemIcon,BorderLayout.SOUTH);
+		/*This adds an image to the label but maybe add later, it looks kinda stupid with current icons*/
+	    //ImageIcon itemImage = new ImageIcon(GlobalConstants.GUI_FILEPATH + "epipen.png");
+	    //JLabel label = new JLabel(itemImage);
+		//
+		//JLabel itemIcon = new JLabel(itemImage);
+		//this.add(itemIcon,BorderLayout.SOUTH);
 	}
 
 	
