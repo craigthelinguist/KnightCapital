@@ -11,7 +11,6 @@ import java.io.IOException;
 /**
  * Simple Server for distributing game information with Clients
  * @author neal and myles
- *
  */
 public class Server extends Thread{
 
