@@ -9,9 +9,8 @@ import java.io.InputStreamReader;
 import java.io.IOException;
 
 /**
- *
- * @author Neal Hartley
- *
+ * Simple Server for distributing game information with Clients
+ * @author neal and myles
  */
 public class Server extends Thread{
 
@@ -27,6 +26,7 @@ public class Server extends Thread{
 	private DataInputStream input;
 	private DataOutputStream output;
 
+
 	public Server() {
 		// Initialise Server Socket
 		initServer();
@@ -35,6 +35,7 @@ public class Server extends Thread{
 		connectClient();
 
 		//Wait for input
+		waitForInput();
 	}
 
 	private void initServer() {
