@@ -65,7 +65,7 @@ public class RendererDemo {
 	}
 
 	/**
-	 * Initialise frame, and add needed components
+	 * Initialise frame, and adds needed components
 	 */
 	private void initialiseInterface() {
 
@@ -160,6 +160,7 @@ public class RendererDemo {
 
 	/**
 	 * Update Party's position
+	 * Removes icon from previous position and adds it to new position if it is within the boundaries of the world map
 	 * @param instruction
 	 */
 	private void updateParty(String instruction) {
@@ -168,55 +169,66 @@ public class RendererDemo {
 		int x = party_x;
 		int y = party_y;
 
+		int orientation = camera.getOrientation();
+
+		// Take camera orientation into count when processing key-input
 		switch(instruction) {
-			case "moveUp":
-				switch(camera.getOrientation()) {
-					case 0: y--;
-							break;
-					case 1: x--;
-							break;
-					case 2: y++;
-							break;
-					case 3: x++;
-							break;
-				}
-				break;
-			case "moveDown":
-				switch(camera.getOrientation()) {
-					case 0: y++;
-							break;
-					case 1: x++;
-							break;
-					case 2: y--;
-							break;
-					case 3: x--;
-							break;
-				}
-				break;
-			case "moveLeft":
-				switch(camera.getOrientation()) {
-					case 0: x--;
-							break;
-					case 1: y++;
-							break;
-					case 2: x++;
-							break;
-					case 3: y--;
-							break;
-				}
-				break;
-			case "moveRight":
-				switch(camera.getOrientation()) {
-					case 0: x++;
-							break;
-					case 1: y--;
-							break;
-					case 2: x--;
-							break;
-					case 3: y++;
-							break;
-				}
-				break;
+
+		// Move Up Command
+		case "moveUp":
+			switch(orientation) {
+			case Camera.NORTH: y--;
+			break;
+			case Camera.EAST: x--;
+			break;
+			case Camera.SOUTH: y++;
+			break;
+			case Camera.WEST: x++;
+			break;
+			}
+			break;
+
+		// Move Down Command
+		case "moveDown":
+			switch(camera.getOrientation()) {
+			case Camera.NORTH: y++;
+			break;
+			case Camera.EAST: x++;
+			break;
+			case Camera.SOUTH: y--;
+			break;
+			case Camera.WEST: x--;
+			break;
+			}
+			break;
+
+		// Move Left Command
+		case "moveLeft":
+			switch(camera.getOrientation()) {
+			case Camera.NORTH: x--;
+			break;
+			case Camera.EAST: y++;
+			break;
+			case Camera.SOUTH: x++;
+			break;
+			case Camera.WEST: y--;
+			break;
+			}
+			break;
+
+		// Move Right Command
+		case "moveRight":
+			switch(camera.getOrientation()) {
+			case Camera.NORTH: x++;
+			break;
+			case Camera.EAST: y--;
+			break;
+			case Camera.SOUTH: x--;
+			break;
+			case Camera.WEST: y++;
+			break;
+			}
+			break;
 		}
 
 		// check new position is valid
