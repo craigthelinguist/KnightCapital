@@ -7,6 +7,12 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.io.IOException;
+
+/**
+ *
+ * @author Neal Hartley
+ *
+ */
 public class Server extends Thread{
 
 	private static final int USER_LIMIT = 5;
