@@ -131,6 +131,22 @@ public class RendererDemo {
 					camera.panLeft();
 				}
 
+				else if(keycode == KeyEvent.VK_W) {
+					updateParty("moveUp");
+				}
+
+				else if(keycode == KeyEvent.VK_S) {
+					updateParty("moveDown");
+				}
+
+				else if(keycode == KeyEvent.VK_A) {
+					updateParty("moveLeft");
+				}
+
+				else if(keycode == KeyEvent.VK_D) {
+					updateParty("moveRight");
+				}
+
 				worldPanel.repaint();
 			}
 
@@ -140,6 +156,80 @@ public class RendererDemo {
 		};
 
 		frame.addKeyListener(keyListener);
+	}
+
+	/**
+	 * Update Party's position
+	 * @param instruction
+	 */
+	private void updateParty(String instruction) {
+
+		// local variables for new positions
+		int x = party_x;
+		int y = party_y;
+
+		switch(instruction) {
+			case "moveUp":
+				switch(camera.getOrientation()) {
+					case 0: y--;
+							break;
+					case 1: x--;
+							break;
+					case 2: y++;
+							break;
+					case 3: x++;
+							break;
+				}
+				break;
+			case "moveDown":
+				switch(camera.getOrientation()) {
+					case 0: y++;
+							break;
+					case 1: x++;
+							break;
+					case 2: y--;
+							break;
+					case 3: x--;
+							break;
+				}
+				break;
+			case "moveLeft":
+				switch(camera.getOrientation()) {
+					case 0: x--;
+							break;
+					case 1: y++;
+							break;
+					case 2: x++;
+							break;
+					case 3: y--;
+							break;
+				}
+				break;
+			case "moveRight":
+				switch(camera.getOrientation()) {
+					case 0: x++;
+							break;
+					case 1: y--;
+							break;
+					case 2: x--;
+							break;
+					case 3: y++;
+							break;
+				}
+				break;
+		}
+
+		// check new position is valid
+		if(x >= 0 && x < world.NUM_TILES_ACROSS) {
+			if(y >= 0 && y < world.NUM_TILES_DOWN) {
+				// remove previous icon
+				world.setIcon(null, party_x, party_y);
+				// set new icon
+				world.setIcon(party, x, y);
+				party_x = x;
+				party_y = y;
+			}
+		}
 	}
 
 	/**
