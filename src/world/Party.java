@@ -24,6 +24,11 @@ public class Party extends WorldIcon{
 		owner = player;
 	}
 	
+	/**
+	 * Return true if this Party is owned by the specified player.
+	 * @param p: player you suspect owns this party.
+	 * @return true if the player owns this party.
+	 */
 	public boolean ownedBy(Player p){
 		return owner == p;
 	}
@@ -36,6 +41,11 @@ public class Party extends WorldIcon{
 		return movementPoints;
 	}
 	
+	/**
+	 * Decrease the remaining movement points by the specified amount. Doesn't check to see if
+	 * the final result will make sense.
+	 * @param amount: amount to decrease by.
+	 */
 	public void decreaseMovePoints(int amount){
 		movementPoints -= amount;
 	}
@@ -56,10 +66,19 @@ public class Party extends WorldIcon{
 		hero = newLeader;
 	}
 	
+	/**
+	 * Set the player who owns this party.
+	 * @param player: new player to own this party.
+	 */
 	public void setOwner(Player player){
 		owner = player;
 	}
 	
+	/**
+	 * Return true if the specified heroes leads this party.
+	 * @param h: hero to check
+	 * @return: true if the hero leads this party.
+	 */
 	public boolean ledBy(Hero h){
 		return hero == h;
 	}

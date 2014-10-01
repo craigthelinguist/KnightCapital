@@ -112,12 +112,13 @@ public class World {
 		
 		// a wrapper class for the nodes in the fringe
 		class Node implements Comparable<Node>{
-			Point point;
-			int costToHere;
-			int weight;
+			final Point point;
+			final int costToHere;
+			final int weight;
 			
 			public Node(Point p, int cost){
 				point = p;
+				costToHere = cost;
 				weight = costToHere + heuristic(goal);
 			}
 			
@@ -159,9 +160,10 @@ public class World {
 		
 			// otherwise push neighbours onto fringe
 			LinkedList<Point> neighbours = findNeighbours(point);
-			int costToHere = node.costToHere + 1;
+			int cost = node.costToHere + 1;
+			System.out.println(cost);
 			for (Point pt : neighbours){
-				Node nd = new Node(pt,costToHere);
+				Node nd = new Node(pt,cost);
 				fringe.offer(nd);
 			}
 			
