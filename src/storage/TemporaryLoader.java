@@ -6,8 +6,8 @@ import java.util.Scanner;
 import java.util.regex.Pattern;
 
 import tools.GlobalConstants;
-import world.AbstractTile;
-import world.TileImpl;
+import world.Tile;
+import world.PassableTile;
 import world.World;
 
 /**
@@ -31,7 +31,7 @@ public class TemporaryLoader {
 	 */
 	public static World loadWorld(String filename){
 		
-		AbstractTile[][] tiles = null;
+		Tile[][] tiles = null;
 		Scanner scan = null;
 		try{
 			
@@ -54,17 +54,17 @@ public class TemporaryLoader {
 			scan.nextLine();
 				
 			// create tiles
-			tiles = new AbstractTile[across][down];
+			tiles = new Tile[across][down];
 			for (int y = 0; y < down; y++){
 				char[] line = scan.nextLine().toCharArray();
 				for (int x = 0; x < across; x++){
 						
 					switch (line[x]){
 						case GRASS_TILE:
-							tiles[x][y] = TileImpl.newGrassTile();
+							tiles[x][y] = PassableTile.newGrassTile();
 							break;
 						case DIRT_TILE:
-							tiles[x][y] = TileImpl.newDirtTile();
+							tiles[x][y] = PassableTile.newDirtTile();
 							break;
 						default:
 							throw new IOException("Unknown symbol " + line[x] + " at ("+"x"+","+y+")");

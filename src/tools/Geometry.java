@@ -4,7 +4,7 @@ import renderer.Camera;
 
 import java.awt.Point;
 
-public class Converter {
+public class Geometry {
 
 	/**
 	 * Convert a point on screen in isometric projection,

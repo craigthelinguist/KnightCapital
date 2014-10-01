@@ -6,7 +6,7 @@ import java.awt.Graphics;
 
 import tools.GlobalConstants;
 
-import world.AbstractTile;
+import world.Tile;
 import world.WorldIcon;
 import world.World;
 
@@ -25,7 +25,7 @@ public class WorldRenderer {
 
 		final int TILE_WD = GlobalConstants.TILE_WD;
 		final int TILE_HT = GlobalConstants.TILE_HT;
-		AbstractTile[][] tiles = world.getTiles();
+		Tile[][] tiles = world.getTiles();
 
 		// At this point rotate is called every render cycle, but this isn't very efficient.
 		tiles = rotateArray(tiles, camera.getOrientation());
@@ -63,18 +63,18 @@ public class WorldRenderer {
 	 * @param tiles
 	 * @return rotates array
 	 */
-	private static AbstractTile[][] rotateArray(AbstractTile[][] tiles, int orientation) {
+	private static Tile[][] rotateArray(Tile[][] tiles, int orientation) {
 		int width = tiles.length;
 		int height = tiles[0].length;
 
 		//Log.print("[WorldRenderer] Rotating tiles by "+(rotation*90));
 
 		// New 2DArray for rotated tiles, not efficient but will do for now.
-		AbstractTile[][] rotated = null;
+		Tile[][] rotated = null;
 
 		// Rotate 90 Clockwise for each rotation count. If 0 do nothing;
 		for(int rotateCount = 0; rotateCount != orientation; rotateCount++) {
-			rotated = new AbstractTile[height][width];
+			rotated = new Tile[height][width];
 
 			// Rotate tiles by 90 cw
 			for(int i = 0; i < width; i++) {
@@ -90,7 +90,7 @@ public class WorldRenderer {
 		else return tiles;
 	}
 
-	private static void drawIcon(Graphics graphics, AbstractTile tile, int isoX, int isoY){
+	private static void drawIcon(Graphics graphics, Tile tile, int isoX, int isoY){
 		final int TILE_HT = GlobalConstants.TILE_HT;
 		final int TILE_WD = GlobalConstants.TILE_WD;
 		final int ICON_WD = GlobalConstants.ICON_WD;

@@ -12,7 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import storage.TemporaryLoader;
-import tools.Converter;
+import tools.Geometry;
 import tools.GlobalConstants;
 import world.Party;
 import world.World;
@@ -48,7 +48,7 @@ public class RendererDemo {
 
 		// Create World and Party.
 		world = TemporaryLoader.loadWorld("world_temporary.txt");
-		party = new Party("icon_ovelia.png");
+		party = new Party("icon_ovelia.png",null);
 		party_x = 3;
 		party_y = 3;
 		world.setIcon(party, party_x, party_y);
@@ -260,7 +260,7 @@ public class RendererDemo {
 				int y = e.getY();
 
 				//create point, converting from iso to cart
-				Point p = Converter.isometricToCartesian(new Point(x, y), camera);
+				Point p = Geometry.isometricToCartesian(new Point(x, y), camera);
 				int arrayX = p.x;
 				int arrayY = p.y;
 
