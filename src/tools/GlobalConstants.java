@@ -27,7 +27,8 @@ public class GlobalConstants {
 	public static final int WORLD_WIDTH = 10;
 	public static final int WORLD_HEIGHT = 10;
 
-
+	//Sprite, Frame, Animation Values
+	public static final int SPRITE_SIZE = 32;
 
 	// These are for the Camera
 	public static final int CAMERA_PAN = 10;
