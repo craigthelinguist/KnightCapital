@@ -36,6 +36,10 @@ public class Party extends WorldIcon{
 		return movementPoints;
 	}
 	
+	public void decreaseMovePoints(int amount){
+		movementPoints -= amount;
+	}
+	
 	/**
 	 * Refresh the number of movement points this party has. This is based on the movement points
 	 * stat the hero in the party has.

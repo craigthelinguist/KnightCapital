@@ -10,6 +10,7 @@ import org.junit.*;
 
 import player.Player;
 
+import world.ImpassableTile;
 import world.Party;
 import world.PassableTile;
 import world.Tile;
@@ -121,13 +122,13 @@ public class PathfindingTests {
 	public void init(){
 		Tile[][] tiles = new Tile[4][4];
 		tiles[0][0] = PassableTile.newGrassTile();
-		tiles[0][1] = PassableTile.newGrassTile();
+		tiles[0][1] = ImpassableTile.newVoidTile();
 		tiles[0][2] = PassableTile.newGrassTile();
-		tiles[0][3] = PassableTile.newGrassTile();
+		tiles[0][3] = ImpassableTile.newVoidTile();
 		tiles[1][0] = PassableTile.newGrassTile();
-		tiles[1][1] = PassableTile.newGrassTile();
-		tiles[1][2] = PassableTile.newGrassTile();
-		tiles[1][3] = PassableTile.newGrassTile();
+		tiles[1][1] = ImpassableTile.newVoidTile();
+		tiles[1][2] = ImpassableTile.newVoidTile();
+		tiles[1][3] = ImpassableTile.newVoidTile();
 		tiles[2][0] = PassableTile.newGrassTile();
 		tiles[2][1] = PassableTile.newGrassTile();
 		tiles[2][2] = PassableTile.newGrassTile();

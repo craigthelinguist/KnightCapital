@@ -7,6 +7,7 @@ import java.util.PriorityQueue;
 
 import player.Player;
 
+import tools.Geometry;
 import tools.GlobalConstants;
 import tools.Log;
 
@@ -90,6 +91,8 @@ public class World {
 		if (!pathExists(location,destination)) return false;
 		tileDestination.setIcon(tileLocation.occupant());
 		tileLocation.setIcon(null);
+		int dist = Geometry.taxicab(location, destination);
+		party.decreaseMovePoints(dist);
 		return true;
 	}
 	
@@ -120,18 +123,12 @@ public class World {
 			
 			// taxicab distance is the heuristic since we're using a discrete grid
 			int heuristic(Point other){
-				return Math.abs(point.x-other.x) + Math.abs(point.y-other.y);
+				return Geometry.taxicab(point, other);
 			}
 			
 			@Override
 			public int compareTo(Node other) {
 				return weight - other.weight;
-			}
-			
-			@Override
-			public boolean equals(Object other){
-				if (!(other instanceof Node)) return false;
-				else return point.equals(((Node)(other)).point);
 			}
 			
 		}
@@ -152,13 +149,13 @@ public class World {
 			point = node.point;
 			if (visited.contains(point)) continue;
 			tile = getTile(point);
-			if (!tile.passable(party)) continue;
+			if (!tile.passable(party) && point != start) continue;
 			
 			// mark as visited
 			visited.add(point);
 			
 			// if you're at the goal, stop
-			if (node.equals(goal)) return true;
+			if (node.point.equals(goal)) return true;
 		
 			// otherwise push neighbours onto fringe
 			LinkedList<Point> neighbours = findNeighbours(point);

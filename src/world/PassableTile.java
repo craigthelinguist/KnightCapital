@@ -26,7 +26,7 @@ public class PassableTile extends Tile{
 
 	@Override
 	public boolean passable(Party party) {	
-		return occupied();
+		return !occupied();
 	}
 	
 	
