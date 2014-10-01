@@ -7,6 +7,12 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.io.IOException;
+
+/**
+ * Simple Server for distributing game information with Clients
+ * @author neal and myles
+ *
+ */
 public class Server extends Thread{
 
 	private static final int USER_LIMIT = 5;
@@ -21,6 +27,7 @@ public class Server extends Thread{
 	private DataInputStream input;
 	private DataOutputStream output;
 
+
 	public Server() {
 		// Initialise Server Socket
 		initServer();
@@ -29,6 +36,7 @@ public class Server extends Thread{
 		connectClient();
 
 		//Wait for input
+		waitForInput();
 	}
 
 	private void initServer() {
