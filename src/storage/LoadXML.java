@@ -17,7 +17,7 @@ import world.World;
 /**
  * recreates a game world object from the state it was
  * Previously saved
- * 
+ *
  * @author selemon
  * */
 
@@ -27,14 +27,14 @@ public class LoadXML {
 
 
 	/**
-	 * reads in an xml file and creates a world object 
-	 * 
-	 * @return a world object 
+	 * reads in an xml file and creates a world object
+	 *
+	 * @return a world object
 	 * */
 
 	public World read(){
 
-		//create a file chooser to let user 
+		//create a file chooser to let user
 		//select a destination to save
 		JFileChooser chooser = new JFileChooser(".");
 
