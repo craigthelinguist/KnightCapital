@@ -100,4 +100,14 @@ public class WorldRenderer {
 		int iconX = isoX + TILE_WD/2 - ICON_WD/2;
 		occupant.draw(graphics,iconX,iconY);
 	}
+	
+	/**
+	 * Return a camera view of the centre of the given world that is north-oriented.
+	 * @param world: the world you're viewing.
+	 * @return: a camera looking at the middle of the world
+	 */
+	public static Camera getCentreOfWorld(World world){
+		return new Camera(GlobalConstants.WINDOW_WD / 2, 0, Camera.NORTH);
+	}
+	
 }

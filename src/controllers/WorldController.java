@@ -7,9 +7,14 @@ import java.awt.event.MouseEvent;
 import javax.swing.JButton;
 import javax.swing.SwingUtilities;
 
+import GUI.MainFrame;
+
 import player.Player;
 import renderer.Camera;
+import renderer.WorldRenderer;
+import storage.TemporaryLoader;
 import tools.Geometry;
+import tools.GlobalConstants;
 import world.Party;
 import world.Tile;
 import world.World;
@@ -20,7 +25,7 @@ import world.World;
  */
 public class WorldController {
 	
-	// world this controller is for
+	// world this controller is for: the model
 	private final World world;
 	
 	// player this controller belongs to
@@ -30,12 +35,14 @@ public class WorldController {
 	// current tile selected by the player
 	private Point selected;
 	
-	// TODO: need gui and 
-
-	public WorldController(World w, Player p, Camera cam){
+	// gui and renderer: the view
+	private MainFrame gui;
+	
+	public WorldController(World w, Player p, MainFrame frame){
 		world = w;
 		player = p;
-		camera = cam;
+		camera = WorldRenderer.getCentreOfWorld(w);
+		gui = frame;
 		selected = null;
 	}
 	
@@ -103,6 +110,14 @@ public class WorldController {
 	 */
 	public void buttonPressed(JButton button){
 		
+	}
+	
+	public static void main(String[] args){
+		MainFrame mf = new MainFrame();
+		World w = TemporaryLoader.loadWorld("world_temporary.txt");
+		Player p = new Player();
+		Camera cam = new Camera(GlobalConstants.WINDOW_WD / 2, 0, Camera.NORTH);
+		new WorldController(w,p,mf);
 	}
 	
 }

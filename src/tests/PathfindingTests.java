@@ -16,6 +16,11 @@ import world.PassableTile;
 import world.Tile;
 import world.World;
 
+/**
+ * Tests pathfinding in the World class.
+ * @author craigthelinguist
+ *
+ */
 public class PathfindingTests {
 
 	World world;
