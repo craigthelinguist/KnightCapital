@@ -40,6 +40,10 @@ public class Server extends Thread{
 		waitForInput();
 	}
 
+	/**
+	 * Initialise server
+	 * Starts the server socket and not much else
+	 */
 	private void initServer() {
 
 		// Set limit on ammout of users
@@ -53,6 +57,7 @@ public class Server extends Thread{
 			System.out.println("Socket : "+ PORT);
 			System.out.println("-------------------------------------------");
 
+			//Create server socket
 			serverSocket = new ServerSocket(PORT);
 
 		} catch(Exception e) {
@@ -60,6 +65,9 @@ public class Server extends Thread{
 		}
 	}
 
+	/**
+	 * Connect client
+	 */
 	private void connectClient() {
 		try {
 			// Accept Client Connection
@@ -70,6 +78,9 @@ public class Server extends Thread{
 		}
 	}
 
+	/**
+	 * Wait for input from clients
+	 */
 	private void waitForInput() {
 		try{
 			for(Socket client : clients) {
@@ -79,10 +90,12 @@ public class Server extends Thread{
 				while((inputLine = bufferedReader.readLine()) != null) {
 					System.out.println("[User "+clients.indexOf(client)+"] "+inputLine);
 
+					// Special command for shutting down server. Could be exploited.
 					if(inputLine.equals("shutdown")) {
 						endServer();
 					}
 
+					// Go back to waiting for more input
 					else {
 						waitForInput();
 					}
@@ -93,6 +106,10 @@ public class Server extends Thread{
 		}
 	}
 
+	/**
+	 * End Server
+	 * Close each of the clients sockets and then the server.
+	 */
 	private void endServer() {
 		try {
 			for(Socket client : clients) {
