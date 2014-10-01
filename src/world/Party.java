@@ -11,7 +11,7 @@ import player.Player;
  */
 public class Party extends WorldIcon{
 
-	private Player player;
+	private Player owner;
 	private int movementPoints;
 	
 	private Hero hero;
@@ -21,11 +21,11 @@ public class Party extends WorldIcon{
 	// TODO: should be instantiated with a hero; no party is without one
 	public Party(String imgname, Player player) {
 		super(imgname);
-		this.player = player;
+		owner = player;
 	}
 	
 	public boolean ownedBy(Player p){
-		return player == p;
+		return owner == p;
 	}
 	
 	/**
@@ -42,6 +42,22 @@ public class Party extends WorldIcon{
 	 */
 	public void refreshMovePoints(){
 		movementPoints = hero.getMovePoints();
+	}
+	
+	/**
+	 * Set the hero leading the party
+	 * @param newLeader: new hero to lead the party
+	 */
+	public void setLeader(Hero newLeader){
+		hero = newLeader;
+	}
+	
+	public void setOwner(Player player){
+		owner = player;
+	}
+	
+	public boolean ledBy(Hero h){
+		return hero == h;
 	}
 	
 }

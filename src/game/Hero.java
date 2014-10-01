@@ -18,4 +18,8 @@ public class Hero extends Creature {
 		return movementPoints;
 	}
 	
+	public void setMovePts(int newPts){
+		movementPoints = newPts;
+	}
+	
 }
