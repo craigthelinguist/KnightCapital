@@ -175,6 +175,7 @@ public class RendererDemo {
 					// update icon position
 					party_x = arrayX;
 					party_y = arrayY;
+
 					worldPanel.repaint();
 				}
 
