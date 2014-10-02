@@ -16,31 +16,31 @@ import tools.ImageLoader;
 public class MainMenuPanel extends JPanel implements ActionListener{
 
 	private BufferedImage backgroundImage;
-	
+
 	private MainFrame mainFrame;
-	
+
 	private CustomButton inventoryButton;
-	
+
 	public MainMenuPanel(MainFrame frame) {
 		this.setBorder(BorderFactory.createLineBorder(Color.black)); //draws a border around canvas (just to show where the canvas is) (delete later)
 		this.setPreferredSize(new Dimension(frame.getWidth(),frame.getHeight()));
 		mainFrame = frame;
-		
+
 		/*Declare and initialize the images for the button */
 		BufferedImage inventoryDefaultIcon = ImageLoader.load(GlobalConstants.GUI_FILEPATH + "inventoryDefaultTemp.png");
-		BufferedImage inventoryHoverIcon = ImageLoader.load(GlobalConstants.GUI_FILEPATH + "inventoryHoverTemp.png");
-		inventoryButton = new CustomButton(inventoryDefaultIcon, inventoryHoverIcon);
+		BufferedImage inventoryPressedIcon = ImageLoader.load(GlobalConstants.GUI_FILEPATH + "inventoryHoverTemp.png");
+		inventoryButton = new CustomButton(inventoryDefaultIcon, inventoryPressedIcon, null);
 		add(inventoryButton);
-		
+
 		/*Initialize the image for the main menu panel*/
 		backgroundImage = ImageLoader.load(GlobalConstants.GUI_FILEPATH + "mainMenuPanel.png");
 	}
-	
-	
+
+
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 	}
-	
+
 	  @Override
 	  protected void paintComponent(Graphics g) {
 	    super.paintComponent(g);

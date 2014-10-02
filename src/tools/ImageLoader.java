@@ -11,10 +11,10 @@ import javax.imageio.ImageIO;
 import renderer.Animation;
 
 public class ImageLoader {
-	
+
 	// use the static methods
 	private ImageLoader(){}
-	
+
 	private static Map<String, BufferedImage> images = new HashMap<String, BufferedImage>();
 
 	/**
@@ -47,7 +47,7 @@ public class ImageLoader {
 			}
 		}
 	}
-	
+
 	/**
 	 * Takes the given filepath. Loads all files prefixed by that filepath into a map,
 	 * where they're indexed by the name of their animation (e.g.: north, south).
@@ -64,8 +64,8 @@ public class ImageLoader {
 		Animation animEast = new Animation(east,1);
 		BufferedImage[] west = new BufferedImage[]{ ImageLoader.load(filepath + "_west.png") };
 		Animation animWest = new Animation(west,1);
-		
-		Map<String,Animation> animationNames = new HashMap<>();
+
+		Map<String,Animation> animationNames = new HashMap<String,Animation>();
 		animationNames.put("north",animNorth);
 		animationNames.put("south",animSouth);
 		animationNames.put("west",animWest);
