@@ -5,6 +5,7 @@ import java.net.Socket;
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
@@ -25,7 +26,9 @@ public class Client implements Runnable {
 
 	private  static DataInputStream in;
 	private static DataOutputStream out;
-	
+
+
+	private static ClientProtocol client;
 	
 	private ObjectInputStream input;
 	private ObjectOutputStream output;
@@ -48,11 +51,11 @@ public class Client implements Runnable {
 
 			//construct input stream from socket
 			in = new DataInputStream(socket.getInputStream());
-
+			out = new DataOutputStream(socket.getOutputStream());
 
 			//initialises the client protocol thread which is always -
 			//- listening for incoming messages from the server.
-			ClientProtocol client = new ClientProtocol(in);
+			client = new ClientProtocol(in,out);
 			Thread listener = new Thread(client);
 			listener.start();
 
@@ -60,23 +63,75 @@ public class Client implements Runnable {
 			//printwriter that prints a message to the socket for the server to see.
 			printWriter = new PrintWriter(socket.getOutputStream(),true);
 
-			out = new DataOutputStream(socket.getOutputStream());
-
-			while(true) {
-				out.writeUTF(message());
-
-
-			}
 		}
 		catch(Exception e) {
 			System.out.println(e);
 		}
+
+		while(true){
+
+			try {
+
+				    if(!client.getStatus()){
+				    	
+				    	System.out.println("server inactive...closing application");
+				    	System.exit(0);
+				    	
+				    }
+					out.writeUTF(message());
+				    
+
+			}
+			//suppress the exception shutdown the client
+			catch (EOFException e) {
+
+			System.out.println("server no longer active, shutting down");
+			System.exit(0);
+
+			}
+
+			catch (IOException e) {
+
+				e.printStackTrace();
+			}
+
+		}
+	}
+
+
+
+	public Client(Socket socket) {
+		this.socket = socket;
 	}
 
 	/**
-	 *
-	 * @return message to send to server.
-	 */
+	 * receive player information from server
+	 * */
+
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		try {
+			output = new ObjectOutputStream(socket.getOutputStream());
+			out.flush();
+			input = new ObjectInputStream(socket.getInputStream());
+			ID = in.readInt();
+
+			player = (Player) input.readObject();
+			System.out.println("client request ID: "+ID);
+
+
+
+
+
+		} catch (IOException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
 	public static String message(){
 		String s = "exit";
 
@@ -84,8 +139,15 @@ public class Client implements Runnable {
 		BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
 		try {
 			//assigns input to string.
+
+
 			s = bufferRead.readLine();
-		} catch (IOException e) {
+
+
+
+		}
+
+		catch (IOException e) {
 
 			e.printStackTrace();
 		}
@@ -96,52 +158,20 @@ public class Client implements Runnable {
 		}
 		//otherwise it closes the socket
 		else{
-//			try {
-//				socket.close();
-//				System.out.println("socket closed yo");
-//				System.exit(0);
-//			} catch (IOException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
+			//			try {
+			//				socket.close();
+			//				System.out.println("socket closed yo");
+			//				System.exit(0);
+			//			} catch (IOException e) {
+			//				// TODO Auto-generated catch block
+			//				e.printStackTrace();
+			//			}
 
 			return "error!!!!";
 
 
 
 		}
-	}
-	
-	public Client(Socket socket) {
-		this.socket = socket;
-	}
-	
-	/**
-	 * receive player information from server
-	 * */
-	 
-
-	@Override
-	public void run() {
-		// TODO Auto-generated method stub
-		try {
-			output = new ObjectOutputStream(socket.getOutputStream());
-			out.flush();
-			input = new ObjectInputStream(socket.getInputStream());
-			ID = in.readInt();
-			
-			player = (Player) input.readObject();
-			System.out.println("client request ID: "+ID);
-			
-			
-			
-			
-			
-		} catch (IOException | ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
 	}
 }
 
