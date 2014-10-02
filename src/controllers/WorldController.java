@@ -65,44 +65,34 @@ public class WorldController {
 	 */
 	public void mousePressed(MouseEvent me, String panel){
 		
-		if (panel.equals("world")){
+		if (panel.equals("canvas")){
+		
 			Point pointIso = new Point(me.getX(),me.getY());
 			Point pointCartesian = Geometry.isometricToCartesian(pointIso, camera);
-			Tile clickedTile = world.getTile(pointCartesian.x, pointCartesian.y);
-			if (selected == null){
-				
-				// player left-clicked on a tile
-				if (SwingUtilities.isLeftMouseButton(me)){
-					selected = pointCartesian;					
-				}
-				
-				// TODO: send message to GUI telling it to display info about that tile
-				
-			}
-			else{
-				
-				// deselect
-				if (pointCartesian == selected){
-					selected = null;
-				}
-				// move if they right-clicked
-				else if (SwingUtilities.isRightMouseButton(me)){
-					Tile selectedTile = world.getTile(selected.x, selected.y);
-					if (world.moveParty(player,selected,pointCartesian)){
-						// check if the move was successful
-					}
-				
-				
-				}
+			Tile clickedTile = world.getTile(pointCartesian);
+		
+			// selected the tile
+			if (selected == null && SwingUtilities.isLeftMouseButton(me)){
+				selected = pointCartesian;
+				gui.updateInfo(clickedTile);
 			}
 			
-			
+			// deselected the tile
+			else if (selected != null && SwingUtilities.isLeftMouseButton(me)){
+				Tile selectedTile = world.getTile(selected);
+				if (selectedTile == clickedTile) selected = null;
+				gui.updateInfo(null);
+			}
+		
+			// moved
+			else if (selected != null && SwingUtilities.isRightMouseButton(me)){
+				boolean moved = world.moveParty(player, selected, pointCartesian);
+				if (moved) gui.updateInfo(clickedTile);
+			}
+		
 		}
-		else if (panel.equals("inventory")){
-			
-		}
-		else if (panel.equals("minimap")){
-		}
+		
+		System.out.println(selected);
 		
 	}
 	

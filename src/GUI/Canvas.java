@@ -34,8 +34,13 @@ public class Canvas extends JPanel implements MouseListener{
 		        new ImageIcon(GlobalConstants.GUI_FILEPATH +"bottomLeft.png").getImage(),
 		        new ImageIcon(GlobalConstants.GUI_FILEPATH +"bottomCenter.png").getImage(),
 		        new ImageIcon(GlobalConstants.GUI_FILEPATH +"bottomRight.png").getImage());
+	    
 	    /*set the panel's border*/
 	    //this.setBorder(border);
+	    
+	    // set up mouse listener
+	    this.addMouseListener(this);
+	    
 	}
 
 	public void setController(WorldController wc){
@@ -43,19 +48,21 @@ public class Canvas extends JPanel implements MouseListener{
 	}
 	
 	@Override
-	public void mouseClicked(MouseEvent arg0) {	}
+	public void mouseClicked(MouseEvent event) {
+		controller.mousePressed(event,"canvas");
+	}
 
 	@Override
-	public void mouseEntered(MouseEvent arg0) {	}
+	public void mouseEntered(MouseEvent event) {	}
 
 	@Override
-	public void mouseExited(MouseEvent arg0) {}
+	public void mouseExited(MouseEvent event) {}
 
 	@Override
-	public void mousePressed(MouseEvent arg0) {	}
+	public void mousePressed(MouseEvent event) {	}
 
 	@Override
-	public void mouseReleased(MouseEvent arg0) {}
+	public void mouseReleased(MouseEvent event) {}
 
 	@Override
 	protected void paintComponent(Graphics graphics){

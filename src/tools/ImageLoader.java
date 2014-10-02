@@ -34,7 +34,6 @@ public class ImageLoader {
 					System.out.println(filename+" failed to load");
 					return new BufferedImage(1,1, BufferedImage.TYPE_INT_RGB);
 				}
-				System.out.println(file.getAbsolutePath());
 				BufferedImage newImage = ImageIO.read(file);
 				//Stores the image
 				images.put(filename, newImage);
