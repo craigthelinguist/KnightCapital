@@ -20,12 +20,14 @@ public class Server extends Thread{
 	private static final int USER_LIMIT = 5;
 	private static final int PORT = 45612;
 
+	//host socket and also list of client sockets.
 	private static ServerSocket serverSocket;
 	private static ArrayList<Socket> clients;
 
 	private static BufferedReader bufferedReader;
 	private static String inputLine;
 
+	//input and outputstreams
 	private DataInputStream input;
 	private DataOutputStream output;
 
@@ -72,7 +74,9 @@ public class Server extends Thread{
 	private void connectClient() {
 		try {
 			// Accept Client Connection
-			clients.add(serverSocket.accept());
+			Socket temp = serverSocket.accept();//just testing connections.
+			clients.add(temp);
+			System.out.println("got connection socket to client: "+ temp.getInetAddress());
 		}
 		catch(IOException e) {
 			System.out.println(e);
@@ -93,6 +97,12 @@ public class Server extends Thread{
 
 					PrintWriter printWriter = new PrintWriter(client.getOutputStream(), true);
 					printWriter.print(inputLine);
+					
+					//echo message across all clients
+					for(Socket s : clients){
+						output = new DataOutputStream(s.getOutputStream());
+						output.writeUTF(inputLine);					
+					}
 
 					// Special command for shutting down server. Could be exploited.
 					if(inputLine.equals("shutdown")) {

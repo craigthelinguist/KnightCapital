@@ -3,18 +3,20 @@ package networking;
 
 import java.net.Socket;
 import java.io.BufferedReader;
+import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 /**
  *
- * @author Neal Hartley
+ * @author Neal Hartley and Myles Glass
  *
  */
 public class Client {
 
 	private static Socket socket;
 	private static PrintWriter printWriter;
+    private static DataInputStream in;
 
 	public static void main(String[] args) {
 
@@ -26,20 +28,25 @@ public class Client {
 			System.out.println("Send a message to the server.");
 
             //connects to socket based on ip and port number. Ip needs to be configured for individual testing on different computers.
-			socket = new Socket("130.195.4.163", 45612);
+			System.out.println("connecting...");
+			socket = new Socket("localhost", 45612);
+			System.out.println("conected!");
+			
+			//construct input stream from socket
+			in = new DataInputStream(socket.getInputStream());
+			
+			
 			
 			//printwriter that prints a message to the socket for the server to see.
 			printWriter = new PrintWriter(socket.getOutputStream(),true);
-			BufferedReader in =new BufferedReader(new InputStreamReader(socket.getInputStream()));
+			//BufferedReader in =new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
 			while(true) {
 				printWriter.println(message());
 				
 				
-//			    if(in.readLine()!=null){
-//				System.out.println(in.readLine());
-//			    }
-				
+				String read = in.readUTF();
+				System.out.println("from server:" + read);
 				
 				
 			}
