@@ -29,12 +29,15 @@ public class Client {
 
             //connects to socket based on ip and port number. Ip needs to be configured for individual testing on different computers.
 			System.out.println("connecting...");
-			socket = new Socket("localhost", 45612);
+			socket = new Socket("130.195.4.174", 45612);
 			System.out.println("conected!");
 			
 			//construct input stream from socket
 			in = new DataInputStream(socket.getInputStream());
 			
+			ClientProtocol client = new ClientProtocol(in);
+			Thread listener = new Thread(client);
+			listener.start();
 			
 			
 			//printwriter that prints a message to the socket for the server to see.
@@ -43,10 +46,6 @@ public class Client {
 
 			while(true) {
 				printWriter.println(message());
-				
-				
-				String read = in.readUTF();
-				System.out.println("from server:" + read);
 				
 				
 			}

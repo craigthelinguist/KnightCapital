@@ -15,7 +15,7 @@ import java.io.PrintWriter;
  * @author neal and myles
  */
 
-public class Server extends Thread{
+public class Server{
 
 	private static final int USER_LIMIT = 5;
 	private static final int PORT = 45612;
