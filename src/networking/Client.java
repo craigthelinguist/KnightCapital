@@ -31,23 +31,26 @@ public class Client {
 			System.out.println("connecting...");
 			socket = new Socket("130.195.4.174", 45612);
 			System.out.println("conected!");
-			
+
 			//construct input stream from socket
 			in = new DataInputStream(socket.getInputStream());
-			
+
+
+			//initialises the client protocol thread which is always -
+			//- listening for incoming messages from the server.
 			ClientProtocol client = new ClientProtocol(in);
 			Thread listener = new Thread(client);
 			listener.start();
-			
-			
+
+
 			//printwriter that prints a message to the socket for the server to see.
 			printWriter = new PrintWriter(socket.getOutputStream(),true);
-			//BufferedReader in =new BufferedReader(new InputStreamReader(socket.getInputStream()));
+			
 
 			while(true) {
 				printWriter.println(message());
-				
-				
+
+
 			}
 		}
 		catch(Exception e) {
@@ -56,7 +59,7 @@ public class Client {
 	}
 
 /**
- * 
+ *
  * @return message to send to server.
  */
 	public static String message(){
@@ -68,10 +71,10 @@ public class Client {
 	    	//assigns input to string.
 			s = bufferRead.readLine();
 		} catch (IOException e) {
-			
+
 			e.printStackTrace();
 		}
-        
+
 	    // if not exiting returns the user input.
 	    if(!s.equals("exit")){
 		return s;
