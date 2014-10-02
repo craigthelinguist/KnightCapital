@@ -14,6 +14,11 @@ import world.Tile;
 import world.WorldIcon;
 import world.World;
 
+/**
+ * 
+ * @author whileym4st3r
+ *
+ */
 public class WorldRenderer {
 
 	// use the static methods
@@ -100,7 +105,7 @@ public class WorldRenderer {
 			&&	pt.y < resolution.height + TILE_HT;
 	}
 	
-	private static void drawIcon(Graphics graphics, WorldIcon occupant, Point ptIso){
+	public static void drawIcon(Graphics graphics, WorldIcon occupant, Point ptIso){
 		int isoY = ptIso.y;
 		int isoX = ptIso.x;
 		final int TILE_HT = GlobalConstants.TILE_HT;

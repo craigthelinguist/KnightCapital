@@ -90,10 +90,22 @@ public class World {
 		
 		// attempt to move party from location to destination
 		if (!pathExists(location,destination)) return false;
-		tileDestination.setIcon(tileLocation.occupant());
+		
+		// do it in this order or you disappear if you move to tile you're already
+		// standing on :)
 		tileLocation.setIcon(null);
+		tileDestination.setIcon(party);
 		int dist = Geometry.taxicab(location, destination);
+		
+		// update party
 		party.decreaseMovePoints(dist);
+		boolean east = destination.x - destination.y > location.x - location.y;
+		boolean north = destination.x + destination.y < location.x + location.y;
+		if (east && north) party.setAnimationName("north");
+		else if (east && !north) party.setAnimationName("east");
+		else if (!east && north) party.setAnimationName("west");
+		else if (!east && !north) party.setAnimationName("south");
+		
 		return true;
 	}
 	

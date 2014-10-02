@@ -16,6 +16,7 @@ public class GlobalConstants {
 
 	// all images are stored in this relative filepath
 	public static final String ASSETS = "assets" + File.separatorChar;
+	public static final String ICONS = File.separatorChar + "icons" + File.separatorChar;
 	// all images inside the GUIAssets
 	public static final String GUI_FILEPATH = GlobalConstants.ASSETS + "GUIAssets" + File.separatorChar;
 
