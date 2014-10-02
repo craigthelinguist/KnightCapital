@@ -68,8 +68,14 @@ public class Geometry {
 	 */
 	public static Point recoverOriginalPoint(Point ptRotated, Camera camera, World world){
 		
-		// it really is this simple: you just rotate it again by the same perspective, but that might not
-		// be so obvious so I'm leaving it like this for the benefit of others.
+		// To whom it may concern,
+		//
+		// it really is this simple: you just rotate it again by the same perspective. 
+		// That might not be so obvious so I'm leaving it like this for the benefit of others,
+		// but if you want to see why it works the rotatePoint method just horizontally or vertically
+		// mirrors points in an array.
+		//		-- sincerely,
+		//			  Aaron.
 		return rotatePoint(ptRotated,camera,world);
 		
 	}
