@@ -89,7 +89,7 @@ public class Server{
 
 			if(users[i] == null){
 
-				users[i] = new ServerProtocol(input, out, users);
+				users[i] = new ServerProtocol(input, out, users, i);
 				Thread thread = new Thread(users[i]);
 				thread.start();
 				break;
