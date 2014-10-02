@@ -56,11 +56,13 @@ public class Geometry {
 	 * @param camera
 	 * @return isometric point.
 	 */
-	private static Point cartesianToIsometric(int cartX, int cartY, Camera camera) {
-		Log.print("WARNING cart -> iso conversion untested");
-		int isoX = (cartX - cartY) + camera.getOriginX();
-		int isoY = ((cartX + cartY) / 2) + camera.getOriginY();
-
+	public static Point cartesianToIsometric(Point pt, Camera camera) {
+		int cartX = pt.x;
+		int cartY = pt.y;
+		final int HALF_TILE_WD = GlobalConstants.TILE_WD/2;
+		final int HALF_TILE_HT = GlobalConstants.TILE_HT/2;
+		int isoX = (cartX-cartY)*HALF_TILE_WD + camera.getOriginX();
+		int isoY = (cartX+cartY)*HALF_TILE_HT + camera.getOriginY();
 		return new Point(isoX, isoY);
 	}
 	

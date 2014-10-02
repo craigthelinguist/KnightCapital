@@ -41,7 +41,7 @@ public class World {
 	 */
 	public Tile getTile(int x, int y){
 		if (x < 0 || x >= tiles.length || y < 0 || y >= tiles[x].length){
-			Log.print("clicked out of world boundaries");
+			System.out.printf("(%d,%d)\n", x, y);
 			return null;
 		}
 		else return tiles[x][y];
@@ -162,7 +162,6 @@ public class World {
 			// otherwise push neighbours onto fringe
 			LinkedList<Point> neighbours = findNeighbours(point);
 			int cost = node.costToHere + 1;
-			System.out.println(cost);
 			for (Point pt : neighbours){
 				Node nd = new Node(pt,cost);
 				fringe.offer(nd);

@@ -7,6 +7,7 @@ import java.awt.Point;
 
 import controllers.WorldController;
 
+import tools.Geometry;
 import tools.GlobalConstants;
 
 import world.Tile;
@@ -34,18 +35,22 @@ public class WorldRenderer {
 		Tile[][] tiles = world.getTiles();
 
 		// At this point rotate is called every render cycle, but this isn't very efficient.
-		tiles = rotateArray(tiles, camera.getOrientation());
-
+		//tiles = rotateArray(tiles, camera.getOrientation());
+		
 		for (int y = 0; y < tiles.length; y++){
-			for (int x = 0; x < tiles[0].length; x++){
-				int isoX = camera.getOriginX() + (TILE_WD/2)*x - (TILE_WD/2)*y;
-				int isoY = camera.getOriginY() + (TILE_HT/2)*x + (TILE_HT/2)*y;
-				Tile tile = world.getTile(x,y);
-				if (tile == selected) tile.drawHighlighted(graphics,isoX,isoY);
-				else tile.draw(graphics, isoX, isoY);
+			for (int x = 0; x < tiles[y].length; x++){
+				
+				Point ptCart = new Point(x,y);
+				Point ptIso = Geometry.cartesianToIsometric(ptCart, camera);
+				if (!tileOnScreen(ptIso,resolution)) continue; // don't draw things that aren't visible
+				Tile tile = world.getTile(ptCart);
+				if (tile == selected) tile.drawHighlighted(graphics, ptIso.x, ptIso.y);
+				else tile.draw(graphics, ptIso.x, ptIso.y);
+				
 			}
 		}
-
+		
+		/**
 		for (int y = 0; y < tiles.length; y++){
 			for (int x = 0; x < tiles[0].length; x++){
 				if (!tiles[x][y].occupied()) continue;
@@ -55,6 +60,8 @@ public class WorldRenderer {
 			}
 		}
 
+		**/
+
 		// Some basic debug info
 		graphics.setColor(Color.BLACK);
 		graphics.drawString("Knight Capital", 30, 30);
@@ -62,9 +69,26 @@ public class WorldRenderer {
 		graphics.drawString("Current Origin: ("+camera.getOriginX()+","+camera.getOriginY()+")", 30, 70);
 		graphics.drawString("Arrow keys to move camera", 30, 110);
 		graphics.drawString("Press r to rotate", 30, 130);
+		
 
 	}
 
+	/**
+	 * Return true if the tile with origin pt would be visible on the screen represented by resolution.
+	 * @param pt: a point in isometric space.
+	 * @param resolution: screen bounds
+	 * @return: boolean
+	 */
+	public static boolean tileOnScreen(Point pt, Dimension resolution){
+		final int TILE_WD = GlobalConstants.TILE_WD;
+		final int TILE_HT = GlobalConstants.TILE_HT;
+		
+		return	pt.x >= 0-TILE_WD
+			&&	pt.x < resolution.width + TILE_WD
+			&&	pt.y >= 0-TILE_HT
+			&&	pt.y < resolution.height + TILE_HT;
+	}
+	
 	public static void highlightTile(Graphics graphics, World world, int x, int y){
 		Tile[][] tiles = world.getTiles();
 		tiles[x][y].drawHighlighted(graphics,x,y);
@@ -108,6 +132,12 @@ public class WorldRenderer {
 		else return tiles;
 	}
 
+	private static void rotatePoint(Point pt, Camera cam){
+		
+		
+		
+	}
+	
 	private static void drawIcon(Graphics graphics, Tile tile, int isoX, int isoY){
 		final int TILE_HT = GlobalConstants.TILE_HT;
 		final int TILE_WD = GlobalConstants.TILE_WD;
