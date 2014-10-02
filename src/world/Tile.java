@@ -4,7 +4,11 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
+import java.awt.image.DataBufferByte;
+import java.awt.image.DataBufferInt;
 import java.awt.image.WritableRaster;
+
+import tools.ImageManipulation;
 
 
 /**
@@ -50,30 +54,8 @@ public abstract class Tile {
 	 * @param y
 	 */
 	public void drawHighlighted(Graphics graphics, int x, int y) {
-		ColorModel cm = image.getColorModel();
-		boolean isAlphaPremultiplied = cm.isAlphaPremultiplied();
-		WritableRaster raster = image.copyData(null);
-		BufferedImage bi = new BufferedImage(cm, raster, isAlphaPremultiplied, null);
-		for (int i = 0; i < bi.getWidth(); i++){
-			for (int j = 0; j < bi.getHeight(); j++){
-				
-				int pixel = bi.getRGB(i, j);
-				int alpha = (pixel>>24) & 0xff;
-				Color color = new Color(pixel);
-				Color lightened = lighten(color);
-				bi.setRGB(i, j, lightened.getRGB());
-				
-			}
-		}
-		graphics.drawImage(bi, x, y, null);
+		BufferedImage lighterImage = ImageManipulation.lighten(image);
+		graphics.drawImage(lighterImage,x,y,null);
 	}
-	
-	private Color lighten(Color col){
-		int increment = 30;
-		int r = Math.min(255,col.getRed()+increment);
-		int g = Math.min(255,col.getGreen()+increment);
-		int b = Math.min(255,col.getBlue()+increment);
-		return new Color(r,g,b);
-	}
-	
+		
 }
