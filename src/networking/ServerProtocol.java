@@ -10,8 +10,9 @@ public class ServerProtocol implements Runnable {
 	private DataInputStream in;
 	private DataOutputStream out;
 	private ServerProtocol[] users;
+	private int iAm;
 
-	public ServerProtocol(DataInputStream in, DataOutputStream out, ServerProtocol[] users){
+	public ServerProtocol(DataInputStream in, DataOutputStream out, ServerProtocol[] users, int playNum){
 
 		System.out.println("made a protocol");
 
@@ -31,6 +32,7 @@ public class ServerProtocol implements Runnable {
 		this.in = in;
 		this.out = out;
 		this.users = users;
+		this.iAm = playNum;
 
 	}
 
