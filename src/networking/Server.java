@@ -24,6 +24,10 @@ public class Server{
 	private static ServerSocket serverSocket;
 	private static ArrayList<Socket> clients;
 
+	//list of running serverprotocol threads. each protocol dealling with one connected user.
+	//private static ArrayList<ServerProtocol> users;
+      private static ServerProtocol[] users = new ServerProtocol[10];
+
 	private static BufferedReader bufferedReader;
 	private static String inputLine;
 
@@ -32,7 +36,7 @@ public class Server{
 	private DataOutputStream output;
 
 
-	public Server() {
+	public Server() throws IOException{
 		// Initialise Server Socket
 		initServer();
 
@@ -71,16 +75,30 @@ public class Server{
 	/**
 	 * Connect client
 	 */
-	private void connectClient() {
-		try {
+	private void connectClient() throws IOException{
+		while(true){
+
 			// Accept Client Connection
 			Socket temp = serverSocket.accept();//just testing connections.
 			clients.add(temp);
+
+		for(int i =0 ; i < 10; i++){
 			System.out.println("got connection socket to client: "+ temp.getInetAddress());
+			input = new DataInputStream(temp.getInputStream());
+			output = new DataOutputStream(temp.getOutputStream());
+
+			if(users[i] == null){
+
+				users[i] = new ServerProtocol(input, output, users);
+				Thread thread = new Thread(users[i]);
+				thread.start();
+				break;
+			}
 		}
-		catch(IOException e) {
-			System.out.println(e);
+
+
 		}
+
 	}
 
 	/**
@@ -97,11 +115,11 @@ public class Server{
 
 					PrintWriter printWriter = new PrintWriter(client.getOutputStream(), true);
 					printWriter.print(inputLine);
-					
+
 					//echo message across all clients
 					for(Socket s : clients){
 						output = new DataOutputStream(s.getOutputStream());
-						output.writeUTF(inputLine);					
+						output.writeUTF(inputLine);
 					}
 
 					// Special command for shutting down server. Could be exploited.
@@ -139,7 +157,12 @@ public class Server{
 	}
 
 	public static void main(String[] args) {
-		new Server();
+		try {
+			new Server();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
 
