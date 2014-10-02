@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 
 import tools.GlobalConstants;
 import tools.ImageLoader;
+import world.Tile;
 
 /**
  * This panel holds all of the player's information such as stats, party  etc.
@@ -34,6 +35,14 @@ public class PlayerInformationPanel extends JPanel{
 	    // paint the background image and scale it to fill the entire space
 	    g.drawImage(backgroundImage, 0, 0, 375, 200, this);
 	  }
+
+	  /**
+	   * Update the information being displayed in this panel to show whatever is on the given tile.
+	   * @param tile: tile whose info you'll display.
+	   */
+	public void updateInfo(Tile tile) {
+		// TODO Auto-generated method stub
+	}
 	
 	
 }

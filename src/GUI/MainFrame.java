@@ -23,6 +23,7 @@ import controllers.WorldController;
 
 import tools.GlobalConstants;
 import tools.ImageLoader;
+import world.Tile;
 
 /**
  * This is the main game frame. Contains a canvas and a JLayeredPanel at the bottom of the frame.
@@ -68,6 +69,9 @@ public class MainFrame extends JFrame {
 		controller = wc;
 	}
 
+	public void updateInfo(Tile tile){
+		layeredPanel.updateInfo(tile);
+	}
 
 	/**public ImageIcon createInventoryIcon(String name) {
 		  try {
