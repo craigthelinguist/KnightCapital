@@ -133,6 +133,7 @@ public class Client implements Runnable {
 			player = (Player) input.readObject();
 			System.out.println("client request ID: "+ID);
 			
+			//will do more once we get the player class going
 			
 			
 			
