@@ -5,6 +5,7 @@ import game.Hero;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.io.File;
 
 import javax.swing.JButton;
 import javax.swing.SwingUtilities;
@@ -49,8 +50,11 @@ public class WorldController {
 	private static final int PAN_RIGHT = KeyEvent.VK_RIGHT;
 	private static final int PAN_LEFT = KeyEvent.VK_LEFT;
 	
+	public static Party ovelia;
+	
 	public WorldController(World w, Player p){
 		world = w;
+		ovelia = (Party) world.getTile(0,0).occupant();
 		player = p;
 		camera = WorldRenderer.getCentreOfWorld(w);
 		gui = new MainFrame();
@@ -119,11 +123,10 @@ public class WorldController {
 		
 			// moved
 			else if (selected != null && SwingUtilities.isRightMouseButton(me)){
-				System.out.println("move");
 				boolean moved = world.moveParty(player, selected, ptOriginal);
 				if (moved){
 					selected = ptOriginal;
-					gui.updateInfo(clickedTile);
+					gui.updateInfo(clickedTile);					
 				}
 			}
 		
@@ -156,7 +159,7 @@ public class WorldController {
 	public static void main(String[] args){
 		World w = TemporaryLoader.loadWorld("world_temporary.txt");
 		Player p = new Player();
-		Party party = new Party("icon_ovelia.png",p);
+		Party party = new Party(GlobalConstants.ICONS+"ovelia", p);
 		Hero hero = new Hero();
 		hero.setMovePts(10);
 		party.setLeader(hero);

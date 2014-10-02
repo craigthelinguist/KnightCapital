@@ -23,11 +23,12 @@ public class Server{
 	//host socket and also list of client sockets.
 	private static ServerSocket serverSocket;
 	private static ArrayList<Socket> clients;
+	
 
 	//list of running serverprotocol threads. each protocol dealling with one connected user.
-	//private static ArrayList<ServerProtocol> users;
-      private static ServerProtocol[] users = new ServerProtocol[10];
-
+    private static ServerProtocol[] users = new ServerProtocol[10];
+   
+      
 	private static BufferedReader bufferedReader;
 	private static String inputLine;
 
@@ -43,8 +44,8 @@ public class Server{
 		// Wait for client
 		connectClient();
 
-		//Wait for input
-		waitForInput();
+		//Wait for input/check for disconnect
+		 //waitForInput();
 	}
 
 	/**
@@ -54,7 +55,7 @@ public class Server{
 	private void initServer() {
 
 		// Set limit on ammout of users
-		clients = new ArrayList<Socket>();
+		  clients = new ArrayList<Socket>();
 
 		try {
 
@@ -87,11 +88,20 @@ public class Server{
 			input = new DataInputStream(temp.getInputStream());
 			out = new DataOutputStream(temp.getOutputStream());
 
+			
+			//first checks if any previous connections have become unusable.
+			if(users[i]!=null && !users[i].getStatus() )
+				//if not in use is destroyed.
+				users[i]=null;
+				
+			
+			//if this connection spot is vacant fills it with the incoming request.
 			if(users[i] == null){
 
 				users[i] = new ServerProtocol(input, out, users, i);
 				Thread thread = new Thread(users[i]);
 				thread.start();
+				
 				break;
 			}
 		}
@@ -104,57 +114,41 @@ public class Server{
 	/**
 	 * Wait for input from clients
 	 */
-	private void waitForInput() {
-		try{
-			for(Socket client : clients) {
-				// Create a reader
-				bufferedReader = new BufferedReader(new InputStreamReader(client.getInputStream()));
-
-				while((inputLine = bufferedReader.readLine()) != null) {
-					System.out.println("[User "+clients.indexOf(client)+"] "+inputLine);
-
-					PrintWriter printWriter = new PrintWriter(client.getOutputStream(), true);
-					printWriter.print(inputLine);
-
-					//echo message across all clients
-					for(Socket s : clients){
-						output = new DataOutputStream(s.getOutputStream());
-						output.writeUTF(inputLine);
-					}
-
-					// Special command for shutting down server. Could be exploited.
-					if(inputLine.equals("shutdown")) {
-						endServer();
-					}
-
-					// Go back to waiting for more input
-					else {
-						waitForInput();
-					}
-				}
-			}
-		} catch(Exception e) {
-			System.out.println(e);
-		}
-	}
+//	private void waitForInput() {
+//		try{
+//			for(int i = 0; i< clients.size() ; i++) {
+//
+//				   if(clients.get(i).getInputStream().read() == -1){
+//
+//                       
+//				        clients.get(i).close();
+//				   }
+//						waitForInput();
+//
+//				}
+//
+//		} catch(Exception e) {
+//			System.out.println(e);
+//		}
+//	}
 
 	/**
 	 * End Server
 	 * Close each of the clients sockets and then the server.
 	 */
-	private void endServer() {
-		try {
-			for(Socket client : clients) {
-				client.close();
-			}
-
-			serverSocket.close();
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		System.out.println("SERVER END.");
-	}
+//	private void endServer() {
+//		try {
+//			for(Socket client : clients) {
+//				client.close();
+//			}
+//
+//			serverSocket.close();
+//
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//		System.out.println("SERVER END.");
+//	}
 
 	public static void main(String[] args) {
 		try {

@@ -1,7 +1,11 @@
 package networking;
 
+import java.io.BufferedReader;
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.EOFException;
+import java.io.InputStreamReader;
 /**
  *
  * @author Neal Hartley
@@ -11,17 +15,18 @@ import java.io.IOException;
  */
 public class ClientProtocol implements Runnable{
 
-	DataInputStream in;
-
-
+	private static DataInputStream in;
+	private boolean clean = true;
+	private static DataOutputStream out;
 
 	/**
 	 * needs to be initialised with a DataInputStream from an already initialised port
 	 * Stream is constantly checked for incoming messages.
 	 * @param in
 	 */
-	public ClientProtocol(DataInputStream in){
+	public ClientProtocol(DataInputStream in, DataOutputStream out){
 		this.in = in;
+		this.out = out;
 	}
 
 
@@ -34,18 +39,34 @@ public class ClientProtocol implements Runnable{
 
 		String message;
 
-		while(true){
+
+		while(clean){
+			 System.out.println("clientProtocol running");
+
+
 
 			try {
 				// currently checks for incoming string messages, functionality for
 				// reading byte stream for board changes will be added.
 				message = in.readUTF();
 				System.out.println("global message: " + message);
-			} catch (IOException e) {
+			}
+			catch (EOFException e) {
+				this.clean = false;
+				}
+
+			catch (IOException e) {
 
 				e.printStackTrace();
 			}
 		}
 	}
+
+
+	public Boolean getStatus(){
+		return clean;
+
+	}
+
 
 }

@@ -8,6 +8,8 @@ import java.util.Map;
 
 import javax.imageio.ImageIO;
 
+import renderer.Animation;
+
 public class ImageLoader {
 	
 	// use the static methods
@@ -44,6 +46,31 @@ public class ImageLoader {
 				return new BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB);
 			}
 		}
+	}
+	
+	/**
+	 * Takes the given filepath. Loads all files prefixed by that filepath into a map,
+	 * where they're indexed by the name of their animation (e.g.: north, south).
+	 * @param filepath: load all files prefixed with this.
+	 * @return: map of string -> animation
+	 */
+	public static Map<String,Animation> loadAnimations(String filepath){
+
+		BufferedImage[] north = new BufferedImage[]{ ImageLoader.load(filepath + "_north.png") };
+		Animation animNorth = new Animation(north,1);
+		BufferedImage[] south = new BufferedImage[]{ ImageLoader.load(filepath + "_south.png") };
+		Animation animSouth = new Animation(south,1);
+		BufferedImage[] east = new BufferedImage[]{ ImageLoader.load(filepath + "_east.png") };
+		Animation animEast = new Animation(east,1);
+		BufferedImage[] west = new BufferedImage[]{ ImageLoader.load(filepath + "_west.png") };
+		Animation animWest = new Animation(west,1);
+		
+		Map<String,Animation> animationNames = new HashMap<>();
+		animationNames.put("north",animNorth);
+		animationNames.put("south",animSouth);
+		animationNames.put("west",animWest);
+		animationNames.put("east",animEast);
+		return animationNames;
 	}
 
 }
