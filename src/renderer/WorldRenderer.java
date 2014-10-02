@@ -34,34 +34,24 @@ public class WorldRenderer {
 		Tile selected = controller.getSelectedTile();
 		Tile[][] tiles = world.getTiles();
 
-		// At this point rotate is called every render cycle, but this isn't very efficient.
-		//tiles = rotateArray(tiles, camera.getOrientation());
-		
 		for (int y = 0; y < tiles.length; y++){
 			for (int x = 0; x < tiles[y].length; x++){
 				
+				// the position in tiles[][]
 				Point ptCart = new Point(x,y);
-				Point ptIso = Geometry.cartesianToIsometric(ptCart, camera);
+				
+				// rotate point according to perspective of camera, and draw it according to that rotation
+				Point ptRotated = Geometry.rotatePoint(new Point(x,y), camera, world);
+				Point ptIso = Geometry.cartesianToIsometric(ptRotated, camera);
+				
 				if (!tileOnScreen(ptIso,resolution)) continue; // don't draw things that aren't visible
 				Tile tile = world.getTile(ptCart);
 				if (tile == selected) tile.drawHighlighted(graphics, ptIso.x, ptIso.y);
 				else tile.draw(graphics, ptIso.x, ptIso.y);
-				
+
 			}
 		}
 		
-		/**
-		for (int y = 0; y < tiles.length; y++){
-			for (int x = 0; x < tiles[0].length; x++){
-				if (!tiles[x][y].occupied()) continue;
-				int isoX = camera.getOriginX() + (TILE_WD/2)*x - (TILE_WD/2)*y;
-				int isoY = camera.getOriginY() + (TILE_HT/2)*x + (TILE_HT/2)*y;
-				drawIcon(graphics,tiles[x][y],isoX,isoY);
-			}
-		}
-
-		**/
-
 		// Some basic debug info
 		graphics.setColor(Color.BLACK);
 		graphics.drawString("Knight Capital", 30, 30);
