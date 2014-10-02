@@ -53,7 +53,7 @@ public class ServerProtocol implements Runnable {
 					if(users[i]!=null){
 						System.out.println("users!=null");
 
-						users[i].getOut().writeUTF(message);
+						users[i].getOut().writeUTF( "player "+ i+ " : "  +message);
 
 					}
 
