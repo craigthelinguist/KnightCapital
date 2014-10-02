@@ -3,6 +3,8 @@ package GUI;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 
 import javax.swing.BorderFactory;
@@ -22,7 +24,7 @@ import world.Tile;
  * @author Ewan Moshi
  *
  */
-public class LayeredPanel extends JLayeredPane {
+public class LayeredPanel extends JLayeredPane{
 	
 	private MainFrame mainFrame;
 	
@@ -65,4 +67,5 @@ public class LayeredPanel extends JLayeredPane {
 	public void updateInfo(Tile tile) {
 		masterPanel.updateInfo(tile);
 	}
+
 }

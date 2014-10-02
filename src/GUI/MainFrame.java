@@ -7,7 +7,11 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.KeyEventDispatcher;
+import java.awt.KeyboardFocusManager;
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -57,7 +61,11 @@ public class MainFrame extends JFrame {
 		//Initialize the layered panel and add it to the south
 		layeredPanel = new LayeredPanel(this);
 		this.add(layeredPanel,BorderLayout.SOUTH);
-
+		
+		// set up key dispatcher
+		KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
+		manager.addKeyEventDispatcher(new WorldKeyDispatcher());
+		
 		//setupSlots();
 		this.setResizable(true);
 		this.pack();
@@ -74,6 +82,25 @@ public class MainFrame extends JFrame {
 		layeredPanel.updateInfo(tile);
 	}
 
+	
+	private class WorldKeyDispatcher implements KeyEventDispatcher {
+
+		@Override
+		public boolean dispatchKeyEvent(KeyEvent e) {
+			
+			if (e.getID() == KeyEvent.KEY_RELEASED){
+				controller.keyPressed(e);
+			}
+			return false;
+			
+		}
+		
+	}
+
+	public void redraw(){
+		canvas.repaint();
+	}
+	
 	/**public ImageIcon createInventoryIcon(String name) {
 		  try {
 			    ImageIcon invImg = ImageIO.read(getClass().getResource("assets/GUIAssets/" +name+".png"));
@@ -178,4 +205,5 @@ public class MainFrame extends JFrame {
 	public static void main(String[] args) {
 		new MainFrame();
 	}
+
 }

@@ -38,6 +38,13 @@ public class WorldController {
 	private Point selected;
 	private Camera camera;
 	
+	// key bindings
+	private static final int ROTATE_CW = KeyEvent.VK_R;
+	private static final int ROTATE_CCW = KeyEvent.VK_E;
+	private static final int PAN_UP = KeyEvent.VK_UP;
+	private static final int PAN_DOWN = KeyEvent.VK_DOWN;
+	private static final int PAN_RIGHT = KeyEvent.VK_RIGHT;
+	private static final int PAN_LEFT = KeyEvent.VK_LEFT;
 	
 	public WorldController(World w, Player p){
 		world = w;
@@ -54,7 +61,27 @@ public class WorldController {
 	 */
 	public void keyPressed(KeyEvent ke){
 		
+		int code = ke.getKeyCode();
 		
+		if (code == ROTATE_CW){
+			camera.rotateClockwise();
+		}
+		else if (code == ROTATE_CCW){
+			camera.rotateCounterClockwise();
+		}
+		else if (code == PAN_UP){
+			camera.panUp();
+		}
+		else if (code == PAN_DOWN){
+			camera.panDown();
+		}
+		else if (code == PAN_RIGHT){
+			camera.panRight();
+		}
+		else if (code == PAN_LEFT){
+			camera.panLeft();
+		}
+		gui.redraw();
 		
 	}
 
@@ -92,7 +119,7 @@ public class WorldController {
 		
 		}
 		
-		System.out.println(selected);
+		gui.redraw();
 		
 	}
 	

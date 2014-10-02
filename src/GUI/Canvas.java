@@ -67,9 +67,10 @@ public class Canvas extends JPanel implements MouseListener{
 	@Override
 	protected void paintComponent(Graphics graphics){
 		if (controller == null) return;
+		graphics.setColor(Color.WHITE);
+		graphics.fillRect(0,0,getWidth(),getHeight());
 		Dimension resolution = this.getSize();
 		WorldRenderer.render(controller, graphics, resolution);
-		this.repaint();
 	}
 
 }
