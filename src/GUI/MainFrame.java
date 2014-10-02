@@ -19,6 +19,8 @@ import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
+import controllers.WorldController;
+
 import tools.GlobalConstants;
 import tools.ImageLoader;
 
@@ -35,6 +37,7 @@ public class MainFrame extends JFrame {
 
 	private LayeredPanel layeredPanel;
 	private Canvas canvas;
+	private WorldController controller;
 
 	public MainFrame() {
 		/* These two statements make the frame full screen. (Commented out for now) */
@@ -61,6 +64,9 @@ public class MainFrame extends JFrame {
 		this.setVisible(true);
 	}
 
+	public void setController(WorldController wc){
+		controller = wc;
+	}
 
 
 	/**public ImageIcon createInventoryIcon(String name) {

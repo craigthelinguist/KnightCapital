@@ -24,25 +24,27 @@ import world.World;
  * @author craigthelinguist
  */
 public class WorldController {
-	
-	// world this controller is for: the model
-	private final World world;
-	
-	// player this controller belongs to
-	private Player player;
-	private Camera camera;
-	
-	// current tile selected by the player
-	private Point selected;
-	
+
 	// gui and renderer: the view
 	private MainFrame gui;
 	
-	public WorldController(World w, Player p, MainFrame frame){
+	// world this controller is for: the model
+	private final World world;
+
+	// player this controller belongs to
+	private Player player;
+	
+	// current tile and perspective
+	private Point selected;
+	private Camera camera;
+	
+	
+	public WorldController(World w, Player p){
 		world = w;
 		player = p;
 		camera = WorldRenderer.getCentreOfWorld(w);
-		gui = frame;
+		gui = new MainFrame();
+		gui.setController(this);
 		selected = null;
 	}
 	
@@ -117,7 +119,7 @@ public class WorldController {
 		World w = TemporaryLoader.loadWorld("world_temporary.txt");
 		Player p = new Player();
 		Camera cam = new Camera(GlobalConstants.WINDOW_WD / 2, 0, Camera.NORTH);
-		new WorldController(w,p,mf);
+		new WorldController(w,p);
 	}
 	
 }
