@@ -12,7 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import storage.TemporaryLoader;
-import tools.Converter;
+import tools.Geometry;
 import tools.GlobalConstants;
 import world.Party;
 import world.World;
@@ -48,7 +48,7 @@ public class RendererDemo {
 
 		// Create World and Party.
 		world = TemporaryLoader.loadWorld("world_temporary.txt");
-		party = new Party("icon_ovelia.png");
+		party = new Party("icon_ovelia.png",null);
 		party_x = 3;
 		party_y = 3;
 		world.setIcon(party, party_x, party_y);
@@ -65,7 +65,7 @@ public class RendererDemo {
 	}
 
 	/**
-	 * Initialise frame, and add needed components
+	 * Initialise frame, and adds needed components
 	 */
 	private void initialiseInterface() {
 
@@ -131,6 +131,22 @@ public class RendererDemo {
 					camera.panLeft();
 				}
 
+				else if(keycode == KeyEvent.VK_W) {
+					updateParty("moveUp");
+				}
+
+				else if(keycode == KeyEvent.VK_S) {
+					updateParty("moveDown");
+				}
+
+				else if(keycode == KeyEvent.VK_A) {
+					updateParty("moveLeft");
+				}
+
+				else if(keycode == KeyEvent.VK_D) {
+					updateParty("moveRight");
+				}
+
 				worldPanel.repaint();
 			}
 
@@ -140,6 +156,92 @@ public class RendererDemo {
 		};
 
 		frame.addKeyListener(keyListener);
+	}
+
+	/**
+	 * Update Party's position
+	 * Removes icon from previous position and adds it to new position if it is within the boundaries of the world map
+	 * @param instruction
+	 */
+	private void updateParty(String instruction) {
+
+		// local variables for new positions
+		int x = party_x;
+		int y = party_y;
+
+		int orientation = camera.getOrientation();
+
+		// Take camera orientation into count when processing key-input
+		switch(instruction) {
+
+		// Move Up Command
+		case "moveUp":
+			switch(orientation) {
+			case Camera.NORTH: y--;
+			break;
+			case Camera.EAST: x--;
+			break;
+			case Camera.SOUTH: y++;
+			break;
+			case Camera.WEST: x++;
+			break;
+			}
+			break;
+
+		// Move Down Command
+		case "moveDown":
+			switch(camera.getOrientation()) {
+			case Camera.NORTH: y++;
+			break;
+			case Camera.EAST: x++;
+			break;
+			case Camera.SOUTH: y--;
+			break;
+			case Camera.WEST: x--;
+			break;
+			}
+			break;
+
+		// Move Left Command
+		case "moveLeft":
+			switch(camera.getOrientation()) {
+			case Camera.NORTH: x--;
+			break;
+			case Camera.EAST: y++;
+			break;
+			case Camera.SOUTH: x++;
+			break;
+			case Camera.WEST: y--;
+			break;
+			}
+			break;
+
+		// Move Right Command
+		case "moveRight":
+			switch(camera.getOrientation()) {
+			case Camera.NORTH: x++;
+			break;
+			case Camera.EAST: y--;
+			break;
+			case Camera.SOUTH: x--;
+			break;
+			case Camera.WEST: y++;
+			break;
+			}
+			break;
+		}
+
+		// check new position is valid
+		if(x >= 0 && x < world.NUM_TILES_ACROSS) {
+			if(y >= 0 && y < world.NUM_TILES_DOWN) {
+				// remove previous icon
+				world.setIcon(null, party_x, party_y);
+				// set new icon
+				world.setIcon(party, x, y);
+				party_x = x;
+				party_y = y;
+			}
+		}
 	}
 
 	/**
@@ -158,7 +260,7 @@ public class RendererDemo {
 				int y = e.getY();
 
 				//create point, converting from iso to cart
-				Point p = Converter.isometricToCartesian(new Point(x, y), camera);
+				Point p = Geometry.isometricToCartesian(new Point(x, y), camera);
 				int arrayX = p.x;
 				int arrayY = p.y;
 

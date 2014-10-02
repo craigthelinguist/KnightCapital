@@ -23,6 +23,7 @@ import javax.swing.OverlayLayout;
 
 import tools.GlobalConstants;
 import tools.ImageLoader;
+import world.Tile;
 
 
 /**
@@ -98,5 +99,16 @@ public class MainPanelMaster extends JPanel {
 	    // paint the background image and scale it to fill the entire space
 	    g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
 	  }
+
+	  /**
+	   * Update info displayed in playerInfoPanel.
+	   * @param tile: tile whose info you'll display.
+	   */
+	public void updateInfo(Tile tile) {
+		playerInfoPanel.updateInfo(tile);
+	}
 	
+	  
+	  
+	  
 }

@@ -10,6 +10,7 @@ import javax.swing.JLayeredPane;
 
 import tools.GlobalConstants;
 import tools.ImageLoader;
+import world.Tile;
 
 
 /**
@@ -56,4 +57,12 @@ public class LayeredPanel extends JLayeredPane {
             }
         }
     }
+
+    /**
+     * Update the info displayed in playerInfoPanel.
+     * @param tile: tile whose info should be displayed.
+     */
+	public void updateInfo(Tile tile) {
+		masterPanel.updateInfo(tile);
+	}
 }

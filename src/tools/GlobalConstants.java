@@ -27,8 +27,6 @@ public class GlobalConstants {
 	public static final int WORLD_WIDTH = 10;
 	public static final int WORLD_HEIGHT = 10;
 
-
-
 	// These are for the Camera
 	public static final int CAMERA_PAN = 10;
 

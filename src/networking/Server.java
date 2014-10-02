@@ -8,6 +8,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
  * Simple Server for distributing game information with Clients
@@ -89,6 +90,9 @@ public class Server extends Thread{
 
 				while((inputLine = bufferedReader.readLine()) != null) {
 					System.out.println("[User "+clients.indexOf(client)+"] "+inputLine);
+
+					PrintWriter printWriter = new PrintWriter(client.getOutputStream(), true);
+					printWriter.print(inputLine);
 
 					// Special command for shutting down server. Could be exploited.
 					if(inputLine.equals("shutdown")) {

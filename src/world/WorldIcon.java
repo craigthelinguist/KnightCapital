@@ -11,7 +11,7 @@ import tools.ImageLoader;
  *
  */
 public abstract class WorldIcon {
-
+	
 	private BufferedImage image;
 	
 	public WorldIcon(String imgname){
