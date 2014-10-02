@@ -18,6 +18,7 @@ import tools.GlobalConstants;
 import world.Party;
 import world.Tile;
 import world.World;
+import world.WorldIcon;
 
 /**
  * A WorldController. This is the glue between the model (World) and the view (gui, renderer).
@@ -98,7 +99,6 @@ public class WorldController {
 			Point ptIso = new Point(me.getX(),me.getY());
 			Point ptRotated = Geometry.isometricToCartesian(ptIso, camera);
 			Point ptOriginal = Geometry.recoverOriginalPoint(ptRotated, camera, world);
-			System.out.printf("Rotated: (%d,%d) ---> Origin: (%d,%d)\n", ptRotated.x,ptRotated.y,ptOriginal.x,ptOriginal.y);
 			
 			Tile clickedTile = world.getTile(ptOriginal);
 			Tile selectedTile = world.getTile(selected);
@@ -150,6 +150,8 @@ public class WorldController {
 	public static void main(String[] args){
 		World w = TemporaryLoader.loadWorld("world_temporary.txt");
 		Player p = new Player();
+		Party party = new Party("icon_ovelia.png",p);
+		w.getTile(0,0).setIcon(party);
 		new WorldController(w,p);
 	}
 	

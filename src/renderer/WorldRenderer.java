@@ -34,6 +34,7 @@ public class WorldRenderer {
 		Tile selected = controller.getSelectedTile();
 		Tile[][] tiles = world.getTiles();
 
+		// draw tiles
 		for (int y = 0; y < tiles.length; y++){
 			for (int x = 0; x < tiles[y].length; x++){
 				
@@ -49,6 +50,26 @@ public class WorldRenderer {
 				if (tile == selected) tile.drawHighlighted(graphics, ptIso.x, ptIso.y);
 				else tile.draw(graphics, ptIso.x, ptIso.y);
 
+			}
+		}
+		
+		// draw icons
+		for (int y = 0; y < tiles.length; y++){
+			for (int x = 0; x < tiles[y].length; x++){
+				
+				// the position in tiles[][]
+				Point ptCart = new Point(x,y);
+				
+				// rotate point according to perspective of camera, and draw it according to that rotation
+				Point ptRotated = Geometry.rotatePoint(new Point(x,y), camera, world);
+				Point ptIso = Geometry.cartesianToIsometric(ptRotated, camera);
+				
+				if (!tileOnScreen(ptIso,resolution)) continue; // don't draw things that aren't visible
+				Tile tile = world.getTile(ptCart);
+				WorldIcon occupant = tile.occupant();
+				if (occupant == null) continue;
+				drawIcon(graphics,occupant,ptIso);
+				
 			}
 		}
 		
@@ -79,12 +100,13 @@ public class WorldRenderer {
 			&&	pt.y < resolution.height + TILE_HT;
 	}
 	
-	private static void drawIcon(Graphics graphics, Tile tile, int isoX, int isoY){
+	private static void drawIcon(Graphics graphics, WorldIcon occupant, Point ptIso){
+		int isoY = ptIso.y;
+		int isoX = ptIso.x;
 		final int TILE_HT = GlobalConstants.TILE_HT;
 		final int TILE_WD = GlobalConstants.TILE_WD;
 		final int ICON_WD = GlobalConstants.ICON_WD;
 		final int ICON_HT = GlobalConstants.ICON_HT;
-		WorldIcon occupant = tile.occupant();
 		int iconY = isoY - TILE_HT/4;
 		int iconX = isoX + TILE_WD/2 - ICON_WD/2;
 		occupant.draw(graphics,iconX,iconY);
