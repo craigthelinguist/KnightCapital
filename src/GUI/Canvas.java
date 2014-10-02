@@ -35,7 +35,7 @@ public class Canvas extends JPanel implements MouseListener{
 		        new ImageIcon(GlobalConstants.GUI_FILEPATH +"bottomCenter.png").getImage(),
 		        new ImageIcon(GlobalConstants.GUI_FILEPATH +"bottomRight.png").getImage());
 	    /*set the panel's border*/
-	    this.setBorder(border);
+	    //this.setBorder(border);
 	}
 
 	public void setController(WorldController wc){
@@ -59,14 +59,10 @@ public class Canvas extends JPanel implements MouseListener{
 
 	@Override
 	protected void paintComponent(Graphics graphics){
-		System.out.println("draw");
 		if (controller == null) return;
 		World world = controller.getWorld();
 		Dimension resolution = this.getSize();
-		System.out.println(resolution);
 		Camera camera = controller.getCamera();
-		graphics.setColor(Color.GREEN);
-		graphics.fillRect(0,0,this.getWidth(),this.getHeight());
 		WorldRenderer.render(world, graphics, resolution, camera);
 		this.repaint();
 	}
