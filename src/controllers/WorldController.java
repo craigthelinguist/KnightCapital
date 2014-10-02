@@ -1,5 +1,7 @@
 package controllers;
 
+import game.Hero;
+
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
@@ -117,8 +119,12 @@ public class WorldController {
 		
 			// moved
 			else if (selected != null && SwingUtilities.isRightMouseButton(me)){
+				System.out.println("move");
 				boolean moved = world.moveParty(player, selected, ptOriginal);
-				if (moved) gui.updateInfo(clickedTile);
+				if (moved){
+					selected = ptOriginal;
+					gui.updateInfo(clickedTile);
+				}
 			}
 		
 		}
@@ -151,6 +157,10 @@ public class WorldController {
 		World w = TemporaryLoader.loadWorld("world_temporary.txt");
 		Player p = new Player();
 		Party party = new Party("icon_ovelia.png",p);
+		Hero hero = new Hero();
+		hero.setMovePts(10);
+		party.setLeader(hero);
+		party.refreshMovePoints();
 		w.getTile(0,0).setIcon(party);
 		new WorldController(w,p);
 	}
