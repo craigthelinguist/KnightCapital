@@ -53,7 +53,8 @@ public class World {
 	 * @return the Tile, or null if the position described is not part of this world.
 	 */
 	public Tile getTile(Point p){
-		return getTile(p.x,p.y);
+		if (p == null) return null;
+		else return getTile(p.x,p.y);
 	}
 	
 	/* I don't like making the data structure storing tiles directly accessible

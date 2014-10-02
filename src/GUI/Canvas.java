@@ -67,10 +67,8 @@ public class Canvas extends JPanel implements MouseListener{
 	@Override
 	protected void paintComponent(Graphics graphics){
 		if (controller == null) return;
-		World world = controller.getWorld();
 		Dimension resolution = this.getSize();
-		Camera camera = controller.getCamera();
-		WorldRenderer.render(world, graphics, resolution, camera);
+		WorldRenderer.render(controller, graphics, resolution);
 		this.repaint();
 	}
 

@@ -3,6 +3,9 @@ package renderer;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Point;
+
+import controllers.WorldController;
 
 import tools.GlobalConstants;
 
@@ -21,10 +24,13 @@ public class WorldRenderer {
 	 * @param graphics: thing on which you're drawing
 	 * @param resolution: size of screen being drawn to
 	 */
-	public static void render(World world, Graphics graphics, Dimension resolution, Camera camera){
+	public static void render(WorldController controller, Graphics graphics, Dimension resolution){
 
 		final int TILE_WD = GlobalConstants.TILE_WD;
 		final int TILE_HT = GlobalConstants.TILE_HT;
+		World world = controller.getWorld();
+		Camera camera = controller.getCamera();
+		Tile selected = controller.getSelectedTile();
 		Tile[][] tiles = world.getTiles();
 
 		// At this point rotate is called every render cycle, but this isn't very efficient.
@@ -34,7 +40,9 @@ public class WorldRenderer {
 			for (int x = 0; x < tiles[0].length; x++){
 				int isoX = camera.getOriginX() + (TILE_WD/2)*x - (TILE_WD/2)*y;
 				int isoY = camera.getOriginY() + (TILE_HT/2)*x + (TILE_HT/2)*y;
-				tiles[x][y].draw(graphics,isoX,isoY);
+				Tile tile = world.getTile(x,y);
+				if (tile == selected) tile.drawHighlighted(graphics,isoX,isoY);
+				else tile.draw(graphics, isoX, isoY);
 			}
 		}
 
@@ -57,6 +65,16 @@ public class WorldRenderer {
 
 	}
 
+	public static void highlightTile(Graphics graphics, World world, int x, int y){
+		Tile[][] tiles = world.getTiles();
+		tiles[x][y].drawHighlighted(graphics,x,y);
+	}
+	
+	public static void drawTile(Graphics graphics, World world, int x, int y){
+		Tile[][] tiles = world.getTiles();
+		tiles[x][y].draw(graphics, x, y);
+	}
+	
 	/**
 	 * Rotates the tiles in a clockwise direction
 	 * Uses the field rotation to know how much to rotate by

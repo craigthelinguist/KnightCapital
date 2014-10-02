@@ -70,16 +70,16 @@ public class WorldController {
 			Point pointIso = new Point(me.getX(),me.getY());
 			Point pointCartesian = Geometry.isometricToCartesian(pointIso, camera);
 			Tile clickedTile = world.getTile(pointCartesian);
-		
+			Tile selectedTile = world.getTile(selected);
+			
 			// selected the tile
-			if (selected == null && SwingUtilities.isLeftMouseButton(me)){
+			if (selectedTile != clickedTile && SwingUtilities.isLeftMouseButton(me)){
 				selected = pointCartesian;
 				gui.updateInfo(clickedTile);
 			}
 			
 			// deselected the tile
 			else if (selected != null && SwingUtilities.isLeftMouseButton(me)){
-				Tile selectedTile = world.getTile(selected);
 				if (selectedTile == clickedTile) selected = null;
 				gui.updateInfo(null);
 			}
@@ -110,6 +110,10 @@ public class WorldController {
 	
 	public Camera getCamera(){
 		return camera;
+	}
+	
+	public Tile getSelectedTile(){
+		return world.getTile(selected);
 	}
 	
 	public static void main(String[] args){
