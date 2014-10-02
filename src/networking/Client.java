@@ -4,6 +4,7 @@ package networking;
 import java.net.Socket;
 import java.io.BufferedReader;
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -16,7 +17,9 @@ public class Client {
 
 	private static Socket socket;
 	private static PrintWriter printWriter;
-    private static DataInputStream in;
+
+	private static DataInputStream in;
+	private static DataOutputStream out;
 
 	public static void main(String[] args) {
 
@@ -29,7 +32,7 @@ public class Client {
 
             //connects to socket based on ip and port number. Ip needs to be configured for individual testing on different computers.
 			System.out.println("connecting...");
-			socket = new Socket("130.195.4.174", 45612);
+			socket = new Socket("130.195.4.155", 45612);
 			System.out.println("conected!");
 
 			//construct input stream from socket
@@ -45,10 +48,11 @@ public class Client {
 
 			//printwriter that prints a message to the socket for the server to see.
 			printWriter = new PrintWriter(socket.getOutputStream(),true);
-			
+
+			out = new DataOutputStream(socket.getOutputStream());
 
 			while(true) {
-				printWriter.println(message());
+				out.writeUTF(message());
 
 
 			}

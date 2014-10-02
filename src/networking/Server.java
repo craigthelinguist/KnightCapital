@@ -34,7 +34,7 @@ public class Server{
 	//input and outputstreams
 	private DataInputStream input;
 	private DataOutputStream output;
-
+    private DataOutputStream out;
 
 	public Server() throws IOException{
 		// Initialise Server Socket
@@ -85,11 +85,11 @@ public class Server{
 		for(int i =0 ; i < 10; i++){
 			System.out.println("got connection socket to client: "+ temp.getInetAddress());
 			input = new DataInputStream(temp.getInputStream());
-			output = new DataOutputStream(temp.getOutputStream());
+			out = new DataOutputStream(temp.getOutputStream());
 
 			if(users[i] == null){
 
-				users[i] = new ServerProtocol(input, output, users);
+				users[i] = new ServerProtocol(input, out, users);
 				Thread thread = new Thread(users[i]);
 				thread.start();
 				break;

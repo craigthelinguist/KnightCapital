@@ -13,6 +13,21 @@ public class ServerProtocol implements Runnable {
 
 	public ServerProtocol(DataInputStream in, DataOutputStream out, ServerProtocol[] users){
 
+		System.out.println("made a protocol");
+
+
+		for(int i = 0; i<users.length; i++){
+
+			if(users[i]==null){
+				System.out.println(i--);
+				break;
+			}
+
+		}
+
+
+
+
 		this.in = in;
 		this.out = out;
 		this.users = users;
@@ -21,15 +36,22 @@ public class ServerProtocol implements Runnable {
 
 	@Override
 	public void run() {
+
+		String message;
+
 		while(true){
 
 
+
+
 			try {
-				String message = in.readUTF();
+				message = in.readUTF();
+				System.out.println("incoming message is:" + message);
 
 				for(int i=0 ; i < users.length; i++){
 
 					if(users[i]!=null){
+						System.out.println("users!=null");
 
 						users[i].getOut().writeUTF(message);
 
@@ -42,7 +64,6 @@ public class ServerProtocol implements Runnable {
 
 				e.printStackTrace();
 			}
-
 
 
 
