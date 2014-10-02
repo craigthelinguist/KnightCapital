@@ -94,14 +94,18 @@ public class WorldController {
 		
 		if (panel.equals("canvas")){
 		
-			Point pointIso = new Point(me.getX(),me.getY());
-			Point pointCartesian = Geometry.isometricToCartesian(pointIso, camera);
-			Tile clickedTile = world.getTile(pointCartesian);
+
+			Point ptIso = new Point(me.getX(),me.getY());
+			Point ptRotated = Geometry.isometricToCartesian(ptIso, camera);
+			Point ptOriginal = Geometry.recoverOriginalPoint(ptRotated, camera, world);
+			System.out.printf("Rotated: (%d,%d) ---> Origin: (%d,%d)\n", ptRotated.x,ptRotated.y,ptOriginal.x,ptOriginal.y);
+			
+			Tile clickedTile = world.getTile(ptOriginal);
 			Tile selectedTile = world.getTile(selected);
 			
 			// selected the tile
 			if (selectedTile != clickedTile && SwingUtilities.isLeftMouseButton(me)){
-				selected = pointCartesian;
+				selected = ptOriginal;
 				gui.updateInfo(clickedTile);
 			}
 			
@@ -113,7 +117,7 @@ public class WorldController {
 		
 			// moved
 			else if (selected != null && SwingUtilities.isRightMouseButton(me)){
-				boolean moved = world.moveParty(player, selected, pointCartesian);
+				boolean moved = world.moveParty(player, selected, ptOriginal);
 				if (moved) gui.updateInfo(clickedTile);
 			}
 		

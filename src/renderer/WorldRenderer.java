@@ -79,55 +79,6 @@ public class WorldRenderer {
 			&&	pt.y < resolution.height + TILE_HT;
 	}
 	
-	public static void highlightTile(Graphics graphics, World world, int x, int y){
-		Tile[][] tiles = world.getTiles();
-		tiles[x][y].drawHighlighted(graphics,x,y);
-	}
-	
-	public static void drawTile(Graphics graphics, World world, int x, int y){
-		Tile[][] tiles = world.getTiles();
-		tiles[x][y].draw(graphics, x, y);
-	}
-	
-	/**
-	 * Rotates the tiles in a clockwise direction
-	 * Uses the field rotation to know how much to rotate by
-	 * @param tiles
-	 * @return rotates array
-	 */
-	private static Tile[][] rotateArray(Tile[][] tiles, int orientation) {
-		int width = tiles.length;
-		int height = tiles[0].length;
-
-		//Log.print("[WorldRenderer] Rotating tiles by "+(rotation*90));
-
-		// New 2DArray for rotated tiles, not efficient but will do for now.
-		Tile[][] rotated = null;
-
-		// Rotate 90 Clockwise for each rotation count. If 0 do nothing;
-		for(int rotateCount = 0; rotateCount != orientation; rotateCount++) {
-			rotated = new Tile[height][width];
-
-			// Rotate tiles by 90 cw
-			for(int i = 0; i < width; i++) {
-				for(int j = 0; j < height; j++) {
-					rotated[i][j] = tiles[j][10 - i - 1];
-				}
-			}
-
-			tiles = rotated; // without this it would only ever rotate by 0 or 90
-		}
-
-		if(rotated != null) return rotated;
-		else return tiles;
-	}
-
-	private static void rotatePoint(Point pt, Camera cam){
-		
-		
-		
-	}
-	
 	private static void drawIcon(Graphics graphics, Tile tile, int isoX, int isoY){
 		final int TILE_HT = GlobalConstants.TILE_HT;
 		final int TILE_WD = GlobalConstants.TILE_WD;

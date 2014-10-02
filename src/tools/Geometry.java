@@ -27,24 +27,6 @@ public class Geometry {
 		float cartY = (((2 * yPos) - xPos) / GlobalConstants.TILE_WD) ;
 		cartY -= ((int)cartY * offset);
 
-		int camOrientation = camera.getOrientation();
-
-		switch(camOrientation) {
-			case Camera.NORTH:	break;
-			case Camera.SOUTH:	cartY = GlobalConstants.WORLD_HEIGHT - cartY;
-								cartX = GlobalConstants.WORLD_WIDTH - cartX;
-								break;
-			case Camera.EAST: 	float tempCartX = cartX;
-								cartX = cartY;
-								cartY = Math.abs(GlobalConstants.WORLD_WIDTH - tempCartX);
-								break;
-			case Camera.WEST: 	float tempCartY = cartY;
-								cartY = cartX;
-								cartX = GlobalConstants.WORLD_HEIGHT - tempCartY;
-								break;
-			default:			break;
-		}
-
 		Log.print("[Converter] Converted isometric point ("+iso.x+","+iso.y+") to cartesian point ("+(int)cartX+","+(int)cartY+")");
 		return new Point((int)cartX, (int)cartY);
 	}
@@ -75,6 +57,21 @@ public class Geometry {
 	 */
 	public static int taxicab(Point p1, Point p2){
 		return Math.abs(p1.x-p2.x) + Math.abs(p1.y-p2.y);
+	}
+	
+	/**
+	 * Given a rotated point and the perspective by which it was rotated, recovers the original point.
+	 * @param ptRotated: a point rotated by the perspective of some camera.
+	 * @param camera: the camera whose perspective this point was rotated by.
+	 * @param world: world in which this point exists.
+	 * @return: the original point
+	 */
+	public static Point recoverOriginalPoint(Point ptRotated, Camera camera, World world){
+		
+		// it really is this simple: you just rotate it again by the same perspective, but that might not
+		// be so obvious so I'm leaving it like this for the benefit of others.
+		return rotatePoint(ptRotated,camera,world);
+		
 	}
 	
 	/**

@@ -50,7 +50,7 @@ public class World {
 	/**
 	 * Get the specified tile in the world (in cartesian coordinates).
 	 * @param p: a point (x,y) in the world
-	 * @return the Tile, or null if the position described is not part of this world.
+	 * @return the Tile, or null if the position described is OUT OF THIS WORLD
 	 */
 	public Tile getTile(Point p){
 		if (p == null) return null;
