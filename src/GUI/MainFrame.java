@@ -67,6 +67,7 @@ public class MainFrame extends JFrame {
 
 	public void setController(WorldController wc){
 		controller = wc;
+		canvas.setController(wc);
 	}
 
 	public void updateInfo(Tile tile){

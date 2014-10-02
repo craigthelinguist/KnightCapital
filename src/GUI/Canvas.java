@@ -1,17 +1,27 @@
 package GUI;
 
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
+import controllers.WorldController;
+
+import renderer.Camera;
+import renderer.WorldRenderer;
 import tools.GlobalConstants;
+import world.World;
 
 public class Canvas extends JPanel implements MouseListener{
 
+	private WorldController controller;
+	
 	public Canvas() {
+		
 		//this.setBorder(BorderFactory.createLineBorder(Color.red)); //draws a border around canvas (just to show where the canvas is) (delete later)
 		this.setPreferredSize(new Dimension(GlobalConstants.WINDOW_WD, GlobalConstants.WINDOW_HT -200));
 
@@ -28,6 +38,10 @@ public class Canvas extends JPanel implements MouseListener{
 	    this.setBorder(border);
 	}
 
+	public void setController(WorldController wc){
+		controller = wc;
+	}
+	
 	@Override
 	public void mouseClicked(MouseEvent arg0) {	}
 
@@ -43,5 +57,18 @@ public class Canvas extends JPanel implements MouseListener{
 	@Override
 	public void mouseReleased(MouseEvent arg0) {}
 
+	@Override
+	protected void paintComponent(Graphics graphics){
+		System.out.println("draw");
+		if (controller == null) return;
+		World world = controller.getWorld();
+		Dimension resolution = this.getSize();
+		System.out.println(resolution);
+		Camera camera = controller.getCamera();
+		graphics.setColor(Color.GREEN);
+		graphics.fillRect(0,0,this.getWidth(),this.getHeight());
+		WorldRenderer.render(world, graphics, resolution, camera);
+		this.repaint();
+	}
 
 }

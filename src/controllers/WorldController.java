@@ -114,11 +114,17 @@ public class WorldController {
 		
 	}
 	
+	public World getWorld(){
+		return world;
+	}
+	
+	public Camera getCamera(){
+		return camera;
+	}
+	
 	public static void main(String[] args){
-		MainFrame mf = new MainFrame();
 		World w = TemporaryLoader.loadWorld("world_temporary.txt");
 		Player p = new Player();
-		Camera cam = new Camera(GlobalConstants.WINDOW_WD / 2, 0, Camera.NORTH);
 		new WorldController(w,p);
 	}
 	
