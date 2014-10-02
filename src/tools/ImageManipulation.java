@@ -16,7 +16,7 @@ public class ImageManipulation {
 		byte[] pixels = ((DataBufferByte) image.getRaster().getDataBuffer()).getData();
 		byte[] result = ((DataBufferByte) resultingImage.getRaster().getDataBuffer()).getData();
 
-		int increment = 30; // lighten by this amount
+		int increment = 55; // lighten by this amount
 
 		// every 4 bytes is the (alpha,r,g,b) of a pixel
 		for (int pixel = 0; pixel < pixels.length; pixel += 4) {
@@ -32,13 +32,13 @@ public class ImageManipulation {
 			// argb += blue;
 
 			// green
-			int green = (int) (pixels[pixel + 2] & 0xff) << 8;
+			int green = (pixels[pixel + 2] & 0xff);
 			green = Math.min(255, green + increment);
 			result[pixel + 2] = (byte)green;
 			// argb += green << 8;
 
 			// red
-			int red = (int) (pixels[pixel + 3] & 0xff) << 16;
+			int red =(pixels[pixel + 3] & 0xff);
 			red = Math.min(255, red + increment);
 			result[pixel + 3] = (byte)red;
 			// argb += red << 16;
