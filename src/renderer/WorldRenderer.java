@@ -118,6 +118,7 @@ public class WorldRenderer {
 	
 	/**
 	 * Draw cities.
+	 * Untested! - Aaron.
 	 */
 	public static void drawCities(Graphics graphics, WorldController controller){
 
