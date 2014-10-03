@@ -90,31 +90,6 @@ public class WorldRenderer {
 		// draw the cities
 		drawCities(graphics,controller);
 		
-		// TODO: debugging code
-		graphics.setColor(Color.BLUE);
-		Point origin = new Point(715,38);
-		
-		/*
-		drawPoint(graphics,715,38);
-		drawPoint(graphics,780,76);
-		drawPoint(graphics,650,76);
-		drawPoint(graphics,325,418);
-		 */
-
-		graphics.setColor(Color.BLUE);
-		drawPoint(graphics,715,114);
-		drawPoint(graphics,650,76);
-		graphics.setColor(Color.RED);
-		
-		/**
-		System.out.println("TAXICABS");
-		System.out.println("========");
-		System.out.println("t1: " + taxicab);
-		System.out.println("t2: " + taxicab2);
-		System.out.printf("Modulo: %d\n", (taxicab%taxicab2));
-		*/
-		
-		
 		// Some basic debug info
 		graphics.setColor(Color.BLACK);
 		graphics.drawString("Knight Capital", 30, 30);
