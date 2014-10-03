@@ -4,6 +4,7 @@ import java.awt.Point;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
+import java.util.Set;
 
 import player.Player;
 
@@ -25,12 +26,16 @@ public class World {
 	public final int WORLD_WD;
 	public final int WORLD_HT;
 
+	// set of cities in this world
+	private final Set<City> cities;
+	
 	public World(Tile[][] tiles_){
 		tiles = tiles_;
 		NUM_TILES_ACROSS = tiles.length;
 		NUM_TILES_DOWN = tiles[0].length;
 		WORLD_WD = NUM_TILES_ACROSS*(GlobalConstants.TILE_WD/2);
 		WORLD_HT = NUM_TILES_DOWN*(GlobalConstants.TILE_HT/2);
+		cities = new HashSet<>();
 	}
 
 	/**

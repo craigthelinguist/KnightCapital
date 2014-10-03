@@ -7,21 +7,35 @@ import javax.swing.JPanel;
 
 import tools.GlobalConstants;
 import tools.ImageLoader;
+import tools.ImageManipulation;
 
 public class ItemSlotPanel extends JPanel {
 
 	private BufferedImage backgroundImage;
+	final String imageName;
 
-	
 	public ItemSlotPanel(String imageName) {
+		/*Store the name of the item */
+		this.imageName = imageName;
+
 		/*Initialize the image for the inventory panel*/
-		backgroundImage = ImageLoader.load(GlobalConstants.GUI_FILEPATH + imageName);	
-		//this.setVisible(true);
+		backgroundImage = ImageLoader.load(GlobalConstants.GUI_FILEPATH + imageName);
 	}
-	
-	
-	
-	
+
+
+	public void changeBackground(BufferedImage lightenedImage) {
+		this.backgroundImage = lightenedImage;
+	}
+
+	public BufferedImage getBackgroundImage() {
+		return backgroundImage;
+	}
+
+
+	public String getImageName() {
+		return imageName;
+	}
+
 	  @Override
 	  protected void paintComponent(Graphics g) {
 	    super.paintComponent(g);

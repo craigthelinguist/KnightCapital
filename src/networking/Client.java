@@ -29,7 +29,7 @@ public class Client implements Runnable {
 
 
 	private static ClientProtocol client;
-	
+
 	private ObjectInputStream input;
 	private ObjectOutputStream output;
 	private int ID;
@@ -37,6 +37,70 @@ public class Client implements Runnable {
 
 	public static void main(String[] args) {
 
+//		String s = "wrong!";
+//
+//		try {
+//
+//			System.out.println("'exit' to terminate connection.");
+//			System.out.println("Send a message to the server.");
+//
+//			//connects to socket based on ip and port number. Ip needs to be configured for individual testing on different computers.
+//			System.out.println("connecting...");
+//			socket = new Socket("130.195.4.155", 45612);
+//			System.out.println("conected!");
+//
+//			//construct input stream from socket
+//			in = new DataInputStream(socket.getInputStream());
+//			out = new DataOutputStream(socket.getOutputStream());
+//
+//			//initialises the client protocol thread which is always -
+//			//- listening for incoming messages from the server.
+//			client = new ClientProtocol(in,out);
+//			Thread listener = new Thread(client);
+//			listener.start();
+//
+//
+//			//printwriter that prints a message to the socket for the server to see.
+//			printWriter = new PrintWriter(socket.getOutputStream(),true);
+//
+//		}
+//		catch(Exception e) {
+//			System.out.println(e);
+//		}
+//
+//		while(true){
+//
+//			try {
+//
+//				    if(!client.getStatus()){
+//
+//				    	System.out.println("server inactive...closing application");
+//				    	System.exit(0);
+//
+//				    }
+//					out.writeUTF(message());
+//
+//
+//			}
+//			//suppress the exception shutdown the client
+//			catch (EOFException e) {
+//
+//			System.out.println("server no longer active, shutting down");
+//			System.exit(0);
+//
+//			}
+//
+//			catch (IOException e) {
+//
+//				e.printStackTrace();
+//			}
+//
+//		}
+	}
+
+
+
+	public Client() {
 		String s = "wrong!";
 
 		try {
@@ -46,7 +110,7 @@ public class Client implements Runnable {
 
 			//connects to socket based on ip and port number. Ip needs to be configured for individual testing on different computers.
 			System.out.println("connecting...");
-			socket = new Socket("130.195.4.155", 45612);
+			socket = new Socket("130.195.4.174", 45612);
 			System.out.println("conected!");
 
 			//construct input stream from socket
@@ -73,13 +137,13 @@ public class Client implements Runnable {
 			try {
 
 				    if(!client.getStatus()){
-				    	
+
 				    	System.out.println("server inactive...closing application");
 				    	System.exit(0);
-				    	
+
 				    }
 					out.writeUTF(message());
-				    
+
 
 			}
 			//suppress the exception shutdown the client
@@ -98,12 +162,6 @@ public class Client implements Runnable {
 		}
 	}
 
-
-
-	public Client(Socket socket) {
-		this.socket = socket;
-	}
-
 	/**
 	 * receive player information from server
 	 * */
@@ -111,7 +169,7 @@ public class Client implements Runnable {
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
+
 		try {
 			output = new ObjectOutputStream(socket.getOutputStream());
 			out.flush();
@@ -172,7 +230,7 @@ public class Client implements Runnable {
 			//				System.out.println("socket closed yo");
 			//				System.exit(0);
 			//			} catch (IOException e) {
-			//				// TODO Auto-generated catch block
+
 			//				e.printStackTrace();
 			//			}
 
@@ -182,5 +240,13 @@ public class Client implements Runnable {
 
 		}
 	}
+
+
+	public void notifyThread(){
+		System.out.println("notifying via Client");
+		client.notifyChange();
+
+	}
+
 }
 
