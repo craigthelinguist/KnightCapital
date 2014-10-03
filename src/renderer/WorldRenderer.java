@@ -4,15 +4,19 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.util.HashMap;
+import java.util.Map;
 
 import controllers.WorldController;
 
 import tools.Geometry;
 import tools.GlobalConstants;
 
+import world.CityTile;
 import world.Tile;
 import world.WorldIcon;
 import world.World;
+import world.City;;
 
 /**
  * 
@@ -78,6 +82,9 @@ public class WorldRenderer {
 			}
 		}
 		
+		// draw 
+		drawCities(graphics,world);
+		
 		// Some basic debug info
 		graphics.setColor(Color.BLACK);
 		graphics.drawString("Knight Capital", 30, 30);
@@ -103,6 +110,16 @@ public class WorldRenderer {
 			&&	pt.x < resolution.width + TILE_WD
 			&&	pt.y >= 0-TILE_HT
 			&&	pt.y < resolution.height + TILE_HT;
+	}
+	
+	/**
+	 * Draw cities.
+	 * @param graphics
+	 * @param city
+	 * @param ptMid
+	 */
+	public static void drawCities(Graphics graphics, World world){
+		
 	}
 	
 	public static void drawIcon(Graphics graphics, WorldIcon occupant, Point ptIso){
