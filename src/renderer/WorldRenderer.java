@@ -3,7 +3,11 @@ package renderer;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.util.List;
 import java.awt.Point;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -82,8 +86,8 @@ public class WorldRenderer {
 			}
 		}
 		
-		// draw 
-		drawCities(graphics,world);
+		// draw the cities
+		drawCities(graphics,controller);
 		
 		// Some basic debug info
 		graphics.setColor(Color.BLACK);
@@ -114,11 +118,89 @@ public class WorldRenderer {
 	
 	/**
 	 * Draw cities.
-	 * @param graphics
-	 * @param city
-	 * @param ptMid
 	 */
-	public static void drawCities(Graphics graphics, World world){
+	public static void drawCities(Graphics graphics, WorldController controller){
+
+		// preliminaries
+		final World world = controller.getWorld();
+		final Camera camera = controller.getCamera();
+		final int TILE_WD = GlobalConstants.TILE_WD;
+		final int TILE_HT = GlobalConstants.TILE_HT;
+		
+		// stores city and point
+		class Tuple{
+			City city;
+			Point point;
+			Tuple (City c, Point p){
+				city = c; point = p;
+			}
+			public boolean equals(Object o){
+				if (!(o instanceof Tuple)) return false;
+				Tuple t = (Tuple)o;
+				return t.city == city;
+			}
+		}
+		
+		List<Tuple> cities = new ArrayList<>();
+		
+		// iterate over tiles; get Cities
+		Tile[][] tiles = world.getTiles();
+		for (int y = 0; y < tiles.length; y++){
+			for (int x = 0; x < tiles[y].length; x++){
+				
+				// if not a city tile we don't care
+				Tile tile = tiles[x][y];
+				if (!(tile instanceof CityTile)) continue;
+				
+				// extract the city from the tile
+				CityTile ct = (CityTile)tile;
+				City city = ct.city;
+				
+				// note that order of iteration means you will always reach the top-most tile
+				// of a city first.
+				Tuple tuple = new Tuple(city,new Point(x,y));
+				if (!cities.contains(tuple)) cities.add(tuple);
+				
+			}
+		}
+
+		// order cities from back to front
+		Comparator<Tuple> isometricSorter = new Comparator<Tuple>(){
+			@Override
+			public int compare(Tuple t1, Tuple t2) {
+				Point p1 = t1.point; Point p2 = t2.point;
+				return Geometry.taxicab(new Point(0,0), p1) - Geometry.taxicab(new Point(0,0), p2);
+			}	
+		};
+		Collections.sort(cities, isometricSorter);
+		
+		// 
+		//  ___________
+		// |q    p     |
+		// |     x     |
+		// |   x   x   |
+		// | x   x   x |
+		// |   x   x   |
+		// |     x     |
+		// |___________|
+		// 
+		// our point is at p, for the purposes of drawing it has to be at q.
+		// subtract the distance = (half tile width) * (number of tiles in the width of a city)
+		int OFFSET_WD = TILE_WD/2 * City.WIDTH;
+		for (Tuple tuple : cities){
+			
+			// get city and the corresponding pt at the top of the city in isometric space
+			City city = tuple.city;
+			Point ptCartesian = tuple.point;
+			Point ptIso = Geometry.cartesianToIsometric(ptCartesian, camera);
+			
+			// we add TILE_WD/2 because ptIso will be at the top-left of the corresponding tile's bounding box:
+			// we want it to be in the top-middle
+			int newX = ptIso.x + TILE_WD/2 - OFFSET_WD;
+			city.draw(graphics, newX, ptIso.y);
+			
+		}
+		
 		
 	}
 	
