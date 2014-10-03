@@ -19,9 +19,10 @@ public class Geometry {
 	 * Convert an isometric point to a cartesian point.
 	 * @param iso: a point in isometric space.
 	 * @param camera: the view by which everything is being projected.
+	 * @param dimensions: the dimensions of the world.
 	 * @return Converted Cartesian Point
 	 */
-	public static Point isometricToCartesian(Point iso, Camera camera){
+	public static Point isometricToCartesian(Point iso, Camera camera, Dimension dimensions){
 		
 		// the isometric -> cartesian function doesn't work for all points inside an isometric tile
 		// because ours is not a true isometric projection - we're just translating and stacking tiles
@@ -39,8 +40,9 @@ public class Geometry {
 		// isometric -> cartesian
 		int cartY = (int)( 0.5*(iso.y/HALF_TILE_HT - iso.x/HALF_TILE_WD) );
 		int cartX = (int)( 0.5*(iso.y/HALF_TILE_HT + iso.x/HALF_TILE_WD) );
-		return new Point(cartX-1,cartY);
-		
+		Point cartesian = new Point(cartX-1,cartY);
+		cartesian = Geometry.recoverOriginalPoint(cartesian, camera, dimensions);
+		return cartesian;
 	}
 
 	/**
@@ -203,7 +205,7 @@ public class Geometry {
 	 * @param world: world in which this point exists.
 	 * @return: the original point
 	 */
-	public static Point recoverOriginalPoint(Point ptRotated, Camera camera, World world){
+	public static Point recoverOriginalPoint(Point ptRotated, Camera camera, Dimension dimensions){
 		
 		// To whom it may concern,
 		//
@@ -213,7 +215,7 @@ public class Geometry {
 		// mirrors points in an array.
 		//		-- sincerely,
 		//			  Aaron.
-		return rotatePoint(ptRotated,camera,world);
+		return rotatePoint(ptRotated,camera,dimensions);
 		
 	}
 	
@@ -223,9 +225,9 @@ public class Geometry {
 	 * @param camera: camera the point is being viewed from.
 	 * @return: the new position rotated according to the camera.
 	 */
-	public static Point rotatePoint(Point ptCart, Camera camera, World world) {
-		final int TILES_ACROSS = world.NUM_TILES_ACROSS;
-		final int TILES_DOWN = world.NUM_TILES_DOWN;
+	public static Point rotatePoint(Point ptCart, Camera camera, Dimension dimensions) {
+		final int TILES_ACROSS = dimensions.width;
+		final int TILES_DOWN = dimensions.height;
 		int x = ptCart.x; int y = ptCart.y;
 		int orientation = camera.getOrientation();
 		if (orientation == Camera.EAST){

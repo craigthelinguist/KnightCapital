@@ -1,5 +1,6 @@
 package world;
 
+import java.awt.Dimension;
 import java.awt.Point;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -21,6 +22,7 @@ public class World {
 
 	// assumes the world is rectangular
 	private Tile[][] tiles;
+	public final Dimension dimensions;
 	public final int NUM_TILES_ACROSS;
 	public final int NUM_TILES_DOWN;
 	public final int WORLD_WD;
@@ -33,6 +35,7 @@ public class World {
 		tiles = tiles_;
 		NUM_TILES_ACROSS = tiles.length;
 		NUM_TILES_DOWN = tiles[0].length;
+		dimensions = new Dimension(NUM_TILES_ACROSS,NUM_TILES_DOWN);
 		WORLD_WD = NUM_TILES_ACROSS*(GlobalConstants.TILE_WD/2);
 		WORLD_HT = NUM_TILES_DOWN*(GlobalConstants.TILE_HT/2);
 		cities = new HashSet<>();
