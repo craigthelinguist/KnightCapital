@@ -1,5 +1,7 @@
 package world;
 
+import game.Item;
+
 import java.awt.Graphics;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -30,6 +32,12 @@ public class City {
 	// buildings inside this city
 	private Set<Building> buildings;
 	
+	// party inside this city
+	private Party party;
+	
+	// items being stored inside this city
+	private LinkedList<Item> items;
+	
 	// image representing this city
 	private Animation animation;
 	
@@ -40,6 +48,8 @@ public class City {
 			Log.print("Error! City has " + overworldTiles.length + " tiles but should only have " + WIDTH*WIDTH);
 		}
 		tiles = overworldTiles;
+		party = null;
+		items = new LinkedList<>();
 	}
 
 	/**
