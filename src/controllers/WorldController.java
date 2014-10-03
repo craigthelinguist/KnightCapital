@@ -91,39 +91,37 @@ public class WorldController {
 	 * @param ke: details about the key event
 	 */
 	public void keyPressed(KeyEvent ke){
-
-
 		int code = ke.getKeyCode();
-
 		if (code == ROTATE_CW){
 			camera.rotateClockwise();
 			notifier();
-			
+			gui.redraw();
 		}
 		else if (code == ROTATE_CCW){
 			camera.rotateCounterClockwise();
 			notifier();
+			gui.redraw();
 		}
 		else if (code == PAN_UP){
 			camera.panUp();
 			notifier();
+			gui.redraw();
 		}
 		else if (code == PAN_DOWN){
 			camera.panDown();
 			notifier();
+			gui.redraw();
 		}
 		else if (code == PAN_RIGHT){
 			camera.panRight();
 			notifier();
+			gui.redraw();
 		}
 		else if (code == PAN_LEFT){
 			camera.panLeft();
 			notifier();
+			gui.redraw();
 		}
-		gui.redraw(); //redraws gui no matter what is pressed...inefficient much? cheers, Selemon.
-
-
-
 	}
 
 	/**
@@ -147,12 +145,14 @@ public class WorldController {
 			if (selectedTile != clickedTile && SwingUtilities.isLeftMouseButton(me)){
 				selected = ptOriginal;
 				gui.updateInfo(clickedTile);
+				gui.redraw();
 			}
 
 			// deselected the tile
 			else if (selected != null && SwingUtilities.isLeftMouseButton(me)){
 				if (selectedTile == clickedTile) selected = null;
 				gui.updateInfo(null);
+				gui.redraw();
 			}
 
 			// moved
@@ -161,12 +161,12 @@ public class WorldController {
 				if (moved){
 					selected = ptOriginal;
 					gui.updateInfo(clickedTile);
+					gui.redraw();
 				}
 			}
 
 		}
 
-		gui.redraw();
 
 	}
 
