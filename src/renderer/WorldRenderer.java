@@ -23,9 +23,8 @@ import world.World;
 import world.City;;
 
 /**
- * 
- * @author whileym4st3r
- *
+ * WorldRenderer provides static methods for
+ * @author Myles, Aaron
  */
 public class WorldRenderer {
 
@@ -99,18 +98,6 @@ public class WorldRenderer {
 		graphics.drawString("Press r to rotate", 30, 130);
 		
 
-	}
-	
-	public static void drawPoint(Graphics graphics, Point p){
-		drawPoint(graphics,p.x,p.y);
-	}
-	
-	public static void drawPoint(Graphics graphics, int x, int y){
-		drawPoint(graphics,x,y,3);
-	}
-	
-	public static void drawPoint(Graphics graphics, int x, int y, int rad){
-		graphics.fillRect(x-rad, y-rad, rad,rad);
 	}
 
 	/**

@@ -25,7 +25,7 @@ import GUI.MainFrame;
 
 /**
  * A WorldController. This is the glue between the model (World) and the view (gui, renderer).
- * @author craigthelinguist
+ * @author Aaron
  */
 public class WorldController {
 

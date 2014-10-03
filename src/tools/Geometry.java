@@ -8,6 +8,11 @@ import java.awt.Dimension;
 import java.awt.Point;
 import java.util.ArrayList;
 
+/**
+ * This class contains functions for converting points between isometric and cartesian,
+ * and for rotating points.
+ * @author Myles, Aaron
+ */
 public class Geometry {
 
 	private static final int TILE_HT = GlobalConstants.TILE_HT;
@@ -221,6 +226,7 @@ public class Geometry {
 	
 	/**
 	 * Rotate a cartesian point inside the world's boundaries according to the perspective of the given camera
+	 * TODO: just realised this isn't doing working properly! Will fix. - Aaron.
 	 * @param pt: the point being rotated
 	 * @param camera: camera the point is being viewed from.
 	 * @return: the new position rotated according to the camera.
@@ -231,7 +237,8 @@ public class Geometry {
 		int x = ptCart.x; int y = ptCart.y;
 		int orientation = camera.getOrientation();
 		if (orientation == Camera.EAST){
-			x = TILES_ACROSS-1-x;
+			y = x;
+			
 		}
 		else if (orientation == Camera.SOUTH){
 			x = TILES_ACROSS-1-x;

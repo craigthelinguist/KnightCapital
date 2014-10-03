@@ -17,6 +17,7 @@ import tools.Log;
  * The world is the part of the game where the players click around the map, and move their parties.
  * It is a collection of tiles and info about them (the cities, heroes, units, items populating those
  * tiles).
+ * @author Aaron
  */
 public class World {
 
