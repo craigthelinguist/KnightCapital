@@ -81,6 +81,7 @@ public class WorldRenderer {
 				Tile tile = world.getTile(ptCart);
 				WorldIcon occupant = tile.occupant();
 				if (occupant == null) continue;
+				occupant.setAnimationName(getAnimationName(camera));
 				drawIcon(graphics,occupant,ptIso);
 				
 			}
@@ -100,6 +101,27 @@ public class WorldRenderer {
 
 	}
 
+	/**
+	 * Given a viewing perspective, returns the suffix of the animation name that should be viewed.
+	 * @param cam: camera whose perspective is being viewed.
+	 * @return: suffix of the animation that should be drawn for this viewing angles
+	 */
+	private static String getAnimationName(Camera cam){
+		switch (cam.getOrientation()){
+		case Camera.EAST:
+			return "east";
+		case Camera.WEST:
+			return "west";
+		case Camera.SOUTH:
+			return "south";
+		case Camera.NORTH:
+			return "north";
+		default:
+			throw new RuntimeException("could not get animation name for camera perspective!");
+		
+		}
+	}
+	
 	/**
 	 * Return true if the tile with origin pt would be visible on the screen represented by resolution.
 	 * @param pt: a point in isometric space.

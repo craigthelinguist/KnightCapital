@@ -57,11 +57,8 @@ public class WorldController {
 	private static final int PAN_RIGHT = KeyEvent.VK_RIGHT;
 	private static final int PAN_LEFT = KeyEvent.VK_LEFT;
 
-	public static Party ovelia;
-
 	public WorldController(World w, Player p){
 		world = w;
-		ovelia = (Party) world.getTile(0,0).occupant();
 		player = p;
 		camera = WorldRenderer.getCentreOfWorld(w);
 		gui = new MainFrame();
