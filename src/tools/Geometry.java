@@ -220,8 +220,11 @@ public class Geometry {
 		// mirrors points in an array.
 		//		-- sincerely,
 		//			  Aaron.
-		return rotatePoint(ptRotated,camera,dimensions);
 		
+		int orientation = camera.getOrientation();
+		if (orientation == Camera.EAST) orientation = Camera.WEST;
+		else if (orientation == Camera.WEST) orientation = Camera.EAST;
+		return rotate(ptRotated,orientation,dimensions);	
 	}
 	
 	/**
@@ -231,20 +234,27 @@ public class Geometry {
 	 * @param camera: camera the point is being viewed from.
 	 * @return: the new position rotated according to the camera.
 	 */
-	public static Point rotatePoint(Point ptCart, Camera camera, Dimension dimensions) {
+	public static Point rotateByCamera(Point ptCart, Camera camera, Dimension dimensions) {
+		return rotate(ptCart,camera.getOrientation(),dimensions);
+	}
+	
+	private static Point rotate(Point ptCart, int orientation, Dimension dimensions){
 		final int TILES_ACROSS = dimensions.width;
 		final int TILES_DOWN = dimensions.height;
 		int x = ptCart.x; int y = ptCart.y;
-		int orientation = camera.getOrientation();
 		if (orientation == Camera.EAST){
-			x = TILES_ACROSS-1-x;
+			int x0 = x; int y0 = y;
+			y = x0;
+			x = TILES_DOWN-1-y0;
 		}
 		else if (orientation == Camera.SOUTH){
 			x = TILES_ACROSS-1-x;
 			y = TILES_DOWN-1-y;
 		}
 		else if (orientation == Camera.WEST){
-			y = TILES_DOWN-1-y;
+			int x0 = x; int y0 = y;
+			x = y0;
+			y = TILES_ACROSS-1-x0;
 		}
 		return new Point(x,y);
 	}

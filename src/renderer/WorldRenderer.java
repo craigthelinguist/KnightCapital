@@ -55,7 +55,7 @@ public class WorldRenderer {
 				Point ptCart = new Point(x,y);
 				
 				// rotate point according to perspective of camera, and draw it according to that rotation
-				Point ptRotated = Geometry.rotatePoint(new Point(x,y), camera, world.dimensions);
+				Point ptRotated = Geometry.rotateByCamera(new Point(x,y), camera, world.dimensions);
 				Point ptIso = Geometry.cartesianToIsometric(ptRotated, camera);
 				
 				if (!tileOnScreen(ptIso,resolution)) continue; // don't draw things that aren't visible
@@ -74,7 +74,7 @@ public class WorldRenderer {
 				Point ptCart = new Point(x,y);
 				
 				// rotate point according to perspective of camera, and draw it according to that rotation
-				Point ptRotated = Geometry.rotatePoint(new Point(x,y), camera, world.dimensions);
+				Point ptRotated = Geometry.rotateByCamera(new Point(x,y), camera, world.dimensions);
 				Point ptIso = Geometry.cartesianToIsometric(ptRotated, camera);
 				
 				if (!tileOnScreen(ptIso,resolution)) continue; // don't draw things that aren't visible

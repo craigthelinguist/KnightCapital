@@ -28,7 +28,7 @@ public class GeometryTests {
 	public void orientationNorth(){
 		init();
 		camera.setOrientation(Camera.NORTH);
-		Point rotated = Geometry.rotatePoint(origin, camera, world);
+		Point rotated = Geometry.rotateByCamera(origin, camera, world.dimensions);
 		assertTrue("rotated point should be same", rotated.equals(origin));
 	}
 	
@@ -36,7 +36,7 @@ public class GeometryTests {
 	public void orientationEast(){
 		init();
 		camera.setOrientation(Camera.EAST);
-		Point rotated = Geometry.rotatePoint(origin,camera,world);
+		Point rotated = Geometry.rotateByCamera(origin,camera,world.dimensions);
 		assertFalse("rotated point should be different", rotated.equals(origin));
 		assertTrue("rotated point not in correct location", rotated.x == WIDTH-1 && rotated.y == 0);
 	}
@@ -45,7 +45,7 @@ public class GeometryTests {
 	public void orientationWest(){
 		init();
 		camera.setOrientation(Camera.WEST);
-		Point rotated = Geometry.rotatePoint(origin,camera,world);
+		Point rotated = Geometry.rotateByCamera(origin,camera,world.dimensions);
 		assertFalse("rotated point should be different", rotated.equals(origin));
 		assertTrue("rotated point not in correct location", rotated.x == 0 && rotated.y == HEIGHT-1);
 	}
@@ -54,7 +54,7 @@ public class GeometryTests {
 	public void orientationSouth(){
 		init();
 		camera.setOrientation(Camera.SOUTH);
-		Point rotated = Geometry.rotatePoint(origin,camera,world);
+		Point rotated = Geometry.rotateByCamera(origin,camera,world.dimensions);
 		assertFalse("rotated point should be different", rotated.equals(origin));
 		assertTrue("rotated point not in correct location", rotated.x == WIDTH-1 && rotated.y == HEIGHT-1);
 	}
@@ -63,10 +63,10 @@ public class GeometryTests {
 	public void rotateAndRecover(){
 		init();
 		camera.setOrientation(Camera.EAST);
-		Point rotated = Geometry.rotatePoint(origin,camera,world);
+		Point rotated = Geometry.rotateByCamera(origin,camera,world.dimensions);
 		assertFalse("rotated point should be different", rotated.equals(origin));
 		assertTrue("rotated point not in correct location", rotated.x == WIDTH-1 && rotated.y == 0);
-		Point recovered = Geometry.recoverOriginalPoint(rotated, camera, world);
+		Point recovered = Geometry.recoverOriginalPoint(rotated, camera, world.dimensions);
 		assertFalse("recovered point shouldn't be same as rotated", recovered.equals(rotated));
 		assertTrue("recovered point should now be original", recovered.equals(origin));
 	}
