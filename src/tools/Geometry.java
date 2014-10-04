@@ -53,7 +53,7 @@ public class Geometry {
 	/**
 	 * Returns true if the vector represented by origin can be expressed as the vector represented
 	 * by point + the linear combination ax + by, where a = tile_wd/2 and b = tile_ht/2. Put another
-	 * way, returns true if origin.x = point.x + ax, and origin.y = point.y + by.
+	 * way, returns true if origin.x = point.x + ax, and origin.y = point.y + by
 	 * 
 	 * Put another way, if origin is the centre of a tile, and point is also the centre of a tile,
 	 * then this will return true.
@@ -237,8 +237,7 @@ public class Geometry {
 		int x = ptCart.x; int y = ptCart.y;
 		int orientation = camera.getOrientation();
 		if (orientation == Camera.EAST){
-			y = x;
-			
+			x = TILES_ACROSS-1-x;
 		}
 		else if (orientation == Camera.SOUTH){
 			x = TILES_ACROSS-1-x;
