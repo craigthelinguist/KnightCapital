@@ -89,7 +89,7 @@ public class GeometryTests {
 		tiles[1][3] = PassableTile.newDirtTile();
 		tiles[2][3] = PassableTile.newDirtTile();
 		tiles[3][3] = PassableTile.newDirtTile();
-		world = new World(tiles);
+		world = new World(tiles,null,null);
 		camera = new Camera(0,0,Camera.NORTH);
 	}
 	

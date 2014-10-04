@@ -16,7 +16,7 @@ public class ImageLoader {
 	private ImageLoader(){}
 
 	private static Map<String, BufferedImage> images = new HashMap<String, BufferedImage>();
-
+	
 	/**
 	 * Attempts to retrieve the image specified, if it is yet to be loaded then it is loaded and returned.
 	 * If the file is invalid then a 1x1 image is returned.
@@ -49,12 +49,27 @@ public class ImageLoader {
 	}
 
 	/**
+	 * Given an array of filenames, loads and returns those images.
+	 * @param filenames: array of the names of the images to load.
+	 * @param frameDelay: delay between each image.
+	 * @return
+	 */
+	public static Animation loadAnimations(String[] filenames, int frameDelay){
+		BufferedImage[] images = new BufferedImage[filenames.length];
+		for (int i = 0; i < filenames.length; i++){
+			if (images == null) break;
+			images[i] = load(filenames[i]);
+		}
+		return new Animation(images,frameDelay);
+	}
+	
+	/**
 	 * Takes the given filepath. Loads all files prefixed by that filepath into a map,
 	 * where they're indexed by the name of their animation (e.g.: north, south).
 	 * @param filepath: load all files prefixed with this.
 	 * @return: map of string -> animation
 	 */
-	public static Map<String,Animation> loadAnimations(String filepath){
+	public static Map<String,Animation> loadDirectedAnimations(String filepath){
 
 		BufferedImage[] north = new BufferedImage[]{ ImageLoader.load(filepath + "_north.png") };
 		Animation animNorth = new Animation(north,1);
@@ -71,6 +86,11 @@ public class ImageLoader {
 		animationNames.put("west",animWest);
 		animationNames.put("east",animEast);
 		return animationNames;
+	}
+
+	public static Animation loadAnimation(String name) {
+		BufferedImage bi = ImageLoader.load(name);
+		return new Animation(new BufferedImage[]{bi},1);
 	}
 
 }

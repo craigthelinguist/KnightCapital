@@ -17,9 +17,11 @@ public class GlobalConstants {
 	// all images are stored in this relative filepath
 	public static final String ASSETS = "assets" + File.separatorChar;
 	public static final String ICONS = File.separatorChar + "icons" + File.separatorChar;
+	public static final String CITIES = GlobalConstants.ASSETS + File.separatorChar + "cities" + File.separatorChar;
+	
 	// all images inside the GUIAssets
 	public static final String GUI_FILEPATH = GlobalConstants.ASSETS + "GUIAssets" + File.separatorChar;
-
+	
 	// these are temporary values for WorldRenderer prototype - Aaron
 	public static final int TILE_WD = 131;
 	public static final int TILE_HT = 77;

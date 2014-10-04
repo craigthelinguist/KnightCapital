@@ -9,7 +9,7 @@ import tools.ImageLoader;
  */
 public class PassableTile extends Tile{
 
-	// instantiate using static facmethods - avoids typos and other things
+	// instantiate using static factory methods - avoids typos and other things
 	private PassableTile(){}
 	
 	public static PassableTile newDirtTile(){

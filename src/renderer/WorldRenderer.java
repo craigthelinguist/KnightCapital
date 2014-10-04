@@ -10,6 +10,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import controllers.WorldController;
 
@@ -177,7 +178,7 @@ public class WorldRenderer {
 				
 				// extract the city from the tile
 				CityTile ct = (CityTile)tile;
-				City city = ct.city;
+				City city = ct.getCity();
 				
 				// note that order of iteration means you will always reach the top-most tile
 				// of a city first.

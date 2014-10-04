@@ -31,15 +31,17 @@ public class World {
 
 	// set of cities in this world
 	private final Set<City> cities;
+	private final Player[] players;
 	
-	public World(Tile[][] tiles_){
+	public World(Tile[][] tiles_, Player[] playersArray, Set<City> citySet){
 		tiles = tiles_;
 		NUM_TILES_ACROSS = tiles.length;
 		NUM_TILES_DOWN = tiles[0].length;
 		dimensions = new Dimension(NUM_TILES_ACROSS,NUM_TILES_DOWN);
 		WORLD_WD = NUM_TILES_ACROSS*(GlobalConstants.TILE_WD/2);
 		WORLD_HT = NUM_TILES_DOWN*(GlobalConstants.TILE_HT/2);
-		cities = new HashSet<>();
+		cities = citySet;
+		players = playersArray;
 	}
 
 	/**
@@ -64,6 +66,10 @@ public class World {
 	public Tile getTile(Point p){
 		if (p == null) return null;
 		else return getTile(p.x,p.y);
+	}
+	
+	public Set<? extends City> getCities(){
+		return cities;
 	}
 	
 	/* I don't like making the data structure storing tiles directly accessible

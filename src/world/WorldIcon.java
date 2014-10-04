@@ -23,7 +23,7 @@ public abstract class WorldIcon {
 	
 	public WorldIcon(String imgname){
 		final String filepath = GlobalConstants.ASSETS + imgname;
-		animationNames = ImageLoader.loadAnimations(filepath);
+		animationNames = ImageLoader.loadDirectedAnimations(filepath);
 		animation = animationNames.get("west");
 		animationName = "west";
 	}

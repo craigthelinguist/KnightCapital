@@ -13,10 +13,18 @@ import tools.ImageManipulation;
 public class CityTile extends Tile {
 
 	// city that this CityTile is apart of.
-	public final City city;
+	private City city;
+
+	public void setCity(City newCity){
+		city = newCity;
+	}
 	
-	public CityTile(City c){
-		city = c;
+	/**
+	 * Get the city this tile is apart of.
+	 * @return: a city.
+	 */
+	public City getCity(){
+		return city;
 	}
 	
 	@Override

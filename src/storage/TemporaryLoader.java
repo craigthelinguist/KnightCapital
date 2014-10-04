@@ -2,10 +2,16 @@ package storage;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.regex.Pattern;
 
+import player.Player;
+
 import tools.GlobalConstants;
+import world.City;
+import world.CityTile;
 import world.Tile;
 import world.PassableTile;
 import world.World;
@@ -73,22 +79,38 @@ public class TemporaryLoader {
 				}
 			}
 			
+			// add a Player
+			Player pl = new Player();
+			
+			// add a city
+			int z = 0;
+			CityTile[] cityTiles = new CityTile[City.WIDTH*City.WIDTH];
+			for (int i = 4; i <= 6; i++){
+				for (int j = 4; j <= 6; j++){
+					CityTile ct = new CityTile();
+					tiles[i][j] = ct;
+					cityTiles[z++] = ct;
+				}
+			}
+			String[] cityAnimNames = new String[]{ "city.png" };
+			City city = new City(cityAnimNames, pl, cityTiles);
+			
+			// world data
+			Player[] players = new Player[]{ pl };
+			Set<City> cities = new HashSet<>();
+			cities.add(city);
+			return new World(tiles, players, cities);
+		
 		}
 		catch (IOException e){
 			e.printStackTrace();
 			System.exit(1);
+			return null;
 		}
 		finally{
 			if (scan != null) scan.close();
 		}
 		
-		// return tiles
-		if (tiles == null){
-			System.out.println("Error loading " + filename + ": world was null at the end");
-			System.exit(1);
-		}
-		return new World(tiles);
-	
 	}
 	
 }
