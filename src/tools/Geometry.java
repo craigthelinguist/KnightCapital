@@ -211,16 +211,6 @@ public class Geometry {
 	 * @return: the original point
 	 */
 	public static Point recoverOriginalPoint(Point ptRotated, Camera camera, Dimension dimensions){
-		
-		// To whom it may concern,
-		//
-		// it really is this simple: you just rotate it again by the same perspective. 
-		// That might not be so obvious so I'm leaving it like this for the benefit of others,
-		// but if you want to see why it works the rotatePoint method just horizontally or vertically
-		// mirrors points in an array.
-		//		-- sincerely,
-		//			  Aaron.
-		
 		int orientation = camera.getOrientation();
 		if (orientation == Camera.EAST) orientation = Camera.WEST;
 		else if (orientation == Camera.WEST) orientation = Camera.EAST;
@@ -229,15 +219,22 @@ public class Geometry {
 	
 	/**
 	 * Rotate a cartesian point inside the world's boundaries according to the perspective of the given camera
-	 * TODO: just realised this isn't doing working properly! Will fix. - Aaron.
 	 * @param pt: the point being rotated
 	 * @param camera: camera the point is being viewed from.
+	 * @param dimensions: the dimensions of the world.
 	 * @return: the new position rotated according to the camera.
 	 */
 	public static Point rotateByCamera(Point ptCart, Camera camera, Dimension dimensions) {
 		return rotate(ptCart,camera.getOrientation(),dimensions);
 	}
 	
+	/**
+	 * Rotates the given point by the specified orientation.
+	 * @param ptCart: the point being rotated
+	 * @param orientation: orientation of the point.
+	 * @param dimensions: the dimensions of the world.
+	 * @return: the new position rotated according to the orientation.
+	 */
 	private static Point rotate(Point ptCart, int orientation, Dimension dimensions){
 		final int TILES_ACROSS = dimensions.width;
 		final int TILES_DOWN = dimensions.height;
