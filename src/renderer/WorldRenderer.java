@@ -82,8 +82,7 @@ public class WorldRenderer {
 				Tile tile = world.getTile(ptCart);
 				WorldIcon occupant = tile.occupant();
 				if (occupant == null) continue;
-				occupant.setAnimationName(getAnimationName(camera));
-				drawIcon(graphics,occupant,ptIso);
+				drawIcon(graphics,controller.getCamera(),occupant,ptIso);
 				
 			}
 		}
@@ -100,27 +99,6 @@ public class WorldRenderer {
 		graphics.drawString("Press r to rotate", 30, 130);
 		
 
-	}
-
-	/**
-	 * Given a viewing perspective, returns the suffix of the animation name that should be viewed.
-	 * @param cam: camera whose perspective is being viewed.
-	 * @return: suffix of the animation that should be drawn for this viewing angles
-	 */
-	private static String getAnimationName(Camera cam){
-		switch (cam.getOrientation()){
-		case Camera.EAST:
-			return "east";
-		case Camera.WEST:
-			return "west";
-		case Camera.SOUTH:
-			return "south";
-		case Camera.NORTH:
-			return "north";
-		default:
-			throw new RuntimeException("could not get animation name for camera perspective!");
-		
-		}
 	}
 	
 	/**
@@ -182,7 +160,8 @@ public class WorldRenderer {
 				
 				// note that order of iteration means you will always reach the top-most tile
 				// of a city first.
-				Tuple tuple = new Tuple(city,new Point(x,y));
+				Point ptRotated = Geometry.rotateByCamera(new Point(x,y), camera, world.dimensions);
+				Tuple tuple = new Tuple(city,ptRotated);
 				if (!cities.contains(tuple)) cities.add(tuple);
 				
 			}
@@ -220,6 +199,13 @@ public class WorldRenderer {
 			
 			// we add TILE_WD/2 because ptIso will be at the top-left of the corresponding tile's bounding box:
 			// we want it to be in the top-middle
+			
+			// TODO: what you add/subtract from where depends on camera perspective, should be here
+			int orient = camera.getOrientation();
+			if (orient == Camera.NORTH){
+				
+			}
+			
 			int newX = ptIso.x + TILE_WD/2 - OFFSET_WD;
 			city.draw(graphics, newX, ptIso.y);
 			
@@ -228,7 +214,7 @@ public class WorldRenderer {
 		
 	}
 	
-	public static void drawIcon(Graphics graphics, WorldIcon occupant, Point ptIso){
+	public static void drawIcon(Graphics graphics, Camera camera, WorldIcon occupant, Point ptIso){
 		int isoY = ptIso.y;
 		int isoX = ptIso.x;
 		final int TILE_HT = GlobalConstants.TILE_HT;
@@ -237,7 +223,45 @@ public class WorldRenderer {
 		final int ICON_HT = GlobalConstants.ICON_HT;
 		int iconY = isoY - TILE_HT/4;
 		int iconX = isoX + TILE_WD/2 - ICON_WD/2;
+
+		occupant.setAnimationName(getAnimationName(occupant.getAnimationName(),camera));
+		
+		
 		occupant.draw(graphics,iconX,iconY);
+	}
+
+	/**
+	 * Given a viewing perspective, returns the suffix of the animation name that should be viewed.
+	 * @param cam: camera whose perspective is being viewed.
+	 * @return: suffix of the animation that should be drawn for this viewing angles
+	 */
+	
+	// TODO: not entirely perfect, character doesn't always face correct direction
+	private static String getAnimationName(String animName, Camera cam){
+		
+		final String[] dirs = new String[]{ "north", "east", "south", "west" };
+		int playerDir = -1;
+		animName = animName.toLowerCase();
+		for (int i = 0; i < dirs.length; i++){
+			if (animName.contains(dirs[i])){
+				playerDir = i;
+				break;
+			}
+		}
+		int cameraDir = -1;
+		switch(cam.getOrientation()){
+		case Camera.NORTH:
+			cameraDir = 0; break;
+		case Camera.EAST:
+			cameraDir = 1; break;
+		case Camera.SOUTH:
+			cameraDir = 2; break;
+		case Camera.WEST:
+			cameraDir = 3; break;
+		}
+		
+		int dir = (playerDir+cameraDir)%4;
+		return dirs[dir];
 	}
 	
 	/**

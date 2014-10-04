@@ -42,6 +42,10 @@ public abstract class WorldIcon {
 			animation = anim;
 		}
 	}
+	
+	public String getAnimationName(){
+		return animationName;
+	}
 
 	public void draw(Graphics graphics, int iconX, int iconY) {
 		graphics.drawImage(animation.getSprite(),iconX,iconY,null);
