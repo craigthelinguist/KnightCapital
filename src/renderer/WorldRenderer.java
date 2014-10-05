@@ -123,7 +123,7 @@ public class WorldRenderer {
 				if (tile == controller.getSelectedTile()){
 					tile.drawHighlighted(graphics, ptIso.x, ptIso.y, 55);
 				}
-				else if (controller.highlighted(ptCart)){
+				else if (controller.isHighlighted(ptCart)){
 					tile.drawHighlighted(graphics, ptIso.x, ptIso.y, 25);
 				}
 				else{

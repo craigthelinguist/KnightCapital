@@ -48,9 +48,13 @@ public class WorldController {
 	// player this controller belongs to
 	private Player player;
 
-	// current tile and perspective
+	// current tile the player has clicked
 	private Point selected;
+	
+	// highlighted tiles that are showing where the player's selected party can move to
 	private Set<Point> highlightedTiles;
+	
+	// the camera that the player is viewing from
 	private Camera camera;
 
 	// key bindings
@@ -145,15 +149,7 @@ public class WorldController {
 			// selected the tile
 			if (selectedTile != clickedTile && SwingUtilities.isLeftMouseButton(me)){
 				selected = ptCartesian;
-				if (clickedTile != null){
-					WorldIcon wi = clickedTile.occupant();
-					if (wi != null && wi instanceof Party){
-						Party p = (Party)wi;
-						if (p.ownedBy(this.player)){
-							highlightedTiles = world.getValidMoves(p,clickedTile);
-						}
-					}
-				}
+				highlightTiles(clickedTile);
 				gui.updateInfo(clickedTile);
 				gui.redraw();
 			}
@@ -161,7 +157,7 @@ public class WorldController {
 			// deselected the tile
 			else if (selected != null && SwingUtilities.isLeftMouseButton(me)){
 				if (selectedTile == clickedTile) selected = null;
-				highlightedTiles = new HashSet<>();
+				resetHighlightedTiles();
 				gui.updateInfo(null);
 				gui.redraw();
 			}
@@ -171,7 +167,7 @@ public class WorldController {
 				boolean moved = world.moveParty(player, selected, ptCartesian);
 				if (moved){
 					selected = ptCartesian;
-					highlightedTiles = world.getValidMoves((Party)clickedTile.occupant(),clickedTile);
+					highlightTiles(clickedTile);
 					gui.updateInfo(clickedTile);
 					gui.redraw();
 				}
@@ -183,22 +179,45 @@ public class WorldController {
 	}
 
 	/**
-	 * Return true if this point is being highlighted by the world controller
-	 * @param p: a point in cartesian spcae
-	 * @return: true if this point is being highlighted by the world controller
-	 */
-	public boolean highlighted(Point p){
-		return highlightedTiles.contains(p);
-	}
-	
-	/**
 	 * Player has clicked a button.
 	 * @param button: the button they clicked.
 	 */
 	public void buttonPressed(JButton button){
 
 	}
-
+	
+	private void resetHighlightedTiles(){
+		this.highlightedTiles = new HashSet<>();
+	}
+	
+	/**
+	 * If the provided tile has a party on it that belongs to this player, highlight
+	 * all the tiles to which the party can move.
+	 * @param tile: tile that a party of the player's is standing on.
+	 */
+	private void highlightTiles(Tile tile){
+		if (tile != null){
+			WorldIcon wi = tile.occupant();
+			if (wi != null && wi instanceof Party){
+				Party p = (Party)wi;
+				if (p.ownedBy(this.player)){
+					highlightedTiles = world.getValidMoves(p,tile);
+					return;
+				}
+			}
+		}
+		resetHighlightedTiles();
+	}
+	
+	/**
+	 * Return true if this point is being highlighted by the world controller
+	 * @param p: a point in Cartesian space
+	 * @return: true if this point is being highlighted by the world controller
+	 */
+	public boolean isHighlighted(Point p){
+		return highlightedTiles.contains(p);
+	}
+	
 	public World getWorld(){
 		return world;
 	}
@@ -217,6 +236,10 @@ public class WorldController {
 		if(client == null)System.out.println("still not initiated");
 	}
 
+	/**
+	 * For testing purposes
+	 * @param args
+	 */
 	public static void main(String[] args){
 		World w = TemporaryLoader.loadWorld("world_temporary.txt");
 		Player p = new Player();
