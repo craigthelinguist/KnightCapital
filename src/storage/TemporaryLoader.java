@@ -83,13 +83,13 @@ public class TemporaryLoader {
 			Player pl = new Player();
 			
 			// add a city
-			int z = 0;
-			CityTile[] cityTiles = new CityTile[City.WIDTH*City.WIDTH];
-			for (int i = 4; i <= 6; i++){
-				for (int j = 4; j <= 6; j++){
+			CityTile[][] cityTiles = new CityTile[City.WIDTH][City.WIDTH];
+			
+			for (int i=4, a=0; i <= 6; i++, a++){
+				for (int j=4, b=0; j <= 6; j++, b++){
 					CityTile ct = new CityTile();
 					tiles[i][j] = ct;
-					cityTiles[z++] = ct;
+					cityTiles[a][b] = ct;
 				}
 			}
 			String[] cityAnimNames = new String[]{ "city.png" };

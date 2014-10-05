@@ -28,7 +28,7 @@ public class City {
 
 	// on the overworld, a city is a collection of 3x3 CityTiles.
 	public static final int WIDTH = 3;
-	private final CityTile[] tiles;
+	private final CityTile[][] tiles;
 
 	// who owns this city
 	private Player owner;
@@ -59,7 +59,7 @@ public class City {
 	 *            in overworldTiles must be the topmost.
 	 */
 	public City(String[] animationNamesArray, Player player,
-			CityTile[] overworldTiles) {
+			CityTile[][] overworldTiles) {
 
 		// set up owner and fields storing details about this city
 		owner = player;
@@ -68,15 +68,16 @@ public class City {
 		items = new LinkedList<>();
 
 		// set up tiles; set tiles so that they have a reference to this.
-		if (overworldTiles.length != WIDTH * WIDTH) {
-			Log.print("Error! City has " + overworldTiles.length
-					+ " tiles but should only have " + WIDTH * WIDTH);
-		}
 		tiles = overworldTiles;
-		for (CityTile t : tiles) {
-			t.setCity(this);
+		if (overworldTiles.length != WIDTH) Log.print("Error! City must be " + WIDTH + "x" + WIDTH + "tiles!");
+		for (int i = 0; i < WIDTH; i++){
+			if (overworldTiles[i].length != WIDTH) Log.print("Error! City must be " + WIDTH + "x" + WIDTH + "tiles!");
+			for (int j = 0; j < WIDTH; j++){
+				tiles[i][j] = overworldTiles[i][j];
+				tiles[i][j].setCity(this);
+			}
 		}
-
+		
 		// set up animation names
 		animationNames = new HashMap<>();
 		for (int i = 0; i < animationNamesArray.length; i++) {
@@ -97,9 +98,21 @@ public class City {
 	 * @return: the topmost tile.
 	 */
 	public CityTile getTopmostTile() {
-		return tiles[0];
+		return tiles[0][0];
+	}
+	
+	public CityTile getRightmostTile(){
+		return tiles[WIDTH-1][0];
 	}
 
+	public CityTile getLeftmostTile(){
+		return tiles[0][WIDTH-1];
+	}
+	
+	public CityTile getBottommostTile(){
+		return tiles[WIDTH-1][WIDTH-1];
+	}
+	
 	/**
 	 * Attempt to add the specified building, or do nothing if it is already in
 	 * this city.

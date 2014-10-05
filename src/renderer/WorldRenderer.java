@@ -203,6 +203,8 @@ public class WorldRenderer {
 			// TODO: what you add/subtract from where depends on camera perspective, should be here
 			int orient = camera.getOrientation();
 			if (orient == Camera.NORTH){
+		
+				
 				
 			}
 			
