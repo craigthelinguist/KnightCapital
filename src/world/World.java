@@ -215,8 +215,7 @@ public class World {
 		return points;
 	}
 
-	public void updateSprites() {
-		
+	public void updateSprites(boolean clockwise) {
 		for (int i = 0; i < tiles.length; i++){
 			for (int j = 0; j < tiles[i].length; j++){
 				Tile tile = tiles[i][j];
@@ -229,7 +228,11 @@ public class World {
 					else if (name.contains("south")) playerDir = Camera.SOUTH;
 					else if (name.contains("west")) playerDir = Camera.WEST;
 					else throw new RuntimeException("Unknown animation name: " + name);
-					playerDir = (playerDir+1)%4;
+					
+					if (clockwise) playerDir = (playerDir+1)%4;
+					else if (playerDir == 0) playerDir = 3;
+					else playerDir = playerDir - 1;
+					
 					if (playerDir == Camera.NORTH) wi.setAnimationName("north");
 					else if (playerDir == Camera.EAST) wi.setAnimationName("east");
 					else if (playerDir == Camera.SOUTH) wi.setAnimationName("south");

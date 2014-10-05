@@ -91,37 +91,33 @@ public class WorldController {
 		int code = ke.getKeyCode();
 		if (code == ROTATE_CW){
 			camera.rotateClockwise();
-			world.updateSprites();
+			world.updateSprites(true);
 			notifier();
 			gui.redraw();
 		}
 		else if (code == ROTATE_CCW){
 			camera.rotateCounterClockwise();
-			world.updateSprites();
+			world.updateSprites(false);
 			notifier();
 			gui.redraw();
 		}
 		else if (code == PAN_UP){
 			camera.panUp();
-			world.updateSprites();
 			notifier();
 			gui.redraw();
 		}
 		else if (code == PAN_DOWN){
 			camera.panDown();
-			world.updateSprites();
 			notifier();
 			gui.redraw();
 		}
 		else if (code == PAN_RIGHT){
 			camera.panRight();
-			world.updateSprites();
 			notifier();
 			gui.redraw();
 		}
 		else if (code == PAN_LEFT){
 			camera.panLeft();
-			world.updateSprites();
 			notifier();
 			gui.redraw();
 		}
