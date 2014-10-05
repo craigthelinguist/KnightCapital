@@ -92,7 +92,7 @@ public class TemporaryLoader {
 					cityTiles[a][b] = ct;
 				}
 			}
-			String[] cityAnimNames = new String[]{ "city.png" };
+			String[] cityAnimNames = new String[]{ "basic" };
 			City city = new City(cityAnimNames, pl, cityTiles);
 			
 			// world data

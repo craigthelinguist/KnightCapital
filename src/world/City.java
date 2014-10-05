@@ -45,6 +45,7 @@ public class City {
 
 	// image representing this city
 	private Animation animation;
+	private String animationName;
 	private Map<String, Animation> animationNames;
 
 	/**
@@ -59,8 +60,7 @@ public class City {
 	 *            located in the world in a way that makes sense. The first tile
 	 *            in overworldTiles must be the topmost.
 	 */
-	public City(String[] animationNamesArray, Player player,
-			CityTile[][] overworldTiles) {
+	public City(String[] animationNamesArray, Player player, CityTile[][] overworldTiles) {
 
 		// set up owner and fields storing details about this city
 		owner = player;
@@ -81,15 +81,15 @@ public class City {
 		
 		// set up animation names
 		animationNames = new HashMap<>();
-		for (int i = 0; i < animationNamesArray.length; i++) {
-			String name = animationNamesArray[i];
-			name = GlobalConstants.CITIES + name;
-			Animation anim = ImageLoader.loadAnimation(name);
-			if (i == 0)
-				animation = anim;
-			animationNames.put(name, anim);
+		for (int i = 0; i < animationNamesArray.length; i++){
+			String FILEPATH = GlobalConstants.CITIES + animationNamesArray[i];
+			Map<String,Animation> anims = ImageLoader.loadDirectedAnimations(FILEPATH);
+			for (Map.Entry<String, Animation> entry : anims.entrySet()){
+				animationNames.put(entry.getKey(), entry.getValue());
+			}		
 		}
-
+		animation = animationNames.get("north");
+		animationName = "north";
 	}
 
 	/**
@@ -148,6 +148,17 @@ public class City {
 		else if (orientation == Camera.SOUTH) return tiles[WIDTH-1][0];
 		else if (orientation == Camera.EAST) return tiles[WIDTH-1][WIDTH-1];
 		else throw new RuntimeException("unknown camera orientation: " + orientation);
+	}
+	
+	public void setAnimationName(String name){
+		if (animationNames.containsKey(name)){
+			animationName = name;
+			animation = animationNames.get(name);
+		}
+	}
+	
+	public String getAnimationName(){
+		return animationName;
 	}
 
 	public int getImageWidth(){

@@ -151,7 +151,6 @@ public class WorldController {
 						Party p = (Party)wi;
 						if (p.ownedBy(this.player)){
 							highlightedTiles = world.getValidMoves(p,clickedTile);
-							System.out.println("highlighted tiles :" + highlightedTiles.size());
 						}
 					}
 				}

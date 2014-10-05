@@ -243,6 +243,28 @@ public class World {
 			}
 		}
 		
+		for (City city : cities){
+			
+			String name = city.getAnimationName();
+			int cityDir;
+			if (name.contains("north")) cityDir = Camera.NORTH;
+			else if (name.contains("east")) cityDir = Camera.EAST;
+			else if (name.contains("south")) cityDir = Camera.SOUTH;
+			else if (name.contains("west")) cityDir = Camera.WEST;
+			else throw new RuntimeException("Unknown animation name: " + name);
+			
+			if (clockwise) cityDir = (cityDir+1)%4;
+			else if (cityDir == 0) cityDir = 3;
+			else cityDir = cityDir - 1;
+			
+			if (cityDir == Camera.NORTH) city.setAnimationName("north");
+			else if (cityDir == Camera.EAST) city.setAnimationName("east");
+			else if (cityDir == Camera.SOUTH) city.setAnimationName("south");
+			else if (cityDir == Camera.WEST) city.setAnimationName("west");
+			
+		}
+		
+		
 		// TODO Auto-generated method stub
 		
 	}
