@@ -179,10 +179,7 @@ public class WorldRenderer {
 		// |___________|
 		// our point is at p, for the purposes of drawing it has to be at q.
 		// we also need to shift the image up so the top of the image is in-line with the top of the topmost tile
-		graphics.setColor(Color.RED);
-		graphics.drawRect(ptIso.x, ptIso.y, City.WIDTH*TILE_WD, City.WIDTH*TILE_HT);
-		graphics.setColor(Color.BLUE);
-		graphics.drawRect(ptIso.x, ptIso.y, TILE_WD, TILE_HT);
+
 		int imageHeight = city.getImageHeight();
 		int necessaryHeight = TILE_HT*City.WIDTH;
 		int offsetY = imageHeight-necessaryHeight;
@@ -211,44 +208,9 @@ public class WorldRenderer {
 		final int ICON_HT = GlobalConstants.ICON_HT;
 		int iconY = isoY - TILE_HT/4;
 		int iconX = isoX + TILE_WD/2 - ICON_WD/2;
-		occupant.setAnimationName(getAnimationName(occupant.getAnimationName(),camera));
 		occupant.draw(graphics,iconX,iconY);
 	}
 
-	/**
-	 * Given a viewing perspective, returns the suffix of the animation name that should be viewed.
-	 * @param cam: camera whose perspective is being viewed.
-	 * @return: suffix of the animation that should be drawn for this viewing angles
-	 */
-	
-	// TODO: not entirely perfect, character doesn't always face correct direction
-	private static String getAnimationName(String animName, Camera cam){
-		
-		final String[] dirs = new String[]{ "north", "east", "south", "west" };
-		int playerDir = -1;
-		animName = animName.toLowerCase();
-		for (int i = 0; i < dirs.length; i++){
-			if (animName.contains(dirs[i])){
-				playerDir = i;
-				break;
-			}
-		}
-		int cameraDir = -1;
-		switch(cam.getOrientation()){
-		case Camera.NORTH:
-			cameraDir = 0; break;
-		case Camera.EAST:
-			cameraDir = 1; break;
-		case Camera.SOUTH:
-			cameraDir = 2; break;
-		case Camera.WEST:
-			cameraDir = 3; break;
-		}
-		
-		int dir = (playerDir+cameraDir)%4;
-		return dirs[dir];
-	}
-	
 	/**
 	 * Return a camera view of the centre of the given world that is north-oriented.
 	 * @param world: the world you're viewing.

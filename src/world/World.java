@@ -8,6 +8,7 @@ import java.util.PriorityQueue;
 import java.util.Set;
 
 import player.Player;
+import renderer.Camera;
 
 import tools.Geometry;
 import tools.GlobalConstants;
@@ -212,6 +213,33 @@ public class World {
 		if (p.y + 1 < tiles[p.x].length) points.add(new Point(p.x,p.y+1));
 		if (p.y - 1 >= 0) points.add(new Point(p.x,p.y-1));
 		return points;
+	}
+
+	public void updateSprites() {
+		
+		for (int i = 0; i < tiles.length; i++){
+			for (int j = 0; j < tiles[i].length; j++){
+				Tile tile = tiles[i][j];
+				WorldIcon wi = tile.occupant();
+				if (wi != null){
+					String name = wi.getAnimationName();
+					int playerDir;
+					if (name.contains("north")) playerDir = Camera.NORTH;
+					else if (name.contains("east")) playerDir = Camera.EAST;
+					else if (name.contains("south")) playerDir = Camera.SOUTH;
+					else if (name.contains("west")) playerDir = Camera.WEST;
+					else throw new RuntimeException("Unknown animation name: " + name);
+					playerDir = (playerDir+1)%4;
+					if (playerDir == Camera.NORTH) wi.setAnimationName("north");
+					else if (playerDir == Camera.EAST) wi.setAnimationName("east");
+					else if (playerDir == Camera.SOUTH) wi.setAnimationName("south");
+					else if (playerDir == Camera.WEST) wi.setAnimationName("west");
+				}
+			}
+		}
+		
+		// TODO Auto-generated method stub
+		
 	}
 	
 }
