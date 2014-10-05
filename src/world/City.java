@@ -153,4 +153,12 @@ public class City {
 		g.drawImage(animation.getSprite(), x, y, null);
 	}
 
+	public int getImageHeight(){
+		return animation.getSprite().getHeight();
+	}
+	
+	public int getImageWidth(){
+		return animation.getSprite().getWidth();
+	}
+	
 }

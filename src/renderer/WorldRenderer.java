@@ -170,11 +170,18 @@ public class WorldRenderer {
 		// 
 		// our point is at p, for the purposes of drawing it has to be at q.
 		// subtract the distance = (half tile width) * (number of tiles in the width of a city)
+		// we also need to shift the image up so the top of the image is in-line with the top of the topmost tile
 		final int OFFSET = HALF_TILE_WD*City.WIDTH;
 		for (CartesianMapping<City> mapping : cities){
 			City city = mapping.thing;
 			Point point = Geometry.cartesianToIsometric(mapping.point, camera);
 			point.x = point.x + HALF_TILE_WD - OFFSET;
+			graphics.setColor(Color.RED);
+			graphics.drawRect(point.x, point.y, City.WIDTH*TILE_WD, City.WIDTH*TILE_HT);
+			int imageHeight = city.getImageHeight();
+			int necessaryHeight = TILE_HT*City.WIDTH;
+			int offsetY = imageHeight-necessaryHeight;
+			if (offsetY > 0) point.y = point.y - offsetY;
 			city.draw(graphics, point.x, point.y);
 		}
 	
