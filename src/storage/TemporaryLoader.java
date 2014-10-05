@@ -67,10 +67,10 @@ public class TemporaryLoader {
 						
 					switch (line[x]){
 						case GRASS_TILE:
-							tiles[x][y] = PassableTile.newGrassTile();
+							tiles[x][y] = PassableTile.newGrassTile(x,y);
 							break;
 						case DIRT_TILE:
-							tiles[x][y] = PassableTile.newDirtTile();
+							tiles[x][y] = PassableTile.newDirtTile(x,y);
 							break;
 						default:
 							throw new IOException("Unknown symbol " + line[x] + " at ("+"x"+","+y+")");
@@ -87,7 +87,7 @@ public class TemporaryLoader {
 			
 			for (int i=4, a=0; i <= 6; i++, a++){
 				for (int j=4, b=0; j <= 6; j++, b++){
-					CityTile ct = new CityTile();
+					CityTile ct = new CityTile(i,j);
 					tiles[i][j] = ct;
 					cityTiles[a][b] = ct;
 				}

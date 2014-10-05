@@ -20,6 +20,12 @@ public abstract class Tile {
 
 	protected BufferedImage image;
 	protected WorldIcon occupant = null;
+	public final int X;
+	public final int Y;
+	
+	public Tile(int x, int y){
+		X = x; Y = y;
+	}
 	
 	public BufferedImage getImage(){
 		return image;

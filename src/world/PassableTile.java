@@ -10,16 +10,18 @@ import tools.ImageLoader;
 public class PassableTile extends Tile{
 
 	// instantiate using static factory methods - avoids typos and other things
-	private PassableTile(){}
+	private PassableTile(int x, int y){
+		super(x,y);
+	}
 	
-	public static PassableTile newDirtTile(){
-		PassableTile t = new PassableTile();
+	public static PassableTile newDirtTile(int x, int y){
+		PassableTile t = new PassableTile(x,y);
 		t.image = ImageLoader.load(GlobalConstants.ASSETS + "tile_dirt.png");
 		return t;
 	}
 	
-	public static PassableTile newGrassTile(){
-		PassableTile t = new PassableTile();
+	public static PassableTile newGrassTile(int x, int y){
+		PassableTile t = new PassableTile(x,y);
 		t.image = ImageLoader.load(GlobalConstants.ASSETS + "tile_grass.png");
 		return t;
 	}

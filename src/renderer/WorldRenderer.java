@@ -14,8 +14,10 @@ import java.util.Set;
 
 import controllers.WorldController;
 
+import tools.CartesianMapping;
 import tools.Geometry;
 import tools.GlobalConstants;
+import tools.Sorter;
 
 import world.CityTile;
 import world.Tile;
@@ -31,6 +33,8 @@ public class WorldRenderer {
 
 	private static final int TILE_WD = GlobalConstants.TILE_WD;
 	private static final int TILE_HT = GlobalConstants.TILE_HT;
+	private static final int HALF_TILE_WD = TILE_WD/2;
+	private static final int HALF_TILE_HT = TILE_HT/2;
 	
 	// use the static methods
 	private WorldRenderer(){}
@@ -117,6 +121,10 @@ public class WorldRenderer {
 			&&	pt.y < resolution.height + TILE_HT;
 	}
 	
+	private static class Tuple<T>{
+
+	}
+	
 	/**
 	 * Draw cities.
 	 * Untested! - Aaron.
@@ -126,56 +134,29 @@ public class WorldRenderer {
 		// preliminaries
 		final World world = controller.getWorld();
 		final Camera camera = controller.getCamera();
-		final int TILE_WD = GlobalConstants.TILE_WD;
-		final int TILE_HT = GlobalConstants.TILE_HT;
+		Set<? extends City> citySet = world.getCities();
+		int orientation = camera.getOrientation();
 		
-		// stores city and point
-		class Tuple{
-			City city;
-			Point point;
-			Tuple (City c, Point p){
-				city = c; point = p;
-			}
-			public boolean equals(Object o){
-				if (!(o instanceof Tuple)) return false;
-				Tuple t = (Tuple)o;
-				return t.city == city;
-			}
+		// get cities and store the tiles to draw them from in a list
+		List<CartesianMapping<City>> cities = new ArrayList<>();
+		for (City city : citySet){
+			CityTile ct = null;
+			if (orientation == Camera.EAST) ct = city.getLeftmostTile();
+			else if (orientation == Camera.WEST) ct = city.getRightmostTile();
+			else if (orientation == Camera.NORTH) ct = city.getTopmostTile(); 
+			else if (orientation == Camera.SOUTH) ct = city.getBottommostTile(); 
+			else throw new RuntimeException("unknown orientation for camera: " + orientation);
+			Point cityOrigin = new Point(ct.X,ct.Y);
+			Point rotatedPt = Geometry.rotateByCamera(cityOrigin, camera, world.dimensions);
+			CartesianMapping<City> tuple = new CartesianMapping<City>(city,rotatedPt);
+			cities.add(tuple);
 		}
 		
-		List<Tuple> cities = new ArrayList<>();
-		
-		// iterate over tiles; get Cities
-		Tile[][] tiles = world.getTiles();
-		for (int y = 0; y < tiles.length; y++){
-			for (int x = 0; x < tiles[y].length; x++){
-				
-				// if not a city tile we don't care
-				Tile tile = tiles[x][y];
-				if (!(tile instanceof CityTile)) continue;
-				
-				// extract the city from the tile
-				CityTile ct = (CityTile)tile;
-				City city = ct.getCity();
-				
-				// note that order of iteration means you will always reach the top-most tile
-				// of a city first.
-				Point ptRotated = Geometry.rotateByCamera(new Point(x,y), camera, world.dimensions);
-				Tuple tuple = new Tuple(city,ptRotated);
-				if (!cities.contains(tuple)) cities.add(tuple);
-				
-			}
-		}
-
-		// order cities from back to front
-		Comparator<Tuple> isometricSorter = new Comparator<Tuple>(){
-			@Override
-			public int compare(Tuple t1, Tuple t2) {
-				Point p1 = t1.point; Point p2 = t2.point;
-				return Geometry.taxicab(new Point(0,0), p1) - Geometry.taxicab(new Point(0,0), p2);
-			}	
-		};
-		Collections.sort(cities, isometricSorter);
+		// sort the cities to get the drawing order
+		if (orientation == Camera.NORTH) Sorter.sortTopToBottom(cities);
+		else if (orientation == Camera.EAST) Sorter.sortRightToLeft(cities);
+		else if (orientation == Camera.WEST) Sorter.sortLeftToRight(cities);
+		else if (orientation == Camera.SOUTH) Sorter.sortBottomToTop(cities);
 		
 		// 
 		//  ___________
@@ -189,31 +170,14 @@ public class WorldRenderer {
 		// 
 		// our point is at p, for the purposes of drawing it has to be at q.
 		// subtract the distance = (half tile width) * (number of tiles in the width of a city)
-		int OFFSET_WD = TILE_WD/2 * City.WIDTH;
-		for (Tuple tuple : cities){
-			
-			// get city and the corresponding pt at the top of the city in isometric space
-			City city = tuple.city;
-			Point ptCartesian = tuple.point;
-			Point ptIso = Geometry.cartesianToIsometric(ptCartesian, camera);
-			
-			// we add TILE_WD/2 because ptIso will be at the top-left of the corresponding tile's bounding box:
-			// we want it to be in the top-middle
-			
-			// TODO: what you add/subtract from where depends on camera perspective, should be here
-			int orient = camera.getOrientation();
-			if (orient == Camera.NORTH){
-		
-				
-				
-			}
-			
-			int newX = ptIso.x + TILE_WD/2 - OFFSET_WD;
-			city.draw(graphics, newX, ptIso.y);
-			
+		final int OFFSET = HALF_TILE_WD*City.WIDTH;
+		for (CartesianMapping<City> mapping : cities){
+			City city = mapping.thing;
+			Point point = Geometry.cartesianToIsometric(mapping.point, camera);
+			point.x = point.x + HALF_TILE_WD - OFFSET;
+			city.draw(graphics, point.x, point.y);
 		}
-		
-		
+	
 	}
 	
 	public static void drawIcon(Graphics graphics, Camera camera, WorldIcon occupant, Point ptIso){

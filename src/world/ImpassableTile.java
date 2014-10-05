@@ -2,10 +2,12 @@ package world;
 
 public class ImpassableTile extends Tile{
 
-	private ImpassableTile(){}
+	private ImpassableTile(int x, int y){
+		super(x,y);
+	}
 	
-	public static ImpassableTile newVoidTile(){
-		return new ImpassableTile();
+	public static ImpassableTile newVoidTile(int x, int y){
+		return new ImpassableTile(x,y);
 	}
 	
 	@Override

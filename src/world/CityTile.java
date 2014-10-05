@@ -1,6 +1,7 @@
 package world;
 
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.image.BufferedImage;
 
 import tools.ImageManipulation;
@@ -15,6 +16,10 @@ public class CityTile extends Tile {
 	// city that this CityTile is apart of.
 	private City city;
 
+	public CityTile(int x, int y){
+		super(x,y);
+	}
+	
 	public void setCity(City newCity){
 		city = newCity;
 	}

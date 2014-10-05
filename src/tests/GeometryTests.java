@@ -73,22 +73,22 @@ public class GeometryTests {
 	
 	private void init(){
 		tiles = new Tile[4][4];
-		tiles[0][0] = PassableTile.newDirtTile();
-		tiles[1][0] = PassableTile.newDirtTile();
-		tiles[2][0] = PassableTile.newDirtTile();
-		tiles[3][0] = PassableTile.newDirtTile();
-		tiles[0][1] = PassableTile.newDirtTile();
-		tiles[1][1] = PassableTile.newDirtTile();
-		tiles[2][1] = PassableTile.newDirtTile();
-		tiles[3][1] = PassableTile.newDirtTile();
-		tiles[0][2] = PassableTile.newDirtTile();
-		tiles[1][2] = PassableTile.newDirtTile();
-		tiles[2][2] = PassableTile.newDirtTile();
-		tiles[3][2] = PassableTile.newDirtTile();
-		tiles[0][3] = PassableTile.newDirtTile();
-		tiles[1][3] = PassableTile.newDirtTile();
-		tiles[2][3] = PassableTile.newDirtTile();
-		tiles[3][3] = PassableTile.newDirtTile();
+		tiles[0][0] = PassableTile.newDirtTile(0,0);
+		tiles[1][0] = PassableTile.newDirtTile(1,0);
+		tiles[2][0] = PassableTile.newDirtTile(2,0);
+		tiles[3][0] = PassableTile.newDirtTile(3,0);
+		tiles[0][1] = PassableTile.newDirtTile(0,1);
+		tiles[1][1] = PassableTile.newDirtTile(1,1);
+		tiles[2][1] = PassableTile.newDirtTile(2,1);
+		tiles[3][1] = PassableTile.newDirtTile(3,1);
+		tiles[0][2] = PassableTile.newDirtTile(0,2);
+		tiles[1][2] = PassableTile.newDirtTile(1,2);
+		tiles[2][2] = PassableTile.newDirtTile(2,2);
+		tiles[3][2] = PassableTile.newDirtTile(3,2);
+		tiles[0][3] = PassableTile.newDirtTile(0,3);
+		tiles[1][3] = PassableTile.newDirtTile(1,3);
+		tiles[2][3] = PassableTile.newDirtTile(2,3);
+		tiles[3][3] = PassableTile.newDirtTile(3,3);
 		world = new World(tiles,null,null);
 		camera = new Camera(0,0,Camera.NORTH);
 	}
