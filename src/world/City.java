@@ -11,6 +11,7 @@ import java.util.Set;
 
 import player.Player;
 import renderer.Animation;
+import renderer.Camera;
 import tools.GlobalConstants;
 import tools.ImageLoader;
 import tools.Log;
@@ -92,28 +93,6 @@ public class City {
 	}
 
 	/**
-	 * Returns the topmost CityTile of this City. This is assumed to be the tile
-	 * at index 0.
-	 * 
-	 * @return: the topmost tile.
-	 */
-	public CityTile getTopmostTile() {
-		return tiles[0][0];
-	}
-	
-	public CityTile getRightmostTile(){
-		return tiles[WIDTH-1][0];
-	}
-
-	public CityTile getLeftmostTile(){
-		return tiles[0][WIDTH-1];
-	}
-	
-	public CityTile getBottommostTile(){
-		return tiles[WIDTH-1][WIDTH-1];
-	}
-	
-	/**
 	 * Attempt to add the specified building, or do nothing if it is already in
 	 * this city.
 	 * 
@@ -156,7 +135,21 @@ public class City {
 	public int getImageHeight(){
 		return animation.getSprite().getHeight();
 	}
-	
+
+	/**
+	 * Return the tile that would be visually leftmost from the perspective of the given camera.
+	 * @param camera: viewing perspective
+	 * @return: the leftmost tile.
+	 */
+	public CityTile getLeftmostTile(Camera camera){
+		int orientation = camera.getOrientation();
+		if (orientation == Camera.NORTH) return tiles[0][WIDTH-1];
+		else if (orientation == Camera.WEST) return tiles[0][0];
+		else if (orientation == Camera.SOUTH) return tiles[WIDTH-1][0];
+		else if (orientation == Camera.EAST) return tiles[WIDTH-1][WIDTH-1];
+		else throw new RuntimeException("unknown camera orientation: " + orientation);
+	}
+
 	public int getImageWidth(){
 		return animation.getSprite().getWidth();
 	}

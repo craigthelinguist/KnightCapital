@@ -149,11 +149,7 @@ public class WorldRenderer {
 		// get mappings and store the tiles to draw them from in a list
 		for (City city : citySet){
 			CityTile ct = null;
-			if (orientation == Camera.EAST) ct = city.getLeftmostTile();
-			else if (orientation == Camera.WEST) ct = city.getRightmostTile();
-			else if (orientation == Camera.NORTH) ct = city.getTopmostTile(); 
-			else if (orientation == Camera.SOUTH) ct = city.getBottommostTile(); 
-			else throw new RuntimeException("unknown orientation for camera: " + orientation);
+			ct = city.getLeftmostTile(controller.getCamera());
 			Point cityOrigin = new Point(ct.X,ct.Y);
 			Point rotatedPt = Geometry.rotateByCamera(cityOrigin, camera, world.dimensions);
 			CartesianMapping<City> mapping = new CartesianMapping<City>(city,rotatedPt);
@@ -163,7 +159,7 @@ public class WorldRenderer {
 	}
 
 	/**
-	 * Draw the given city. Assumes that the point is the point obtained by rotating the city's topmost tile (from the
+	 * Draw the given city. Assumes that the point is the point obtained by rotating the city's leftmost tile (from the
 	 * camera's perspective) along the camera's viewing perspective and then converting into isometric with no further
 	 * manipulation.
 	 * @param graphics: object on which to draw
@@ -174,25 +170,26 @@ public class WorldRenderer {
 	private static void drawCity(Graphics graphics, Point ptIso, Camera camera, City city){
 		
 		//  ___________
-		// |q    p     |
+		// |q          |
 		// |     x     |
 		// |   x   x   |
-		// | x   x   x |
+		// |px   x   x |
 		// |   x   x   |
 		// |     x     |
 		// |___________|
 		// our point is at p, for the purposes of drawing it has to be at q.
-		// subtract the distance = (half tile width) * (number of tiles in the width of a city)
 		// we also need to shift the image up so the top of the image is in-line with the top of the topmost tile
-		
-		final int OFFSET = HALF_TILE_WD*City.WIDTH;
-		ptIso.x = ptIso.x + HALF_TILE_WD - OFFSET;
 		graphics.setColor(Color.RED);
 		graphics.drawRect(ptIso.x, ptIso.y, City.WIDTH*TILE_WD, City.WIDTH*TILE_HT);
+		graphics.setColor(Color.BLUE);
+		graphics.drawRect(ptIso.x, ptIso.y, TILE_WD, TILE_HT);
 		int imageHeight = city.getImageHeight();
 		int necessaryHeight = TILE_HT*City.WIDTH;
 		int offsetY = imageHeight-necessaryHeight;
 		if (offsetY > 0) ptIso.y = ptIso.y - offsetY;
+		int OFFSET = HALF_TILE_HT*City.WIDTH;
+		ptIso.y = ptIso.y - OFFSET;
+		ptIso.y = ptIso.y + HALF_TILE_HT;
 		city.draw(graphics, ptIso.x, ptIso.y);
 	}
 	
