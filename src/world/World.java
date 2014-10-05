@@ -2,9 +2,11 @@ package world;
 
 import java.awt.Dimension;
 import java.awt.Point;
+import java.util.ArrayDeque;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
+import java.util.Queue;
 import java.util.Set;
 
 import player.Player;
@@ -243,6 +245,53 @@ public class World {
 		
 		// TODO Auto-generated method stub
 		
+	}
+
+	/**
+	 * Return the set of valid moves for the given party on the selected tile.
+	 * @param party: the party that is moving.
+	 * @param start: the tile they're starting from.
+	 */
+	public Set<Point> getValidMoves(Party party, Tile start) {
+		
+		// a wrapper class for the nodes in the queue
+		class Node{
+			
+			final Point point;
+			final int distance;
+			
+			public Node(Point p, int d){
+				point = p;
+				distance = d;
+			}
+			
+			public int hashCode(){
+				return point.hashCode();
+			}
+			
+		}
+		
+		int movePoints = party.getMovePoints();
+		if (movePoints == 0) return new HashSet<Point>();
+		Point point = new Point(start.X,start.Y);
+		Node node = new Node(point,0);
+		Set<Point> visited = new HashSet<>();
+		Queue<Node> queue = new ArrayDeque<>();
+		queue.offer(node);
+		
+		while (!queue.isEmpty()){
+			node = queue.poll();
+			point = node.point;
+			visited.add(point);
+			LinkedList<Point> neighbours = findNeighbours(point);
+			int newDist = node.distance + 1;
+			for (Point neighbour : neighbours){
+				if (newDist > movePoints || visited.contains(neighbour)) continue;
+				else queue.offer(new Node(neighbour,newDist));
+			}
+		}
+		
+		return visited;
 	}
 	
 }

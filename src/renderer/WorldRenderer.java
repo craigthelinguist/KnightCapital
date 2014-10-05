@@ -120,8 +120,12 @@ public class WorldRenderer {
 				Tile tile = world.getTile(x,y);
 				Point ptRotated = Geometry.rotateByCamera(ptCart, camera, world.dimensions);
 				Point ptIso = Geometry.cartesianToIsometric(ptRotated, camera);
-				if (tile == controller.getSelectedTile()) tile.drawHighlighted(graphics, ptIso.x, ptIso.y);
-				else tile.draw(graphics, ptIso.x, ptIso.y);
+				if (tile == controller.getSelectedTile() || controller.highlighted(ptCart)){
+					tile.drawHighlighted(graphics, ptIso.x, ptIso.y);
+				}
+				else{
+					tile.draw(graphics, ptIso.x, ptIso.y);
+				}
 				
 				// add occupant to buffer, if it exists
 				WorldIcon occupant = tile.occupant();

@@ -6,6 +6,8 @@ import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.swing.JButton;
 import javax.swing.SwingUtilities;
@@ -21,6 +23,7 @@ import tools.GlobalConstants;
 import world.Party;
 import world.Tile;
 import world.World;
+import world.WorldIcon;
 import GUI.MainFrame;
 
 /**
@@ -47,6 +50,7 @@ public class WorldController {
 
 	// current tile and perspective
 	private Point selected;
+	private Set<Point> highlightedTiles;
 	private Camera camera;
 
 	// key bindings
@@ -64,6 +68,7 @@ public class WorldController {
 		gui = new MainFrame();
 		gui.setController(this);
 		selected = null;
+		highlightedTiles = new HashSet<>();
 
 		if(serverOrClient){
 			try {
@@ -140,6 +145,16 @@ public class WorldController {
 			// selected the tile
 			if (selectedTile != clickedTile && SwingUtilities.isLeftMouseButton(me)){
 				selected = ptCartesian;
+				if (clickedTile != null){
+					WorldIcon wi = clickedTile.occupant();
+					if (wi != null && wi instanceof Party){
+						Party p = (Party)wi;
+						if (p.ownedBy(this.player)){
+							highlightedTiles = world.getValidMoves(p,clickedTile);
+							System.out.println("highlighted tiles :" + highlightedTiles.size());
+						}
+					}
+				}
 				gui.updateInfo(clickedTile);
 				gui.redraw();
 			}
@@ -147,6 +162,7 @@ public class WorldController {
 			// deselected the tile
 			else if (selected != null && SwingUtilities.isLeftMouseButton(me)){
 				if (selectedTile == clickedTile) selected = null;
+				highlightedTiles = new HashSet<>();
 				gui.updateInfo(null);
 				gui.redraw();
 			}
@@ -156,6 +172,7 @@ public class WorldController {
 				boolean moved = world.moveParty(player, selected, ptCartesian);
 				if (moved){
 					selected = ptCartesian;
+					highlightedTiles = world.getValidMoves((Party)clickedTile.occupant(),clickedTile);
 					gui.updateInfo(clickedTile);
 					gui.redraw();
 				}
@@ -166,6 +183,16 @@ public class WorldController {
 
 	}
 
+	/**
+	 * Return true if this point is being highlighted by the world controller
+	 * @param p: a point in cartesian spcae
+	 * @return: true if this point is being highlighted by the world controller
+	 */
+	public boolean highlighted(Point p){
+		if (highlightedTiles.contains(p)) return true;
+		else return selected != null && selected.equals(p);
+	}
+	
 	/**
 	 * Player has clicked a button.
 	 * @param button: the button they clicked.
