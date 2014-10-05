@@ -7,7 +7,7 @@ public class ImageManipulation {
 
 	private ImageManipulation(){}
 	
-	public static BufferedImage lighten(BufferedImage image) {
+	public static BufferedImage lighten(BufferedImage image, int intensity) {
 
 		final int WIDTH = image.getWidth();
 		final int HEIGHT = image.getHeight();
@@ -16,7 +16,7 @@ public class ImageManipulation {
 		byte[] pixels = ((DataBufferByte) image.getRaster().getDataBuffer()).getData();
 		byte[] result = ((DataBufferByte) resultingImage.getRaster().getDataBuffer()).getData();
 
-		int increment = 55; // lighten by this amount
+		int increment = intensity; // lighten by this amount
 
 		// every 4 bytes is the (alpha,r,g,b) of a pixel
 		for (int pixel = 0; pixel < pixels.length; pixel += 4) {

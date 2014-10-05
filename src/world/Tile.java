@@ -59,8 +59,8 @@ public abstract class Tile {
 	 * @param x
 	 * @param y
 	 */
-	public void drawHighlighted(Graphics graphics, int x, int y) {
-		BufferedImage lighterImage = ImageManipulation.lighten(image);
+	public void drawHighlighted(Graphics graphics, int x, int y, int intensity) {
+		BufferedImage lighterImage = ImageManipulation.lighten(image, intensity);
 		graphics.drawImage(lighterImage,x,y,null);
 	}
 		

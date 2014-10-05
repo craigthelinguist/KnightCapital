@@ -145,13 +145,13 @@ public class InventoryPanel extends JPanel implements MouseListener {
 	public void mouseEntered(MouseEvent e) {
 		repaint();
 		if(e.getSource() == slot1) {
-			slot1.changeBackground(ImageManipulation.lighten(slot1.getBackgroundImage()));
+			slot1.changeBackground(ImageManipulation.lighten(slot1.getBackgroundImage(),55));
 			dSlot1 = new ItemSlotInformation(frame,"Epinephrine Autoinjector. Used for intramuscular injection to revive unconscious casualties.");
 			dSlot1.setLocation(frame.getWidth()-500,frame.getHeight()-400);
 			dSlot1.setVisible(true);
 	    }
 		if(e.getSource() == slot2) {
-			slot2.changeBackground(ImageManipulation.lighten(slot2.getBackgroundImage()));
+			slot2.changeBackground(ImageManipulation.lighten(slot2.getBackgroundImage(),55));
 			dSlot2 = new ItemSlotInformation(frame,"Heals your hero for    100 health.");
 			dSlot2.setLocation(frame.getWidth()-425,frame.getHeight()-400);
 			dSlot2.setVisible(true);

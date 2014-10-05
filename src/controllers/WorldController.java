@@ -189,8 +189,7 @@ public class WorldController {
 	 * @return: true if this point is being highlighted by the world controller
 	 */
 	public boolean highlighted(Point p){
-		if (highlightedTiles.contains(p)) return true;
-		else return selected != null && selected.equals(p);
+		return highlightedTiles.contains(p);
 	}
 	
 	/**

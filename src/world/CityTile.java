@@ -38,7 +38,7 @@ public class CityTile extends Tile {
 	}
 	
 	@Override
-	public void drawHighlighted(Graphics graphics, int x, int y) {
+	public void drawHighlighted(Graphics graphics, int x, int y, int intensity) {
 		// do nothing - call draw on the city.
 	}
 	
