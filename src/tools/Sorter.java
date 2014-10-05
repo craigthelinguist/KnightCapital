@@ -33,6 +33,7 @@ public class Sorter {
 	private static class TopToBottomSorter implements Comparator<CartesianMapping<?>> {
 		@Override
 		public int compare(CartesianMapping arg0, CartesianMapping arg1) {
+			if (arg0.depth != arg1.depth) return arg0.depth - arg1.depth;
 			return Geometry.taxicab(arg0.point, ORIGIN) - Geometry.taxicab(arg1.point, ORIGIN);
 		}
 	}
