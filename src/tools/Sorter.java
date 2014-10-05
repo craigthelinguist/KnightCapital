@@ -11,11 +11,14 @@ import java.util.List;
  */
 public class Sorter {
 
+	// use the static methods
+	private Sorter(){}
+	
 	/**
 	 * Sort points from topmost to bottom-most.
 	 * @param stuffToSort: list of cartesian mappings to sort.
 	 */
-	public static <T> void sortTopToBottom(List<CartesianMapping<T>> cities) {
+	public static <T> void sortTopToBottom(List<CartesianMapping<?>> cities) {
 		TopToBottomSorter sorter = new TopToBottomSorter();
 		Collections.sort(cities,sorter);
 	}
@@ -24,7 +27,7 @@ public class Sorter {
 	 * Sort points from bottom-most to topmost.
 	 * @param stuffToSort: list of cartesian mappings to sort.
 	 */
-	public static <T> void sortBottomToTop(List<CartesianMapping<T>> stuffToSort) {
+	public static <T> void sortBottomToTop(List<CartesianMapping<? extends Object>> stuffToSort) {
 		BottomToTopSorter sorter = new BottomToTopSorter();
 		Collections.sort(stuffToSort,sorter);
 	}
@@ -33,7 +36,7 @@ public class Sorter {
 	 * Sort points from leftmost to rightmost.
 	 * @param stuffToSort: list of cartesian mappings to sort.
 	 */
-	public static <T> void sortLeftToRight(List<CartesianMapping<T>> stuffToSort) {
+	public static <T> void sortLeftToRight(List<CartesianMapping<? extends Object>> stuffToSort) {
 		LeftToRightSorter sorter = new LeftToRightSorter();
 		Collections.sort(stuffToSort, sorter);
 	}
@@ -42,9 +45,9 @@ public class Sorter {
 	 * Sort points from rightmost to leftmost.
 	 * @param stuffToSort: list of cartesian mappings to sort.
 	 */
-	public static <T> void sortRightToLeft(List<CartesianMapping<T>> stuffToSort) {
+	public static <T> void sortRightToLeft(List<CartesianMapping<? extends Object>> drawBuffer) {
 		RightToLeftSorter sorter = new RightToLeftSorter();
-		Collections.sort(stuffToSort, sorter);
+		Collections.sort(drawBuffer, sorter);
 	}
 	
 	/**

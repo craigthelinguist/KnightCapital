@@ -43,6 +43,11 @@ public class CityTile extends Tile {
 	}
 	
 	@Override
+	public WorldIcon occupant(){
+		return null;
+	}
+	
+	@Override
 	public boolean passable(Party party) {
 		// TODO: this should return true if the tile is the entrance to the city.
 		// that way world will put the party inside the city garrison.
