@@ -88,7 +88,7 @@ public class RendererDemo {
 			protected void paintComponent(Graphics g) {
 				g.setColor(Color.WHITE);
 				g.fillRect(0, 0, GlobalConstants.WINDOW_WD, GlobalConstants.WINDOW_HT);
-				WorldRenderer.render(world, g, getSize(), camera);
+				//WorldRenderer.render(world, g, getSize(), camera);
 				this.repaint();
 			}
 		};
@@ -267,7 +267,7 @@ public class RendererDemo {
 				int y = e.getY();
 
 				//create point, converting from iso to cart
-				
+				/**
 				Point p = Geometry.isometricToCartesian(new Point(x, y), camera);
 				int arrayX = p.x;
 				int arrayY = p.y;
@@ -287,7 +287,7 @@ public class RendererDemo {
 					party_y = arrayY;
 
 					worldPanel.repaint();
-				}
+				} **/
 
 			}
 
