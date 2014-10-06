@@ -19,6 +19,9 @@ import world.World;
 
 /**
  * This is a test environment for the graphics renderer.
+ * 
+ * NOTE: This is broken as of Integration day, RIP.
+ * 
  * @author myles
  *
  */
@@ -45,6 +48,8 @@ public class RendererDemo {
 	private static final int PAN_LEFT = KeyEvent.VK_LEFT;
 
 	public RendererDemo() {
+		
+		System.out.println("RENDERER DEMO IS DEPRECIATED, USE WORLD CONTROLLER");
 
 		// Create World and Party.
 		world = TemporaryLoader.loadWorld("world_temporary.txt");
