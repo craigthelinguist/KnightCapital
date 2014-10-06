@@ -79,7 +79,7 @@ public class WorldRenderer {
 		graphics.drawString("Current Rotation: "+(camera.getOrientation() * 90), 30, 50);
 		graphics.drawString("Current Origin: ("+camera.getOriginX()+","+camera.getOriginY()+")", 30, 70);
 		graphics.drawString("Arrow keys to move camera", 30, 110);
-		graphics.drawString("Press r to rotate", 30, 130);
+		graphics.drawString("Press r & e to rotate cw & ccw", 30, 130);
 		
 
 	}

@@ -25,6 +25,8 @@ import world.World;
  * @author myles
  *
  */
+
+@Deprecated
 public class RendererDemo {
 
 	// World Variables
@@ -265,6 +267,7 @@ public class RendererDemo {
 				int y = e.getY();
 
 				//create point, converting from iso to cart
+				
 				Point p = Geometry.isometricToCartesian(new Point(x, y), camera);
 				int arrayX = p.x;
 				int arrayY = p.y;
