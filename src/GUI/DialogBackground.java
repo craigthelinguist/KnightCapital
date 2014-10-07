@@ -110,7 +110,7 @@ public class DialogBackground extends JPanel implements ActionListener {
 	     int charPerLine=(int)(strLength*rc.width/(double)strWidth);
 
 	     if(charPerLine>=strLength) {
-	        g.drawString(str,rc.x,rc.y+strHeight);
+	        g.drawString(str,rc.x+(strWidth*2)+10,rc.y+strHeight);
 	     }
 	     else {
 	        int lines=strLength/charPerLine;
