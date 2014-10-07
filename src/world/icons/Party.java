@@ -75,6 +75,22 @@ public class Party extends WorldIcon{
 	}
 	
 	/**
+	 * Return the hero leading this party.
+	 * @return: a hero.
+	 */
+	public Hero getHero(){
+		return this.hero;
+	}
+	
+	/**
+	 * Return the player that owns this party.
+	 * @return: a player
+	 */
+	public Player getOwner(){
+		return this.owner;
+	}
+	
+	/**
 	 * Return true if the specified heroes leads this party.
 	 * @param h: hero to check
 	 * @return: true if the hero leads this party.

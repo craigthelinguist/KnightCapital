@@ -8,11 +8,12 @@ import game.items.Item;
  * @author craigthelinguist
  *
  */
-public class ItemIcon {
+public class ItemIcon extends WorldIcon {
 
 	private final Item item;
 	
 	public ItemIcon(String imgName, Item item){
+		super(imgName);
 		this.item = item;
 	}
 	

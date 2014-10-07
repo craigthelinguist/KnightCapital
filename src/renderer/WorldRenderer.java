@@ -184,7 +184,7 @@ public class WorldRenderer {
 		// |   x   x   |
 		// |     x     |
 		// |___________|
-		// our point is at p, for the purposes of drawing it has to be at q.
+		// our point is at p, for the purposeparts of drawing it has to be at q.
 		// we also need to shift the image up so the top of the image is in-line with the top of the topmost tile
 
 		int imageHeight = city.getImageHeight();

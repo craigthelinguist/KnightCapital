@@ -1,5 +1,7 @@
 package GUI;
 
+import game.items.Item;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -19,6 +21,10 @@ import javax.swing.JPanel;
 
 import tools.GlobalConstants;
 import tools.ImageLoader;
+import world.icons.ItemIcon;
+import world.icons.Party;
+import world.icons.WorldIcon;
+import world.tiles.CityTile;
 import world.tiles.Tile;
 
 /**
@@ -107,6 +113,35 @@ public class PlayerInformationPanel extends JPanel{
 	   * @param tile: tile whose info you'll display.
 	   */
 	public void updateInfo(Tile tile) {
+		
+		// nothing selected, display a blank panel
+		if (tile == null){
+			
+		}
+		// city tile selected, draw some info about the city
+		else if (tile instanceof CityTile){
+			CityTile ct = (CityTile)tile;
+			ct.getCity();
+		}
+
+		WorldIcon occupant = tile.occupant();
+		
+		// empty tile selected, display some grass or something
+		if (occupant == null){
+			
+		}
+		
+		else if (occupant instanceof Party){
+			Party party = (Party)occupant;
+			party.getHero();
+			party.getOwner();
+		}
+		
+		// item on the tile, draw a picture of a treasure chest or something
+		else if (occupant instanceof ItemIcon){
+		}
+		
+		
 	}
 
 }
