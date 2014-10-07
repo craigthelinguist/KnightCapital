@@ -4,6 +4,7 @@ import java.awt.AlphaComposite;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
@@ -19,6 +20,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 
+import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -36,8 +38,8 @@ import tools.ImageLoader;
 public class DialogBackground extends JPanel implements ActionListener {
 
 	/* Initialize buttons */
-	CustomButton declineButton;
-	CustomButton confirmButton;
+	private CustomButton declineButton;
+	private CustomButton confirmButton;
 
 	GameDialog gameDialog;
 
@@ -59,20 +61,20 @@ public class DialogBackground extends JPanel implements ActionListener {
 		/*Set up the grid bag constraints and insets */
 		GridBagConstraints c = new GridBagConstraints();
 		c.insets = new Insets(10,10,10,10);
-
+		
+		
 		/*Declare and initialize the images for the button */
 		BufferedImage confirmButtonDefault = ImageLoader.load(GlobalConstants.GUI_FILEPATH + "dialogConfirmButton.png");
 		BufferedImage confirmButtonPressed = ImageLoader.load(GlobalConstants.GUI_FILEPATH + "dialogConfirmButtonPressed.png");
-		confirmButton = new CustomButton(confirmButtonDefault, confirmButtonPressed,null);
+		confirmButton = new CustomButton(confirmButtonDefault, confirmButtonPressed,confirmButtonDefault);
 		c.gridx = 0;
 		c.gridy = 1;
 		this.add(confirmButton,c);
-
-
+		
 		/*Declare and initialize the images for the button */
 		BufferedImage declineButtonDefault = ImageLoader.load(GlobalConstants.GUI_FILEPATH + "dialogDeclineButton.png");
 		BufferedImage declineButtonPressed = ImageLoader.load(GlobalConstants.GUI_FILEPATH + "dialogDeclineButtonPressed.png");
-		declineButton = new CustomButton(declineButtonDefault, declineButtonPressed,null);
+		declineButton = new CustomButton(declineButtonDefault, declineButtonPressed,declineButtonDefault);
 		c.gridx = 1;
 		c.gridy = 1;
 		this.add(declineButton,c);
@@ -80,6 +82,7 @@ public class DialogBackground extends JPanel implements ActionListener {
 		/*Set up the action listener for the buttons */
 		confirmButton.addActionListener(this);
 		declineButton.addActionListener(this);
+		
 	}
 
 
@@ -91,7 +94,7 @@ public class DialogBackground extends JPanel implements ActionListener {
 
 	    g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
 	    //g.drawString(message,50,50);
-	    drawOntoPanel(message,new Rectangle(15,15,300,300), g);
+	   drawOntoPanel(message,new Rectangle(15,15,300,300), g);
 	  }
 
 

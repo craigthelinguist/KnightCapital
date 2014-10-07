@@ -92,6 +92,7 @@ public class EscapeDialogBackground extends JPanel implements ActionListener{
 		c.gridy = 4;
 		this.add(quitGame,c);
 
+	
 		/*Set up the action listener for the buttons */
 		quitGame.addActionListener(this);
 	}

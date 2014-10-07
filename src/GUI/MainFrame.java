@@ -123,7 +123,6 @@ public class MainFrame extends JFrame  {
 	 * @author Dennis Ritchie :^)
 	 */
 	private class WorldKeyDispatcher implements KeyEventDispatcher {
-
 		@Override
 		public boolean dispatchKeyEvent(KeyEvent e) {
 			if (closeDialogEnabled) return false;
@@ -137,9 +136,7 @@ public class MainFrame extends JFrame  {
 				EscapeDialog dialog = new EscapeDialog(MainFrame.this);
 		    }
 			return false;
-
 		}
-
 	}
 
 	public void redraw(){

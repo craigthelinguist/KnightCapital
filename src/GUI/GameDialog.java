@@ -10,6 +10,7 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
@@ -24,15 +25,15 @@ import tools.ImageLoader;
  * @author Ewan Moshi
  *
  */
-public class GameDialog extends JDialog implements KeyListener {
+public class GameDialog extends JDialog {
 
 	private DialogPanel panel;
 	private String FILENAME = GlobalConstants.GUI_BUTTONS;
 
 	public GameDialog (MainFrame frame,String msg) {
 		super(frame,true);
-		this.setSize(400,374); //height, width
-		//this.setUndecorated(true); //removes the border
+		this.setSize(400,374); //width, height
+		this.setUndecorated(true); //removes the border
 		// TODO: if i don't uncommenet this i can't exit the frame.... need to do this to test end turn
 		// maybe there should be butotn on the gamedialog u click ok and it exits dialog - Aaron
 		
@@ -53,30 +54,6 @@ public class GameDialog extends JDialog implements KeyListener {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-
-
-	@Override
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-
-	@Override
-	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
-	    if(e.getKeyCode() == KeyEvent.VK_ESCAPE)
-	    {
-	    	System.out.println("sdfdf");
-	    }
-	}
-
-
-	@Override
-	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-
 	}
 
 }

@@ -29,7 +29,7 @@ public class CustomButton extends JButton implements MouseListener {
 		this.setOpaque(false);
 		this.setContentAreaFilled( false );
 		this.defaultIcon = new ImageIcon(buttonDefaultIcon); //this is the image of the button (default)
-		this.mousePressedIcon = new ImageIcon(buttonPressedIcon); //this is the image of the button when mouse is over button
+		this.mousePressedIcon = new ImageIcon(buttonPressedIcon); //this is the image of the button when mouse is pressed on button
 
 		/*Some buttons don't have a hover icon so we must check if the parameter is null to prevent null pointer when trying to set the icon for hover to null*/
 		if(buttonHoverIcon == null) {
