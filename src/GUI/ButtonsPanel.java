@@ -52,23 +52,18 @@ public class ButtonsPanel extends JPanel  {
 
 
 		/*Declare and initialize the images for the button */
-		BufferedImage newGameDefault = ImageLoader.load(GlobalConstants.GUI_FILEPATH + "newGameButton.png");
-		BufferedImage newGamePressed = ImageLoader.load(GlobalConstants.GUI_FILEPATH + "newGameButtonPressed.png");
-		BufferedImage newGameHover = ImageLoader.load(GlobalConstants.GUI_FILEPATH + "newGameButtonHover.png");
+		BufferedImage newGameDefault = ImageLoader.load(GlobalConstants.GUI_BUTTONS + "newGameButton.png");
+		BufferedImage newGamePressed = ImageLoader.load(GlobalConstants.GUI_BUTTONS + "newGameButtonClicked.png");
+		BufferedImage newGameHover = ImageLoader.load(GlobalConstants.GUI_BUTTONS + "newGameButtonHover.png");
 		newGame = new CustomButton(newGameDefault, newGamePressed, newGameHover);
 		c.gridx = 0;
 		c.gridy = 1;
 		this.add(newGame,c);
 
-		b2 = new JButton("placeholder");
+		b2 = new JButton("End Turn Placeholder");
 		c.gridx = 0;
 		c.gridy = 2;
 		this.add(b2,c);
-
-		b3 = new JButton("placeholder");
-		c.gridx = 0;
-		c.gridy = 3;
-		this.add(b3,c);
 
 
 	}
