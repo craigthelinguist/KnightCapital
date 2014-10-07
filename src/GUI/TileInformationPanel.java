@@ -34,14 +34,14 @@ import world.tiles.Tile;
  * @author Ewan Moshi
  *
  */
-public class PlayerInformationPanel extends JPanel{
+public class TileInformationPanel extends JPanel{
 
 	private BufferedImage backgroundImage;
 	private ImageIcon tileIcon;
 	
 	GridBagConstraints c;
 	
-	public PlayerInformationPanel() {
+	public TileInformationPanel() {
 		/*set the size of this panel to be size of the image*/
 		this.setPreferredSize(new Dimension(375,200));
 		this.setOpaque(false);

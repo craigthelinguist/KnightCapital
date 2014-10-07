@@ -43,7 +43,7 @@ public class MainPanelMaster extends JPanel {
 	private InventoryPanel inventoryPanel;
 	private ButtonsPanel buttonsPanel;
 	private MiniMapPanel miniMapPanel;
-	private PlayerInformationPanel playerInfoPanel;
+	private TileInformationPanel tileInfoPanel;
 
 	public MainPanelMaster(MainFrame frame) {
 		//this.setBorder(BorderFactory.createLineBorder(Color.black)); //draws a border around canvas (just to show where the canvas is) (delete later)
@@ -71,10 +71,10 @@ public class MainPanelMaster extends JPanel {
 		c.gridy = 0;
 		this.add(buttonsPanel,c);
 
-		playerInfoPanel = new PlayerInformationPanel();
+		tileInfoPanel = new TileInformationPanel();
 		c.gridx =2;
 		c.gridy =0;
-		this.add(playerInfoPanel,c);
+		this.add(tileInfoPanel,c);
 
 		/*Initialize the inventory panel and place it bottom right*/
 		inventoryPanel = new InventoryPanel(frame);
@@ -104,7 +104,7 @@ public class MainPanelMaster extends JPanel {
 	   * @param tile: tile whose info you'll display.
 	   */
 	public void updateInfo(Tile tile) {
-		playerInfoPanel.updateInfo(tile);
+		tileInfoPanel.updateInfo(tile);
 	}
 
 
