@@ -22,6 +22,9 @@ import world.World;
  * 
  * NOTE: This is broken as of Integration day, RIP.
  * 
+ * RIP demo
+ * you were an hero
+ * 
  * @author myles
  *
  */
