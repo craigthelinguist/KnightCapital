@@ -18,6 +18,7 @@ public class GlobalConstants {
 	public static final String ASSETS = "assets" + File.separatorChar;
 	public static final String ICONS = File.separatorChar + "icons" + File.separatorChar;
 	public static final String CITIES = GlobalConstants.ASSETS + "cities" + File.separatorChar;
+	public static final String PORTRAITS = "assets" + File.separatorChar+ "portraits" +   File.separatorChar;     
 
 	// all images inside the GUIAssets
 	public static final String GUI_FILEPATH = GlobalConstants.ASSETS + "GUIAssets" + File.separatorChar;
