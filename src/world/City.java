@@ -1,6 +1,6 @@
 package world;
 
-import game.Item;
+import game.items.Item;
 
 import java.awt.Graphics;
 import java.util.HashMap;

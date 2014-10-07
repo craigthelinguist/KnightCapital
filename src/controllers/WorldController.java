@@ -1,6 +1,6 @@
 package controllers;
 
-import game.Hero;
+import game.units.Hero;
 
 import java.awt.Point;
 import java.awt.event.KeyEvent;

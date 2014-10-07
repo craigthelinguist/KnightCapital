@@ -1,7 +1,7 @@
 package world;
 
-import game.Hero;
-import game.Unit;
+import game.units.Hero;
+import game.units.Unit;
 import player.Player;
 
 /**

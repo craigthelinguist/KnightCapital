@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import java.awt.Point;
 
-import game.Hero;
+import game.units.Hero;
 
 import org.junit.*;
 

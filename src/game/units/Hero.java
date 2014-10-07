@@ -1,4 +1,6 @@
-package game;
+package game.units;
+
+import game.items.Item;
 
 import java.util.LinkedList;
 
@@ -10,9 +12,16 @@ import java.util.LinkedList;
  */
 public class Hero extends Creature {
 
+	public static final int INVENTORY_SIZE = 6;
+	
 	// how far this hero can move on the world
 	private int movementPoints;
-	private LinkedList<Item> items;
+	private int maxMovementPoints;
+	private Item[] inventory;
+	
+	public Hero(){
+		inventory = new Item[INVENTORY_SIZE];
+	}
 	
 	public int getMovePoints(){
 		return movementPoints;
