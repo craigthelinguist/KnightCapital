@@ -1,4 +1,4 @@
-package game.items.active;
+package game.items;
 
 import game.units.Creature;
 
@@ -7,7 +7,7 @@ import game.units.Creature;
  * @author craigthelinguist
  *
  */
-public abstract class ActiveEffect {
+public abstract class ChargedItem {
 	
 	public abstract void apply(Creature c);
 	

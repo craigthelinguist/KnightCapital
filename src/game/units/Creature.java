@@ -1,4 +1,7 @@
 package game.units;
+import java.util.List;
+
+import game.effects.Buff;
 
 /**
  * A creature represents anything on the world or in a battle that is controlled by a player and can be given
@@ -17,6 +20,7 @@ public abstract class Creature {
 	private int currentSpeed;
 	private int currentArmour;
 
+	private List<Buff> buffs;
 	private Targets targets;
 	
 	public enum Targets{

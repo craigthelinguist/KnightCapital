@@ -25,7 +25,6 @@ import tools.Log;
 public class World {
 
 	// assumes the world is rectangular
-	private Tile[][] tiles;
 	public final Dimension dimensions;
 	public final int NUM_TILES_ACROSS;
 	public final int NUM_TILES_DOWN;
@@ -35,6 +34,8 @@ public class World {
 	// set of cities in this world
 	private final Set<City> cities;
 	private final Player[] players;
+	private int currentPlayer;
+	private Tile[][] tiles;
 	
 	public World(Tile[][] tiles_, Player[] playersArray, Set<City> citySet){
 		tiles = tiles_;
@@ -45,8 +46,19 @@ public class World {
 		WORLD_HT = NUM_TILES_DOWN*(GlobalConstants.TILE_HT/2);
 		cities = citySet;
 		players = playersArray;
+		currentPlayer = 0;
 	}
 
+
+	/**
+	 * End the turn for the current player. Update everything.
+	 */
+	public void endTurn(){
+		
+		currentPlayer = (currentPlayer+1)%players.length;
+		
+	}
+	
 	/**
 	 * Get the specified tile in the world (in cartesian coordinates).
 	 * @param x: how far across tile is
@@ -71,6 +83,10 @@ public class World {
 		else return getTile(p.x,p.y);
 	}
 	
+	/**
+	 * Return a read-only view of the cities in this world.
+	 * @return: a read-only set.
+	 */
 	public Set<? extends City> getCities(){
 		return cities;
 	}

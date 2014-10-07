@@ -1,5 +1,6 @@
-package game.items.active;
+package game.effects;
 
+import game.items.ChargedItem;
 import game.units.Creature;
 import game.units.Stat;
 
@@ -7,7 +8,7 @@ import game.units.Stat;
  * A Buff changes the stats of a target.
  * @author craigthelinguist
  */
-public class Buff extends ActiveEffect{
+public class Buff extends Effect{
 
 	private final Stat stat;
 	private final int amount;

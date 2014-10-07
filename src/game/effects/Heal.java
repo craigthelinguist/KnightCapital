@@ -1,5 +1,6 @@
-package game.items.active;
+package game.effects;
 
+import game.items.ChargedItem;
 import game.units.Creature;
 
 /**
@@ -7,7 +8,7 @@ import game.units.Creature;
  * @author craigthelinguist
  *
  */
-public class Heal extends ActiveEffect{
+public class Heal extends ChargedItem{
 
 	private final int magnitude;
 	
