@@ -4,6 +4,8 @@ package GUI;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 
 import javax.swing.ImageIcon;
@@ -16,29 +18,29 @@ import tools.ImageLoader;
 
 
 /**
- * This class extends JDialog and contains a layeredPane to display a border and a panel 
+ * This class extends JDialog and contains a layeredPane to display a border and a panel
  * for the buttons.
- * 
+ *
  * @author Ewan Moshi
  *
  */
-public class GameDialog extends JDialog {
+public class GameDialog extends JDialog implements KeyListener {
 
 	private DialogPanel panel;
-	
+
 	public GameDialog (MainFrame frame,String msg) {
 		super(frame,true);
 		this.setSize(400,374); //height, width
-		this.setUndecorated(true); //removes the border 
+		this.setUndecorated(true); //removes the border
         this.setLocationRelativeTo(frame); //set location of dialog relative to frame
-        
+
 	    DialogLayeredPane dLayeredPane = new DialogLayeredPane(this,msg);
 		this.add(dLayeredPane);
 		this.setResizable(false);
 		this.setVisible(true);
 	}
 
-	
+
 	/*for testing the dialog*/
 	public static void main(String[] args) {
 		try {
@@ -48,5 +50,29 @@ public class GameDialog extends JDialog {
 			e.printStackTrace();
 		}
 	}
-	
+
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+	    if(e.getKeyCode() == KeyEvent.VK_ESCAPE)
+	    {
+	    	System.out.println("sdfdf");
+	    }
+	}
+
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
 }

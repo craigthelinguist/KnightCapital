@@ -5,6 +5,8 @@ import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JButton;
@@ -19,7 +21,7 @@ import tools.ImageLoader;
  * @author Ewan Moshi
  *
  */
-public class ButtonsPanel extends JPanel {
+public class ButtonsPanel extends JPanel  {
 
 	private CustomButton inventoryButton;
 	private CustomButton newGame;

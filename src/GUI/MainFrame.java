@@ -24,7 +24,6 @@ import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
 import controllers.WorldController;
-
 import tools.GlobalConstants;
 import tools.ImageLoader;
 import world.Tile;
@@ -37,7 +36,7 @@ import world.Tile;
  *
  */
 
-public class MainFrame extends JFrame {
+public class MainFrame extends JFrame  {
 
 
 	private LayeredPanel layeredPanel;
@@ -61,11 +60,12 @@ public class MainFrame extends JFrame {
 		//Initialize the layered panel and add it to the south
 		layeredPanel = new LayeredPanel(this);
 		this.add(layeredPanel,BorderLayout.SOUTH);
-		
+
 		// set up key dispatcher
 		KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
 		manager.addKeyEventDispatcher(new WorldKeyDispatcher());
-		
+
+
 		//setupSlots();
 		this.setResizable(true);
 		this.pack();
@@ -82,25 +82,25 @@ public class MainFrame extends JFrame {
 		layeredPanel.updateInfo(tile);
 	}
 
-	
+
 	private class WorldKeyDispatcher implements KeyEventDispatcher {
 
 		@Override
 		public boolean dispatchKeyEvent(KeyEvent e) {
-			
+
 			if (e.getID() == KeyEvent.KEY_RELEASED){
 				controller.keyPressed(e);
 			}
 			return false;
-			
+
 		}
-		
+
 	}
 
 	public void redraw(){
 		canvas.repaint();
 	}
-	
+
 	/**public ImageIcon createInventoryIcon(String name) {
 		  try {
 			    ImageIcon invImg = ImageIO.read(getClass().getResource("assets/GUIAssets/" +name+".png"));
@@ -205,5 +205,6 @@ public class MainFrame extends JFrame {
 	public static void main(String[] args) {
 		new MainFrame();
 	}
+
 
 }

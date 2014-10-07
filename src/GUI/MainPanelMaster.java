@@ -29,27 +29,27 @@ import world.Tile;
 /**
  * This class contains all of the panels to be displayed on the main screen (while playing)
  * It uses gridbaglayout to align all of the components horizontally.
- * 
+ *
  * @author Ewan Moshi
  *
  */
 
 public class MainPanelMaster extends JPanel {
 	private BufferedImage backgroundImage;
-	
+
 	private MainFrame mainFrame;
-	
+
 	/* Declare all the panels on this panel */
 	private InventoryPanel inventoryPanel;
 	private ButtonsPanel buttonsPanel;
 	private MiniMapPanel miniMapPanel;
 	private PlayerInformationPanel playerInfoPanel;
-	
+
 	public MainPanelMaster(MainFrame frame) {
 		//this.setBorder(BorderFactory.createLineBorder(Color.black)); //draws a border around canvas (just to show where the canvas is) (delete later)
-		this.setPreferredSize(new Dimension(frame.getWidth(),frame.getHeight()));  
+		this.setPreferredSize(new Dimension(frame.getWidth(),frame.getHeight()));
 		mainFrame = frame;
-	
+
 		/*Initialize the layout and the insets*/
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
@@ -57,42 +57,41 @@ public class MainPanelMaster extends JPanel {
 		c.anchor = GridBagConstraints.FIRST_LINE_START;
 		c.fill = GridBagConstraints.NONE;
 		c.weightx = 1.0;
-		
-		
+
+
 		/*Initialize the minimap panel and palce it bottom left */
 		miniMapPanel = new MiniMapPanel();
 		c.gridx = 0;
 		c.gridy =0;
 		this.add(miniMapPanel,c);
 
-		
+
 		buttonsPanel = new ButtonsPanel();
 		c.gridx = 1;
 		c.gridy = 0;
 		this.add(buttonsPanel,c);
-				
+
 		playerInfoPanel = new PlayerInformationPanel();
 		c.gridx =2;
 		c.gridy =0;
 		this.add(playerInfoPanel,c);
-		
+
 		/*Initialize the inventory panel and place it bottom right*/
 		inventoryPanel = new InventoryPanel(frame);
 		c.weightx = 0.0;
 		c.gridx = 3;
 		c.gridy = 0;
 		this.add(inventoryPanel,c);
-		
+
 		/*Initialize the image for the main menu panel*/
 		backgroundImage = ImageLoader.load(GlobalConstants.GUI_FILEPATH + "mainMenuPanelBackground.png");
-		
+
 	}
-	
-	public void actionPerformed(ActionEvent arg0) {
-		
+
+	public void actionPerformed(ActionEvent e) {
 	}
-	
-	
+
+
 	  @Override
 	  protected void paintComponent(Graphics g) {
 	    super.paintComponent(g);
@@ -107,8 +106,8 @@ public class MainPanelMaster extends JPanel {
 	public void updateInfo(Tile tile) {
 		playerInfoPanel.updateInfo(tile);
 	}
-	
-	  
-	  
-	  
+
+
+
+
 }

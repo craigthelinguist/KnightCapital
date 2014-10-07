@@ -19,9 +19,9 @@ import world.World;
 public class Canvas extends JPanel implements MouseListener{
 
 	private WorldController controller;
-	
+
 	public Canvas() {
-		
+
 		//this.setBorder(BorderFactory.createLineBorder(Color.red)); //draws a border around canvas (just to show where the canvas is) (delete later)
 		this.setPreferredSize(new Dimension(GlobalConstants.WINDOW_WD, GlobalConstants.WINDOW_HT -200));
 
@@ -34,19 +34,19 @@ public class Canvas extends JPanel implements MouseListener{
 		        new ImageIcon(GlobalConstants.GUI_FILEPATH +"bottomLeft.png").getImage(),
 		        new ImageIcon(GlobalConstants.GUI_FILEPATH +"bottomCenter.png").getImage(),
 		        new ImageIcon(GlobalConstants.GUI_FILEPATH +"bottomRight.png").getImage());
-	    
+
 	    /*set the panel's border*/
 	    //this.setBorder(border);
-	    
+
 	    // set up mouse listener
 	    this.addMouseListener(this);
-	    
+
 	}
 
 	public void setController(WorldController wc){
 		controller = wc;
 	}
-	
+
 	@Override
 	public void mouseClicked(MouseEvent event) {
 		controller.mousePressed(event,"canvas");

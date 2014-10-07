@@ -50,10 +50,10 @@ public class WorldController {
 
 	// current tile the player has clicked
 	private Point selected;
-	
+
 	// highlighted tiles that are showing where the player's selected party can move to
 	private Set<Point> highlightedTiles;
-	
+
 	// the camera that the player is viewing from
 	private Camera camera;
 
@@ -140,7 +140,7 @@ public class WorldController {
 	public void mousePressed(MouseEvent me, String panel){
 
 		if (panel.equals("canvas")){
-			
+
 			Point ptIso = new Point(me.getX(),me.getY());
 			Point ptCartesian = Geometry.isometricToCartesian(ptIso, camera, world.dimensions);
 			Tile clickedTile = world.getTile(ptCartesian);
@@ -185,11 +185,11 @@ public class WorldController {
 	public void buttonPressed(JButton button){
 
 	}
-	
+
 	private void resetHighlightedTiles(){
 		this.highlightedTiles = new HashSet<>();
 	}
-	
+
 	/**
 	 * If the provided tile has a party on it that belongs to this player, highlight
 	 * all the tiles to which the party can move.
@@ -208,7 +208,7 @@ public class WorldController {
 		}
 		resetHighlightedTiles();
 	}
-	
+
 	/**
 	 * Return true if this point is being highlighted by the world controller
 	 * @param p: a point in Cartesian space
@@ -217,7 +217,7 @@ public class WorldController {
 	public boolean isHighlighted(Point p){
 		return highlightedTiles.contains(p);
 	}
-	
+
 	public World getWorld(){
 		return world;
 	}
@@ -229,9 +229,9 @@ public class WorldController {
 	public Tile getSelectedTile(){
 		return world.getTile(selected);
 	}
-	
+
 	public void notifier(){
-		
+
 		if(client!=null)client.notifyThread();
 		if(client == null)System.out.println("still not initiated");
 	}

@@ -18,10 +18,12 @@ public class GlobalConstants {
 	public static final String ASSETS = "assets" + File.separatorChar;
 	public static final String ICONS = File.separatorChar + "icons" + File.separatorChar;
 	public static final String CITIES = GlobalConstants.ASSETS + "cities" + File.separatorChar;
-	
+
 	// all images inside the GUIAssets
 	public static final String GUI_FILEPATH = GlobalConstants.ASSETS + "GUIAssets" + File.separatorChar;
-	
+	public static final String GUI_BUTTONS = GlobalConstants.ASSETS + "GUIAssets" + File.separatorChar +"buttons"+ File.separatorChar;
+
+
 	// these are temporary values for WorldRenderer prototype - Aaron
 	public static final int TILE_WD = 131;
 	public static final int TILE_HT = 77;

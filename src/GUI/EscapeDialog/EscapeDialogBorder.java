@@ -1,30 +1,21 @@
-package GUI;
+package GUI.EscapeDialog;
 
-import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 import tools.GlobalConstants;
-import tools.ImageLoader;
+import GUI.Border;
+import GUI.GameDialog;
 
-/**
- * Dispalys the border for the GameDialog
- *
- * @author Ewan Moshi
- *
- */
+public class EscapeDialogBorder extends JPanel{
 
-public class DialogPanel extends JPanel{
+	private EscapeDialog  ed;
 
-	private GameDialog  gd;
-
-	public DialogPanel(GameDialog gd) {
-		this.gd = gd;
+	public EscapeDialogBorder(EscapeDialog ed) {
+		this.ed = ed;
 		this.setOpaque(false);
 		/*Load the images for the border*/
 	    Border border = new Border(new ImageIcon(GlobalConstants.GUI_FILEPATH +"dTopLeft.png").getImage(),
@@ -38,6 +29,7 @@ public class DialogPanel extends JPanel{
 	    this.setBorder(border);
 	    //this.setPreferredSize(new Dimension(410,410));
 	    //this.setBackground(new Color(0,0,0,0));
+
 	}
 
 	  @Override
