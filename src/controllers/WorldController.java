@@ -202,6 +202,9 @@ public class WorldController {
 		resetHighlightedTiles();
 	}
 	
+	/**
+	 * Resets the set of highlighted tiles.
+	 */
 	private void resetHighlightedTiles(){
 		this.highlightedTiles = new HashSet<>();
 	}
@@ -258,7 +261,7 @@ public class WorldController {
 	 */
 	public static void main(String[] args){
 		World w = TemporaryLoader.loadWorld("world_temporary.txt");
-		Player p = new Player();
+		Player p = new Player("John The Baptist",1);
 		Party party = new Party(GlobalConstants.ICONS+"ovelia", p);
 		Hero hero = new Hero();
 		hero.setMovePts(10);

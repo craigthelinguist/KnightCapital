@@ -80,7 +80,7 @@ public class TemporaryLoader {
 			}
 			
 			// add a Player
-			Player pl = new Player();
+			Player pl = new Player("Whiley Master",1);
 			
 			// add a city
 			CityTile[][] cityTiles = new CityTile[City.WIDTH][City.WIDTH];

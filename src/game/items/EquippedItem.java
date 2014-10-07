@@ -4,6 +4,7 @@ import game.effects.Buff;
 
 /**
  * An equipped item must be equipped to your hero before its effect takes place.
+ * e.g.: a sword that increases attack
  * @author craigthelinguist
  */
 public class EquippedItem {
