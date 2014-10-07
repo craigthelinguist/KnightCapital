@@ -64,7 +64,7 @@ public abstract class Creature {
 	 * @param stat: stat to increase
 	 * @param amount: amount to increase by (may be positive)
 	 */
-	public void buff(Stat stat, int amount) {
+	public void tempBuff(Stat stat, int amount) {
 		if (stat == Stat.ARMOUR){
 			currentArmour = currentArmour + amount;
 		}
@@ -94,26 +94,6 @@ public abstract class Creature {
 		else if (stat == Stat.HEALTH){
 			baseHealth = baseHealth + amount;
 		}
-	}
-	
-	public void applyBuff(Buff buff){
-		
-		Stat stat = buff.stat;
-		int amount = buff.amount;
-		
-		if (buff.permanent){
-			if (stat == Stat.ARMOUR) baseArmour += amount;
-			else if (stat == Stat.DAMAGE) baseDamage += amount;
-			else if (stat == Stat.SPEED) baseSpeed += amount;
-		}
-		else{
-			
-		}
-		
-	}
-	
-	public void removeBuff(Buff buff){
-		
 	}
 	
 }

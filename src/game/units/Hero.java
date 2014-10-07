@@ -39,7 +39,7 @@ public class Hero extends Creature {
 	 */
 	public void equip(EquippedItem itm){
 		for (Buff buff : itm.getBuffs()){
-			this.applyBuff(buff);
+			buff.applyTo(this);
 		}
 	}
 	
@@ -49,7 +49,7 @@ public class Hero extends Creature {
 	 */
 	public void unequip(EquippedItem itm){
 		for (Buff buff : itm.getBuffs()){
-			this.removeBuff(buff);
+			buff.applyTo(this);
 		}
 	}
 	

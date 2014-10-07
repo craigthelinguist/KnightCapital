@@ -43,6 +43,11 @@ public class Buff{
 		return new Buff(stat,amount,true);
 	}
 	
+	public void applyTo(Creature c){
+		if (permanent) c.permaBuff(stat, amount);
+		else c.tempBuff(stat, amount);
+	}
+	
 	@Override
 	public boolean equals(Object other){
 		if (!(other instanceof Buff)) return false;
