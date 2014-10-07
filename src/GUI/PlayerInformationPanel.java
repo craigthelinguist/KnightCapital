@@ -8,7 +8,7 @@ import javax.swing.JPanel;
 
 import tools.GlobalConstants;
 import tools.ImageLoader;
-import world.Tile;
+import world.tiles.Tile;
 
 /**
  * This panel holds all of the player's information such as stats, party  etc.

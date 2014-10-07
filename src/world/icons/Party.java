@@ -1,4 +1,4 @@
-package world;
+package world.icons;
 
 import game.units.Hero;
 import game.units.Unit;

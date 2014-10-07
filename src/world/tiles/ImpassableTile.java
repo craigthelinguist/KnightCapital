@@ -1,4 +1,6 @@
-package world;
+package world.tiles;
+
+import world.icons.Party;
 
 public class ImpassableTile extends Tile{
 

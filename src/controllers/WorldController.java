@@ -20,10 +20,10 @@ import renderer.WorldRenderer;
 import storage.TemporaryLoader;
 import tools.Geometry;
 import tools.GlobalConstants;
-import world.Party;
-import world.Tile;
 import world.World;
-import world.WorldIcon;
+import world.icons.Party;
+import world.icons.WorldIcon;
+import world.tiles.Tile;
 import GUI.GameDialog;
 import GUI.MainFrame;
 

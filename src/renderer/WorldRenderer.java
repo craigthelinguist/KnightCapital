@@ -19,11 +19,11 @@ import tools.Geometry;
 import tools.GlobalConstants;
 import tools.Sorter;
 
-import world.CityTile;
-import world.Tile;
-import world.WorldIcon;
 import world.World;
-import world.City;;
+import world.icons.WorldIcon;
+import world.tiles.CityTile;
+import world.tiles.Tile;
+import world.towns.City;
 
 /**
  * WorldRenderer provides static methods for

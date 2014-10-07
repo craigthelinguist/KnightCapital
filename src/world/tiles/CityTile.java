@@ -1,10 +1,13 @@
-package world;
+package world.tiles;
 
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 
 import tools.ImageManipulation;
+import world.icons.Party;
+import world.icons.WorldIcon;
+import world.towns.City;
 
 /**
  * A CityTile belongs to a city. They collectively make up the same city.

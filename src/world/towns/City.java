@@ -1,4 +1,4 @@
-package world;
+package world.towns;
 
 import game.items.Item;
 
@@ -15,6 +15,8 @@ import renderer.Camera;
 import tools.GlobalConstants;
 import tools.ImageLoader;
 import tools.Log;
+import world.icons.Party;
+import world.tiles.CityTile;
 
 /**
  * There are cities on the world. They train units. What units a city can train

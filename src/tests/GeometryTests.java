@@ -10,9 +10,9 @@ import org.junit.Test;
 
 import renderer.Camera;
 import tools.Geometry;
-import world.PassableTile;
-import world.Tile;
 import world.World;
+import world.tiles.PassableTile;
+import world.tiles.Tile;
 
 public class GeometryTests {
 

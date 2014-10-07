@@ -15,6 +15,10 @@ import renderer.Camera;
 import tools.Geometry;
 import tools.GlobalConstants;
 import tools.Log;
+import world.icons.Party;
+import world.icons.WorldIcon;
+import world.tiles.Tile;
+import world.towns.City;
 
 /**
  * The world is the part of the game where the players click around the map, and move their parties.

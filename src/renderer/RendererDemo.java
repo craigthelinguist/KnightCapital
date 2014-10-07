@@ -14,8 +14,8 @@ import javax.swing.JPanel;
 import storage.TemporaryLoader;
 import tools.Geometry;
 import tools.GlobalConstants;
-import world.Party;
 import world.World;
+import world.icons.Party;
 
 /**
  * This is a test environment for the graphics renderer.

@@ -12,7 +12,7 @@ import javax.swing.JLayeredPane;
 
 import tools.GlobalConstants;
 import tools.ImageLoader;
-import world.Tile;
+import world.tiles.Tile;
 
 
 /**

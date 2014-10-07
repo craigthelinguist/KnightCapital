@@ -10,11 +10,11 @@ import org.junit.*;
 
 import player.Player;
 
-import world.ImpassableTile;
-import world.Party;
-import world.PassableTile;
-import world.Tile;
 import world.World;
+import world.icons.Party;
+import world.tiles.ImpassableTile;
+import world.tiles.PassableTile;
+import world.tiles.Tile;
 
 /**
  * Tests pathfinding in the World class.

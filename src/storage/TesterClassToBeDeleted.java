@@ -1,8 +1,8 @@
 package storage;
 
 import player.Player;
-import world.Tile;
 import world.World;
+import world.tiles.Tile;
 
 public class TesterClassToBeDeleted {
 

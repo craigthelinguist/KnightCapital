@@ -10,11 +10,11 @@ import java.util.regex.Pattern;
 import player.Player;
 
 import tools.GlobalConstants;
-import world.City;
-import world.CityTile;
-import world.Tile;
-import world.PassableTile;
 import world.World;
+import world.tiles.CityTile;
+import world.tiles.PassableTile;
+import world.tiles.Tile;
+import world.towns.City;
 
 /**
  * I'm just using this to load my tiles/other stuff until the real stuff comes along. You can safely

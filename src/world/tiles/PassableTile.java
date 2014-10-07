@@ -1,7 +1,8 @@
-package world;
+package world.tiles;
 
 import tools.GlobalConstants;
 import tools.ImageLoader;
+import world.icons.Party;
 
 /**
  * A PassableTile is something a Creature can stand on.

@@ -1,4 +1,4 @@
-package world;
+package world.tiles;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -9,6 +9,8 @@ import java.awt.image.DataBufferInt;
 import java.awt.image.WritableRaster;
 
 import tools.ImageManipulation;
+import world.icons.Party;
+import world.icons.WorldIcon;
 
 
 /**

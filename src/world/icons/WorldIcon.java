@@ -1,4 +1,4 @@
-package world;
+package world.icons;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;

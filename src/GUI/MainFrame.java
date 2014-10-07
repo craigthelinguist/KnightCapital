@@ -28,7 +28,7 @@ import GUI.EscapeDialog.EscapeDialog;
 import controllers.WorldController;
 import tools.GlobalConstants;
 import tools.ImageLoader;
-import world.Tile;
+import world.tiles.Tile;
 
 /**
  * This is the main game frame. Contains a canvas and a JLayeredPanel at the bottom of the frame.

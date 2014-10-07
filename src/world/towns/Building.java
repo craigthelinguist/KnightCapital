@@ -1,4 +1,4 @@
-package world;
+package world.towns;
 
 /**
  * Buildings enable certain types of units to be trained from the city.
