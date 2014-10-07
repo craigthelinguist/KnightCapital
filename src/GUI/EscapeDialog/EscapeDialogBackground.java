@@ -107,7 +107,10 @@ public class EscapeDialogBackground extends JPanel implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+
+			this.escapeDialog.frame.disableCloseDialog();
 			escapeDialog.dispose();
+
 	}
 
 }

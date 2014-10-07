@@ -7,12 +7,17 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 
 import GUI.DialogLayeredPane;
+import GUI.MainFrame;
 
 public class EscapeDialog extends JDialog  {
 
+	protected MainFrame frame;
 
-	public EscapeDialog (JFrame frame) {
+	public EscapeDialog (MainFrame frame) {
 		super(frame,true);
+		this.frame = frame;
+		frame.enableCloseDialog();
+
 		this.setSize(400,500); //widht, height
 		this.setUndecorated(true); //removes the border
         this.setLocationRelativeTo(frame); //set location of dialog relative to frame
@@ -23,17 +28,4 @@ public class EscapeDialog extends JDialog  {
 		this.setVisible(true);
 	}
 
-
-
-
-
-	/*for testing the dialog*/
-	public static void main(String[] args) {
-		try {
-			EscapeDialog dialog = new EscapeDialog(new JFrame());
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 }

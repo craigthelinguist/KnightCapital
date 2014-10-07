@@ -23,6 +23,7 @@ import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
+import GUI.EscapeDialog.EscapeDialog;
 import controllers.WorldController;
 import tools.GlobalConstants;
 import tools.ImageLoader;
@@ -42,6 +43,7 @@ public class MainFrame extends JFrame  {
 	private LayeredPanel layeredPanel;
 	private Canvas canvas;
 	private WorldController controller;
+	private boolean closeDialogEnabled = false;
 
 	public MainFrame() {
 		/* These two statements make the frame full screen. (Commented out for now) */
@@ -82,15 +84,29 @@ public class MainFrame extends JFrame  {
 		layeredPanel.updateInfo(tile);
 	}
 
+	public void enableCloseDialog(){
+		this.closeDialogEnabled = true;
+	}
+
+	public void disableCloseDialog(){
+		this.closeDialogEnabled = false;
+	}
 
 	private class WorldKeyDispatcher implements KeyEventDispatcher {
 
 		@Override
 		public boolean dispatchKeyEvent(KeyEvent e) {
+			if (closeDialogEnabled) return false;
 
-			if (e.getID() == KeyEvent.KEY_RELEASED){
+			// :^)
+			if (e.getID() == KeyEvent.KEY_RELEASED)
+			{
 				controller.keyPressed(e);
 			}
+		    if(e.getKeyCode() == KeyEvent.VK_ESCAPE)
+		    {
+				EscapeDialog dialog = new EscapeDialog(MainFrame.this);
+		    }
 			return false;
 
 		}
