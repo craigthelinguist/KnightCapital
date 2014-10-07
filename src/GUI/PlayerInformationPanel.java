@@ -2,6 +2,9 @@ package GUI;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -36,7 +39,16 @@ public class PlayerInformationPanel extends JPanel{
 		/*Initialize the image for the inventory panel*/
 		backgroundImage = ImageLoader.load(GlobalConstants.GUI_FILEPATH + "playerInfoPanel.png");
 		
-
+		/*Initialize the layout and the insets*/
+		this.setLayout(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+		c.insets = new Insets(15,15,10,10);
+		c.anchor = GridBagConstraints.LINE_START;
+		//c.fill = GridBagConstraints.BOTH;
+		c.weightx = 1.0;
+		c.weighty = 1.0;
+		
+		/*Create the label and set icon of label to the player's icon*/
 		try {
 			tileIcon = new ImageIcon(ImageIO.read(new FileInputStream(GlobalConstants.PORTRAITS +"ovelia.png")));
 		} catch (FileNotFoundException e) {
@@ -45,7 +57,12 @@ public class PlayerInformationPanel extends JPanel{
 			e.printStackTrace();
 		}
 		JLabel tileLabel = new JLabel(tileIcon);
-		this.add(tileLabel);
+		
+		
+		c.insets = new Insets(15,40,10,10);
+		c.gridx = 0;
+		c.gridy = 0;
+		this.add(tileLabel,c);
 		
 	}
 
