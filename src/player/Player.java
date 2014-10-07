@@ -2,10 +2,15 @@ package player;
 
 public class Player {
 
-	private final String name;
+	// name = name of the player
+	// slot = player 1, player 2, etc.
+	public final String name;
+	public final int slot;
 	
-	public Player(String name){
+	public Player(String name, int slot){
 		this.name = name;
+		this.slot = slot;
 	}
+	
 	
 }
