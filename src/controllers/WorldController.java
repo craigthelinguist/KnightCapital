@@ -202,6 +202,9 @@ public class WorldController {
 		resetHighlightedTiles();
 	}
 	
+	/**
+	 * Resets the set of highlighted tiles.
+	 */
 	private void resetHighlightedTiles(){
 		this.highlightedTiles = new HashSet<>();
 	}
