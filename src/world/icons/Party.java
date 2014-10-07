@@ -1,5 +1,6 @@
 package world.icons;
 
+import game.items.Item;
 import game.units.Hero;
 import game.units.Unit;
 import player.Player;
@@ -12,9 +13,13 @@ import player.Player;
 public class Party extends WorldIcon{
 
 	public static final int PARTY_SIZE = 5;
+	public static final int INVENTORY_ROWS = 2;
+	public static final int INVENTORY_COLS = 3;
+	
 	private Player owner;
 	private int movementPoints;
 	
+	private Item[][] inventory;
 	private Hero hero;
 	private Unit[] units;
 	
@@ -24,6 +29,7 @@ public class Party extends WorldIcon{
 		super(imgname);
 		owner = player;
 		units = new Unit[PARTY_SIZE];
+		inventory = new Item[INVENTORY_COLS][INVENTORY_ROWS];
 	}
 	
 	/**
@@ -92,12 +98,22 @@ public class Party extends WorldIcon{
 			unit.regenHealth();
 		}
 	}
-	
-	private void regenHitPoints() {
-		hero.regenHealth();
-		for (int i = 0; i < units.length; i++){
-			if (units[i] != null) units[i].regenHealth();
+
+	/**
+	 * Attempt to add the item to this party's inventory if there is space.
+	 * @param item: item to add.
+	 * @return: 
+	 */
+	public boolean addItem(Item item) {
+		for (int y = 0; y < INVENTORY_ROWS; y++){
+			for (int x = 0; x < INVENTORY_COLS; x++){
+				if (inventory[x][y] == null){
+					inventory[x][y] = item;
+					return true;
+				}
+			}
 		}
+		return false;
 	}
 	
 }
