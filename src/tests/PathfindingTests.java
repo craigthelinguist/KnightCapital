@@ -149,7 +149,7 @@ public class PathfindingTests {
 		hero.setMovePts(4);
 		party.setLeader(hero);
 		party.setOwner(player);
-		party.refreshMovePoints();
+		party.refresh();
 		world.setIcon(party, 0, 0);
 	}
 	

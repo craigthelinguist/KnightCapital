@@ -84,8 +84,7 @@ public class World {
 				if (wi == null) continue;
 				if (wi instanceof Party){
 					Party party = (Party)wi;
-					party.regenHitPoints();
-					party.refreshMovePoints();
+					party.refresh();
 				}
 				
 			}

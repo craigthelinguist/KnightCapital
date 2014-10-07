@@ -263,7 +263,7 @@ public class WorldController {
 		Hero hero = new Hero();
 		hero.setMovePts(10);
 		party.setLeader(hero);
-		party.refreshMovePoints();
+		party.refresh();
 		w.getTile(0,0).setIcon(party);
 		new WorldController(w,p);
 	}

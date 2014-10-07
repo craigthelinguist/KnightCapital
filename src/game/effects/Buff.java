@@ -10,9 +10,9 @@ import game.units.Stat;
  */
 public class Buff{
 
-	public final Stat stat;
-	public final int amount;
-	public final boolean permanent;
+	private final Stat stat;
+	private final int amount;
+	private final boolean permanent;
 	
 	private Buff(Stat stat, int amount, boolean permanence){
 		this.stat = stat;
@@ -43,9 +43,31 @@ public class Buff{
 		return new Buff(stat,amount,true);
 	}
 	
+	/**
+	 * Apply this buff to a creature.
+	 * @param c
+	 */
 	public void applyTo(Creature c){
 		if (permanent) c.permaBuff(stat, amount);
 		else c.tempBuff(stat, amount);
+	}
+	
+	/**
+	 * Remove this buff from a creature.
+	 * If this buff is permanent, does nothing.
+	 * Otherwise this method should 'undo' whatever buff it applied.
+	 * @param c: creature to apply this buff to.
+	 */
+	public void removeFrom(Creature c){
+		if (!permanent) c.tempBuff(stat, -amount);
+	}
+	
+	/**
+	 * Return true if this buff is permanent.
+	 * @return: boolean
+	 */
+	public boolean isPermanent() {
+		return permanent;
 	}
 	
 	@Override
@@ -54,5 +76,6 @@ public class Buff{
 		Buff otherBuff = (Buff)other;
 		return otherBuff.stat == stat && otherBuff.amount == amount && otherBuff.permanent == permanent;
 	}
+
 	
 }

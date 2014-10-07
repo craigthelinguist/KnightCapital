@@ -53,14 +53,6 @@ public class Party extends WorldIcon{
 	}
 	
 	/**
-	 * Refresh the number of movement points this party has. This is based on the movement points
-	 * stat the hero in the party has.
-	 */
-	public void refreshMovePoints(){
-		movementPoints = hero.getMovePoints();
-	}
-	
-	/**
 	 * Set the hero leading the party
 	 * @param newLeader: new hero to lead the party
 	 */
@@ -85,7 +77,23 @@ public class Party extends WorldIcon{
 		return hero == h;
 	}
 
-	public void regenHitPoints() {
+	/**
+	 * 'Refresh' this party. Reset its movement points. All members should regenerate their
+	 * hit points and lose all temporary buffs for thie day.
+	 */
+	public void refresh(){
+		movementPoints = hero.getMovePoints();
+		hero.regenHealth();
+		hero.removeTempBuffs();
+		for (int i = 0; i < units.length; i++){
+			Unit unit = units[i];
+			if (unit == null) continue;
+			unit.removeTempBuffs();
+			unit.regenHealth();
+		}
+	}
+	
+	private void regenHitPoints() {
 		hero.regenHealth();
 		for (int i = 0; i < units.length; i++){
 			if (units[i] != null) units[i].regenHealth();

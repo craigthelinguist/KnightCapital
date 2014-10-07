@@ -1,4 +1,6 @@
 package game.units;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 import game.effects.Buff;
@@ -16,12 +18,16 @@ public abstract class Creature {
 	private int baseArmour;
 	
 	private int currentHealth;
-	private int currentDamage;
-	private int currentSpeed;
-	private int currentArmour;
-
-	protected List<Buff> buffs;
+	private int buffedDamage;
+	private int buffedSpeed;
+	private int buffedArmour;
+	
+	protected LinkedList<Buff> buffs;
 	private Targets targets;
+	
+	public Creature(){
+		buffs = new LinkedList<>();
+	}
 	
 	public enum Targets{
 		MELEE, RANGED, AOE;
@@ -35,7 +41,8 @@ public abstract class Creature {
 	 */
 	public void damage(int amount){
 		if (amount < 0) return;
-		currentHealth = Math.min(0,currentHealth-amount);
+		int damage = amount - baseArmour + buffedArmour;
+		currentHealth = Math.min(0,currentHealth-damage);
 	}
 	
 	/**
@@ -73,13 +80,13 @@ public abstract class Creature {
 	 */
 	public void tempBuff(Stat stat, int amount) {
 		if (stat == Stat.ARMOUR){
-			currentArmour = currentArmour + amount;
+			buffedArmour = buffedArmour + amount;
 		}
 		else if (stat == Stat.DAMAGE){
-			currentDamage = currentDamage + amount;
+			buffedDamage = buffedDamage + amount;
 		}
 		else if (stat == Stat.SPEED){
-			currentSpeed = currentSpeed + amount;
+			buffedSpeed = buffedSpeed + amount;
 		}
 	}
 
@@ -100,6 +107,20 @@ public abstract class Creature {
 		}
 		else if (stat == Stat.HEALTH){
 			baseHealth = baseHealth + amount;
+		}
+	}
+	
+	/**
+	 * Removes all temporary buffs from this creature.
+	 */
+	public void removeTempBuffs(){
+		Iterator<Buff> iter = buffs.iterator();
+		while (iter.hasNext()){
+			Buff buff = iter.next();
+			if (!buff.isPermanent()){
+				buff.removeFrom(this);
+				iter.remove();
+			}
 		}
 	}
 	
