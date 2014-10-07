@@ -20,7 +20,7 @@ public abstract class Creature {
 	private int currentSpeed;
 	private int currentArmour;
 
-	private List<Buff> buffs;
+	protected List<Buff> buffs;
 	private Targets targets;
 	
 	public enum Targets{
@@ -39,6 +39,8 @@ public abstract class Creature {
 	}
 	
 	/**
+	/**
+	 * Increase or decrease the units armour, damage, o
 	 * Heal this creature by the specified amount. Cannot be healed above base hit points.
 	 * @param magnitude: amount of hit points to heal.
 	 */
@@ -56,7 +58,7 @@ public abstract class Creature {
 		if (amount < 0) return;
 		currentHealth = currentHealth+amount;
 	}
-
+	
 	/**
 	 * Increase or decrease the units armour, damage, or speed by the specified amount.
 	 * @param stat: stat to increase
@@ -92,6 +94,26 @@ public abstract class Creature {
 		else if (stat == Stat.HEALTH){
 			baseHealth = baseHealth + amount;
 		}
+	}
+	
+	public void applyBuff(Buff buff){
+		
+		Stat stat = buff.stat;
+		int amount = buff.amount;
+		
+		if (buff.permanent){
+			if (stat == Stat.ARMOUR) baseArmour += amount;
+			else if (stat == Stat.DAMAGE) baseDamage += amount;
+			else if (stat == Stat.SPEED) baseSpeed += amount;
+		}
+		else{
+			
+		}
+		
+	}
+	
+	public void removeBuff(Buff buff){
+		
 	}
 	
 }

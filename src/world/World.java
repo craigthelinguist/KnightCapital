@@ -55,6 +55,13 @@ public class World {
 	 */
 	public void endTurn(){
 		
+		for (int i = 0; i < tiles.length; i++){
+			for (int j = 0; j < tiles[i].length; j++){
+				Tile tile = tiles[i][j];
+				WorldIcon wi = tile.occupant();
+				if (wi == null) continue;
+			}
+		}
 		currentPlayer = (currentPlayer+1)%players.length;
 		
 	}

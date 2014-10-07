@@ -1,5 +1,7 @@
 package game.units;
 
+import game.effects.Buff;
+import game.items.EquippedItem;
 import game.items.Item;
 
 import java.util.LinkedList;
@@ -29,6 +31,26 @@ public class Hero extends Creature {
 	
 	public void setMovePts(int newPts){
 		movementPoints = newPts;
+	}
+	
+	/**
+	 * Equip an item to this Hero. Should apply all buffs to the Hero.
+	 * @param itm: item to be equipped.
+	 */
+	public void equip(EquippedItem itm){
+		for (Buff buff : itm.getBuffs()){
+			this.applyBuff(buff);
+		}
+	}
+	
+	/**
+	 * Unequip an item from this hero. Should take away all buffs that were granted.
+	 * @param itm: item to be removed.
+	 */
+	public void unequip(EquippedItem itm){
+		for (Buff buff : itm.getBuffs()){
+			this.removeBuff(buff);
+		}
 	}
 	
 }

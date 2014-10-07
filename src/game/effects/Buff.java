@@ -8,16 +8,18 @@ import game.units.Stat;
  * A Buff changes the stats of a target.
  * @author craigthelinguist
  */
-public class Buff extends Effect{
+public class Buff{
 
-	private final Stat stat;
-	private final int amount;
-	private final boolean permanence;
+	public final Stat stat;
+	public final int amount;
+	public final boolean permanent;
 	
 	private Buff(Stat stat, int amount, boolean permanence){
 		this.stat = stat;
+		if (stat == Stat.HEALTH)
+			throw new RuntimeException("don't hadd health effects to buffs - use Heal instead"); 
 		this.amount = amount;
-		this.permanence = permanence;
+		this.permanent = permanence;
 	}
 	
 	/**
@@ -41,20 +43,11 @@ public class Buff extends Effect{
 		return new Buff(stat,amount,true);
 	}
 	
-	/**
-	 * Check to see if this buff is permanent or not.
-	 * @return: true if the buff is permanent.
-	 */
-	public boolean isPermanent(){
-		return permanence;
-	}
-	
 	@Override
-	public void apply(Creature c) {
-		if (permanence) c.permaBuff(stat,amount);
-		else c.buff(stat, amount);
+	public boolean equals(Object other){
+		if (!(other instanceof Buff)) return false;
+		Buff otherBuff = (Buff)other;
+		return otherBuff.stat == stat && otherBuff.amount == amount && otherBuff.permanent == permanent;
 	}
-
-	
 	
 }

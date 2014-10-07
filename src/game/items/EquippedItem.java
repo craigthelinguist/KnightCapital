@@ -1,6 +1,6 @@
 package game.items;
 
-import game.effects.Effect;
+import game.effects.Buff;
 
 /**
  * An equipped item must be equipped to your hero before its effect takes place.
@@ -8,10 +8,14 @@ import game.effects.Effect;
  */
 public class EquippedItem {
 
-	private Effect[] effects;
+	private Buff[] buffs;
 	
-	public EquippedItem(){
-		
+	public EquippedItem(Buff[] buffs){
+		this.buffs = buffs;
+	}
+
+	public Buff[] getBuffs() {
+		return buffs;
 	}
 
 }
