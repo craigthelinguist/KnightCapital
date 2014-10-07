@@ -32,7 +32,7 @@ public class LoadXML {
 	 * @return a world object
 	 * */
 
-	public World read(){
+	public States read(){
 
 		//create a file chooser to let user
 		//select a destination to save
@@ -44,7 +44,7 @@ public class LoadXML {
 
 		int value = chooser.showOpenDialog(null);
 		String filePath = null;
-		World world = null;
+		States world = null;
 
 		if(value == JFileChooser.APPROVE_OPTION){
 			filePath = chooser.getSelectedFile().getPath();
@@ -54,7 +54,7 @@ public class LoadXML {
 		}
 
 		try{
-			world = (World) new XStream(new DomDriver()).fromXML(new FileInputStream(filePath), world);
+			world = (States) new XStream(new DomDriver()).fromXML(new FileInputStream(filePath), world);
 		}catch(FileNotFoundException e){
 			e.printStackTrace();
 		}
