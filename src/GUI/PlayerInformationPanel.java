@@ -1,6 +1,8 @@
 package GUI;
 
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -29,8 +31,9 @@ import world.tiles.Tile;
 public class PlayerInformationPanel extends JPanel{
 
 	private BufferedImage backgroundImage;
-
 	private ImageIcon tileIcon;
+	
+	GridBagConstraints c;
 	
 	public PlayerInformationPanel() {
 		/*set the size of this panel to be size of the image*/
@@ -41,8 +44,7 @@ public class PlayerInformationPanel extends JPanel{
 		
 		/*Initialize the layout and the insets*/
 		this.setLayout(new GridBagLayout());
-		GridBagConstraints c = new GridBagConstraints();
-		c.insets = new Insets(15,15,10,10);
+		c = new GridBagConstraints();
 		c.anchor = GridBagConstraints.LINE_START;
 		//c.fill = GridBagConstraints.BOTH;
 		c.weightx = 1.0;
@@ -58,12 +60,39 @@ public class PlayerInformationPanel extends JPanel{
 		}
 		JLabel tileLabel = new JLabel(tileIcon);
 		
-		
-		c.insets = new Insets(15,40,10,10);
+		/*Insets parameters are top, left, bottom, right */
+		c.insets = new Insets(1,40,0,0);
 		c.gridx = 0;
-		c.gridy = 0;
+		c.gridy = 1;
 		this.add(tileLabel,c);
 		
+		JLabel tileInfoTitle = new JLabel("Ovelia");
+		tileInfoTitle.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 30)); //set font of JLabel to franklin gothic medium
+		tileInfoTitle.setForeground(new Color(225,179,55));
+		c.insets = new Insets(10,40,0,10);
+		c.weightx = 1.0;
+		c.weighty = 1.0;
+		c.gridx = 0;
+		c.gridy = 0;
+		this.add(tileInfoTitle,c);
+		
+		/*set up the label that displays how many moves the player has left */
+		JLabel movesLeft = new JLabel("Moves Left:");
+		movesLeft.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 15)); 
+		movesLeft.setForeground(new Color(225,179,55));
+		c.insets = new Insets(1,40,8,10);
+		c.gridx = 0;
+		c.gridy = 2;
+		this.add(movesLeft,c);
+				
+		
+		JLabel partySize = new JLabel("Party Size:");
+		partySize.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 15)); 
+		partySize.setForeground(new Color(225,179,55));
+		c.insets = new Insets(1,1,8,80);
+		c.gridx = 1;
+		c.gridy = 2;
+		this.add(partySize,c);
 	}
 
 	  @Override
@@ -78,8 +107,6 @@ public class PlayerInformationPanel extends JPanel{
 	   * @param tile: tile whose info you'll display.
 	   */
 	public void updateInfo(Tile tile) {
-		// TODO Auto-generated method stub
 	}
-
 
 }
