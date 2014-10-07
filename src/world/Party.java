@@ -11,6 +11,7 @@ import player.Player;
  */
 public class Party extends WorldIcon{
 
+	public static final int PARTY_SIZE = 5;
 	private Player owner;
 	private int movementPoints;
 	
@@ -22,6 +23,7 @@ public class Party extends WorldIcon{
 	public Party(String imgname, Player player) {
 		super(imgname);
 		owner = player;
+		units = new Unit[PARTY_SIZE];
 	}
 	
 	/**
@@ -81,6 +83,13 @@ public class Party extends WorldIcon{
 	 */
 	public boolean ledBy(Hero h){
 		return hero == h;
+	}
+
+	public void regenHitPoints() {
+		hero.regenHealth();
+		for (int i = 0; i < units.length; i++){
+			if (units[i] != null) units[i].regenHealth();
+		}
 	}
 	
 }

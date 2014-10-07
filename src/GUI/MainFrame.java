@@ -18,6 +18,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
@@ -80,10 +81,10 @@ public class MainFrame extends JFrame  {
 		canvas.setController(wc);
 	}
 
-	public void updateInfo(Tile tile){
-		layeredPanel.updateInfo(tile);
-	}
-
+	/**
+	 * Enable close dialog. While close dialog is enabled, the only key events that should fire are those in the
+	 * close dialog. 
+	 */
 	public void enableCloseDialog(){
 		this.closeDialogEnabled = true;
 	}
@@ -92,13 +93,41 @@ public class MainFrame extends JFrame  {
 		this.closeDialogEnabled = false;
 	}
 
+	/**
+	 * Update what displays in the layered panel to reflect the information
+	 * in the supplied tile.
+	 * @author Aaron
+	 * @param tile: whose info you'll display
+	 */
+	public void updateInfo(Tile tile){
+		layeredPanel.updateInfo(tile);
+	}
+
+	
+	/**
+	 * All button presses should be sent up to the controller.
+	 * @author Aaron
+	 * @param b2: the button that fired an event.
+	 */
+	protected void buttonPressed(JButton b2) {
+		if (closeDialogEnabled) return;
+		controller.buttonPressed(b2);
+	}
+
+	/**
+	public void redraw(){
+		canvas.repaint();
+	}
+	 * All key presses should be sent up to the controller.
+	 * @author Aaron
+	 * @author Dennis Ritchie :^)
+	 */
 	private class WorldKeyDispatcher implements KeyEventDispatcher {
 
 		@Override
 		public boolean dispatchKeyEvent(KeyEvent e) {
 			if (closeDialogEnabled) return false;
 
-			// :^)
 			if (e.getID() == KeyEvent.KEY_RELEASED)
 			{
 				controller.keyPressed(e);
@@ -220,6 +249,14 @@ public class MainFrame extends JFrame  {
 	/* Main method to test the MainFrame */
 	public static void main(String[] args) {
 		new MainFrame();
+	}
+
+	/**
+	 * Create a new game dialog attached to this frame.
+	 * @param msg: the message to display.
+	 */
+	public void makeGameDialog(String msg) {
+		new GameDialog(this,msg);
 	}
 
 

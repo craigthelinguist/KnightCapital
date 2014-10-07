@@ -24,6 +24,7 @@ import world.Party;
 import world.Tile;
 import world.World;
 import world.WorldIcon;
+import GUI.GameDialog;
 import GUI.MainFrame;
 
 /**
@@ -156,8 +157,7 @@ public class WorldController {
 
 			// deselected the tile
 			else if (selected != null && SwingUtilities.isLeftMouseButton(me)){
-				if (selectedTile == clickedTile) selected = null;
-				resetHighlightedTiles();
+				if (selectedTile == clickedTile) deselect();
 				gui.updateInfo(null);
 				gui.redraw();
 			}
@@ -184,8 +184,24 @@ public class WorldController {
 	 */
 	public void buttonPressed(JButton button){
 
+		if (button.getText().equals("End Turn Placeholder")){
+			world.endTurn();
+			deselect();
+			gui.updateInfo(null);
+			gui.redraw();
+			gui.makeGameDialog("Day " + world.getDay());
+		}
+		
 	}
 
+	/**
+	 * Deselect the current tile. Un-highlight everything.
+	 */
+	private void deselect(){
+		selected = null;
+		resetHighlightedTiles();
+	}
+	
 	private void resetHighlightedTiles(){
 		this.highlightedTiles = new HashSet<>();
 	}
@@ -208,7 +224,7 @@ public class WorldController {
 		}
 		resetHighlightedTiles();
 	}
-
+	
 	/**
 	 * Return true if this point is being highlighted by the world controller
 	 * @param p: a point in Cartesian space

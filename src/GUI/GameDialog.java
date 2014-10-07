@@ -27,13 +27,17 @@ import tools.ImageLoader;
 public class GameDialog extends JDialog implements KeyListener {
 
 	private DialogPanel panel;
+	private String FILENAME = GlobalConstants.GUI_BUTTONS;
 
 	public GameDialog (MainFrame frame,String msg) {
 		super(frame,true);
 		this.setSize(400,374); //height, width
-		this.setUndecorated(true); //removes the border
+		//this.setUndecorated(true); //removes the border
+		// TODO: if i don't uncommenet this i can't exit the frame.... need to do this to test end turn
+		// maybe there should be butotn on the gamedialog u click ok and it exits dialog - Aaron
+		
         this.setLocationRelativeTo(frame); //set location of dialog relative to frame
-
+        
 	    DialogLayeredPane dLayeredPane = new DialogLayeredPane(this,msg);
 		this.add(dLayeredPane);
 		this.setResizable(false);

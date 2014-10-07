@@ -66,7 +66,7 @@ public class MainPanelMaster extends JPanel {
 		this.add(miniMapPanel,c);
 
 
-		buttonsPanel = new ButtonsPanel();
+		buttonsPanel = new ButtonsPanel(mainFrame);
 		c.gridx = 1;
 		c.gridy = 0;
 		this.add(buttonsPanel,c);

@@ -23,6 +23,9 @@ import tools.ImageLoader;
  */
 public class ButtonsPanel extends JPanel  {
 
+	// the top-level view
+	private MainFrame gui;
+	
 	private CustomButton inventoryButton;
 	private CustomButton newGame;
 
@@ -31,7 +34,10 @@ public class ButtonsPanel extends JPanel  {
 	private JButton b2;
 	private JButton b3;
 
-	public ButtonsPanel() {
+	public ButtonsPanel(MainFrame frame) {
+		
+		gui = frame;
+		
 		/*set the size of this panel to be size of the image*/
 		this.setOpaque(false);
 
@@ -64,9 +70,24 @@ public class ButtonsPanel extends JPanel  {
 		c.gridx = 0;
 		c.gridy = 2;
 		this.add(b2,c);
-
-
+		
+		setupActionListeners();
+		
 	}
 
+	private void setupActionListeners(){
+
+		b2.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				gui.buttonPressed(b2);
+			}
+			
+			
+		});
+		
+	}
+	
 
 }

@@ -36,6 +36,7 @@ public class World {
 	private final Player[] players;
 	private int currentPlayer;
 	private Tile[][] tiles;
+	private int currentDay;
 	
 	public World(Tile[][] tiles_, Player[] playersArray, Set<City> citySet){
 		tiles = tiles_;
@@ -47,22 +48,48 @@ public class World {
 		cities = citySet;
 		players = playersArray;
 		currentPlayer = 0;
+		currentDay = 1;
 	}
 
 
 	/**
-	 * End the turn for the current player. Update everything.
+	 * End the turn for the current player. If all players have cycled through, then the day has 
+	 * ended so the game world should be updated.
+	 * @return: true if the day ended (all players had their turn), false otherwise.
 	 */
 	public void endTurn(){
 		
+		// if you have cycled through all players, it is a new day.
+		currentPlayer = (currentPlayer+1)%players.length;
+		if (currentPlayer == 0){
+			currentDay++;
+			newDay();
+		}
+	}
+
+	/**
+	 * A new day has ended, so do several things:
+	 *    - regenerate some health for all units.
+	 * 	  - reset movement points for all parties.
+	 *    - remove all temporary buffs.
+	 */
+	private void newDay() {
+		
+		// cycle through all tiles, updating parties
 		for (int i = 0; i < tiles.length; i++){
 			for (int j = 0; j < tiles[i].length; j++){
+				
 				Tile tile = tiles[i][j];
 				WorldIcon wi = tile.occupant();
 				if (wi == null) continue;
+				if (wi instanceof Party){
+					Party party = (Party)wi;
+					party.regenHitPoints();
+					party.refreshMovePoints();
+				}
+				
 			}
 		}
-		currentPlayer = (currentPlayer+1)%players.length;
 		
 	}
 	
@@ -74,7 +101,6 @@ public class World {
 	 */
 	public Tile getTile(int x, int y){
 		if (x < 0 || x >= tiles.length || y < 0 || y >= tiles[x].length){
-			System.out.printf("(%d,%d)\n", x, y);
 			return null;
 		}
 		else return tiles[x][y];
@@ -98,9 +124,6 @@ public class World {
 		return cities;
 	}
 	
-	/* I don't like making the data structure storing tiles directly accessible
-	 * because we might move to a quadtree or something and seems like it'd be easier
-	 * to accidentally modify stuff you shouldn't if u can get references to things through here - Aaron */
 	public Tile[][] getTiles(){
 		return tiles;
 	}
@@ -109,6 +132,14 @@ public class World {
 		tiles[x][y].setIcon(i);
 	}
 
+	/**
+	 * Return the current day.
+	 * @return: an integer.
+	 */
+	public int getDay() {
+		return currentDay;
+	}
+	
 	/**
 	 * Given two points on the world grid, moves the party which is owned by player
 	 * and standing on the tile at location to the tile at destination.
@@ -338,5 +369,6 @@ public class World {
 		
 		return visited;
 	}
+
 	
 }

@@ -35,28 +35,35 @@ public abstract class Creature {
 	 */
 	public void damage(int amount){
 		if (amount < 0) return;
-		currentHealth = currentHealth-amount;
+		currentHealth = Math.min(0,currentHealth-amount);
 	}
 	
 	/**
-	/**
-	 * Increase or decrease the units armour, damage, o
 	 * Heal this creature by the specified amount. Cannot be healed above base hit points.
+	 * If the creature is dead, they don't get healed.
 	 * @param magnitude: amount of hit points to heal.
 	 */
 	public void heal(int amount) {
-		if (amount < 0) return;
+		if (amount < 0 || currentHealth <= 0) return;
 		currentHealth = Math.min(baseHealth, currentHealth+amount);
 	}
 	
 	/**
 	 * Heal this creature by the specified amount. The creature may be healed above their
-	 * base hit points.
+	 * base hit points. If the creature is dead they don't get healed.
 	 * @param amount: amount of hit points to heal.
 	 */
 	public void healOverload(int amount){
-		if (amount < 0) return;
+		if (amount < 0 || currentHealth <= 0) return;
 		currentHealth = currentHealth+amount;
+	}
+	
+	/**
+	 * Regenerate this creature by 5% of their max hit points.
+	 */
+	public void regenHealth(){		
+		int hpToRegen = (int)(this.baseHealth/20);
+		heal(hpToRegen);
 	}
 	
 	/**
