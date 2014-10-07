@@ -19,14 +19,14 @@ import world.World;
  * */
 public class SaveXML {
 
-	private World world;
+	private States world;
 	
 	
 	/**
 	 * Constructor takes a world object
 	 * @param w the game world 
 	 * */
-	public SaveXML(World w){
+	public SaveXML(States w){
 		this.world = w;
 	}
 	
