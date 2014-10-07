@@ -7,11 +7,11 @@ import game.units.Creature;
  * @author craigthelinguist
  *
  */
-public class HealingEffect extends ActiveEffect{
+public class Heal extends ActiveEffect{
 
 	private final int magnitude;
 	
-	public HealingEffect(int magnitude){
+	public Heal(int magnitude){
 		this.magnitude = magnitude;
 	}
 
