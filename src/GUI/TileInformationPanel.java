@@ -39,7 +39,15 @@ public class TileInformationPanel extends JPanel{
 	private BufferedImage backgroundImage;
 	private ImageIcon tileIcon;
 	
+
 	CustomButton partyButton;
+	
+	JLabel tileLabel = new JLabel();
+	JLabel tileInfoTitle = new JLabel();
+	JLabel playerName = new JLabel();
+	JLabel movesLeft = new JLabel();
+	JLabel partySize = new JLabel();
+
 	
 	GridBagConstraints c;
 	
@@ -87,13 +95,60 @@ public class TileInformationPanel extends JPanel{
 		
 		// empty tile selected, display some grass or something
 		if (occupant == null){
+			/*Reset all the labels*/
+			tileLabel.setIcon(null);
+			tileInfoTitle.setText("");
+			playerName.setText("");
+			movesLeft.setText("");
+			partySize.setText("");
+			if(partyButton != null) {
+				partyButton.setVisible(false);				
+			}
 			
+			/*Setup the labels to display grass*/
+			JLabel tileInfoTitle = new JLabel("Grass");
+			tileInfoTitle.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 30)); //set font of JLabel to franklin gothic medium
+			tileInfoTitle.setForeground(new Color(225,179,55));
+			c.insets = new Insets(0,0,0,120);
+			c.weightx = 1.0;
+			c.weighty = 1.0;
+			c.gridx = 1;
+			c.gridy = 0;
+			this.add(tileInfoTitle,c);
+			
+			
+			/*Create the label and set icon of label to the player's icon*/
+			try {
+				tileIcon = new ImageIcon(ImageIO.read(new FileInputStream(GlobalConstants.ASSETS +"tile_grass.png")));
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			tileLabel = new JLabel(tileIcon);
+			
+			/*Insets parameters are top, left, bottom, right */
+			c.insets = new Insets(1,40,0,0);
+			c.gridx = 0;
+			c.gridy = 4;
+			this.add(tileLabel,c);
+			revalidate();
 		}
 		
 		else if (occupant instanceof Party){
 			Party party = (Party)occupant;
 			party.getHero();
 			party.getOwner();
+			
+			/*Reset all the labels*/
+			tileLabel.setIcon(null);
+			tileInfoTitle.setText("");
+			playerName.setText("");
+			movesLeft.setText("");
+			partySize.setText("");
+			if(partyButton != null) {
+				partyButton.setVisible(false);				
+			}
 			
 			/*Create the label and set icon of label to the player's icon*/
 			try {
@@ -103,7 +158,7 @@ public class TileInformationPanel extends JPanel{
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			JLabel tileLabel = new JLabel(tileIcon);
+			tileLabel = new JLabel(tileIcon);
 			
 			/*Insets parameters are top, left, bottom, right */
 			c.insets = new Insets(1,40,0,0);
@@ -111,7 +166,7 @@ public class TileInformationPanel extends JPanel{
 			c.gridy = 4;
 			this.add(tileLabel,c);
 			
-			JLabel tileInfoTitle = new JLabel("Ovelia");
+			tileInfoTitle = new JLabel("Ovelia");
 			tileInfoTitle.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 30)); //set font of JLabel to franklin gothic medium
 			tileInfoTitle.setForeground(new Color(225,179,55));
 			c.insets = new Insets(0,0,0,120);
@@ -122,7 +177,7 @@ public class TileInformationPanel extends JPanel{
 			this.add(tileInfoTitle,c);
 			
 			/*set up the label that displays how many moves the player has left */
-			JLabel playerName = new JLabel("Harry");
+			playerName = new JLabel("Harry");
 			playerName.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 13)); 
 			playerName.setForeground(new Color(225,179,55));
 			c.insets = new Insets(10,0,0,0);
@@ -132,7 +187,7 @@ public class TileInformationPanel extends JPanel{
 			
 			
 			/*set up the label that displays how many moves the player has left */
-			JLabel movesLeft = new JLabel("Moves Left:");
+			movesLeft = new JLabel("Moves Left:");
 			movesLeft.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 15)); 
 			movesLeft.setForeground(new Color(225,179,55));
 			c.insets = new Insets(1,0,8,0);
@@ -150,7 +205,7 @@ public class TileInformationPanel extends JPanel{
 			c.gridy = 5;
 			this.add(partyButton,c);
 			
-			JLabel partySize = new JLabel("Party Health:");
+			partySize = new JLabel("Party Health:");
 			partySize.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 15)); 
 			partySize.setForeground(new Color(225,179,55));
 			c.insets = new Insets(1,1,8,0);
