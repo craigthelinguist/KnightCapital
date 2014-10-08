@@ -1,8 +1,15 @@
 package game.units;
+import java.awt.image.BufferedImage;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
+import player.Player;
+import renderer.Animation;
+import tools.GlobalConstants;
+import tools.ImageLoader;
+import tools.Log;
 import game.effects.Buff;
 
 /**
@@ -16,25 +23,55 @@ public abstract class Creature {
 	private int baseDamage;
 	private int baseSpeed;
 	private int baseArmour;
-	
+
 	private int currentHealth;
 	private int buffedDamage;
 	private int buffedSpeed;
 	private int buffedArmour;
-	
+
+
+
+	protected BufferedImage portrait;
+	protected Map<String,Animation> animations;
+	protected String animationName;
+	protected Animation animation;
+
 	protected LinkedList<Buff> buffs;
 	private Targets targets;
-	
-	public Creature(){
+
+	public BufferedImage getImage(){
+		return animation.getSprite();
+	}
+
+	public BufferedImage getPortrait(){
+		return portrait;
+	}
+
+	public String getAnimationName(){
+		return animationName;
+	}
+
+	public void setAnimation(String name){
+		Animation anim = animations.get(name);
+		if (anim == null) Log.print("setting animation that doesn't exist for creature, animation name was " + name);
+		else this.animation = animations.get(name);
+	}
+
+	public Creature(String imgName, Player player) {
+		this.portrait = ImageLoader.load(GlobalConstants.PORTRAITS + imgName);
+		imgName = imgName.concat("_" + player.getColour());
+		this.animations = ImageLoader.loadDirectedAnimations(GlobalConstants.ICONS + imgName);
+		this.animation = animations.get("north");
+		this.animationName = "north";
 		buffs = new LinkedList<>();
 	}
-	
+
 	public enum Targets{
 		MELEE, RANGED, AOE;
 	}
 
 	/** GETTERS AND SETTERS **/
-	
+
 	/**
 	 * Damage this creature by the amount specified.
 	 * @param amount: amount by which to damage this creature.
@@ -44,7 +81,7 @@ public abstract class Creature {
 		int damage = amount - baseArmour + buffedArmour;
 		currentHealth = Math.min(0,currentHealth-damage);
 	}
-	
+
 	/**
 	 * Heal this creature by the specified amount. Cannot be healed above base hit points.
 	 * If the creature is dead, they don't get healed.
@@ -54,7 +91,7 @@ public abstract class Creature {
 		if (amount < 0 || currentHealth <= 0) return;
 		currentHealth = Math.min(baseHealth, currentHealth+amount);
 	}
-	
+
 	/**
 	 * Heal this creature by the specified amount. The creature may be healed above their
 	 * base hit points. If the creature is dead they don't get healed.
@@ -64,15 +101,15 @@ public abstract class Creature {
 		if (amount < 0 || currentHealth <= 0) return;
 		currentHealth = currentHealth+amount;
 	}
-	
+
 	/**
 	 * Regenerate this creature by 5% of their max hit points.
 	 */
-	public void regenHealth(){		
+	public void regenHealth(){
 		int hpToRegen = (int)(this.baseHealth/20);
 		heal(hpToRegen);
 	}
-	
+
 	/**
 	 * Increase or decrease the units armour, damage, or speed by the specified amount.
 	 * @param stat: stat to increase
@@ -109,7 +146,7 @@ public abstract class Creature {
 			baseHealth = baseHealth + amount;
 		}
 	}
-	
+
 	/**
 	 * Removes all temporary buffs from this creature.
 	 */
@@ -123,5 +160,5 @@ public abstract class Creature {
 			}
 		}
 	}
-	
+
 }

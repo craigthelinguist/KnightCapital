@@ -16,39 +16,16 @@ import tools.Log;
  * @author craigthelinguist
  */
 public abstract class WorldIcon {
-	
-	private Animation animation;
-	private Map<String,Animation> animationNames;
-	private String animationName;
-	
-	public WorldIcon(String imgname){
-		final String filepath = GlobalConstants.ASSETS + imgname;
-		animationNames = ImageLoader.loadDirectedAnimations(filepath);
-		animation = animationNames.get("west");
-		animationName = "west";
-	}
-	
-	public BufferedImage getImage(){
-		if (animation.getSprite() == null) System.out.println("FUCK");
-		return animation.getSprite();
-	}
-	
-	public void setAnimationName(String name){
-		if (name.equals(animationName)) return;
-		Animation anim = animationNames.get(name);
-		if (anim == null) Log.print("couldn't find animation name" + name);
-		else{
-			animationName = name;
-			animation = anim;
-		}
-	}
-	
-	public String getAnimationName(){
-		return animationName;
-	}
+
+	public abstract void setAnimationName(String name);
+
+	public abstract String getAnimationName();
+
+	protected abstract BufferedImage getImage();
+	protected abstract BufferedImage getPortrait();
 
 	public void draw(Graphics graphics, int iconX, int iconY) {
-		graphics.drawImage(animation.getSprite(),iconX,iconY,null);
+		graphics.drawImage(this.getImage(),iconX,iconY,null);
 	}
-	
+
 }

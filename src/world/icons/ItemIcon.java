@@ -1,5 +1,7 @@
 package world.icons;
 
+import java.awt.image.BufferedImage;
+
 import world.tiles.Tile;
 import game.items.Item;
 
@@ -11,14 +13,33 @@ import game.items.Item;
 public class ItemIcon extends WorldIcon {
 
 	private final Item item;
-	
-	public ItemIcon(String imgName, Item item){
-		super(imgName);
+
+	public ItemIcon(Item item){
 		this.item = item;
 	}
-	
+
 	public boolean pickup(Party p){
 		return p.addItem(item);
 	}
-	
+
+	@Override
+	protected BufferedImage getImage() {
+		return item.getImage();
+	}
+
+	@Override
+	protected BufferedImage getPortrait() {
+		return item.getPortrait();
+	}
+
+	@Override
+	public void setAnimationName(String name) {
+		item.setAnimation(name);
+	}
+
+	@Override
+	public String getAnimationName() {
+		return item.getAnimationName();
+	}
+
 }

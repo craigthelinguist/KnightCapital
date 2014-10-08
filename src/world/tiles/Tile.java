@@ -20,17 +20,30 @@ import world.icons.WorldIcon;
  */
 public abstract class Tile {
 
+	protected BufferedImage portrait;
 	protected BufferedImage image;
 	protected WorldIcon occupant = null;
 	public final int X;
 	public final int Y;
-	
-	public Tile(int x, int y){
+
+	protected Tile(int x, int y){
 		X = x; Y = y;
 	}
-	
+
+	/**
+	 * Return the image representing this tile on the world map.
+	 * @return a buffered image
+	 */
 	public BufferedImage getImage(){
 		return image;
+	}
+
+	/**
+	 * Return the portrait representing this tile in the info panel.
+	 * @return a buffered image
+	 */
+	public BufferedImage getPortrait(){
+		return portrait;
 	}
 
 	/**
@@ -38,11 +51,11 @@ public abstract class Tile {
 	 * @return: true if the specified party is allowed to stand on this tile.
 	 */
 	public abstract boolean passable(Party party);
-	
+
 	public boolean occupied(){
 		return occupant != null;
 	}
-	
+
 	public WorldIcon occupant(){
 		return occupant;
 	}
@@ -50,7 +63,7 @@ public abstract class Tile {
 	public void draw(Graphics g, int x, int y){
 		g.drawImage(image, x, y, null);
 	}
-	
+
 	public void setIcon(WorldIcon i){
 		occupant = i;
 	}
@@ -65,5 +78,5 @@ public abstract class Tile {
 		BufferedImage lighterImage = ImageManipulation.lighten(image, intensity);
 		graphics.drawImage(lighterImage,x,y,null);
 	}
-		
+
 }

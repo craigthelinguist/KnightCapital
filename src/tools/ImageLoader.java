@@ -16,14 +16,21 @@ public class ImageLoader {
 	private ImageLoader(){}
 
 	private static Map<String, BufferedImage> images = new HashMap<String, BufferedImage>();
-	
+
 	/**
 	 * Attempts to retrieve the image specified, if it is yet to be loaded then it is loaded and returned.
 	 * If the file is invalid then a 1x1 image is returned.
 	 * @param filename The File to be retrieved
 	 * @return An Image from the file
 	 */
+
+
 	public static BufferedImage load(String filename){
+
+		if (!filename.endsWith(".png")){
+			filename = filename.concat(".png");
+		}
+
 		//If the image already exists then return
 		if(images.containsKey(filename)){
 			return images.get(filename);
@@ -62,7 +69,7 @@ public class ImageLoader {
 		}
 		return new Animation(images,frameDelay);
 	}
-	
+
 	/**
 	 * Takes the given filepath. Loads all files prefixed by that filepath into a map,
 	 * where they're indexed by the name of their animation (e.g.: north, south).

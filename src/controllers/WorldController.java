@@ -191,7 +191,7 @@ public class WorldController {
 			gui.redraw();
 			gui.makeGameDialog("Day " + world.getDay());
 		}
-		
+
 	}
 
 	/**
@@ -201,7 +201,7 @@ public class WorldController {
 		selected = null;
 		resetHighlightedTiles();
 	}
-	
+
 	/**
 	 * Resets the set of highlighted tiles.
 	 */
@@ -227,7 +227,7 @@ public class WorldController {
 		}
 		resetHighlightedTiles();
 	}
-	
+
 	/**
 	 * Return true if this point is being highlighted by the world controller
 	 * @param p: a point in Cartesian space
@@ -261,9 +261,9 @@ public class WorldController {
 	 */
 	public static void main(String[] args){
 		World w = TemporaryLoader.loadWorld("world_temporary.txt");
-		Player p = new Player("John The Baptist",1);
-		Party party = new Party(GlobalConstants.ICONS+"ovelia", p);
-		Hero hero = new Hero();
+		Player p = new Player("John The Baptist",4);
+		Hero hero = new Hero("ovelia",p);
+		Party party = new Party(hero, p);
 		hero.setMovePts(10);
 		party.setLeader(hero);
 		party.refresh();

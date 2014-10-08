@@ -2,6 +2,8 @@ package tools;
 
 import java.io.File;
 
+import player.Player;
+
 /**
  * This class contains game-wide global constants. It is used so they're all in one place.
  */
@@ -16,9 +18,10 @@ public class GlobalConstants {
 
 	// all images are stored in this relative filepath
 	public static final String ASSETS = "assets" + File.separatorChar;
-	public static final String ICONS = File.separatorChar + "icons" + File.separatorChar;
+	public static final String ICONS = ASSETS + "icons" + File.separatorChar;
 	public static final String CITIES = GlobalConstants.ASSETS + "cities" + File.separatorChar;
-	public static final String PORTRAITS = "assets" + File.separatorChar+ "portraits" +   File.separatorChar;     
+	public static final String PORTRAITS = "assets" + File.separatorChar+ "portraits" +   File.separatorChar;
+	public static final String ITEMS = GlobalConstants.ASSETS + "items" + File.separatorChar;
 
 	// all images inside the GUIAssets
 	public static final String GUI_FILEPATH = GlobalConstants.ASSETS + "GUIAssets" + File.separatorChar;
@@ -35,6 +38,5 @@ public class GlobalConstants {
 
 	// These are for the Camera
 	public static final int CAMERA_PAN = 10;
-
 
 }

@@ -14,23 +14,25 @@ public class PassableTile extends Tile{
 	private PassableTile(int x, int y){
 		super(x,y);
 	}
-	
+
 	public static PassableTile newDirtTile(int x, int y){
 		PassableTile t = new PassableTile(x,y);
 		t.image = ImageLoader.load(GlobalConstants.ASSETS + "tile_dirt.png");
+		t.portrait = ImageLoader.load(GlobalConstants.PORTRAITS + "grass.png");
 		return t;
 	}
-	
+
 	public static PassableTile newGrassTile(int x, int y){
 		PassableTile t = new PassableTile(x,y);
 		t.image = ImageLoader.load(GlobalConstants.ASSETS + "tile_grass.png");
+		t.portrait = ImageLoader.load(GlobalConstants.PORTRAITS + "grass.png");
 		return t;
 	}
 
 	@Override
-	public boolean passable(Party party) {	
+	public boolean passable(Party party) {
 		return !occupied();
 	}
-	
-	
+
+
 }
