@@ -1,0 +1,20 @@
+package controllers;
+
+/**
+ * Battle
+ * This is created whenever a player right clicks on an enemy who is within their move limit.
+ *
+ * Battle is turn based, the player with the unit with the highest speed goes first, and then the next fastest
+ * regardless of which party it's in.
+ *
+ * 		Rules
+ * 		-Melee units can only attack the front line until it is non-existant.
+ * 		-Ranged units can attack anyone.
+ * 		-AOE units attack everyone.
+ * 		-Battles continue to the death
+ * 		-No rush 20 min
+ *
+ */
+public class BattleController {
+
+}
