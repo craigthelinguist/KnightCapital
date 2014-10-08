@@ -92,7 +92,7 @@ public class XMLReader {
 	}
 	
 	public static void main(String[] args){
-		new XMLReader("C:\\Users\\mr\\workspace\\KnightCapital\\assets\\Levels.xml", "levelTwo").readLevel();
+		new XMLReader("C:\\Users\\mr\\workspace\\KnightCapital\\src\\storage\\Levels.xml", "levelTwo").readLevel();
 	}
 	
 }
