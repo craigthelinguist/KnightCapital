@@ -260,8 +260,8 @@ public class WorldController {
 	 * @param args
 	 */
 	public static void main(String[] args){
-		World w = TemporaryLoader.loadWorld("world_temporary.txt");
-		Player p = new Player("John The Baptist",2);
+		Player p = new Player("John The Baptist",4);
+		World w = TemporaryLoader.loadWorld("world_temporary.txt",p);
 		Hero hero = new Hero("ovelia",p);
 		Party party = new Party(hero, p);
 		hero.setMovePts(10);

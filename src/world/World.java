@@ -64,36 +64,26 @@ public class World {
 	public void endTurn(){
 
 		// if you have cycled through all players, it is a new day.
-		currentPlayer = (currentPlayer+1)%players.length;
-		if (currentPlayer == 0){
-			currentDay++;
-			newDay();
-		}
-	}
-
-	/**
-	 * A new day has ended, so do several things:
-	 *    - regenerate some health for all units.
-	 * 	  - reset movement points for all parties.
-	 *    - remove all temporary buffs.
-	 */
-	private void newDay() {
-
-		// cycle through all tiles, updating parties
+		// cycle through all parties owned by that player and remove buffs and stuff
 		for (int i = 0; i < tiles.length; i++){
 			for (int j = 0; j < tiles[i].length; j++){
-
 				Tile tile = tiles[i][j];
 				WorldIcon wi = tile.occupant();
 				if (wi == null) continue;
 				if (wi instanceof Party){
 					Party party = (Party)wi;
-					party.refresh();
+					if (party.ownedBy(players[currentPlayer])){
+						party.refresh();
+					}
 				}
-
 			}
 		}
 
+		// if you've cycled through all players, it is a new day
+		currentPlayer = (currentPlayer+1)%players.length;
+		if (currentPlayer == 0){
+			currentDay++;
+		}
 	}
 
 	/**
