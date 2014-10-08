@@ -54,7 +54,12 @@ public abstract class Creature {
 	public void setAnimation(String name){
 		Animation anim = animations.get(name);
 		if (anim == null) Log.print("setting animation that doesn't exist for creature, animation name was " + name);
-		else this.animation = animations.get(name);
+		else{
+
+			this.animationName = name;
+			this.animation = animations.get(name);
+
+		}
 	}
 
 	public Creature(String imgName, Player player) {
