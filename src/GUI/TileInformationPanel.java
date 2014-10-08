@@ -50,6 +50,7 @@ public class TileInformationPanel extends JPanel{
 
 	
 	GridBagConstraints c;
+
 	
 	public TileInformationPanel() {
 		/*set the size of this panel to be size of the image*/
@@ -89,9 +90,48 @@ public class TileInformationPanel extends JPanel{
 		else if (tile instanceof CityTile){
 			CityTile ct = (CityTile)tile;
 			ct.getCity();
+			
+			/*Reset all the labels*/
+			tileLabel.setIcon(null);
+			tileInfoTitle.setText("");
+			playerName.setText("");
+			movesLeft.setText("");
+			partySize.setText("");
+			if(partyButton != null) {
+				partyButton.setVisible(false);				
+			}
+			
+			/*Setup the labels to display the city image*/
+			tileInfoTitle = new JLabel("City");
+			tileInfoTitle.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 30)); 
+			tileInfoTitle.setForeground(new Color(225,179,55));
+			c.insets = new Insets(0,0,0,120);
+			c.weightx = 1.0;
+			c.weighty = 1.0;
+			c.gridx = 1;
+			c.gridy = 0;
+			this.add(tileInfoTitle,c);
+			
+			
+			/*Create the label and set icon of label to the player's icon*/
+			try {
+				tileIcon = new ImageIcon(ImageIO.read(new FileInputStream(GlobalConstants.CITIES +"basic_east.png")));
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			tileLabel = new JLabel(tileIcon);
+			c.insets = new Insets(1,40,0,0);
+			c.gridx = 0;
+			c.gridy = 4;
+			this.add(tileLabel,c);
+			revalidate();
+			
 		}
+		
+			WorldIcon occupant = tile.occupant();
 
-		WorldIcon occupant = tile.occupant();
 		
 		// empty tile selected, display some grass or something
 		if (occupant == null){
@@ -106,7 +146,7 @@ public class TileInformationPanel extends JPanel{
 			}
 			
 			/*Setup the labels to display grass*/
-			JLabel tileInfoTitle = new JLabel("Grass");
+			tileInfoTitle = new JLabel("Grass");
 			tileInfoTitle.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 30)); //set font of JLabel to franklin gothic medium
 			tileInfoTitle.setForeground(new Color(225,179,55));
 			c.insets = new Insets(0,0,0,120);
