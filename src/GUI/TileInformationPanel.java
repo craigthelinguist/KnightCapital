@@ -38,27 +38,27 @@ public class TileInformationPanel extends JPanel{
 
 	private BufferedImage backgroundImage;
 	private ImageIcon tileIcon;
-	
+
 
 	CustomButton partyButton;
-	
+
 	JLabel tileLabel = new JLabel();
 	JLabel tileInfoTitle = new JLabel();
 	JLabel playerName = new JLabel();
 	JLabel movesLeft = new JLabel();
 	JLabel partySize = new JLabel();
 
-	
+
 	GridBagConstraints c;
 
-	
+
 	public TileInformationPanel() {
 		/*set the size of this panel to be size of the image*/
 		this.setPreferredSize(new Dimension(375,200));
 		this.setOpaque(false);
 		/*Initialize the image for the inventory panel*/
 		backgroundImage = ImageLoader.load(GlobalConstants.GUI_FILEPATH + "playerInfoPanel.png");
-		
+
 		/*Initialize the layout and the insets*/
 		this.setLayout(new GridBagLayout());
 		c = new GridBagConstraints();
@@ -66,7 +66,7 @@ public class TileInformationPanel extends JPanel{
 		//c.fill = GridBagConstraints.BOTH;
 		c.weightx = 1.0;
 		c.weighty = 1.0;
-		
+
 	}
 
 	  @Override
@@ -81,16 +81,16 @@ public class TileInformationPanel extends JPanel{
 	   * @param tile: tile whose info you'll display.
 	   */
 	public void updateInfo(Tile tile) {
-		
+
 		// nothing selected, display a blank panel
 		if (tile == null){
-			
+
 		}
 		// city tile selected, draw some info about the city
 		else if (tile instanceof CityTile){
 			CityTile ct = (CityTile)tile;
 			ct.getCity();
-			
+
 			/*Reset all the labels*/
 			tileLabel.setIcon(null);
 			tileInfoTitle.setText("");
@@ -98,12 +98,12 @@ public class TileInformationPanel extends JPanel{
 			movesLeft.setText("");
 			partySize.setText("");
 			if(partyButton != null) {
-				partyButton.setVisible(false);				
+				partyButton.setVisible(false);
 			}
-			
+
 			/*Setup the labels to display the city image*/
 			tileInfoTitle = new JLabel("City");
-			tileInfoTitle.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 30)); 
+			tileInfoTitle.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 30));
 			tileInfoTitle.setForeground(new Color(225,179,55));
 			c.insets = new Insets(0,0,0,120);
 			c.weightx = 1.0;
@@ -111,8 +111,8 @@ public class TileInformationPanel extends JPanel{
 			c.gridx = 1;
 			c.gridy = 0;
 			this.add(tileInfoTitle,c);
-			
-			
+
+
 			/*Create the label and set icon of label to the player's icon*/
 			try {
 				tileIcon = new ImageIcon(ImageIO.read(new FileInputStream(GlobalConstants.CITIES +"basic_east.png")));
@@ -127,12 +127,13 @@ public class TileInformationPanel extends JPanel{
 			c.gridy = 4;
 			this.add(tileLabel,c);
 			revalidate();
-			
+
 		}
-		
+		else{
+
 			WorldIcon occupant = tile.occupant();
 
-		
+
 		// empty tile selected, display some grass or something
 		if (occupant == null){
 			/*Reset all the labels*/
@@ -142,9 +143,9 @@ public class TileInformationPanel extends JPanel{
 			movesLeft.setText("");
 			partySize.setText("");
 			if(partyButton != null) {
-				partyButton.setVisible(false);				
+				partyButton.setVisible(false);
 			}
-			
+
 			/*Setup the labels to display grass*/
 			tileInfoTitle = new JLabel("Grass");
 			tileInfoTitle.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 30)); //set font of JLabel to franklin gothic medium
@@ -155,8 +156,8 @@ public class TileInformationPanel extends JPanel{
 			c.gridx = 1;
 			c.gridy = 0;
 			this.add(tileInfoTitle,c);
-			
-			
+
+
 			/*Create the label and set icon of label to the player's icon*/
 			try {
 				tileIcon = new ImageIcon(ImageIO.read(new FileInputStream(GlobalConstants.ASSETS +"tile_grass.png")));
@@ -166,7 +167,7 @@ public class TileInformationPanel extends JPanel{
 				e.printStackTrace();
 			}
 			tileLabel = new JLabel(tileIcon);
-			
+
 			/*Insets parameters are top, left, bottom, right */
 			c.insets = new Insets(1,40,0,0);
 			c.gridx = 0;
@@ -174,12 +175,12 @@ public class TileInformationPanel extends JPanel{
 			this.add(tileLabel,c);
 			revalidate();
 		}
-		
+
 		else if (occupant instanceof Party){
 			Party party = (Party)occupant;
 			party.getHero();
 			party.getOwner();
-			
+
 			/*Reset all the labels*/
 			tileLabel.setIcon(null);
 			tileInfoTitle.setText("");
@@ -187,9 +188,9 @@ public class TileInformationPanel extends JPanel{
 			movesLeft.setText("");
 			partySize.setText("");
 			if(partyButton != null) {
-				partyButton.setVisible(false);				
+				partyButton.setVisible(false);
 			}
-			
+
 			/*Create the label and set icon of label to the player's icon*/
 			try {
 				tileIcon = new ImageIcon(ImageIO.read(new FileInputStream(GlobalConstants.PORTRAITS +"ovelia.png")));
@@ -199,13 +200,13 @@ public class TileInformationPanel extends JPanel{
 				e.printStackTrace();
 			}
 			tileLabel = new JLabel(tileIcon);
-			
+
 			/*Insets parameters are top, left, bottom, right */
 			c.insets = new Insets(1,40,0,0);
 			c.gridx = 0;
 			c.gridy = 4;
 			this.add(tileLabel,c);
-			
+
 			tileInfoTitle = new JLabel("Ovelia");
 			tileInfoTitle.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 30)); //set font of JLabel to franklin gothic medium
 			tileInfoTitle.setForeground(new Color(225,179,55));
@@ -215,26 +216,26 @@ public class TileInformationPanel extends JPanel{
 			c.gridx = 1;
 			c.gridy = 0;
 			this.add(tileInfoTitle,c);
-			
+
 			/*set up the label that displays how many moves the player has left */
 			playerName = new JLabel("Harry");
-			playerName.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 13)); 
+			playerName.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 13));
 			playerName.setForeground(new Color(225,179,55));
 			c.insets = new Insets(10,0,0,0);
 			c.gridx = 1;
 			c.gridy = 2;
 			this.add(playerName,c);
-			
-			
+
+
 			/*set up the label that displays how many moves the player has left */
 			movesLeft = new JLabel("Moves Left:");
-			movesLeft.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 15)); 
+			movesLeft.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 15));
 			movesLeft.setForeground(new Color(225,179,55));
 			c.insets = new Insets(1,0,8,0);
 			c.gridx = 1;
 			c.gridy = 4;
 			this.add(movesLeft,c);
-					
+
 			/*Declare and initialize the images for the party button */
 			BufferedImage partyButtonDefault = ImageLoader.load(GlobalConstants.GUI_BUTTONS + "partyButton.png");
 			BufferedImage partyButtonPressed = ImageLoader.load(GlobalConstants.GUI_BUTTONS + "partyButtonClicked.png");
@@ -244,9 +245,9 @@ public class TileInformationPanel extends JPanel{
 			c.gridx = 0;
 			c.gridy = 5;
 			this.add(partyButton,c);
-			
+
 			partySize = new JLabel("Party Health:");
-			partySize.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 15)); 
+			partySize.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 15));
 			partySize.setForeground(new Color(225,179,55));
 			c.insets = new Insets(1,1,8,0);
 			c.gridx = 1;
@@ -254,12 +255,12 @@ public class TileInformationPanel extends JPanel{
 			this.add(partySize,c);
 			revalidate(); //revalidate this panel (displays all the information)
 		}
-		
+
 		// item on the tile, draw a picture of a treasure chest or something
 		else if (occupant instanceof ItemIcon){
 		}
-		
-		
+
+		}
 	}
 
 }

@@ -261,7 +261,7 @@ public class WorldController {
 	 */
 	public static void main(String[] args){
 		World w = TemporaryLoader.loadWorld("world_temporary.txt");
-		Player p = new Player("John The Baptist",4);
+		Player p = new Player("John The Baptist",2);
 		Hero hero = new Hero("ovelia",p);
 		Party party = new Party(hero, p);
 		hero.setMovePts(10);
