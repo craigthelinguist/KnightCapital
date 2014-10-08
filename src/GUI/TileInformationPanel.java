@@ -39,6 +39,8 @@ public class TileInformationPanel extends JPanel{
 	private BufferedImage backgroundImage;
 	private ImageIcon tileIcon;
 	
+	CustomButton partyButton;
+	
 	GridBagConstraints c;
 	
 	public TileInformationPanel() {
@@ -83,14 +85,23 @@ public class TileInformationPanel extends JPanel{
 		this.add(tileInfoTitle,c);
 		
 		/*set up the label that displays how many moves the player has left */
-		JLabel movesLeft = new JLabel("Moves Left:");
+		/**JLabel movesLeft = new JLabel("Moves Left:");
 		movesLeft.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 15)); 
 		movesLeft.setForeground(new Color(225,179,55));
 		c.insets = new Insets(1,40,8,10);
 		c.gridx = 0;
 		c.gridy = 2;
-		this.add(movesLeft,c);
+		this.add(movesLeft,c);*/
 				
+		/*Declare and initialize the images for the party button */
+		BufferedImage partyButtonDefault = ImageLoader.load(GlobalConstants.GUI_BUTTONS + "partyButton.png");
+		BufferedImage partyButtonPressed = ImageLoader.load(GlobalConstants.GUI_BUTTONS + "partyButtonClicked.png");
+		BufferedImage partyButtonHover = ImageLoader.load(GlobalConstants.GUI_BUTTONS + "partyButtonHover.png");
+		partyButton = new CustomButton(partyButtonDefault, partyButtonPressed, partyButtonHover);
+		c.insets = new Insets(1,40,15,10);
+		c.gridx = 0;
+		c.gridy = 2;
+		this.add(partyButton,c);
 		
 		JLabel partySize = new JLabel("Party Size:");
 		partySize.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 15)); 
