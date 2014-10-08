@@ -41,7 +41,7 @@ public class World {
 	private int currentPlayer;
 	private Tile[][] tiles;
 	private int currentDay;
-	
+
 	public World(Tile[][] tiles_, Player[] playersArray, Set<City> citySet){
 		tiles = tiles_;
 		NUM_TILES_ACROSS = tiles.length;
@@ -57,45 +57,35 @@ public class World {
 
 
 	/**
-	 * End the turn for the current player. If all players have cycled through, then the day has 
+	 * End the turn for the current player. If all players have cycled through, then the day has
 	 * ended so the game world should be updated.
 	 * @return: true if the day ended (all players had their turn), false otherwise.
 	 */
 	public void endTurn(){
-		
-		// if you have cycled through all players, it is a new day.
-		currentPlayer = (currentPlayer+1)%players.length;
-		if (currentPlayer == 0){
-			currentDay++;
-			newDay();
-		}
-	}
 
-	/**
-	 * A new day has ended, so do several things:
-	 *    - regenerate some health for all units.
-	 * 	  - reset movement points for all parties.
-	 *    - remove all temporary buffs.
-	 */
-	private void newDay() {
-		
-		// cycle through all tiles, updating parties
+		// if you have cycled through all players, it is a new day.
+		// cycle through all parties owned by that player and remove buffs and stuff
 		for (int i = 0; i < tiles.length; i++){
 			for (int j = 0; j < tiles[i].length; j++){
-				
 				Tile tile = tiles[i][j];
 				WorldIcon wi = tile.occupant();
 				if (wi == null) continue;
 				if (wi instanceof Party){
 					Party party = (Party)wi;
-					party.refresh();
+					if (party.ownedBy(players[currentPlayer])){
+						party.refresh();
+					}
 				}
-				
 			}
 		}
-		
+
+		// if you've cycled through all players, it is a new day
+		currentPlayer = (currentPlayer+1)%players.length;
+		if (currentPlayer == 0){
+			currentDay++;
+		}
 	}
-	
+
 	/**
 	 * Get the specified tile in the world (in cartesian coordinates).
 	 * @param x: how far across tile is
@@ -108,7 +98,7 @@ public class World {
 		}
 		else return tiles[x][y];
 	}
-	
+
 	/**
 	 * Get the specified tile in the world (in cartesian coordinates).
 	 * @param p: a point (x,y) in the world
@@ -118,7 +108,7 @@ public class World {
 		if (p == null) return null;
 		else return getTile(p.x,p.y);
 	}
-	
+
 	/**
 	 * Return a read-only view of the cities in this world.
 	 * @return: a read-only set.
@@ -126,11 +116,11 @@ public class World {
 	public Set<? extends City> getCities(){
 		return cities;
 	}
-	
+
 	public Tile[][] getTiles(){
 		return tiles;
 	}
-	
+
 	public void setIcon(WorldIcon i, int x, int y){
 		tiles[x][y].setIcon(i);
 	}
@@ -142,7 +132,7 @@ public class World {
 	public int getDay() {
 		return currentDay;
 	}
-	
+
 	/**
 	 * Given two points on the world grid, moves the party which is owned by player
 	 * and standing on the tile at location to the tile at destination.
@@ -151,27 +141,27 @@ public class World {
 	 * @return: true if the party was successfully moved.
 	 */
 	public boolean moveParty(Player player, Point location, Point destination) {
-		
+
 		// check points given describe tiles in this world.
 		Tile tileLocation = getTile(location.x,location.y);
 		Tile tileDestination = getTile(destination.x,destination.y);
 		if (tileLocation == null || tileDestination == null) return false;
-		
+
 		// check there is a party at location and it is owned by the specified player
 		WorldIcon icon = tileLocation.occupant();
 		if (!(icon instanceof Party)) return false;
 		Party party = (Party)icon;
 		if (!(party.ownedBy(player))) return false;
-		
+
 		// attempt to move party from location to destination
 		if (!pathExists(location,destination)) return false;
-		
+
 		// do it in this order or you disappear if you move to tile you're already
 		// standing on :)
 		tileLocation.setIcon(null);
 		tileDestination.setIcon(party);
 		int dist = Geometry.taxicab(location, destination);
-		
+
 		// update party
 		party.decreaseMovePoints(dist);
 		boolean east = destination.x - destination.y > location.x - location.y;
@@ -180,10 +170,10 @@ public class World {
 		else if (east && !north) party.setAnimationName("east");
 		else if (!east && north) party.setAnimationName("west");
 		else if (!east && !north) party.setAnimationName("south");
-		
+
 		return true;
 	}
-	
+
 	/**
 	 * Check if there's a path from the tile at one point to the tile at another point. Does not move
 	 * or update the state of the world - only says whether the path exists.
@@ -192,44 +182,44 @@ public class World {
 	 * @return: true if the party on the tile at start can move to the tile at goal.
 	 */
 	private boolean pathExists(Point start, final Point goal){
-		
+
 		// preliminaries
 		Party party = (Party)(getTile(start.x,start.y).occupant());
 		int movePts = party.getMovePoints();
 		if (movePts <= 0) return false;
-		
+
 		// a wrapper class for the nodes in the fringe
 		class Node implements Comparable<Node>{
 			final Point point;
 			final int costToHere;
 			final int weight;
-			
+
 			public Node(Point p, int cost){
 				point = p;
 				costToHere = cost;
 				weight = costToHere + heuristic(goal);
 			}
-			
+
 			// taxicab distance is the heuristic since we're using a discrete grid
 			int heuristic(Point other){
 				return Geometry.taxicab(point, other);
 			}
-			
+
 			@Override
 			public int compareTo(Node other) {
 				return weight - other.weight;
 			}
-			
+
 		}
-		
+
 		// initialise the fringe and declare variables
 		Node node = new Node(start,0);
 		HashSet<Point> visited = new HashSet<>();
 		PriorityQueue<Node> fringe = new PriorityQueue<>();
 		fringe.offer(node);
 		Point point; Tile tile;
-		
-		
+
+
 		while (!fringe.isEmpty()){
 
 			// get next node, check its feasibility
@@ -239,13 +229,13 @@ public class World {
 			if (visited.contains(point)) continue;
 			tile = getTile(point);
 			if (!tile.passable(party) && point != start) continue;
-			
+
 			// mark as visited
 			visited.add(point);
-			
+
 			// if you're at the goal, stop
 			if (node.point.equals(goal)) return true;
-		
+
 			// otherwise push neighbours onto fringe
 			LinkedList<Point> neighbours = findNeighbours(point);
 			int cost = node.costToHere + 1;
@@ -253,11 +243,11 @@ public class World {
 				Node nd = new Node(pt,cost);
 				fringe.offer(nd);
 			}
-			
+
 		}
-		
+
 		return false;
-		
+
 	}
 
 	/**
@@ -287,11 +277,11 @@ public class World {
 					else if (name.contains("south")) playerDir = Camera.SOUTH;
 					else if (name.contains("west")) playerDir = Camera.WEST;
 					else throw new RuntimeException("Unknown animation name: " + name);
-					
+
 					if (clockwise) playerDir = (playerDir+1)%4;
 					else if (playerDir == 0) playerDir = 3;
 					else playerDir = playerDir - 1;
-					
+
 					if (playerDir == Camera.NORTH) wi.setAnimationName("north");
 					else if (playerDir == Camera.EAST) wi.setAnimationName("east");
 					else if (playerDir == Camera.SOUTH) wi.setAnimationName("south");
@@ -299,9 +289,9 @@ public class World {
 				}
 			}
 		}
-		
+
 		for (City city : cities){
-			
+
 			String name = city.getAnimationName();
 			int cityDir;
 			if (name.contains("north")) cityDir = Camera.NORTH;
@@ -309,21 +299,21 @@ public class World {
 			else if (name.contains("south")) cityDir = Camera.SOUTH;
 			else if (name.contains("west")) cityDir = Camera.WEST;
 			else throw new RuntimeException("Unknown animation name: " + name);
-			
+
 			if (clockwise) cityDir = (cityDir+1)%4;
 			else if (cityDir == 0) cityDir = 3;
 			else cityDir = cityDir - 1;
-			
+
 			if (cityDir == Camera.NORTH) city.setAnimationName("north");
 			else if (cityDir == Camera.EAST) city.setAnimationName("east");
 			else if (cityDir == Camera.SOUTH) city.setAnimationName("south");
 			else if (cityDir == Camera.WEST) city.setAnimationName("west");
-			
+
 		}
-		
-		
+
+
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	/**
@@ -332,24 +322,24 @@ public class World {
 	 * @param start: the tile they're starting from.
 	 */
 	public Set<Point> getValidMoves(Party party, Tile start) {
-		
+
 		// a wrapper class for the nodes in the queue
 		class Node{
-			
+
 			final Point point;
 			final int distance;
-			
+
 			public Node(Point p, int d){
 				point = p;
 				distance = d;
 			}
-			
+
 			public int hashCode(){
 				return point.hashCode();
 			}
-			
+
 		}
-		
+
 		int movePoints = party.getMovePoints();
 		if (movePoints == 0) return new HashSet<Point>();
 		Point point = new Point(start.X,start.Y);
@@ -357,7 +347,7 @@ public class World {
 		Set<Point> visited = new HashSet<>();
 		Queue<Node> queue = new ArrayDeque<>();
 		queue.offer(node);
-		
+
 		while (!queue.isEmpty()){
 			node = queue.poll();
 			point = node.point;
@@ -369,9 +359,9 @@ public class World {
 				else queue.offer(new Node(neighbour,newDist));
 			}
 		}
-		
+
 		return visited;
 	}
 
-	
+
 }

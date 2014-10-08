@@ -6,7 +6,7 @@ import java.awt.image.DataBufferByte;
 public class ImageManipulation {
 
 	private ImageManipulation(){}
-	
+
 	public static BufferedImage lighten(BufferedImage image, int intensity) {
 
 		final int WIDTH = image.getWidth();
@@ -47,28 +47,6 @@ public class ImageManipulation {
 
 		return resultingImage;
 
-		
-		/**
-		old, slower way
-		ColorModel cm = image.getColorModel();
-		boolean isAlphaPremultiplied = cm.isAlphaPremultiplied();
-		WritableRaster raster = image.copyData(null);
-		BufferedImage bi = new BufferedImage(cm, raster, isAlphaPremultiplied, null);
-		for (int i = 0; i < bi.getWidth(); i++){
-			for (int j = 0; j < bi.getHeight(); j++){
-				
-				int pixel = bi.getRGB(i, j);
-				int alpha = (pixel>>24) & 0xff;
-				Color color = new Color(pixel);
-				Color lightened = lighten(color);
-				bi.setRGB(i, j, lightened.getRGB());
-				
-			}
-		}
-		graphics.drawImage(bi, x, y, null);
-		**/
-		
-		
 	}
 
 }
