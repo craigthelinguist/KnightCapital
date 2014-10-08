@@ -77,10 +77,10 @@ public class TileInformationPanel extends JPanel{
 		JLabel tileInfoTitle = new JLabel("Ovelia");
 		tileInfoTitle.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 30)); //set font of JLabel to franklin gothic medium
 		tileInfoTitle.setForeground(new Color(225,179,55));
-		c.insets = new Insets(10,40,0,10);
+		c.insets = new Insets(10,0,0,50);
 		c.weightx = 1.0;
 		c.weighty = 1.0;
-		c.gridx = 0;
+		c.gridx = 1;
 		c.gridy = 0;
 		this.add(tileInfoTitle,c);
 		
