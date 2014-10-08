@@ -39,7 +39,7 @@ public class MainMenuPanel extends JPanel {
 		/*Set up the grid bag constraints and insets */
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
-		c.insets = new Insets(250,30,0,0);
+		c.insets = new Insets(250,50,0,0);
 		c.anchor = GridBagConstraints.LAST_LINE_START;
 		c.weightx = 1.0;
 		//c.weighty = 1.0;
@@ -57,7 +57,7 @@ public class MainMenuPanel extends JPanel {
 		BufferedImage loadGamePressed = ImageLoader.load(GlobalConstants.GUI_BUTTONS + "loadMainClicked.png");
 		BufferedImage loadGameHover = ImageLoader.load(GlobalConstants.GUI_BUTTONS + "loadMainHover.png");
 		loadGame = new CustomButton(loadGameDefault, loadGamePressed, loadGameHover);
-		c.insets = new Insets(0,30,0,0);
+		c.insets = new Insets(0,50,0,0);
 		c.gridx = 0;
 		c.gridy = 2;
 		this.add(loadGame,c);
@@ -66,7 +66,7 @@ public class MainMenuPanel extends JPanel {
 		BufferedImage joinGamePressed = ImageLoader.load(GlobalConstants.GUI_BUTTONS + "joinMainClicked.png");
 		BufferedImage joinGameHover = ImageLoader.load(GlobalConstants.GUI_BUTTONS + "joinMainHover.png");
 		joinGame = new CustomButton(joinGameDefault, joinGamePressed, joinGameHover);
-		c.insets = new Insets(0,30,0,0);
+		c.insets = new Insets(0,50,0,0);
 		c.gridx = 0;
 		c.gridy = 3;
 		this.add(joinGame,c);
@@ -75,7 +75,7 @@ public class MainMenuPanel extends JPanel {
 		BufferedImage quitGamePressed = ImageLoader.load(GlobalConstants.GUI_BUTTONS + "quitMainClicked.png");
 		BufferedImage quitGameHover = ImageLoader.load(GlobalConstants.GUI_BUTTONS + "quitMainHover.png");
 		quitGame = new CustomButton(quitGameDefault, quitGamePressed, quitGameHover);
-		c.insets = new Insets(0,30,0,0);
+		c.insets = new Insets(0,50,0,0);
 		c.gridx = 0;
 		c.gridy = 4;
 		this.add(quitGame,c);
