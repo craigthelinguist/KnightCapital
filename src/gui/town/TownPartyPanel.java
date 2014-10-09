@@ -28,7 +28,7 @@ public class TownPartyPanel extends JPanel {
 	// data this townPartyPanel displays
 	private TownController controller;
 	private Party party;
-	private TownPartySlot[][] slots;
+	private TownPartySlot slots[][];
 	
 	protected TownPartyPanel(Party party, Dimension dimensions, TownController townController) {
 		this.controller = townController;
@@ -37,19 +37,15 @@ public class TownPartyPanel extends JPanel {
 	
 		GridBagConstraints grid = new GridBagConstraints();
 		this.setLayout(new GridBagLayout());
-		grid.fill = GridBagConstraints.BOTH;
+	
 		slots = new TownPartySlot[Party.PARTY_COLS][Party.PARTY_ROWS];
-		for (int i = 0; i < slots.length; i++){
-			for (int j = 0; j < slots[i].length; j++){
-				System.out.printf("(%d,%d)\n",i,j);
-				grid.gridx = i;
-				grid.gridy = j;
-				grid.fill = GridBagConstraints.BOTH;
-				TownPartySlot slot = new TownPartySlot(party,townController,i,j);
-				grid.insets = new Insets(15,15,10,10);
-				slots[i][j] = slot;
-				slots[i][j] = new TownPartySlot(party,townController,i,j);
+		for (int y = 0; y < Party.PARTY_ROWS; y++){
+			for (int x = 0; x < Party.PARTY_COLS; x++){
+				grid.gridx = x;
+				grid.gridy = y;
+				TownPartySlot slot = new TownPartySlot(party,townController,x,y);
 				this.add(slot,grid);
+				slots[x][y] = slot;
 			}
 		}
 		
@@ -57,13 +53,7 @@ public class TownPartyPanel extends JPanel {
 
 	@Override
 	protected void paintComponent(Graphics g){
-		g.setColor(Color.BLACK);
-		g.drawRect(0, 0, Constants.PORTRAIT_DIMENSIONS.width, Constants.PORTRAIT_DIMENSIONS.height);
-		for (int i = 0; i < slots.length; i++){
-			for (int j = 0; j < slots[i].length; j++){
-				slots[i][j].draw(g);
-			}
-		}
+
 	}
 	
 	public static void main(String[] args){

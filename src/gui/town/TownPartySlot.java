@@ -2,6 +2,7 @@ package gui.town;
 
 import game.units.Creature;
 
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -33,17 +34,17 @@ public class TownPartySlot extends JPanel{
 		this.controller = townController;
 		this.addMouseListener(new SlotListener());
 		this.party = party;
-		this.setPreferredSize(Constants.PORTRAIT_DIMENSIONS);
+		this.setPreferredSize(new Dimension(PORTRAIT_WIDTH+1,PORTRAIT_HEIGHT+1));
 		dragging = false;
 	}
-
-	protected void draw(Graphics g){
+		
+	@Override
+	protected void paintComponent(Graphics g){
+		g.drawRect(0, 0, PORTRAIT_WIDTH, PORTRAIT_HEIGHT);
 		Creature c = party.getMember(x, y);
 		if (c == null) return;
 		g.drawImage(c.getPortrait(),0,0,null);
 	}
-		
-	
 	
 	
 	private class SlotListener implements MouseMotionListener,MouseListener{
