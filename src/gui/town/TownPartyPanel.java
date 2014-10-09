@@ -2,6 +2,7 @@ package gui.town;
 
 import game.units.Creature;
 import game.units.Hero;
+import game.units.Unit;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -73,6 +74,8 @@ public class TownPartyPanel extends JPanel {
 		Hero hero = new Hero("ovelia",player);
 		Creature[][] members = Party.newEmptyParty();
 		members[0][0] = hero;
+		members[0][1] = new Unit("knight",player);
+		members[1][1] = new Unit("knight",player);
 		Party party = new Party(hero, player, members);
 		TownPartyPanel tpp = new TownPartyPanel(party,size,null);
 		panel.add(tpp);
