@@ -17,9 +17,9 @@ import world.towns.City;
 public class TownController {
 
 	// state stuff
-	private final City city;
-	private Party garrison;
-	private Party visitors;
+	protected final City city;
+	protected Party garrison;
+	protected Party visitors;
 	
 	// gui stuff
 	private TownGui gui;
@@ -37,6 +37,14 @@ public class TownController {
 		Dimension dimensions = controller.getVisualDimensions();
 		this.gui = new TownGui(this);
 		
+	}
+	
+	protected Party getGarrison(){
+		return garrison;
+	}
+	
+	protected Party getVisitors(){
+		return visitors;
 	}
 	
 	public static void main(String[] args){

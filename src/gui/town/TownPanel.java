@@ -20,11 +20,21 @@ public class TownPanel extends JPanel{
 	private BufferedImage splash;
 
 	// components
+	private TownPartyPanel panel_visitor;
+	private TownPartyPanel panel_garrison;
+	private TownButtonPanel panel_buttons;
 
 	protected TownPanel(TownController townController) {
 		this.controller = townController;
 		this.splash = ImageLoader.load(FILEPATH + BACKDROP, ".jpg");
 		this.setPreferredSize(new Dimension(splash.getWidth(),splash.getHeight()));
+	
+		panel_visitor = new TownPartyPanel(townController);
+		panel_garrison = new TownPartyPanel(townController);
+		panel_buttons = new TownButtonPanel(townController);
+		
+		
+		
 	}
 	
 	@Override

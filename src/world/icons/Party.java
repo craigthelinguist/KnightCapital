@@ -1,8 +1,10 @@
 package world.icons;
 
+import java.awt.Point;
 import java.awt.image.BufferedImage;
 
 import game.items.Item;
+import game.units.Creature;
 import game.units.Hero;
 import game.units.Unit;
 import player.Player;
@@ -14,7 +16,7 @@ import player.Player;
  */
 public class Party extends WorldIcon{
 
-	public static final int PARTY_SIZE = 5;
+	public static final int PARTY_SIZE = 6;
 	public static final int INVENTORY_ROWS = 2;
 	public static final int INVENTORY_COLS = 3;
 
@@ -22,18 +24,28 @@ public class Party extends WorldIcon{
 	private int movementPoints;
 
 	private Item[][] inventory;
+	private Creature[][] members;
 	private Hero hero;
-	private Unit[] units;
-
 
 	// TODO: should be instantiated with a hero; no party is without one
 	public Party(Hero hero, Player player) {
 		this.hero = hero;
 		owner = player;
-		units = new Unit[PARTY_SIZE];
+		members = new Creature[PARTY_SIZE/2][PARTY_SIZE/2];	
 		inventory = new Item[INVENTORY_COLS][INVENTORY_ROWS];
 	}
 
+	/**
+	 * Switch the order of two party members.
+	 * @param p1: position of first party member.
+	 * @param p2: position of second party member.
+	 */
+	public void switchOrder(Point p1, Point p2){
+		Creature c1 = members[p1.x][p1.y];
+		members[p1.x][p1.y] = members[p2.x][p2.y];
+		members[p2.x][p2.y] = c1;
+	}
+	
 	/**
 	 * Return true if this Party is owned by the specified player.
 	 * @param p: player you suspect owns this party.
@@ -107,13 +119,13 @@ public class Party extends WorldIcon{
 	 */
 	public void refresh(){
 		movementPoints = hero.getMovePoints();
-		hero.regenHealth();
-		hero.removeTempBuffs();
-		for (int i = 0; i < units.length; i++){
-			Unit unit = units[i];
-			if (unit == null) continue;
-			unit.removeTempBuffs();
-			unit.regenHealth();
+		for (int i = 0; i < members.length; i++){
+			for (int j = 0; j < members[i].length; j++){
+				Creature member = members[i][j];
+				if (member == null) continue;
+				member.removeTempBuffs();
+				member.regenHealth();
+			}
 		}
 	}
 
