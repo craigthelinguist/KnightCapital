@@ -209,5 +209,10 @@ public class City {
 	public void setGarrison(Party party) {
 		this.garrison = party;
 	}
+
+
+	public void setVisitors(Party party) {
+		this.visitors = party;
+	}
 	
 }

@@ -27,8 +27,8 @@ public class TownPanel extends JPanel{
 	private BufferedImage splash;
 
 	// components
-	private PartyPanel panel_visitor;
-	private PartyPanel panel_garrison;
+	public PartyPanel panel_visitor;
+	public PartyPanel panel_garrison;
 	private TownButtonPanel panel_buttons;
 	
 	protected TownPanel(TownController townController, Party visitors, Party garrison) {
@@ -37,8 +37,8 @@ public class TownPanel extends JPanel{
 		this.setPreferredSize(new Dimension(splash.getWidth(),splash.getHeight()));
 
 		Dimension childDimensions = new Dimension(getWidth()/3,getHeight()/3);
-		panel_visitor = new PartyPanel(visitors, townController);
-		panel_garrison = new PartyPanel(garrison, townController);
+		panel_visitor = new PartyPanel(visitors);
+		panel_garrison = new PartyPanel(garrison);
 		panel_buttons = new TownButtonPanel(childDimensions,townController);
 		
 		this.add(panel_visitor);
@@ -50,6 +50,9 @@ public class TownPanel extends JPanel{
 	@Override
 	protected void paintComponent(Graphics g){
 		g.drawImage(splash,0,0,null);
+		panel_visitor.repaint();
+		panel_garrison.repaint();
+		
 	}
 	
 }

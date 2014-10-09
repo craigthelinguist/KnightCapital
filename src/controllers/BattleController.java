@@ -20,24 +20,5 @@ import javax.swing.JButton;
  * 		-No rush 20 min
  *
  */
-public class BattleController extends Controller{
-
-	@Override
-	public void buttonPressed(JButton button, Object[] info) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mousePressed(MouseEvent me, Object[] info) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void keyPressed(KeyEvent ke, Object[] info) {
-		// TODO Auto-generated method stub
-		
-	}
-
+public class BattleController{
 }

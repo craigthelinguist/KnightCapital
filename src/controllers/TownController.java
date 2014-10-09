@@ -25,7 +25,7 @@ import world.towns.City;
 
 
 
-public class TownController extends Controller {
+public class TownController{
 
 	// state stuff
 	protected final City city;
@@ -75,30 +75,26 @@ public class TownController extends Controller {
 			}
 		}
 		
+		Hero h2 = new Hero("dark_knight",player);
+		Unit u3 = new Unit("knight",player);
+		Unit u4 = new Unit("archer",player);
+		Unit u5 = new Unit("archer",player);
+		Unit u6 = new Unit("knight",player);
+		Creature[][] members2 = Party.newEmptyParty();
+		members[0][0] = u3;
+		members[1][0] = u6;
+		members[2][0] = h2;
+		members[0][1] = u4;
+		members[2][1] = u5;
+		Party party2 = new Party(h2,player,members2);
+		
 		City city = new City("basic",player,tiles);
 		city.setGarrison(party);
-
+		city.setVisitors(party2);
+		
 		Player p = new Player("John",1);
 		TownController tc = new TownController(city,WorldController.testWorldControllerNoGui());
 
-	}
-
-	@Override
-	public void buttonPressed(JButton button, Object[] info) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mousePressed(MouseEvent me, Object[] info) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void keyPressed(KeyEvent ke, Object[] info) {
-		// TODO Auto-generated method stub
-		
 	}
 	
 }

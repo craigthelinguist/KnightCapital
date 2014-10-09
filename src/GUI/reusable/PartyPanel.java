@@ -20,7 +20,6 @@ import java.awt.image.BufferedImage;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import controllers.Controller;
 import controllers.TownController;
 
 import player.Player;
@@ -31,7 +30,6 @@ import world.icons.Party;
 public class PartyPanel extends JPanel {
 
 	// data this townPartyPanel displays
-	private Controller controller;
 	private Party party;
 	private Point dragging;
 	
@@ -42,8 +40,7 @@ public class PartyPanel extends JPanel {
 	private final int WIDTH = Constants.PORTRAIT_DIMENSIONS.width*Party.PARTY_COLS+1;
 	private final int HEIGHT = Constants.PORTRAIT_DIMENSIONS.height*Party.PARTY_ROWS+1;
 	
-	public PartyPanel(Party party, Controller controller) {
-		this.controller = controller;
+	public PartyPanel(Party party) {
 		this.setPreferredSize(new Dimension(WIDTH,HEIGHT));
 		this.party = party;
 		dragging = null;
@@ -113,8 +110,10 @@ public class PartyPanel extends JPanel {
 		if (dragging != null){
 			Point mousePoint = MouseInfo.getPointerInfo().getLocation();
 			Creature member = party.getMember(dragging.x,dragging.y);
-			BufferedImage portrait = member.getPortrait();
-			g.drawImage(portrait, mousePoint.x-PORTRAIT_WIDTH/2, mousePoint.y-PORTRAIT_WIDTH/2, null);
+			if (member != null){
+				BufferedImage portrait = member.getPortrait();
+				g.drawImage(portrait, mousePoint.x-PORTRAIT_WIDTH/2, mousePoint.y-PORTRAIT_WIDTH/2, null);
+			}
 		}
 		
 		
@@ -153,6 +152,7 @@ public class PartyPanel extends JPanel {
 		@Override
 		public void mousePressed(MouseEvent e) {
 			dragging = asArrayIndices(e.getX(),e.getY());
+			System.out.println(dragging);
 		}
 
 		@Override
@@ -160,13 +160,12 @@ public class PartyPanel extends JPanel {
 			Point release = asArrayIndices(e.getX(),e.getY());
 			if (dragging == null || !validPoint(dragging) || release == null || !validPoint(release)){
 				dragging = null;
-				if (controller != null) controller.mousePressed(e, new Object[]{ new Point(dragging.x,dragging.y), new Point(release.x,release.y) });
 				return;
 			}
 			else{
+				System.out.println("yep yep yep");
 				party.swap(dragging,release);
 				dragging = null;
-				controller.mousePressed(e, new Object[]{ new Point(dragging.x,dragging.y), new Point(release.x,release.y) });
 				repaint();
 			}
 		}
@@ -183,10 +182,10 @@ public class PartyPanel extends JPanel {
 		members[0][1] = new Unit("knight",player);
 		members[1][1] = new Unit("knight",player);
 		Party party = new Party(hero, player, members);
-		PartyPanel tpp = new PartyPanel(party,null);
-		tpp.party = party;
+		PartyPanel tpp = new PartyPanel(party);
+		//tpp.party = party;
 		panel.add(tpp);
-		frame.add(panel);
+		frame.add(tpp);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.pack();
 		frame.setVisible(true);
