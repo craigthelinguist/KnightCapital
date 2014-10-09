@@ -92,17 +92,8 @@ public class TileInformationPanel extends JPanel{
 			CityTile ct = (CityTile)tile;
 			ct.getCity();
 
-			/*Reset all the labels*/
-			tileLabel.setIcon(null);
-			tileInfoTitle.setText("");
-			playerName.setText("");
-			movesLeft.setText("");
-			partySize.setText("");
+			resetPanel();
 
-
-			if(partyButton != null) {
-				partyButton.setVisible(false);
-			}
 
 			/*Setup the labels to display the city image*/
 			tileInfoTitle = new JLabel("City");
@@ -139,16 +130,7 @@ public class TileInformationPanel extends JPanel{
 
 			// empty tile selected, display some grass or something
 			if (occupant == null){
-				/*Reset all the labels*/
-				tileLabel.setIcon(null);
-				tileInfoTitle.setText("");
-				playerName.setText("");
-				movesLeft.setText("");
-				partySize.setText("");
-				
-				if(partyButton != null) {
-					partyButton.setVisible(false);
-				}
+				resetPanel();
 
 				/*Setup the labels to display grass*/
 				tileInfoTitle = new JLabel("Grass");
@@ -185,15 +167,7 @@ public class TileInformationPanel extends JPanel{
 				party.getHero();
 				party.getOwner();
 
-				/*Reset all the labels*/
-				tileLabel.setIcon(null);
-				tileInfoTitle.setText("");
-				playerName.setText("");
-				movesLeft.setText("");
-				partySize.setText("");
-				if(partyButton != null) {
-					partyButton.setVisible(false);
-				}
+				resetPanel();
 
 				/*Create the label and set icon of label to the player's icon*/
 				try {
@@ -276,6 +250,19 @@ public class TileInformationPanel extends JPanel{
 				
 			}
 
+		}
+	}
+
+
+	private void resetPanel() {
+		/*Reset all the labels*/
+		tileLabel.setIcon(null);
+		tileInfoTitle.setText("");
+		playerName.setText("");
+		movesLeft.setText("");
+		partySize.setText("");
+		if(partyButton != null) {
+			partyButton.setVisible(false);
 		}
 	}
 
