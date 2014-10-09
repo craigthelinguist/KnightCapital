@@ -1,3 +1,4 @@
+
 package controllers;
 
 import game.units.Hero;
@@ -18,13 +19,13 @@ import player.Player;
 import renderer.Camera;
 import renderer.WorldRenderer;
 import storage.TemporaryLoader;
+import storage.XMLReader;
 import tools.Geometry;
 import tools.GlobalConstants;
 import world.World;
 import world.icons.Party;
 import world.icons.WorldIcon;
 import world.tiles.Tile;
-import GUI.GameDialog;
 import GUI.MainFrame;
 import GUI.PartyDialog.PartyDialog;
 
@@ -136,7 +137,7 @@ public class WorldController {
 			System.out.println("xxx");
 			
 			PartyDialog partyDialog = new PartyDialog(this.gui, world.getTile(selected));;
-			this.gui.add(partyDialog);
+			
 
 			
 
@@ -275,11 +276,35 @@ public class WorldController {
 		World w = TemporaryLoader.loadWorld("world_temporary.txt",p);
 		Hero hero = new Hero("ovelia",p);
 		Party party = new Party(hero, p);
-		hero.setMovePts(10);
+		
+		//hero.setMovePts(10);
+		XMLReader read = new XMLReader(GlobalConstants.ASSETS+"Levels.xml", "levelTwo", hero);
+		read.readLevel();
+		System.out.println(hero.getMovePoints());
+		
 		party.setLeader(hero);
 		party.refresh();
 		w.getTile(0,0).setIcon(party);
 		new WorldController(w,p);
+		
+		/**
+		 * Player p = new Player("John The Baptist",4);
+		World w = TemporaryLoader.loadWorld("world_temporary.txt",p);
+		Hero hero = new Hero("ovelia",p);
+		Party party = new Party(hero, p);
+		//hero.setMovePts(10);
+		XMLReader read = new XMLReader("C:\\Users\\mr\\workspace\\KnightCapital\\src\\storage\\Levels.xml", "levelTwo", hero);
+		read.readLevel();
+		
+		System.out.println(hero.getMovePoints());
+//		System.out.println(hero.);
+		
+		party.setLeader(hero);
+		party.refresh();
+		w.getTile(0,0).setIcon(party);
+		new WorldController(w,p);
+		 */
 	}
 
 }
+

@@ -1,5 +1,7 @@
 package storage;
 
+import game.units.Hero;
+
 import java.io.File;
 import java.io.FileInputStream;
 
@@ -19,15 +21,17 @@ public class XMLReader {
 
 	private String filePath;
 	private String level;
+	private Hero hero;
 	
 	/**
 	 * constructer
 	 * @param String filepath that contains the file path and the 
 	 * level the player wants to play at
 	 */
-	public XMLReader(String filePath, String level){
+	public XMLReader(String filePath, String level, Hero hero){
 		this.filePath = filePath;
 		this.level = level;
+		this.hero = hero;
 		
 	}
 	
@@ -45,7 +49,7 @@ public class XMLReader {
 			
 			document.getDocumentElement().normalize();//parent node
 			System.out.println("Root element "+document.getDocumentElement().getNodeName());
-			NodeList nodelist = document.getElementsByTagName(this.level);
+			NodeList nodelist = document.getElementsByTagName(this.level);//the level the players have choosen
 			System.out.println(this.level+" attributes");
 			
 			for(int i = 0; i<nodelist.getLength(); i++){
@@ -54,32 +58,45 @@ public class XMLReader {
 					Element firstElement = (Element) firstNode;
 					NodeList nameList = firstElement.getElementsByTagName("name");
 					Element nameElement = (Element) nameList.item(0);
-					NodeList n = nameElement.getChildNodes();
+					NodeList n = nameElement.getChildNodes();//the list of values
 					System.out.println("Hero name : "+n.item(0).getNodeValue());
+					
+					
 					NodeList health = firstElement.getElementsByTagName("health");
 					Element healthElement = (Element) health.item(0);
-					NodeList healthList = healthElement.getChildNodes();
+					NodeList healthList = healthElement.getChildNodes();//the list of values
 					System.out.println("Health : "+healthList.item(0).getNodeValue());
+					this.hero.heal(Integer.parseInt(healthList.item(0).getNodeValue()));
+					
 					NodeList speed = firstElement.getElementsByTagName("speed");
 					Element speedElement = (Element) speed.item(0);
-					NodeList speedList = speedElement.getChildNodes();
+					NodeList speedList = speedElement.getChildNodes();//the list of values
 					System.out.println("Speed : "+speedList.item(0).getNodeValue());
+					//this.hero.
+					
 					NodeList damage = firstElement.getElementsByTagName("damage");
 					Element damageElement = (Element) damage.item(0);
-					NodeList damageList = damageElement.getChildNodes();
+					NodeList damageList = damageElement.getChildNodes();//the list of values
 					System.out.println("Damage : "+damageList.item(0).getNodeValue());
+					this.hero.damage(Integer.parseInt(damageList.item(0).getNodeValue()));
+					
 					NodeList amour = firstElement.getElementsByTagName("amour");
 					Element amourElement = (Element) amour.item(0);
-					NodeList amourList = amourElement.getChildNodes();
+					NodeList amourList = amourElement.getChildNodes();//the list of values
 					System.out.println("Amour : "+amourList.item(0).getNodeValue());
+					//this.hero.
+					
 					NodeList movement = firstElement.getElementsByTagName("movement");
 					Element movementElement = (Element) movement.item(0);
-					NodeList movementList = movementElement.getChildNodes();
+					NodeList movementList = movementElement.getChildNodes();//the list of values
 					System.out.println("Movement : "+movementList.item(0).getNodeValue());
+					this.hero.setMovePts(Integer.parseInt(movementList.item(0).getNodeValue()));
+					
 					NodeList sight = firstElement.getElementsByTagName("sight");
 					Element sightElement = (Element) sight.item(0);
-					NodeList sightList = sightElement.getChildNodes();
+					NodeList sightList = sightElement.getChildNodes();//the list of values
 					System.out.println("Sight : "+sightList.item(0).getNodeValue());
+					//this.hero.
 					
 				
 				
@@ -92,7 +109,7 @@ public class XMLReader {
 	}
 	
 	public static void main(String[] args){
-		new XMLReader("C:\\Users\\mr\\workspace\\KnightCapital\\src\\storage\\Levels.xml", "levelTwo").readLevel();
+		//new XMLReader("C:\\Users\\mr\\workspace\\KnightCapital\\src\\storage\\Levels.xml", "levelTwo").readLevel();
 	}
 	
 }
