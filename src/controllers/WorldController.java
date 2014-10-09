@@ -52,7 +52,7 @@ public class WorldController{
 
 	// town controller when you have town view up
 	private TownController townController;
-	
+
 	// world this controller is for: the model
 	private final World world;
 
@@ -67,7 +67,7 @@ public class WorldController{
 
 	// the camera that the player is viewing from
 	private Camera camera;
-	
+
 	// whether this worldController is currently doing anything
 	private boolean active = true;
 
@@ -146,11 +146,11 @@ public class WorldController{
 		}
 		else if(code == KeyEvent.VK_I){
 			System.out.println("xxx");
-			
-			PartyDialog partyDialog = new PartyDialog(this.gui, world.getTile(selected));;
-			
 
-			
+			PartyDialog partyDialog = new PartyDialog(this.gui, world.getTile(selected));;
+
+
+
 
 		}
 	}
@@ -205,7 +205,7 @@ public class WorldController{
 					gui.redraw();
 				}
 			}
-	
+
 	}
 
 	/**
@@ -274,22 +274,22 @@ public class WorldController{
 		gui.updateInfo(null);
 		gui.redraw();
 	}
-	
+
 	public void startTownView(City city){
 		suspend();
 		this.townController = new TownController(city,this);
 	}
-	
+
 	public void awake(){
 		gui.awake();
 		this.active = true;
 	}
-	
+
 	public void suspend(){
 		this.active = false;
 		gui.suspend();
 	}
-	
+
 	public World getWorld(){
 		return world;
 	}
@@ -312,7 +312,7 @@ public class WorldController{
 		if (gui == null) return Toolkit.getDefaultToolkit().getScreenSize();
 		return gui.getSize();
 	}
-	
+
 
 	public static void main(String[] args){
 		aaron_main(args);
@@ -330,7 +330,7 @@ public class WorldController{
 		w.getTile(0,0).setIcon(party);
 		new WorldController(w,p);
 	}
-	
+
 
 	public static void selemon_main(){
 		Player p = new Player("John The Baptist",4);
@@ -340,19 +340,19 @@ public class WorldController{
 		Creature[][] members = Party.newEmptyParty();
 		members[0][0] = hero;
 		Party party = new Party(hero, p, members);
-		
+
 		//hero.setMovePts(10);
 		XMLReader read = new XMLReader(Constants.ASSETS+"Levels.xml", "levelTwo", hero);
 		read.readLevel();
 		System.out.println(hero.getMovePoints());
-		
+
 		party.setLeader(hero);
 		party.refresh();
 		hero.setMovePts(8);
 		w.getTile(0,0).setIcon(party);
 		new WorldController(w,p);
 	}
-	
+
 	/**
 	 * When u don't want a gui use this for testing purposes only
 	 */
@@ -364,7 +364,7 @@ public class WorldController{
 		selected = null;
 		highlightedTiles = new HashSet<>();
 	}
-	
+
 	/**
 	 * To test other classes, if they need a WorldController.
 	 * @return
@@ -378,7 +378,7 @@ public class WorldController{
 		Party party = new Party(hero, p, members);
 		hero.setMovePts(10);
 		return new WorldController(w,p,true);
-		
+
 	}
 
 }
