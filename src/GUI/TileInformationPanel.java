@@ -86,7 +86,7 @@ public class TileInformationPanel extends JPanel{
 
 		// nothing selected, display a blank panel
 		if (tile == null){
-			
+
 		}
 		// city tile selected, draw some info about the city
 		else if (tile instanceof CityTile){
@@ -169,7 +169,7 @@ public class TileInformationPanel extends JPanel{
 				this.add(tileLabel,c);
 
 				tileInfoTitle = new JLabel("Ovelia");
-				tileInfoTitle.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 30)); //set font of JLabel to franklin gothic medium
+				tileInfoTitle.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 20)); //set font of JLabel to franklin gothic medium
 				tileInfoTitle.setForeground(new Color(225,179,55));
 				c.insets = new Insets(0,0,0,120);
 				c.weightx = 1.0;
@@ -201,7 +201,7 @@ public class TileInformationPanel extends JPanel{
 				BufferedImage partyButtonDefault = ImageLoader.load(Constants.GUI_BUTTONS + "partyButton.png");
 				BufferedImage partyButtonPressed = ImageLoader.load(Constants.GUI_BUTTONS + "partyButtonClicked.png");
 				BufferedImage partyButtonHover = ImageLoader.load(Constants.GUI_BUTTONS + "partyButtonHover.png");
-				
+
 				// copy of currently selected tile
 				partyButton = new CustomButton(partyButtonDefault, partyButtonPressed, partyButtonHover) {
 					@Override
@@ -210,10 +210,10 @@ public class TileInformationPanel extends JPanel{
 						//TODO: this
 					}
 				};
-				
+
 				// Add functionality to party button
-				
-				c.insets = new Insets(1,20,15,10);
+
+				c.insets = new Insets(1,40,15,10);
 				c.gridx = 0;
 				c.gridy = 5;
 				this.add(partyButton,c);
@@ -230,7 +230,7 @@ public class TileInformationPanel extends JPanel{
 
 			// item on the tile, draw a picture of a treasure chest or something
 			else if (occupant instanceof ItemIcon){
-				
+
 			}
 
 		}
