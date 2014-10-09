@@ -21,7 +21,7 @@ import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.OverlayLayout;
 
-import tools.GlobalConstants;
+import tools.Constants;
 import tools.ImageLoader;
 import world.tiles.Tile;
 
@@ -84,7 +84,7 @@ public class MainPanelMaster extends JPanel {
 		this.add(inventoryPanel,c);
 
 		/*Initialize the image for the main menu panel*/
-		backgroundImage = ImageLoader.load(GlobalConstants.GUI_FILEPATH + "mainMenuPanelBackground.png");
+		backgroundImage = ImageLoader.load(Constants.GUI_FILEPATH + "mainMenuPanelBackground.png");
 
 	}
 

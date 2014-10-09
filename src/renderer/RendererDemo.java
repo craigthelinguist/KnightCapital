@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 
 import storage.TemporaryLoader;
 import tools.Geometry;
-import tools.GlobalConstants;
+import tools.Constants;
 import world.World;
 import world.icons.Party;
 
@@ -64,7 +64,7 @@ public class RendererDemo {
 		world.setIcon(party, party_x, party_y);
 
 		// Set up camera
-		camera = new Camera(GlobalConstants.WINDOW_WD / 2, 0, Camera.NORTH);
+		camera = new Camera(Constants.WINDOW_WD / 2, 0, Camera.NORTH);
 
 		// Set frame and components
 		initialiseInterface();
@@ -83,14 +83,14 @@ public class RendererDemo {
 		frame = new JFrame();
 		frame.setResizable(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(GlobalConstants.WINDOW_WD, GlobalConstants.WINDOW_HT);
+		frame.setSize(Constants.WINDOW_WD, Constants.WINDOW_HT);
 
 		// Set world panel
 		worldPanel = new JPanel() {
 			@Override
 			protected void paintComponent(Graphics g) {
 				g.setColor(Color.WHITE);
-				g.fillRect(0, 0, GlobalConstants.WINDOW_WD, GlobalConstants.WINDOW_HT);
+				g.fillRect(0, 0, Constants.WINDOW_WD, Constants.WINDOW_HT);
 				//WorldRenderer.render(world, g, getSize(), camera);
 				this.repaint();
 			}

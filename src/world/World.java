@@ -13,7 +13,7 @@ import player.Player;
 import renderer.Camera;
 
 import tools.Geometry;
-import tools.GlobalConstants;
+import tools.Constants;
 import tools.Log;
 import world.icons.Party;
 import world.icons.WorldIcon;
@@ -47,8 +47,8 @@ public class World {
 		NUM_TILES_ACROSS = tiles.length;
 		NUM_TILES_DOWN = tiles[0].length;
 		dimensions = new Dimension(NUM_TILES_ACROSS,NUM_TILES_DOWN);
-		WORLD_WD = NUM_TILES_ACROSS*(GlobalConstants.TILE_WD/2);
-		WORLD_HT = NUM_TILES_DOWN*(GlobalConstants.TILE_HT/2);
+		WORLD_WD = NUM_TILES_ACROSS*(Constants.TILE_WD/2);
+		WORLD_HT = NUM_TILES_DOWN*(Constants.TILE_HT/2);
 		cities = citySet;
 		players = playersArray;
 		currentPlayer = 0;

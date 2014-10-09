@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 
 import player.Player;
 
-import tools.GlobalConstants;
+import tools.Constants;
 import world.World;
 import world.tiles.CityTile;
 import world.tiles.PassableTile;
@@ -42,7 +42,7 @@ public class TemporaryLoader {
 		Scanner scan = null;
 		try{
 
-			scan = new Scanner(new File(GlobalConstants.ASSETS + filename));
+			scan = new Scanner(new File(Constants.ASSETS + filename));
 
 			// skip over comments
 			String regex = "\\s*#";

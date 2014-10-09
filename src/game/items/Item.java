@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 import java.util.Map;
 
 import renderer.Animation;
-import tools.GlobalConstants;
+import tools.Constants;
 import tools.ImageLoader;
 import tools.Log;
 
@@ -17,8 +17,8 @@ public abstract class Item {
 
 
 	public Item(String imgName){
-		animation = ImageLoader.loadAnimation(GlobalConstants.ITEMS + imgName);
-		portrait = ImageLoader.load(GlobalConstants.ITEMS + imgName);
+		animation = ImageLoader.loadAnimation(Constants.ITEMS + imgName);
+		portrait = ImageLoader.load(Constants.ITEMS + imgName);
 	}
 
 	public BufferedImage getImage(){

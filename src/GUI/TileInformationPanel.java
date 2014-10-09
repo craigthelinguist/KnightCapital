@@ -19,7 +19,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import GUI.PartyDialog.PartyDialog;
-import tools.GlobalConstants;
+import tools.Constants;
 import tools.ImageLoader;
 import world.icons.ItemIcon;
 import world.icons.Party;
@@ -57,7 +57,7 @@ public class TileInformationPanel extends JPanel{
 		this.setPreferredSize(new Dimension(375,200));
 		this.setOpaque(false);
 		/*Initialize the image for the inventory panel*/
-		backgroundImage = ImageLoader.load(GlobalConstants.GUI_FILEPATH + "playerInfoPanel.png");
+		backgroundImage = ImageLoader.load(Constants.GUI_FILEPATH + "playerInfoPanel.png");
 
 		/*Initialize the layout and the insets*/
 		this.setLayout(new GridBagLayout());
@@ -118,7 +118,7 @@ public class TileInformationPanel extends JPanel{
 
 			/*Create the label and set icon of label to the player's icon*/
 			try {
-				tileIcon = new ImageIcon(ImageIO.read(new FileInputStream(GlobalConstants.CITIES +"basic_east.png")));
+				tileIcon = new ImageIcon(ImageIO.read(new FileInputStream(Constants.CITIES +"basic_east.png")));
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
@@ -164,7 +164,7 @@ public class TileInformationPanel extends JPanel{
 
 				/*Create the label and set icon of label to the player's icon*/
 				try {
-					tileIcon = new ImageIcon(ImageIO.read(new FileInputStream(GlobalConstants.ASSETS +"tile_grass.png")));
+					tileIcon = new ImageIcon(ImageIO.read(new FileInputStream(Constants.ASSETS +"tile_grass.png")));
 				} catch (FileNotFoundException e) {
 					e.printStackTrace();
 				} catch (IOException e) {
@@ -197,7 +197,7 @@ public class TileInformationPanel extends JPanel{
 
 				/*Create the label and set icon of label to the player's icon*/
 				try {
-					tileIcon = new ImageIcon(ImageIO.read(new FileInputStream(GlobalConstants.PORTRAITS +"ovelia.png")));
+					tileIcon = new ImageIcon(ImageIO.read(new FileInputStream(Constants.PORTRAITS +"ovelia.png")));
 				} catch (FileNotFoundException e) {
 					e.printStackTrace();
 				} catch (IOException e) {
@@ -241,9 +241,9 @@ public class TileInformationPanel extends JPanel{
 				this.add(movesLeft,c);
 
 				/*Declare and initialize the images for the party button */
-				BufferedImage partyButtonDefault = ImageLoader.load(GlobalConstants.GUI_BUTTONS + "partyButton.png");
-				BufferedImage partyButtonPressed = ImageLoader.load(GlobalConstants.GUI_BUTTONS + "partyButtonClicked.png");
-				BufferedImage partyButtonHover = ImageLoader.load(GlobalConstants.GUI_BUTTONS + "partyButtonHover.png");
+				BufferedImage partyButtonDefault = ImageLoader.load(Constants.GUI_BUTTONS + "partyButton.png");
+				BufferedImage partyButtonPressed = ImageLoader.load(Constants.GUI_BUTTONS + "partyButtonClicked.png");
+				BufferedImage partyButtonHover = ImageLoader.load(Constants.GUI_BUTTONS + "partyButtonHover.png");
 				
 				// copy of currently selected tile
 				partyButton = new CustomButton(partyButtonDefault, partyButtonPressed, partyButtonHover) {

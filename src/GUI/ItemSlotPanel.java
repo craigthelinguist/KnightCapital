@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
-import tools.GlobalConstants;
+import tools.Constants;
 import tools.ImageLoader;
 import tools.ImageManipulation;
 
@@ -19,7 +19,7 @@ public class ItemSlotPanel extends JPanel {
 		this.imageName = imageName;
 
 		/*Initialize the image for the inventory panel*/
-		backgroundImage = ImageLoader.load(GlobalConstants.GUI_FILEPATH + imageName);
+		backgroundImage = ImageLoader.load(Constants.GUI_FILEPATH + imageName);
 	}
 
 

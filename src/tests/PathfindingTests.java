@@ -144,9 +144,9 @@ public class PathfindingTests {
 		tiles[3][3] = PassableTile.newGrassTile(3,3);
 		player = new Player("Ben Dover",1);
 		world = new World(tiles,null,null);
-		party = new Party("icon_ovelia.png",null);
-		hero = new Hero();
+		hero = new Hero("ovelia",player);
 		hero.setMovePts(4);
+		party = new Party(hero,null);
 		party.setLeader(hero);
 		party.setOwner(player);
 		party.refresh();

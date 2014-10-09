@@ -10,7 +10,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
-import tools.GlobalConstants;
+import tools.Constants;
 import tools.ImageLoader;
 
 public class MainMenuPanel extends JPanel implements ActionListener{
@@ -27,13 +27,13 @@ public class MainMenuPanel extends JPanel implements ActionListener{
 		mainFrame = frame;
 
 		/*Declare and initialize the images for the button */
-		BufferedImage inventoryDefaultIcon = ImageLoader.load(GlobalConstants.GUI_FILEPATH + "inventoryDefaultTemp.png");
-		BufferedImage inventoryPressedIcon = ImageLoader.load(GlobalConstants.GUI_FILEPATH + "inventoryHoverTemp.png");
+		BufferedImage inventoryDefaultIcon = ImageLoader.load(Constants.GUI_FILEPATH + "inventoryDefaultTemp.png");
+		BufferedImage inventoryPressedIcon = ImageLoader.load(Constants.GUI_FILEPATH + "inventoryHoverTemp.png");
 		inventoryButton = new CustomButton(inventoryDefaultIcon, inventoryPressedIcon, null);
 		add(inventoryButton);
 
 		/*Initialize the image for the main menu panel*/
-		backgroundImage = ImageLoader.load(GlobalConstants.GUI_FILEPATH + "mainMenuPanel.png");
+		backgroundImage = ImageLoader.load(Constants.GUI_FILEPATH + "mainMenuPanel.png");
 	}
 
 

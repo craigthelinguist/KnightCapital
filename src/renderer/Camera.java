@@ -1,6 +1,6 @@
 package renderer;
 
-import tools.GlobalConstants;
+import tools.Constants;
 
 /**
  * Camera
@@ -52,7 +52,7 @@ public class Camera {
 	 *	Panning distance is defined in Tools.GlobalConstants
 	 */
 	public void panDown() {
-		origin_y -= GlobalConstants.CAMERA_PAN;
+		origin_y -= Constants.CAMERA_PAN;
 	}
 
 	/**
@@ -60,7 +60,7 @@ public class Camera {
 	 *	Panning distance is defined in Tools.GlobalConstants
 	 */
 	public void panUp() {
-		origin_y += GlobalConstants.CAMERA_PAN;
+		origin_y += Constants.CAMERA_PAN;
 	}
 
 	/**
@@ -68,7 +68,7 @@ public class Camera {
 	 *	Panning distance is defined in Tools.GlobalConstants
 	 */
 	public void panRight() {
-		origin_x -= GlobalConstants.CAMERA_PAN;
+		origin_x -= Constants.CAMERA_PAN;
 	}
 
 	/**
@@ -76,7 +76,7 @@ public class Camera {
 	 *	Panning distance is defined in Tools.GlobalConstants
 	 */
 	public void panLeft() {
-		origin_x += GlobalConstants.CAMERA_PAN;
+		origin_x += Constants.CAMERA_PAN;
 	}
 
 	/**

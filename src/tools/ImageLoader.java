@@ -100,4 +100,38 @@ public class ImageLoader {
 		return new Animation(new BufferedImage[]{bi},1);
 	}
 
+	/**
+	 * Use this if your file extension is not .png
+	 * @param filename
+	 * @param extension
+	 * @return
+	 */
+	public static BufferedImage load(String filename, String extension) {
+		
+		filename = filename + extension;
+
+		//If the image already exists then return
+		if(images.containsKey(filename)){
+			return images.get(filename);
+		//Else load the image and return
+		}else{
+			try{
+				//Loads the image
+				File file = new File(filename);
+				if(file == null){
+					System.out.println(filename+" failed to load");
+					return new BufferedImage(1,1, BufferedImage.TYPE_INT_RGB);
+				}
+				BufferedImage newImage = ImageIO.read(file);
+				//Stores the image
+				images.put(filename, newImage);
+				return newImage;
+			}catch(IOException e){
+				//Display an error and return a 1x1 Image
+				System.err.println("Error loading file \""+filename+"\"\n");
+				return new BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB);
+			}
+		}
+	}
+
 }

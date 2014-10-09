@@ -17,8 +17,8 @@ import java.util.ArrayList;
  */
 public class Geometry {
 
-	private static final int TILE_HT = GlobalConstants.TILE_HT;
-	private static final int TILE_WD = GlobalConstants.TILE_WD;
+	private static final int TILE_HT = Constants.TILE_HT;
+	private static final int TILE_WD = Constants.TILE_WD;
 	private static final int HALF_TILE_HT = TILE_HT/2;
 	private static final int HALF_TILE_WD = TILE_WD/2;
 	

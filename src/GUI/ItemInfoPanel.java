@@ -14,7 +14,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import tools.GlobalConstants;
+import tools.Constants;
 import tools.ImageLoader;
 
 public class ItemInfoPanel extends JPanel   {
@@ -31,7 +31,7 @@ public class ItemInfoPanel extends JPanel   {
 		this.message = msg;
 		this.setLayout(new BorderLayout());
 		/*Initialize the image for the inventory panel*/
-		backgroundImage = ImageLoader.load(GlobalConstants.GUI_FILEPATH + "itemInfoBackground.png");
+		backgroundImage = ImageLoader.load(Constants.GUI_FILEPATH + "itemInfoBackground.png");
 		//this.setBackground(new Color(56,56,56,10));
 		
 		/*This adds an image to the label but maybe add later, it looks kinda stupid with current icons*/

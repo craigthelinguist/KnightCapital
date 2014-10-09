@@ -13,7 +13,7 @@ import controllers.WorldController;
 
 import renderer.Camera;
 import renderer.WorldRenderer;
-import tools.GlobalConstants;
+import tools.Constants;
 import world.World;
 
 public class Canvas extends JPanel implements MouseListener{
@@ -23,17 +23,17 @@ public class Canvas extends JPanel implements MouseListener{
 	public Canvas() {
 
 		//this.setBorder(BorderFactory.createLineBorder(Color.red)); //draws a border around canvas (just to show where the canvas is) (delete later)
-		this.setPreferredSize(new Dimension(GlobalConstants.WINDOW_WD, GlobalConstants.WINDOW_HT -200));
+		this.setPreferredSize(new Dimension(Constants.WINDOW_WD, Constants.WINDOW_HT -200));
 
 		/*Load the images for the border*/
-	    Border border = new Border(new ImageIcon(GlobalConstants.GUI_FILEPATH +"upperCenter.png").getImage(),
-		        new ImageIcon(GlobalConstants.GUI_FILEPATH +"upperLeft.png").getImage(),
-		        new ImageIcon(GlobalConstants.GUI_FILEPATH +"upperRight.png").getImage(),
-		        new ImageIcon(GlobalConstants.GUI_FILEPATH +"leftCenter.png").getImage(),
-		        new ImageIcon(GlobalConstants.GUI_FILEPATH +"rightCenter.png").getImage(),
-		        new ImageIcon(GlobalConstants.GUI_FILEPATH +"bottomLeft.png").getImage(),
-		        new ImageIcon(GlobalConstants.GUI_FILEPATH +"bottomCenter.png").getImage(),
-		        new ImageIcon(GlobalConstants.GUI_FILEPATH +"bottomRight.png").getImage());
+	    Border border = new Border(new ImageIcon(Constants.GUI_FILEPATH +"upperCenter.png").getImage(),
+		        new ImageIcon(Constants.GUI_FILEPATH +"upperLeft.png").getImage(),
+		        new ImageIcon(Constants.GUI_FILEPATH +"upperRight.png").getImage(),
+		        new ImageIcon(Constants.GUI_FILEPATH +"leftCenter.png").getImage(),
+		        new ImageIcon(Constants.GUI_FILEPATH +"rightCenter.png").getImage(),
+		        new ImageIcon(Constants.GUI_FILEPATH +"bottomLeft.png").getImage(),
+		        new ImageIcon(Constants.GUI_FILEPATH +"bottomCenter.png").getImage(),
+		        new ImageIcon(Constants.GUI_FILEPATH +"bottomRight.png").getImage());
 
 	    /*set the panel's border*/
 	    //this.setBorder(border);

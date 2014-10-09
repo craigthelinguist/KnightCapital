@@ -6,7 +6,7 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
-import tools.GlobalConstants;
+import tools.Constants;
 import tools.ImageLoader;
 
 public class MiniMapPanel extends JPanel {
@@ -16,7 +16,7 @@ public class MiniMapPanel extends JPanel {
 	public MiniMapPanel() {
 		this.setOpaque(true);
 		/*Initialize the image for the inventory panel*/
-		backgroundImage = ImageLoader.load(GlobalConstants.GUI_FILEPATH + "minimap.png");	
+		backgroundImage = ImageLoader.load(Constants.GUI_FILEPATH + "minimap.png");	
 		
  
 	}

@@ -16,7 +16,7 @@ import controllers.WorldController;
 
 import tools.CartesianMapping;
 import tools.Geometry;
-import tools.GlobalConstants;
+import tools.Constants;
 import tools.Sorter;
 
 import world.World;
@@ -31,8 +31,8 @@ import world.towns.City;
  */
 public class WorldRenderer {
 
-	private static final int TILE_WD = GlobalConstants.TILE_WD;
-	private static final int TILE_HT = GlobalConstants.TILE_HT;
+	private static final int TILE_WD = Constants.TILE_WD;
+	private static final int TILE_HT = Constants.TILE_HT;
 	private static final int HALF_TILE_WD = TILE_WD/2;
 	private static final int HALF_TILE_HT = TILE_HT/2;
 	
@@ -91,8 +91,8 @@ public class WorldRenderer {
 	 * @return: boolean
 	 */
 	public static boolean isPointOnScreen(Point pt, Dimension resolution){
-		final int TILE_WD = GlobalConstants.TILE_WD;
-		final int TILE_HT = GlobalConstants.TILE_HT;
+		final int TILE_WD = Constants.TILE_WD;
+		final int TILE_HT = Constants.TILE_HT;
 		
 		return	pt.x >= 0-TILE_WD
 			&&	pt.x < resolution.width + TILE_WD
@@ -209,10 +209,10 @@ public class WorldRenderer {
 	private static void drawIcon(Graphics graphics, Point ptIso, Camera camera, WorldIcon occupant){
 		int isoY = ptIso.y;
 		int isoX = ptIso.x;
-		final int TILE_HT = GlobalConstants.TILE_HT;
-		final int TILE_WD = GlobalConstants.TILE_WD;
-		final int ICON_WD = GlobalConstants.ICON_WD;
-		final int ICON_HT = GlobalConstants.ICON_HT;
+		final int TILE_HT = Constants.TILE_HT;
+		final int TILE_WD = Constants.TILE_WD;
+		final int ICON_WD = Constants.ICON_WD;
+		final int ICON_HT = Constants.ICON_HT;
 		int iconY = isoY - TILE_HT/4;
 		int iconX = isoX + TILE_WD/2 - ICON_WD/2;
 		occupant.draw(graphics,iconX,iconY);
@@ -224,7 +224,7 @@ public class WorldRenderer {
 	 * @return: a camera looking at the middle of the world
 	 */
 	public static Camera getCentreOfWorld(World world){
-		return new Camera(GlobalConstants.WINDOW_WD / 2, 0, Camera.NORTH);
+		return new Camera(Constants.WINDOW_WD / 2, 0, Camera.NORTH);
 	}
 	
 }

@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JLayeredPane;
 
-import tools.GlobalConstants;
+import tools.Constants;
 import tools.ImageLoader;
 
 /**

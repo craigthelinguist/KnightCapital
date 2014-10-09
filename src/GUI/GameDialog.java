@@ -14,7 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
-import tools.GlobalConstants;
+import tools.Constants;
 import tools.ImageLoader;
 
 
@@ -28,7 +28,7 @@ import tools.ImageLoader;
 public class GameDialog extends JDialog {
 
 	private DialogPanel panel;
-	private String FILENAME = GlobalConstants.GUI_BUTTONS;
+	private String FILENAME = Constants.GUI_BUTTONS;
 
 	public GameDialog (MainFrame frame,String msg) {
 		super(frame,true);

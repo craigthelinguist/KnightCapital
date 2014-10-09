@@ -13,7 +13,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 
-import tools.GlobalConstants;
+import tools.Constants;
 import tools.ImageLoader;
 
 public class ItemSlotInformation extends JDialog  {

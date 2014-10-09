@@ -7,7 +7,7 @@ import java.io.FilenameFilter;
 import java.util.Map;
 
 import renderer.Animation;
-import tools.GlobalConstants;
+import tools.Constants;
 import tools.ImageLoader;
 import tools.Log;
 

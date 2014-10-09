@@ -9,7 +9,7 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import tools.GlobalConstants;
+import tools.Constants;
 import tools.Log;
 import world.icons.Party;
 import world.tiles.Tile;
@@ -68,7 +68,7 @@ public class PartyDialog extends JDialog  {
 		this.tile = tile;
 		
 		// Set size of panel to 80% width of world screen, and 100% of height
-		this.setSize((int)(GlobalConstants.WINDOW_WD * 0.8), (int)(GlobalConstants.WINDOW_HT *0.7)); //width, height
+		this.setSize((int)(Constants.WINDOW_WD * 0.8), (int)(Constants.WINDOW_HT *0.7)); //width, height
 		this.setUndecorated(true); //removes the border
         this.setLocationRelativeTo(frame); //set location of dialog relative to frame
         
@@ -97,13 +97,13 @@ public class PartyDialog extends JDialog  {
 		}
 		
 		// set and add add title type
-		JLabel title = new JLabel(GlobalConstants.PartyPanelTitle);
-		title.setFont(GlobalConstants.HeaderFont);
+		JLabel title = new JLabel(Constants.PartyPanelTitle);
+		title.setFont(Constants.HeaderFont);
 		this.descriptionPanel.add(title, BorderLayout.WEST);
 		
 		// set and add instruction type
-		JLabel description = new JLabel(GlobalConstants.PartyPanelDescription);
-		description.setFont(GlobalConstants.SubheaderFont);
+		JLabel description = new JLabel(Constants.PartyPanelDescription);
+		description.setFont(Constants.SubheaderFont);
 		this.descriptionPanel.add(description, BorderLayout.CENTER);
 		
 		// add escape button for shits and giggs

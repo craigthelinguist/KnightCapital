@@ -1,6 +1,6 @@
 package world.tiles;
 
-import tools.GlobalConstants;
+import tools.Constants;
 import tools.ImageLoader;
 import world.icons.Party;
 
@@ -17,15 +17,15 @@ public class PassableTile extends Tile{
 
 	public static PassableTile newDirtTile(int x, int y){
 		PassableTile t = new PassableTile(x,y);
-		t.image = ImageLoader.load(GlobalConstants.ASSETS + "tile_dirt.png");
-		t.portrait = ImageLoader.load(GlobalConstants.PORTRAITS + "grass.png");
+		t.image = ImageLoader.load(Constants.ASSETS + "tile_dirt.png");
+		t.portrait = ImageLoader.load(Constants.PORTRAITS + "grass.png");
 		return t;
 	}
 
 	public static PassableTile newGrassTile(int x, int y){
 		PassableTile t = new PassableTile(x,y);
-		t.image = ImageLoader.load(GlobalConstants.ASSETS + "tile_grass.png");
-		t.portrait = ImageLoader.load(GlobalConstants.PORTRAITS + "grass.png");
+		t.image = ImageLoader.load(Constants.ASSETS + "tile_grass.png");
+		t.portrait = ImageLoader.load(Constants.PORTRAITS + "grass.png");
 		return t;
 	}
 

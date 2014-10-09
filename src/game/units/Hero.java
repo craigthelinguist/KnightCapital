@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 
 import player.Player;
-import tools.GlobalConstants;
+import tools.Constants;
 import tools.ImageLoader;
 
 /**

@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
-import tools.GlobalConstants;
+import tools.Constants;
 import tools.ImageLoader;
 
 /**
@@ -28,7 +28,7 @@ public class MainPanelBorder extends JPanel{
 		this.setOpaque(false);
 
 		/*Initialize the image for the main panel*/
-		backgroundImage = ImageLoader.load(GlobalConstants.GUI_FILEPATH + "mainMenuPanel.png");
+		backgroundImage = ImageLoader.load(Constants.GUI_FILEPATH + "mainMenuPanel.png");
 		//this.setVisible(true);
 	}
 	

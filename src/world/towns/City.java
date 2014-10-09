@@ -12,7 +12,7 @@ import java.util.Set;
 import player.Player;
 import renderer.Animation;
 import renderer.Camera;
-import tools.GlobalConstants;
+import tools.Constants;
 import tools.ImageLoader;
 import tools.Log;
 import world.icons.Party;
@@ -40,7 +40,10 @@ public class City {
 	private Set<Building> buildings;
 
 	// party inside this city
-	private Party party;
+	private Party garrison;
+	
+	// party staying in this city
+	private Party visitors;
 
 	// items being stored inside this city
 	private LinkedList<Item> items;
@@ -67,7 +70,7 @@ public class City {
 		// set up owner and fields storing details about this city
 		owner = player;
 		buildings = new HashSet<>();
-		party = null;
+		visitors = garrison = null;
 		items = new LinkedList<>();
 
 		// set up tiles; set tiles so that they have a reference to this.
@@ -84,7 +87,7 @@ public class City {
 		// set up animation names
 		animationNames = new HashMap<>();
 		for (int i = 0; i < animationNamesArray.length; i++){
-			String FILEPATH = GlobalConstants.CITIES + animationNamesArray[i];
+			String FILEPATH = Constants.CITIES + animationNamesArray[i];
 			Map<String,Animation> anims = ImageLoader.loadDirectedAnimations(FILEPATH);
 			for (Map.Entry<String, Animation> entry : anims.entrySet()){
 				animationNames.put(entry.getKey(), entry.getValue());
@@ -165,6 +168,14 @@ public class City {
 
 	public int getImageWidth(){
 		return animation.getSprite().getWidth();
+	}
+
+	public Party getVisitors() {
+		return visitors;
+	}
+	
+	public Party getGarrison(){
+		return garrison;
 	}
 	
 }

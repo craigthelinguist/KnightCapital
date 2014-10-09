@@ -25,7 +25,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import tools.GlobalConstants;
+import tools.Constants;
 import tools.ImageLoader;
 
 /**
@@ -55,7 +55,7 @@ public class DialogBackground extends JPanel implements ActionListener {
 		//this.setPreferredSize(new Dimension(200,200));
 		this.setLayout(new GridBagLayout());
 		/*Initialize the image for the dialog background*/
-		backgroundImage = ImageLoader.load(GlobalConstants.GUI_FILEPATH + "dialogBackground.png");
+		backgroundImage = ImageLoader.load(Constants.GUI_FILEPATH + "dialogBackground.png");
 		this.setOpaque(true);
 
 		/*Set up the grid bag constraints and insets */
@@ -64,16 +64,16 @@ public class DialogBackground extends JPanel implements ActionListener {
 		
 		
 		/*Declare and initialize the images for the button */
-		BufferedImage confirmButtonDefault = ImageLoader.load(GlobalConstants.GUI_FILEPATH + "dialogConfirmButton.png");
-		BufferedImage confirmButtonPressed = ImageLoader.load(GlobalConstants.GUI_FILEPATH + "dialogConfirmButtonPressed.png");
+		BufferedImage confirmButtonDefault = ImageLoader.load(Constants.GUI_FILEPATH + "dialogConfirmButton.png");
+		BufferedImage confirmButtonPressed = ImageLoader.load(Constants.GUI_FILEPATH + "dialogConfirmButtonPressed.png");
 		confirmButton = new CustomButton(confirmButtonDefault, confirmButtonPressed,confirmButtonDefault);
 		c.gridx = 0;
 		c.gridy = 1;
 		this.add(confirmButton,c);
 		
 		/*Declare and initialize the images for the button */
-		BufferedImage declineButtonDefault = ImageLoader.load(GlobalConstants.GUI_FILEPATH + "dialogDeclineButton.png");
-		BufferedImage declineButtonPressed = ImageLoader.load(GlobalConstants.GUI_FILEPATH + "dialogDeclineButtonPressed.png");
+		BufferedImage declineButtonDefault = ImageLoader.load(Constants.GUI_FILEPATH + "dialogDeclineButton.png");
+		BufferedImage declineButtonPressed = ImageLoader.load(Constants.GUI_FILEPATH + "dialogDeclineButtonPressed.png");
 		declineButton = new CustomButton(declineButtonDefault, declineButtonPressed,declineButtonDefault);
 		c.gridx = 1;
 		c.gridy = 1;

@@ -26,7 +26,7 @@ import javax.swing.WindowConstants;
 
 import GUI.EscapeDialog.EscapeDialog;
 import controllers.WorldController;
-import tools.GlobalConstants;
+import tools.Constants;
 import tools.ImageLoader;
 import world.tiles.Tile;
 

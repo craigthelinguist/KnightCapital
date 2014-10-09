@@ -17,7 +17,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import tools.GlobalConstants;
+import tools.Constants;
 import tools.ImageLoader;
 import tools.ImageManipulation;
 
@@ -57,7 +57,7 @@ public class InventoryPanel extends JPanel implements MouseListener {
 		this.setPreferredSize(new Dimension(375,200));
 		this.setOpaque(true);
 		/*Initialize the image for the inventory panel*/
-		backgroundImage = ImageLoader.load(GlobalConstants.GUI_FILEPATH + "inventory.png");
+		backgroundImage = ImageLoader.load(Constants.GUI_FILEPATH + "inventory.png");
 
 
 		/*Initialize the layout and the insets*/
@@ -174,11 +174,11 @@ public class InventoryPanel extends JPanel implements MouseListener {
 	public void mouseExited(MouseEvent e) {
 		repaint();
 		if(e.getSource() == slot1) {
-			slot1.changeBackground(ImageLoader.load(GlobalConstants.GUI_FILEPATH + slot1.getImageName()));
+			slot1.changeBackground(ImageLoader.load(Constants.GUI_FILEPATH + slot1.getImageName()));
 			dSlot1.dispose();
 	    }
 		if(e.getSource() == slot2) {
-			slot2.changeBackground(ImageLoader.load(GlobalConstants.GUI_FILEPATH + slot2.getImageName()));
+			slot2.changeBackground(ImageLoader.load(Constants.GUI_FILEPATH + slot2.getImageName()));
 			dSlot2.dispose();
 		}
 		if(e.getSource() == slot3) {

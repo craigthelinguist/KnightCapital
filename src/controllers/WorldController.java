@@ -3,6 +3,7 @@ package controllers;
 
 import game.units.Hero;
 
+import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
@@ -21,7 +22,7 @@ import renderer.WorldRenderer;
 import storage.TemporaryLoader;
 import storage.XMLReader;
 import tools.Geometry;
-import tools.GlobalConstants;
+import tools.Constants;
 import world.World;
 import world.icons.Party;
 import world.icons.WorldIcon;
@@ -267,6 +268,10 @@ public class WorldController {
 		if(client == null)System.out.println("still not initiated");
 	}
 
+	public Dimension getVisualDimensions() {
+		return gui.getSize();
+	}
+	
 	/**
 	 * For testing purposes
 	 * @param args
@@ -278,7 +283,7 @@ public class WorldController {
 		Party party = new Party(hero, p);
 		
 		//hero.setMovePts(10);
-		XMLReader read = new XMLReader(GlobalConstants.ASSETS+"Levels.xml", "levelTwo", hero);
+		XMLReader read = new XMLReader(Constants.ASSETS+"Levels.xml", "levelTwo", hero);
 		read.readLevel();
 		System.out.println(hero.getMovePoints());
 		

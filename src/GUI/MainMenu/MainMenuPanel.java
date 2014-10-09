@@ -18,7 +18,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import GUI.CustomButton;
-import tools.GlobalConstants;
+import tools.Constants;
 import tools.ImageLoader;
 import tools.Log;
 
@@ -33,7 +33,7 @@ public class MainMenuPanel extends JPanel {
     private BufferedImage backgroundImage;
     
 	public MainMenuPanel() {
-		backgroundImage = ImageLoader.load(GlobalConstants.GUI_FILEPATH + "mainMenuBackground.png");
+		backgroundImage = ImageLoader.load(Constants.GUI_FILEPATH + "mainMenuBackground.png");
 		frame = new JFrame();
 		this.setPreferredSize(new Dimension(650,650));
 		/*Set up the grid bag constraints and insets */
@@ -45,35 +45,35 @@ public class MainMenuPanel extends JPanel {
 		//c.weighty = 1.0;
 
 		/*Declare and initialize the images for the buttons */
-		BufferedImage newGameDefault = ImageLoader.load(GlobalConstants.GUI_BUTTONS + "newGameMain.png");
-		BufferedImage newGamePressed = ImageLoader.load(GlobalConstants.GUI_BUTTONS + "newGameMainClicked.png");
-		BufferedImage newGameHover = ImageLoader.load(GlobalConstants.GUI_BUTTONS + "newGameMainHover.png");
+		BufferedImage newGameDefault = ImageLoader.load(Constants.GUI_BUTTONS + "newGameMain.png");
+		BufferedImage newGamePressed = ImageLoader.load(Constants.GUI_BUTTONS + "newGameMainClicked.png");
+		BufferedImage newGameHover = ImageLoader.load(Constants.GUI_BUTTONS + "newGameMainHover.png");
 		newGame = new CustomButton(newGameDefault, newGamePressed, newGameHover);
 		c.gridx = 0;
 		c.gridy = 1;
 		this.add(newGame,c);
 
-		BufferedImage loadGameDefault = ImageLoader.load(GlobalConstants.GUI_BUTTONS + "loadMain.png");
-		BufferedImage loadGamePressed = ImageLoader.load(GlobalConstants.GUI_BUTTONS + "loadMainClicked.png");
-		BufferedImage loadGameHover = ImageLoader.load(GlobalConstants.GUI_BUTTONS + "loadMainHover.png");
+		BufferedImage loadGameDefault = ImageLoader.load(Constants.GUI_BUTTONS + "loadMain.png");
+		BufferedImage loadGamePressed = ImageLoader.load(Constants.GUI_BUTTONS + "loadMainClicked.png");
+		BufferedImage loadGameHover = ImageLoader.load(Constants.GUI_BUTTONS + "loadMainHover.png");
 		loadGame = new CustomButton(loadGameDefault, loadGamePressed, loadGameHover);
 		c.insets = new Insets(0,50,0,0);
 		c.gridx = 0;
 		c.gridy = 2;
 		this.add(loadGame,c);
 		
-		BufferedImage joinGameDefault = ImageLoader.load(GlobalConstants.GUI_BUTTONS + "joinMain.png");
-		BufferedImage joinGamePressed = ImageLoader.load(GlobalConstants.GUI_BUTTONS + "joinMainClicked.png");
-		BufferedImage joinGameHover = ImageLoader.load(GlobalConstants.GUI_BUTTONS + "joinMainHover.png");
+		BufferedImage joinGameDefault = ImageLoader.load(Constants.GUI_BUTTONS + "joinMain.png");
+		BufferedImage joinGamePressed = ImageLoader.load(Constants.GUI_BUTTONS + "joinMainClicked.png");
+		BufferedImage joinGameHover = ImageLoader.load(Constants.GUI_BUTTONS + "joinMainHover.png");
 		joinGame = new CustomButton(joinGameDefault, joinGamePressed, joinGameHover);
 		c.insets = new Insets(0,50,0,0);
 		c.gridx = 0;
 		c.gridy = 3;
 		this.add(joinGame,c);
 		
-		BufferedImage quitGameDefault = ImageLoader.load(GlobalConstants.GUI_BUTTONS + "quitMain.png");
-		BufferedImage quitGamePressed = ImageLoader.load(GlobalConstants.GUI_BUTTONS + "quitMainClicked.png");
-		BufferedImage quitGameHover = ImageLoader.load(GlobalConstants.GUI_BUTTONS + "quitMainHover.png");
+		BufferedImage quitGameDefault = ImageLoader.load(Constants.GUI_BUTTONS + "quitMain.png");
+		BufferedImage quitGamePressed = ImageLoader.load(Constants.GUI_BUTTONS + "quitMainClicked.png");
+		BufferedImage quitGameHover = ImageLoader.load(Constants.GUI_BUTTONS + "quitMainHover.png");
 		quitGame = new CustomButton(quitGameDefault, quitGamePressed, quitGameHover);
 		c.insets = new Insets(0,50,0,0);
 		c.gridx = 0;

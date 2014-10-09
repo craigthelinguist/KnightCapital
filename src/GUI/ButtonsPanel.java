@@ -12,7 +12,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import tools.GlobalConstants;
+import tools.Constants;
 import tools.ImageLoader;
 
 /**
@@ -47,8 +47,8 @@ public class ButtonsPanel extends JPanel  {
 		c.insets = new Insets(5,1,5,1); //top, left, bottom, right padding (in that order)
 
 		/*Declare and initialize the images for the button */
-		BufferedImage inventoryDefaultIcon = ImageLoader.load(GlobalConstants.GUI_FILEPATH + "inventoryDefaultTemp.png");
-		BufferedImage inventoryPressedIcon = ImageLoader.load(GlobalConstants.GUI_FILEPATH + "inventoryHoverTemp.png");
+		BufferedImage inventoryDefaultIcon = ImageLoader.load(Constants.GUI_FILEPATH + "inventoryDefaultTemp.png");
+		BufferedImage inventoryPressedIcon = ImageLoader.load(Constants.GUI_FILEPATH + "inventoryHoverTemp.png");
 		inventoryButton = new CustomButton(inventoryDefaultIcon, inventoryPressedIcon,null);
 		/*Place these buttons on a different panel and add that panel on this layeredPane(PanelMaster)*/
 		c.gridx = 0;
@@ -58,9 +58,9 @@ public class ButtonsPanel extends JPanel  {
 
 
 		/*Declare and initialize the images for the button */
-		BufferedImage newGameDefault = ImageLoader.load(GlobalConstants.GUI_BUTTONS + "newGameButton.png");
-		BufferedImage newGamePressed = ImageLoader.load(GlobalConstants.GUI_BUTTONS + "newGameButtonClicked.png");
-		BufferedImage newGameHover = ImageLoader.load(GlobalConstants.GUI_BUTTONS + "newGameButtonHover.png");
+		BufferedImage newGameDefault = ImageLoader.load(Constants.GUI_BUTTONS + "newGameButton.png");
+		BufferedImage newGamePressed = ImageLoader.load(Constants.GUI_BUTTONS + "newGameButtonClicked.png");
+		BufferedImage newGameHover = ImageLoader.load(Constants.GUI_BUTTONS + "newGameButtonHover.png");
 		newGame = new CustomButton(newGameDefault, newGamePressed, newGameHover);
 		c.gridx = 0;
 		c.gridy = 1;

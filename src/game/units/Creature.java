@@ -7,7 +7,7 @@ import java.util.Map;
 
 import player.Player;
 import renderer.Animation;
-import tools.GlobalConstants;
+import tools.Constants;
 import tools.ImageLoader;
 import tools.Log;
 import game.effects.Buff;
@@ -63,9 +63,9 @@ public abstract class Creature {
 	}
 
 	public Creature(String imgName, Player player) {
-		this.portrait = ImageLoader.load(GlobalConstants.PORTRAITS + imgName);
+		this.portrait = ImageLoader.load(Constants.PORTRAITS + imgName);
 		imgName = imgName.concat("_" + player.getColour());
-		this.animations = ImageLoader.loadDirectedAnimations(GlobalConstants.ICONS + imgName);
+		this.animations = ImageLoader.loadDirectedAnimations(Constants.ICONS + imgName);
 		this.animation = animations.get("north");
 		this.animationName = "north";
 		buffs = new LinkedList<>();
