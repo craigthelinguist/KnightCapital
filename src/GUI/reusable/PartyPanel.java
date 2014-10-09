@@ -109,6 +109,8 @@ public class PartyPanel extends JPanel {
 		// TODO: draw the thing being dragged
 		if (dragging != null){
 			Point mousePoint = MouseInfo.getPointerInfo().getLocation();
+			Point location = this.getLocationOnScreen();
+			mousePoint = new Point(mousePoint.x-location.x,mousePoint.y-location.y);
 			Creature member = party.getMember(dragging.x,dragging.y);
 			if (member != null){
 				BufferedImage portrait = member.getPortrait();
@@ -152,7 +154,6 @@ public class PartyPanel extends JPanel {
 		@Override
 		public void mousePressed(MouseEvent e) {
 			dragging = asArrayIndices(e.getX(),e.getY());
-			System.out.println(dragging);
 		}
 
 		@Override
@@ -163,7 +164,6 @@ public class PartyPanel extends JPanel {
 				return;
 			}
 			else{
-				System.out.println("yep yep yep");
 				party.swap(dragging,release);
 				dragging = null;
 				repaint();

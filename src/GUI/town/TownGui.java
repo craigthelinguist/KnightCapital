@@ -19,8 +19,7 @@ public class TownGui extends JFrame {
 	
 	public TownGui(TownController townController) {
 		panel = new TownPanel(townController, townController.getVisitors(), townController.getGarrison());
-		this.add(panel.panel_visitor);
-		this.add(panel.panel_garrison);
+		this.add(panel);
 		
 		this.pack();
 		this.setLocationRelativeTo(null);
