@@ -15,7 +15,7 @@ public class PartyDialogTest {
 		Tile tile = PassableTile.newDirtTile(0, 0);
 		Player p = new Player("LL Cool J",1);
 		Hero hero = new Hero("ovelia",p);
-		Party party = new Party(hero, p);
+		Party party = new Party(hero, p, null);
 		tile.setIcon(party);
 		
 		MainFrame frame = new MainFrame();

@@ -27,7 +27,7 @@ public class TownPartySlot extends JPanel{
 	// are you currently dragging mouse
 	private boolean dragging;
 	
-	protected TownPartySlot(TownController townController, Party party, int x, int y){
+	protected TownPartySlot(Party party, TownController townController, int x, int y){
 		this.x = x;
 		this.y = y;
 		this.controller = townController;
@@ -35,7 +35,7 @@ public class TownPartySlot extends JPanel{
 		this.party = party;
 		dragging = false;
 	}
-	
+
 	protected void draw(Graphics g){
 		Creature c = party.getMember(x, y);
 		g.drawImage(c.getPortrait(),0,0,null);

@@ -29,10 +29,10 @@ public class Party extends WorldIcon{
 	private Hero hero;
 
 	// TODO: should be instantiated with a hero; no party is without one
-	public Party(Hero hero, Player player) {
+	public Party(Hero hero, Player player, Creature[][] members) {
 		this.hero = hero;
 		owner = player;
-		members = new Creature[PARTY_COLS][PARTY_ROWS];	
+		this.members = members;
 		inventory = new Item[INVENTORY_COLS][INVENTORY_ROWS];
 	}
 
@@ -177,6 +177,10 @@ public class Party extends WorldIcon{
 	@Override
 	public String getAnimationName() {
 		return hero.getAnimationName();
+	}
+
+	public static Creature[][] newEmptyParty() {
+		return new Creature[Party.PARTY_COLS][Party.PARTY_ROWS];
 	}
 
 }

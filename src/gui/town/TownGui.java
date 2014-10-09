@@ -1,8 +1,15 @@
 package gui.town;
 
+import game.units.Creature;
+import game.units.Hero;
+import game.units.Unit;
+
 import java.awt.Dimension;
 
 import javax.swing.JFrame;
+
+import player.Player;
+import world.icons.Party;
 
 public class TownGui extends JFrame {
 
@@ -20,6 +27,7 @@ public class TownGui extends JFrame {
 	}
 	
 	public static void main(String[] args){
+	
 		new TownGui(null);
 	}
 	

@@ -146,7 +146,7 @@ public class PathfindingTests {
 		world = new World(tiles,null,null);
 		hero = new Hero("ovelia",player);
 		hero.setMovePts(4);
-		party = new Party(hero,null);
+		party = new Party(hero,null,null);
 		party.setLeader(hero);
 		party.setOwner(player);
 		party.refresh();

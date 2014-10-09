@@ -21,10 +21,17 @@ public class TownPartyPanel extends JPanel {
 	private Party party;
 	private TownPartySlot[][] slots;
 	
-	protected TownPartyPanel(Dimension dimensions, TownController townController) {
+	protected TownPartyPanel(Party party, Dimension dimensions, TownController townController) {
 		this.controller = townController;
-		this.party = party;
 		this.setPreferredSize(dimensions);
+		
+		slots = new TownPartySlot[Party.PARTY_COLS][Party.PARTY_ROWS];
+		for (int i = 0; i < slots.length; i++){
+			for (int j = 0; j < slots[i].length; j++){
+				slots[i][j] = new TownPartySlot(party,townController,i,j);
+			}
+		}
+		
 	}
 
 	@Override

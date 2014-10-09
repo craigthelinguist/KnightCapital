@@ -1,6 +1,7 @@
 
 package controllers;
 
+import game.units.Creature;
 import game.units.Hero;
 
 import java.awt.Dimension;
@@ -277,10 +278,21 @@ public class WorldController {
 	 * @param args
 	 */
 	public static void main(String[] args){
+		generateTestWorldController();
+		
+	}
+	
+	/**
+	 * Use this to generate a test world controller whenever you need one.
+	 * @return
+	 */
+	public static WorldController generateTestWorldController(){
 		Player p = new Player("John The Baptist",4);
 		World w = TemporaryLoader.loadWorld("world_temporary.txt",p);
 		Hero hero = new Hero("ovelia",p);
-		Party party = new Party(hero, p);
+		Creature[][] members = Party.newEmptyParty();
+		members[0][0] = hero;
+		Party party = new Party(hero, p, members);
 		
 		//hero.setMovePts(10);
 		XMLReader read = new XMLReader(Constants.ASSETS+"Levels.xml", "levelTwo", hero);
@@ -290,8 +302,9 @@ public class WorldController {
 		party.setLeader(hero);
 		party.refresh();
 		w.getTile(0,0).setIcon(party);
-		new WorldController(w,p);
+		return new WorldController(w,p);
 		
+
 		/**
 		 * Player p = new Player("John The Baptist",4);
 		World w = TemporaryLoader.loadWorld("world_temporary.txt",p);

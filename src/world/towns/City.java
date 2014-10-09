@@ -96,6 +96,32 @@ public class City {
 		animation = animationNames.get("north");
 		animationName = "north";
 	}
+	
+	public City(String filepath, Player player, CityTile[][] overworldTiles){
+	
+		// set up owner and fields storing details about this city
+		owner = player;
+		buildings = new HashSet<>();
+		visitors = garrison = null;
+		items = new LinkedList<>();
+
+		// set up tiles; set tiles so that they have a reference to this.
+		tiles = overworldTiles;
+		if (overworldTiles.length != WIDTH) Log.print("Error! City must be " + WIDTH + "x" + WIDTH + "tiles!");
+		for (int i = 0; i < WIDTH; i++){
+			if (overworldTiles[i].length != WIDTH) Log.print("Error! City must be " + WIDTH + "x" + WIDTH + "tiles!");
+			for (int j = 0; j < WIDTH; j++){
+				tiles[i][j] = overworldTiles[i][j];
+				tiles[i][j].setCity(this);
+			}
+		}
+		
+		final String FILEPATH = Constants.CITIES + filepath;
+		animationNames = ImageLoader.loadDirectedAnimations(filepath);
+		animation = animationNames.get("north");
+		animationName = "north";
+		
+	}
 
 	/**
 	 * Attempt to add the specified building, or do nothing if it is already in
