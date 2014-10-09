@@ -16,7 +16,8 @@ import player.Player;
  */
 public class Party extends WorldIcon{
 
-	public static final int PARTY_SIZE = 6;
+	public static final int PARTY_ROWS = 2;
+	public static final int PARTY_COLS = 3;
 	public static final int INVENTORY_ROWS = 2;
 	public static final int INVENTORY_COLS = 3;
 
@@ -31,7 +32,7 @@ public class Party extends WorldIcon{
 	public Party(Hero hero, Player player) {
 		this.hero = hero;
 		owner = player;
-		members = new Creature[PARTY_SIZE/2][PARTY_SIZE/2];	
+		members = new Creature[PARTY_COLS][PARTY_ROWS];	
 		inventory = new Item[INVENTORY_COLS][INVENTORY_ROWS];
 	}
 

@@ -23,7 +23,7 @@ public class TownPanel extends JPanel{
 	private TownPartyPanel panel_visitor;
 	private TownPartyPanel panel_garrison;
 	private TownButtonPanel panel_buttons;
-
+	
 	protected TownPanel(TownController townController) {
 		this.controller = townController;
 		this.splash = ImageLoader.load(FILEPATH + BACKDROP, ".jpg");
