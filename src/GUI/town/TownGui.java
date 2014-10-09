@@ -21,6 +21,7 @@ public class TownGui extends JFrame {
 		panel = new TownPanel(townController, townController.getVisitors(), townController.getGarrison());
 		this.add(panel);
 		
+		
 		this.pack();
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);

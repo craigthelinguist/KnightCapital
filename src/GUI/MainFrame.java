@@ -261,9 +261,12 @@ public class MainFrame extends JFrame  {
 
 	public void suspend() {
 		this.setVisible(false);
+		this.active = false;
 	}
 	
 	public void awake(){
+		this.setExtendedState(this.MAXIMIZED_BOTH);
+		this.active = true;
 		this.setVisible(true);
 	}
 

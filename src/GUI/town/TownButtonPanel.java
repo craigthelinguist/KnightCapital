@@ -19,7 +19,7 @@ public class TownButtonPanel extends JPanel{
 		this.setPreferredSize(dimensions);
 		
 		button_leave = new JButton("Leave");
-		
+		button_leave.setPreferredSize(new Dimension(80,50));
 		button_leave.addActionListener(new ActionListener(){
 
 			@Override
@@ -28,6 +28,8 @@ public class TownButtonPanel extends JPanel{
 			}
 		
 		});
+		this.add(button_leave);
+		this.setPreferredSize(new Dimension(400,200));
 		
 	}
 

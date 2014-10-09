@@ -86,7 +86,7 @@ public class TileInformationPanel extends JPanel{
 
 		// nothing selected, display a blank panel
 		if (tile == null){
-
+			
 		}
 		// city tile selected, draw some info about the city
 		else if (tile instanceof CityTile){

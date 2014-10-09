@@ -98,6 +98,7 @@ public class PartyPanel extends JPanel {
 				int xDraw = x * PORTRAIT_WIDTH;
 				int yDraw = y * PORTRAIT_HEIGHT;
 				g.drawRect(xDraw, yDraw, PORTRAIT_WIDTH, PORTRAIT_HEIGHT);
+				if (party == null) continue; // nothing to draw
 				if (dragging != null && dragging.equals(new Point(x,y))) continue; // this is being dragged
 				Creature member = party.getMember(x,y);
 				if (member == null) continue;
@@ -156,7 +157,7 @@ public class PartyPanel extends JPanel {
 		@Override
 		public void mousePressed(MouseEvent e) {
 			Point pt = asArrayIndices(e.getX(),e.getY());
-			if (party.getMember(pt.x, pt.y) != null){
+			if (party != null && party.getMember(pt.x, pt.y) != null){
 				dragging = asArrayIndices(e.getX(),e.getY());
 			}
 		}

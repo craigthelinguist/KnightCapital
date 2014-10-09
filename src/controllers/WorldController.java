@@ -28,6 +28,7 @@ import tools.Constants;
 import world.World;
 import world.icons.Party;
 import world.icons.WorldIcon;
+import world.tiles.CityTile;
 import world.tiles.Tile;
 import world.towns.City;
 import GUI.MainFrame;
@@ -166,19 +167,31 @@ public class WorldController{
 			Tile clickedTile = world.getTile(ptCartesian);
 			Tile selectedTile = world.getTile(selected);
 
-			// selected the tile
-			if (selectedTile != clickedTile && SwingUtilities.isLeftMouseButton(me)){
-				selected = ptCartesian;
-				highlightTiles(clickedTile);
-				gui.updateInfo(clickedTile);
-				gui.redraw();
+			// double clicked a city
+			if (SwingUtilities.isLeftMouseButton(me) && selectedTile != null
+				&& clickedTile instanceof CityTile && selectedTile instanceof CityTile){
+				{
+					CityTile c1 = (CityTile)clickedTile;
+					CityTile c2 = (CityTile)selectedTile;
+					if (c1.getCity() == c2.getCity()){
+						startTownView(c1.getCity());
+					}
+				}
 			}
 
 			// deselected the tile
-			else if (selected != null && SwingUtilities.isLeftMouseButton(me)){
-				if (selectedTile == clickedTile) deselect();
-
+			else if (selected != null && SwingUtilities.isLeftMouseButton(me) && selectedTile == clickedTile){
+				System.out.println("deselect");
+				deselect();
 				gui.updateInfo(null);
+				gui.redraw();
+			}
+
+			// selected the tile
+			else if (selectedTile != clickedTile && SwingUtilities.isLeftMouseButton(me)){
+				selected = ptCartesian;
+				highlightTiles(clickedTile);
+				gui.updateInfo(clickedTile);
 				gui.redraw();
 			}
 
@@ -192,7 +205,7 @@ public class WorldController{
 					gui.redraw();
 				}
 			}
-
+	
 	}
 
 	/**
@@ -257,6 +270,9 @@ public class WorldController{
 	public void endTownView(){
 		awake();
 		this.townController = null;
+		deselect();
+		gui.updateInfo(null);
+		gui.redraw();
 	}
 	
 	public void startTownView(City city){
@@ -337,6 +353,10 @@ public class WorldController{
 		new WorldController(w,p);
 	}
 	
+	/**
+	 * When u don't want a gui use this for testing purposes only
+	 */
+	@Deprecated
 	private WorldController(World w, Player p, boolean af){
 		world = w;
 		player = p;

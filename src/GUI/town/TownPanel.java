@@ -44,7 +44,6 @@ public class TownPanel extends JPanel{
 		this.add(panel_visitor);
 		this.add(panel_garrison);
 		this.add(panel_buttons);
-		
 	}
 	
 	@Override
