@@ -16,7 +16,7 @@ public class MiniMapBorder extends JPanel {
 	public MiniMapBorder() {
 		this.setOpaque(false);
 		/*Initialize the image for the mini map border*/
-		backgroundImage = ImageLoader.load(GlobalConstants.GUI_FILEPATH + "minimapBorder.png");	
+		backgroundImage = ImageLoader.load(GlobalConstants.GUI_FILEPATH + "miniMapBorder.png");	
 	
 	}
 

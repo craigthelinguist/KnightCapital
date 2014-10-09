@@ -26,6 +26,7 @@ import world.icons.WorldIcon;
 import world.tiles.Tile;
 import GUI.GameDialog;
 import GUI.MainFrame;
+import GUI.PartyDialog.PartyDialog;
 
 /**
  * A WorldController. This is the glue between the model (World) and the view (gui, renderer).
@@ -131,6 +132,15 @@ public class WorldController {
 			notifier();
 			gui.redraw();
 		}
+		else if(code == KeyEvent.VK_I){
+			System.out.println("xxx");
+			
+			PartyDialog partyDialog = new PartyDialog(this.gui, world.getTile(selected));;
+			this.gui.add(partyDialog);
+
+			
+
+		}
 	}
 
 	/**
@@ -158,6 +168,7 @@ public class WorldController {
 			// deselected the tile
 			else if (selected != null && SwingUtilities.isLeftMouseButton(me)){
 				if (selectedTile == clickedTile) deselect();
+
 				gui.updateInfo(null);
 				gui.redraw();
 			}

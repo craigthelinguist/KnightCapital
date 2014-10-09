@@ -1,5 +1,6 @@
 package tools;
 
+import java.awt.Font;
 import java.io.File;
 
 import player.Player;
@@ -38,5 +39,15 @@ public class GlobalConstants {
 
 	// These are for the Camera
 	public static final int CAMERA_PAN = 10;
+	
+	// Font's for GUI
+	public static final Font HeaderFont = new Font("Dialog", Font.BOLD, 30);
+	public static final Font SubheaderFont = new Font("Dialog", Font.ITALIC, 24);
+	public static final Font ParagraphFont = new Font("Dialog", Font.PLAIN, 14);
+	public static final Font TooltipFont = new Font("DialogInput", Font.PLAIN, 10);
 
+	// Values needed for party panel i'm guessing these will be stored somewhere else eventually
+	public static final String PartyPanelTitle = "Party Panel";
+	public static final String PartyPanelDescription = "This is a motherfucking description telling you what the fuck this is and what the fuck it does. Got it?";
+	
 }

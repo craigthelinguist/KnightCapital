@@ -51,7 +51,8 @@ public class MainFrame extends JFrame  {
 		this.setExtendedState(this.MAXIMIZED_BOTH);
 		this.setUndecorated(false); //true means borderless window
 
-
+		
+		
 		//this.setSize(1300,200);
 		this.setLayout(new BorderLayout());
 		//this.setVisible(true);
@@ -135,6 +136,7 @@ public class MainFrame extends JFrame  {
 		    {
 				EscapeDialog dialog = new EscapeDialog(MainFrame.this);
 		    }
+		    
 			return false;
 		}
 	}
@@ -255,6 +257,5 @@ public class MainFrame extends JFrame  {
 	public void makeGameDialog(String msg) {
 		new GameDialog(this,msg);
 	}
-
 
 }
