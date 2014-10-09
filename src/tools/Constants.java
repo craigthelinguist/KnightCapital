@@ -23,8 +23,8 @@ public class Constants {
 	public static final String ICONS = ASSETS + "icons" + File.separatorChar;
 	public static final String CITIES = Constants.ASSETS + "cities" + File.separatorChar;
 	public static final String PORTRAITS = "assets" + File.separatorChar+ "portraits" +   File.separatorChar;
-	public static final String ITEMS = Constants.ASSETS + "items" + File.separatorChar;
-	
+	public static final String ITEMS = Constants.ASSETS + "itemIcons" + File.separatorChar;
+
 	// all images inside the GUIAssets
 	public static final String GUI_FILEPATH = Constants.ASSETS + "GUIAssets" + File.separatorChar;
 	public static final String GUI_BUTTONS = Constants.ASSETS + "GUIAssets" + File.separatorChar +"buttons"+ File.separatorChar;
@@ -40,10 +40,10 @@ public class Constants {
 
 	// image sizing
 	public static final Dimension PORTRAIT_DIMENSIONS = new Dimension(66,100);
-	
+
 	// These are for the Camera
 	public static final int CAMERA_PAN = 10;
-	
+
 	// Font's for GUI
 	public static final Font HeaderFont = new Font("Dialog", Font.BOLD, 30);
 	public static final Font SubheaderFont = new Font("Dialog", Font.ITALIC, 24);
@@ -53,5 +53,5 @@ public class Constants {
 	// Values needed for party panel i'm guessing these will be stored somewhere else eventually
 	public static final String PartyPanelTitle = "Party Panel";
 	public static final String PartyPanelDescription = "This is a motherfucking description telling you what the fuck this is and what the fuck it does. Got it?";
-	
+
 }

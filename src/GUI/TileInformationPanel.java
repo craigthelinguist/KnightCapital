@@ -153,8 +153,6 @@ public class TileInformationPanel extends JPanel{
 
 			else if (occupant instanceof Party){
 				Party party = (Party)occupant;
-				party.getHero();
-				party.getOwner();
 
 				resetPanel();
 
