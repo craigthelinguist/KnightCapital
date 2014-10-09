@@ -6,7 +6,8 @@ import world.World;
 
 /**
  * a class to hold on to the main states of a game
- * used by savexml
+ * used by savexml and loadxml
+ * @author Selemon Yitbare
  * 
  * */
 public class States {

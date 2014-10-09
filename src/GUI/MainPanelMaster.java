@@ -42,7 +42,7 @@ public class MainPanelMaster extends JPanel {
 	/* Declare all the panels on this panel */
 	private InventoryPanel inventoryPanel;
 	private ButtonsPanel buttonsPanel;
-	private MiniMapPanel miniMapPanel;
+	private MiniMap miniMapPanel;
 	private TileInformationPanel tileInfoPanel;
 
 	public MainPanelMaster(MainFrame frame) {
@@ -60,9 +60,9 @@ public class MainPanelMaster extends JPanel {
 
 
 		/*Initialize the minimap panel and palce it bottom left */
-		miniMapPanel = new MiniMapPanel();
+		miniMapPanel = new MiniMap();
 		c.gridx = 0;
-		c.gridy =0;
+		c.gridy = 0;
 		this.add(miniMapPanel,c);
 
 

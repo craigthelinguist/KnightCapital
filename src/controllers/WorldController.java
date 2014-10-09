@@ -18,6 +18,7 @@ import player.Player;
 import renderer.Camera;
 import renderer.WorldRenderer;
 import storage.TemporaryLoader;
+import storage.XMLReader;
 import tools.Geometry;
 import tools.GlobalConstants;
 import world.World;
@@ -264,7 +265,13 @@ public class WorldController {
 		World w = TemporaryLoader.loadWorld("world_temporary.txt",p);
 		Hero hero = new Hero("ovelia",p);
 		Party party = new Party(hero, p);
-		hero.setMovePts(10);
+		//hero.setMovePts(10);
+		XMLReader read = new XMLReader("C:\\Users\\mr\\workspace\\KnightCapital\\src\\storage\\Levels.xml", "levelTwo", hero);
+		read.readLevel();
+		
+		System.out.println(hero.getMovePoints());
+//		System.out.println(hero.);
+		
 		party.setLeader(hero);
 		party.refresh();
 		w.getTile(0,0).setIcon(party);
