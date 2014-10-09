@@ -48,6 +48,15 @@ public class Party extends WorldIcon{
 	}
 	
 	/**
+	 * Return the party member at the specified position.
+	 * @param x: column
+	 * @param y: row
+	 */
+	public Creature getMember(int x, int y){
+		return members[x][y];
+	}
+	
+	/**
 	 * Return true if this Party is owned by the specified player.
 	 * @param p: player you suspect owns this party.
 	 * @return true if the player owns this party.

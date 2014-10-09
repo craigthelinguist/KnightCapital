@@ -1,6 +1,12 @@
 package gui.town;
 
+import game.units.Creature;
+
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
 import javax.swing.JPanel;
 
@@ -9,20 +15,24 @@ import world.icons.Party;
 
 public class TownPartyPanel extends JPanel {
 
-	// constants
-	private final int PORTRAIT_WIDTH = Constants.PORTRAIT_DIMENSIONS.width;
-	private final int PORTRAIT_HEIGHT = Constants.PORTRAIT_DIMENSIONS.height;
-	
+
 	// data this townPartyPanel displays
 	private TownController controller;
 	private Party party;
+	private TownPartySlot[][] slots;
 	
-	protected TownPartyPanel(TownController townController) {
+	protected TownPartyPanel(Dimension dimensions, TownController townController) {
 		this.controller = townController;
 		this.party = party;
-		this.setPreferredSize(new Dimension(PORTRAIT_WIDTH*2,PORTRAIT_HEIGHT*3));
+		this.setPreferredSize(dimensions);
 	}
-	
-	
 
+	@Override
+	protected void paintComponent(Graphics g){
+		for (int i = 0; i < slots.length; i++){
+			for (int j = 0; j < slots[i].length; j++){
+				slots[i][j].draw(g);
+			}
+		}
+	}
 }

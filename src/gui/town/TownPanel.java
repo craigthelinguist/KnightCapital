@@ -29,11 +29,10 @@ public class TownPanel extends JPanel{
 		this.splash = ImageLoader.load(FILEPATH + BACKDROP, ".jpg");
 		this.setPreferredSize(new Dimension(splash.getWidth(),splash.getHeight()));
 	
-		panel_visitor = new TownPartyPanel(townController);
-		panel_garrison = new TownPartyPanel(townController);
-		panel_buttons = new TownButtonPanel(townController);
-		
-		
+		Dimension childDimensions = new Dimension(getWidth()/3,getHeight()/3);
+		panel_visitor = new TownPartyPanel(childDimensions,townController);
+		panel_garrison = new TownPartyPanel(childDimensions,townController);
+		panel_buttons = new TownButtonPanel(childDimensions,townController);
 		
 	}
 	

@@ -1,11 +1,16 @@
 package gui.town;
 
-public class TownButtonPanel {
+import java.awt.Dimension;
+
+import javax.swing.JPanel;
+
+public class TownButtonPanel extends JPanel{
 
 	private TownController controller;
 	
-	protected TownButtonPanel(TownController townController) {
+	protected TownButtonPanel(Dimension dimensions, TownController townController) {
 		this.controller = townController;
+		this.setPreferredSize(dimensions);
 	}
 
 }
