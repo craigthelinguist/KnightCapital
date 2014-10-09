@@ -1,5 +1,10 @@
 package controllers;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+
+import javax.swing.JButton;
+
 /**
  * Battle
  * This is created whenever a player right clicks on an enemy who is within their move limit.
@@ -15,6 +20,24 @@ package controllers;
  * 		-No rush 20 min
  *
  */
-public class BattleController {
+public class BattleController implements Controller{
+
+	@Override
+	public void buttonPressed(JButton button, Object[] info) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent me, Object[] info) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyPressed(KeyEvent ke, Object[] info) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

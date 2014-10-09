@@ -1,17 +1,22 @@
-package gui.town;
+package controllers;
 
 import game.units.Creature;
 import game.units.Hero;
 import game.units.Unit;
 
 import java.awt.Dimension;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+
+import javax.swing.JButton;
+
+import GUI.town.TownGui;
 
 import player.Player;
 
 import storage.TemporaryLoader;
 import tools.Log;
 
-import controllers.WorldController;
 
 import world.World;
 import world.icons.Party;
@@ -20,7 +25,7 @@ import world.towns.City;
 
 
 
-public class TownController {
+public class TownController implements Controller {
 
 	// state stuff
 	protected final City city;
@@ -40,16 +45,15 @@ public class TownController {
 		this.garrison = city.getGarrison();
 		this.visitors = city.getVisitors();
 		
-		Dimension dimensions = controller.getVisualDimensions();
 		this.gui = new TownGui(this);
 		
 	}
 	
-	protected Party getGarrison(){
+	public Party getGarrison(){
 		return garrison;
 	}
 	
-	protected Party getVisitors(){
+	public Party getVisitors(){
 		return visitors;
 	}
 	
@@ -77,6 +81,24 @@ public class TownController {
 		Player p = new Player("John",1);
 		TownController tc = new TownController(city,WorldController.testWorldControllerNoGui());
 
+	}
+
+	@Override
+	public void buttonPressed(JButton button, Object[] info) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent me, Object[] info) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyPressed(KeyEvent ke, Object[] info) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

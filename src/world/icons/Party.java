@@ -41,7 +41,7 @@ public class Party extends WorldIcon{
 	 * @param p1: position of first party member.
 	 * @param p2: position of second party member.
 	 */
-	public void switchOrder(Point p1, Point p2){
+	public void swap(Point p1, Point p2){
 		Creature c1 = members[p1.x][p1.y];
 		members[p1.x][p1.y] = members[p2.x][p2.y];
 		members[p2.x][p2.y] = c1;

@@ -1,4 +1,4 @@
-package gui.town;
+package GUI.town;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -8,8 +8,13 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
+import GUI.reusable.PartyPanel;
+
+import controllers.TownController;
+
 import tools.Constants;
 import tools.ImageLoader;
+import world.icons.Party;
 
 public class TownPanel extends JPanel{
 	
@@ -22,18 +27,18 @@ public class TownPanel extends JPanel{
 	private BufferedImage splash;
 
 	// components
-	private TownPartyPanel panel_visitor;
-	private TownPartyPanel panel_garrison;
+	private PartyPanel panel_visitor;
+	private PartyPanel panel_garrison;
 	private TownButtonPanel panel_buttons;
 	
-	protected TownPanel(TownController townController) {
+	protected TownPanel(TownController townController, Party visitors, Party garrison) {
 		this.controller = townController;
 		this.splash = ImageLoader.load(FILEPATH + BACKDROP, ".jpg");
 		this.setPreferredSize(new Dimension(splash.getWidth(),splash.getHeight()));
 
 		Dimension childDimensions = new Dimension(getWidth()/3,getHeight()/3);
-		panel_visitor = new TownPartyPanel(controller.visitors, childDimensions,townController);
-		panel_garrison = new TownPartyPanel(controller.garrison, childDimensions,townController);
+		panel_visitor = new PartyPanel(visitors, townController);
+		panel_garrison = new PartyPanel(garrison, townController);
 		panel_buttons = new TownButtonPanel(childDimensions,townController);
 		
 		this.add(panel_visitor);

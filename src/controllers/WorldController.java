@@ -36,7 +36,7 @@ import GUI.PartyDialog.PartyDialog;
  * A WorldController. This is the glue between the model (World) and the view (gui, renderer).
  * @author Aaron
  */
-public class WorldController {
+public class WorldController implements Controller {
 
 	//boolean server or client, true if server, false if client.
 	private boolean serverOrClient = true;

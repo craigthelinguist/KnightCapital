@@ -1,4 +1,4 @@
-package gui.town;
+package GUI.town;
 
 import game.units.Creature;
 import game.units.Hero;
@@ -8,6 +8,8 @@ import java.awt.Dimension;
 
 import javax.swing.JFrame;
 
+import controllers.TownController;
+
 import player.Player;
 import world.icons.Party;
 
@@ -15,8 +17,8 @@ public class TownGui extends JFrame {
 
 	private TownPanel panel;
 	
-	protected TownGui(TownController townController) {
-		panel = new TownPanel(townController);
+	public TownGui(TownController townController) {
+		panel = new TownPanel(townController, townController.getVisitors(), townController.getGarrison());
 		this.add(panel);
 		
 		this.pack();
