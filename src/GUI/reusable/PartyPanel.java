@@ -127,7 +127,9 @@ public class PartyPanel extends JPanel {
 
 		@Override
 		public void mouseDragged(MouseEvent arg0) {
-			repaint();
+			if (dragging != null){
+				repaint();
+			}
 		}
 
 		@Override
@@ -153,7 +155,10 @@ public class PartyPanel extends JPanel {
 
 		@Override
 		public void mousePressed(MouseEvent e) {
-			dragging = asArrayIndices(e.getX(),e.getY());
+			Point pt = asArrayIndices(e.getX(),e.getY());
+			if (party.getMember(pt.x, pt.y) != null){
+				dragging = asArrayIndices(e.getX(),e.getY());
+			}
 		}
 
 		@Override

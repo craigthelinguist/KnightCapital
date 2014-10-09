@@ -44,9 +44,7 @@ public class TownController{
 		this.city = city;
 		this.garrison = city.getGarrison();
 		this.visitors = city.getVisitors();
-		
 		this.gui = new TownGui(this);
-		
 	}
 	
 	public Party getGarrison(){
@@ -81,11 +79,11 @@ public class TownController{
 		Unit u5 = new Unit("archer",player);
 		Unit u6 = new Unit("knight",player);
 		Creature[][] members2 = Party.newEmptyParty();
-		members[0][0] = u3;
-		members[1][0] = u6;
-		members[2][0] = h2;
-		members[0][1] = u4;
-		members[2][1] = u5;
+		members2[0][0] = u3;
+		members2[1][0] = u6;
+		members2[2][0] = h2;
+		members2[0][1] = u4;
+		members2[2][1] = u5;
 		Party party2 = new Party(h2,player,members2);
 		
 		City city = new City("basic",player,tiles);

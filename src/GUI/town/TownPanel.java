@@ -27,8 +27,8 @@ public class TownPanel extends JPanel{
 	private BufferedImage splash;
 
 	// components
-	public PartyPanel panel_visitor;
-	public PartyPanel panel_garrison;
+	private PartyPanel panel_visitor;
+	private PartyPanel panel_garrison;
 	private TownButtonPanel panel_buttons;
 	
 	protected TownPanel(TownController townController, Party visitors, Party garrison) {
