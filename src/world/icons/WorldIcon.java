@@ -21,8 +21,8 @@ public abstract class WorldIcon {
 
 	public abstract String getAnimationName();
 
-	protected abstract BufferedImage getImage();
-	protected abstract BufferedImage getPortrait();
+	public abstract BufferedImage getImage();
+	public abstract BufferedImage getPortrait();
 
 	public void draw(Graphics graphics, int iconX, int iconY) {
 		graphics.drawImage(this.getImage(),iconX,iconY,null);

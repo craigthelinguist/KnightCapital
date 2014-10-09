@@ -23,12 +23,12 @@ public class ItemIcon extends WorldIcon {
 	}
 
 	@Override
-	protected BufferedImage getImage() {
+	public BufferedImage getImage() {
 		return item.getImage();
 	}
 
 	@Override
-	protected BufferedImage getPortrait() {
+	public BufferedImage getPortrait() {
 		return item.getPortrait();
 	}
 

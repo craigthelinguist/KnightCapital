@@ -160,12 +160,12 @@ public class Party extends WorldIcon{
 	 * Return the image needed to represent this party on the mpa.
 	 */
 	@Override
-	protected BufferedImage getImage() {
+	public BufferedImage getImage() {
 		return hero.getImage();
 	}
 
 	@Override
-	protected BufferedImage getPortrait(){
+	public BufferedImage getPortrait(){
 		return hero.getPortrait();
 	}
 

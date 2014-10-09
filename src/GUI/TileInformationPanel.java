@@ -140,13 +140,7 @@ public class TileInformationPanel extends JPanel{
 
 
 				/*Create the label and set icon of label to the player's icon*/
-				try {
-					tileIcon = new ImageIcon(ImageIO.read(new FileInputStream(Constants.ASSETS +"tile_grass.png")));
-				} catch (FileNotFoundException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+				tileIcon = new ImageIcon(tile.getPortrait());
 				tileLabel = new JLabel(tileIcon);
 
 				/*Insets parameters are top, left, bottom, right */
@@ -165,13 +159,7 @@ public class TileInformationPanel extends JPanel{
 				resetPanel();
 
 				/*Create the label and set icon of label to the player's icon*/
-				try {
-					tileIcon = new ImageIcon(ImageIO.read(new FileInputStream(Constants.PORTRAITS +"ovelia.png")));
-				} catch (FileNotFoundException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+				tileIcon = new ImageIcon(party.getPortrait());
 				tileLabel = new JLabel(tileIcon);
 
 				/*Insets parameters are top, left, bottom, right */
