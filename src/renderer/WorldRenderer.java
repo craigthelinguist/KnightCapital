@@ -13,13 +13,12 @@ import java.util.Map;
 import java.util.Set;
 
 import controllers.WorldController;
-
 import tools.CartesianMapping;
 import tools.Geometry;
 import tools.Constants;
 import tools.Sorter;
-
 import world.World;
+import world.icons.ItemIcon;
 import world.icons.WorldIcon;
 import world.tiles.CityTile;
 import world.tiles.Tile;
@@ -35,7 +34,7 @@ public class WorldRenderer {
 	private static final int TILE_HT = Constants.TILE_HT;
 	private static final int HALF_TILE_WD = TILE_WD/2;
 	private static final int HALF_TILE_HT = TILE_HT/2;
-	
+
 	// use the static methods
 	private WorldRenderer(){}
 
@@ -49,7 +48,7 @@ public class WorldRenderer {
 
 		// preliminaries
 		Camera camera = controller.getCamera();
-		
+
 		// draw tiles and construct buffer
 		List<CartesianMapping<?>> drawBuffer = new ArrayList<>();
 		drawTilesAndAddIconsToBuffer(graphics,controller,drawBuffer);
@@ -57,7 +56,7 @@ public class WorldRenderer {
 
 		// sort buffer's contents by the perspective
 		Sorter.sortTopToBottom(drawBuffer);
-		
+
 		// convert buffer contents into isometric points
 		for (int i = 0; i < drawBuffer.size(); i++){
 			CartesianMapping<?> mapping = drawBuffer.get(i);
@@ -65,14 +64,15 @@ public class WorldRenderer {
 			mapping.point.x = ptIso.x;
 			mapping.point.y = ptIso.y;
 		}
-		
+
 		// draw contents of buffer
 		for (CartesianMapping<?> mapping : drawBuffer){
 			Object toDraw = mapping.thing;
 			if (toDraw instanceof City) drawCity(graphics,mapping.point,camera,(City)toDraw);
+			else if (toDraw instanceof ItemIcon) drawItemIcon(graphics,mapping.point,camera,(ItemIcon)toDraw);
 			else if (toDraw instanceof WorldIcon) drawIcon(graphics,mapping.point,camera,(WorldIcon)toDraw);
 		}
-		
+
 		// Some basic debug info
 		graphics.setColor(Color.BLACK);
 		graphics.drawString("Knight Capital", 30, 30);
@@ -80,10 +80,10 @@ public class WorldRenderer {
 		graphics.drawString("Current Origin: ("+camera.getOriginX()+","+camera.getOriginY()+")", 30, 70);
 		graphics.drawString("Arrow keys to move camera", 30, 110);
 		graphics.drawString("Press r & e to rotate cw & ccw", 30, 130);
-		
+
 
 	}
-	
+
 	/**
 	 * Return true if the tile with origin pt would be visible on the screen represented by resolution.
 	 * @param pt: a point in isometric space.
@@ -93,7 +93,7 @@ public class WorldRenderer {
 	public static boolean isPointOnScreen(Point pt, Dimension resolution){
 		final int TILE_WD = Constants.TILE_WD;
 		final int TILE_HT = Constants.TILE_HT;
-		
+
 		return	pt.x >= 0-TILE_WD
 			&&	pt.x < resolution.width + TILE_WD
 			&&	pt.y >= 0-TILE_HT
@@ -109,13 +109,13 @@ public class WorldRenderer {
 	public static void drawTilesAndAddIconsToBuffer(Graphics graphics, WorldController controller, List<CartesianMapping<?>> drawBuffer){
 		final World world = controller.getWorld();
 		final Camera camera = controller.getCamera();
-		
+
 		Tile[][] tiles = controller.getWorld().getTiles();
 		for (int y = 0; y < tiles.length; y++){
 			for (int x = 0; x < tiles[y].length; x++){
 				Point ptCart = new Point(x,y);
 				if (!isPointOnScreen(ptCart,world.dimensions)) continue;
-				
+
 				// draw the tile
 				Tile tile = world.getTile(x,y);
 				Point ptRotated = Geometry.rotateByCamera(ptCart, camera, world.dimensions);
@@ -129,7 +129,7 @@ public class WorldRenderer {
 				else{
 					tile.draw(graphics, ptIso.x, ptIso.y);
 				}
-				
+
 				// add occupant to buffer, if it exists
 				WorldIcon occupant = tile.occupant();
 				if (occupant != null){
@@ -139,7 +139,7 @@ public class WorldRenderer {
 			}
 		}
 	}
-	
+
 	/**
 	 * Adds all cities in the given controller's world to the draw buffer.
 	 * @param controller: contains info about world to be drawn
@@ -152,7 +152,7 @@ public class WorldRenderer {
 		final Camera camera = controller.getCamera();
 		Set<? extends City> citySet = world.getCities();
 		int orientation = camera.getOrientation();
-		
+
 		// get mappings and store the tiles to draw them from in a list
 		for (City city : citySet){
 			CityTile ct = null;
@@ -162,7 +162,7 @@ public class WorldRenderer {
 			CartesianMapping<City> mapping = new CartesianMapping<City>(city,rotatedPt);
 			drawBuffer.add(mapping);
 		}
-	
+
 	}
 
 	/**
@@ -175,7 +175,7 @@ public class WorldRenderer {
 	 * @param city: the city to be drawn
 	 */
 	private static void drawCity(Graphics graphics, Point ptIso, Camera camera, City city){
-		
+
 		//  ___________
 		// |q          |
 		// |     x     |
@@ -196,7 +196,7 @@ public class WorldRenderer {
 		ptIso.y = ptIso.y + HALF_TILE_HT;
 		city.draw(graphics, ptIso.x, ptIso.y);
 	}
-	
+
 	/**
 	 * Draw the given WorldIcon. Assumes that the point is the point obtained by rotating the city's topmost tile (from the
 	 * camera's perspective) along the camera's viewing perspective and then converting into isometric with no further
@@ -209,13 +209,21 @@ public class WorldRenderer {
 	private static void drawIcon(Graphics graphics, Point ptIso, Camera camera, WorldIcon occupant){
 		int isoY = ptIso.y;
 		int isoX = ptIso.x;
-		final int TILE_HT = Constants.TILE_HT;
-		final int TILE_WD = Constants.TILE_WD;
 		final int ICON_WD = Constants.ICON_WD;
 		final int ICON_HT = Constants.ICON_HT;
 		int iconY = isoY - TILE_HT/4;
 		int iconX = isoX + TILE_WD/2 - ICON_WD/2;
 		occupant.draw(graphics,iconX,iconY);
+	}
+
+	private static void drawItemIcon(Graphics graphics, Point ptIso, Camera camera, ItemIcon toDraw) {
+		int isoY = ptIso.y;
+		int isoX = ptIso.x;
+		final int ICON_WD = toDraw.getImage().getWidth();
+		final int ICON_HT = toDraw.getImage().getHeight();
+		int iconY = isoY + ICON_HT/4;
+		int iconX = isoX + TILE_WD/2 - ICON_WD/2;
+		toDraw.draw(graphics,iconX,iconY);
 	}
 
 	/**
@@ -226,5 +234,5 @@ public class WorldRenderer {
 	public static Camera getCentreOfWorld(World world){
 		return new Camera(Constants.WINDOW_WD / 2, 0, Camera.NORTH);
 	}
-	
+
 }
