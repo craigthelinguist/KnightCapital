@@ -1,6 +1,8 @@
 
 package controllers;
 
+import game.items.FloorItem;
+import game.items.Item;
 import game.units.Creature;
 import game.units.Hero;
 
@@ -26,6 +28,7 @@ import storage.XMLReader;
 import tools.Geometry;
 import tools.Constants;
 import world.World;
+import world.icons.ItemIcon;
 import world.icons.Party;
 import world.icons.WorldIcon;
 import world.tiles.CityTile;
@@ -319,6 +322,10 @@ public class WorldController{
 	}
 
 	public static void aaron_main(String[] args){
+		/*Loading items*/
+		FloorItem floorItem = new FloorItem("itemChest", "Uknown Item", null);
+		ItemIcon itemIcon = new ItemIcon(floorItem);
+
 		Player p = new Player("John The Baptist",4);
 		World w = TemporaryLoader.loadWorld("world_temporary.txt",p);
 		Hero hero = new Hero("ovelia",p);
@@ -328,6 +335,9 @@ public class WorldController{
 		Party party = new Party(hero, p, members);
 		party.refresh();
 		w.getTile(0,0).setIcon(party);
+
+		w.getTile(8,8).setIcon(itemIcon); //place a floor item on this tile
+
 		new WorldController(w,p);
 	}
 
