@@ -9,6 +9,7 @@ import java.awt.Dimension;
 import player.Player;
 
 import storage.TemporaryLoader;
+import tools.Log;
 
 import controllers.WorldController;
 
@@ -70,10 +71,11 @@ public class TownController {
 			}
 		}
 		
-		City city = new City("city_basic",player,tiles);
+		City city = new City("basic",player,tiles);
 
 		Player p = new Player("John",1);
-		new TownController(city,WorldController.generateTestWorldController());
+		TownController tc = new TownController(city,WorldController.testWorldControllerNoGui());
+
 	}
 	
 }

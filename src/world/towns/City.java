@@ -97,6 +97,7 @@ public class City {
 		animationName = "north";
 	}
 	
+
 	public City(String filepath, Player player, CityTile[][] overworldTiles){
 	
 		// set up owner and fields storing details about this city
@@ -116,7 +117,7 @@ public class City {
 			}
 		}
 		
-		final String FILEPATH = Constants.CITIES + filepath;
+		filepath = Constants.CITIES + filepath;
 		animationNames = ImageLoader.loadDirectedAnimations(filepath);
 		animation = animationNames.get("north");
 		animationName = "north";

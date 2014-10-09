@@ -6,6 +6,7 @@ import game.units.Hero;
 
 import java.awt.Dimension;
 import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
@@ -218,6 +219,14 @@ public class WorldController {
 
 	/**
 	 * Resets the set of highlighted tiles.
+		world = w;
+		player = p;
+		camera = WorldRenderer.getCentreOfWorld(w);
+		gui = new MainFrame();
+		gui.setController(this);
+		selected = null;
+		highlightedTiles = new HashSet<>();
+
 	 */
 	private void resetHighlightedTiles(){
 		this.highlightedTiles = new HashSet<>();
@@ -270,6 +279,7 @@ public class WorldController {
 	}
 
 	public Dimension getVisualDimensions() {
+		if (gui == null) return Toolkit.getDefaultToolkit().getScreenSize();
 		return gui.getSize();
 	}
 	
@@ -322,6 +332,29 @@ public class WorldController {
 		w.getTile(0,0).setIcon(party);
 		new WorldController(w,p);
 		 */
+	}
+	
+	private WorldController(World w, Player p, boolean af){
+		world = w;
+		player = p;
+		camera = WorldRenderer.getCentreOfWorld(w);
+		selected = null;
+		highlightedTiles = new HashSet<>();
+	}
+	
+	public static WorldController testWorldControllerNoGui(){
+		Player p = new Player("John The Baptist",4);
+		World w = TemporaryLoader.loadWorld("world_temporary.txt",p);
+		Hero hero = new Hero("ovelia",p);
+		Creature[][] members = Party.newEmptyParty();
+		members[0][0] = hero;
+		Party party = new Party(hero, p, members);
+		return new WorldController(w,p,true);
+		
+	}
+
+	public void hide() {
+		gui.setVisible(false);
 	}
 
 }
