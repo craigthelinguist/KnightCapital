@@ -160,12 +160,15 @@ public class PartyPanel extends JPanel {
 			Point release = asArrayIndices(e.getX(),e.getY());
 			if (dragging == null || !validPoint(dragging) || release == null || !validPoint(release)){
 				dragging = null;
+				if (controller != null) controller.mousePressed(e, new Object[]{ new Point(dragging.x,dragging.y), new Point(release.x,release.y) });
 				return;
 			}
-			party.swap(dragging,release);
-			dragging = null;
-			repaint();
-			controller.mousePressed(e, new Object[]{ new Point(dragging.x,dragging.y), new Point(release.x,release.y) });
+			else{
+				party.swap(dragging,release);
+				dragging = null;
+				controller.mousePressed(e, new Object[]{ new Point(dragging.x,dragging.y), new Point(release.x,release.y) });
+				repaint();
+			}
 		}
 
 	}
