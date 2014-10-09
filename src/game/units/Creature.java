@@ -24,12 +24,13 @@ public abstract class Creature {
 	private int baseSpeed;
 	private int baseArmour;
 
-	private int currentHealth;
 	private int buffedDamage;
 	private int buffedSpeed;
 	private int buffedArmour;
+	private int buffedHealth;
 
 
+	private int currentHealth;
 
 	protected BufferedImage portrait;
 	protected Map<String,Animation> animations;
@@ -95,6 +96,10 @@ public abstract class Creature {
 	public void heal(int amount) {
 		if (amount < 0 || currentHealth <= 0) return;
 		currentHealth = Math.min(baseHealth, currentHealth+amount);
+	}
+
+	public void fullHeal(){
+		currentHealth = baseHealth + buffedHealth;
 	}
 
 	/**
@@ -164,6 +169,29 @@ public abstract class Creature {
 				iter.remove();
 			}
 		}
+	}
+
+	public void setStat(Stat stat, int value){
+
+		if (stat == Stat.ARMOUR){
+			this.baseArmour = value;
+		}
+		else if (stat == Stat.DAMAGE){
+			this.baseDamage = value;
+		}
+		else if (stat == Stat.HEALTH){
+			this.baseHealth = value;
+		}
+	}
+
+	/**
+	 * Return the healthiness of this creature as a percentage
+	 * @return: int
+	 */
+	public int healthiness(){
+		int maxHP = this.baseHealth + this.buffedHealth;
+		int currentHP = this.currentHealth;
+		return (int)(maxHP/currentHP*100);
 	}
 
 }
