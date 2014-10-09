@@ -53,7 +53,7 @@ public class ItemInfoPanel extends JPanel   {
 	  }
 
 	  
-	  
+	  // haha what the fuck is this method?
 	  public void drawOntoPanel(String str, Rectangle rc, Graphics g)
 	  {
 	     g.setFont(F);

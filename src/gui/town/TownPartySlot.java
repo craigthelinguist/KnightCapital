@@ -33,14 +33,19 @@ public class TownPartySlot extends JPanel{
 		this.controller = townController;
 		this.addMouseListener(new SlotListener());
 		this.party = party;
+		this.setPreferredSize(Constants.PORTRAIT_DIMENSIONS);
 		dragging = false;
 	}
 
 	protected void draw(Graphics g){
 		Creature c = party.getMember(x, y);
+		if (c == null) return;
 		g.drawImage(c.getPortrait(),0,0,null);
 	}
 		
+	
+	
+	
 	private class SlotListener implements MouseMotionListener,MouseListener{
 
 		@Override

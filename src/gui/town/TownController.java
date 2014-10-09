@@ -72,6 +72,7 @@ public class TownController {
 		}
 		
 		City city = new City("basic",player,tiles);
+		city.setGarrison(party);
 
 		Player p = new Player("John",1);
 		TownController tc = new TownController(city,WorldController.testWorldControllerNoGui());

@@ -2,6 +2,8 @@ package gui.town;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
@@ -33,6 +35,10 @@ public class TownPanel extends JPanel{
 		panel_visitor = new TownPartyPanel(controller.visitors, childDimensions,townController);
 		panel_garrison = new TownPartyPanel(controller.garrison, childDimensions,townController);
 		panel_buttons = new TownButtonPanel(childDimensions,townController);
+		
+		this.add(panel_visitor);
+		this.add(panel_garrison);
+		this.add(panel_buttons);
 		
 	}
 	

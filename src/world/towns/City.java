@@ -204,5 +204,10 @@ public class City {
 	public Party getGarrison(){
 		return garrison;
 	}
+
+
+	public void setGarrison(Party party) {
+		this.garrison = party;
+	}
 	
 }
