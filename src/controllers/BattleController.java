@@ -20,7 +20,7 @@ import javax.swing.JButton;
  * 		-No rush 20 min
  *
  */
-public class BattleController implements Controller{
+public class BattleController extends Controller{
 
 	@Override
 	public void buttonPressed(JButton button, Object[] info) {

@@ -36,7 +36,7 @@ import GUI.PartyDialog.PartyDialog;
  * A WorldController. This is the glue between the model (World) and the view (gui, renderer).
  * @author Aaron
  */
-public class WorldController implements Controller {
+public class WorldController extends Controller {
 
 	//boolean server or client, true if server, false if client.
 	private boolean serverOrClient = true;
@@ -102,7 +102,7 @@ public class WorldController implements Controller {
 	 * Player has pushed a key
 	 * @param ke: details about the key event
 	 */
-	public void keyPressed(KeyEvent ke){
+	public void keyPressed(KeyEvent ke, Object[] info){
 		int code = ke.getKeyCode();
 		if (code == ROTATE_CW){
 			camera.rotateClockwise();
@@ -152,9 +152,7 @@ public class WorldController implements Controller {
 	 * @param me: details about the click.
 	 * @param panel: what they clicked on (inventory, world, etc.)
 	 */
-	public void mousePressed(MouseEvent me, String panel){
-
-		if (panel.equals("canvas")){
+	public void mousePressed(MouseEvent me, Object[] info){
 
 			Point ptIso = new Point(me.getX(),me.getY());
 			Point ptCartesian = Geometry.isometricToCartesian(ptIso, camera, world.dimensions);
@@ -188,16 +186,13 @@ public class WorldController implements Controller {
 				}
 			}
 
-		}
-
-
 	}
 
 	/**
 	 * Player has clicked a button.
 	 * @param button: the button they clicked.
 	 */
-	public void buttonPressed(JButton button){
+	public void buttonPressed(JButton button, Object[] info){
 
 		if (button.getText().equals("End Turn Placeholder")){
 			world.endTurn();
@@ -356,6 +351,7 @@ public class WorldController implements Controller {
 	public void hide() {
 		gui.setVisible(false);
 	}
+
 
 }
 

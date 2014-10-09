@@ -49,7 +49,7 @@ public class Canvas extends JPanel implements MouseListener{
 
 	@Override
 	public void mouseClicked(MouseEvent event) {
-		controller.mousePressed(event,"canvas");
+		controller.mousePressed(event);
 	}
 
 	@Override

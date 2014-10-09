@@ -25,7 +25,7 @@ import world.towns.City;
 
 
 
-public class TownController implements Controller {
+public class TownController extends Controller {
 
 	// state stuff
 	protected final City city;
