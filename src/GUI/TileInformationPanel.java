@@ -26,6 +26,7 @@ import world.icons.Party;
 import world.icons.WorldIcon;
 import world.tiles.CityTile;
 import world.tiles.Tile;
+import world.towns.City;
 
 /**
  * This panel holds all of the player's information such as stats, party  etc.
@@ -90,7 +91,7 @@ public class TileInformationPanel extends JPanel{
 		// city tile selected, draw some info about the city
 		else if (tile instanceof CityTile){
 			CityTile ct = (CityTile)tile;
-			ct.getCity();
+			City city = ct.getCity();
 
 			resetPanel();
 
@@ -108,13 +109,7 @@ public class TileInformationPanel extends JPanel{
 
 
 			/*Create the label and set icon of label to the player's icon*/
-			try {
-				tileIcon = new ImageIcon(ImageIO.read(new FileInputStream(Constants.CITIES +"basic_east.png")));
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			tileIcon = new ImageIcon(city.getPortrait());
 			tileLabel = new JLabel(tileIcon);
 			c.insets = new Insets(1,40,0,0);
 			c.gridx = 0;

@@ -45,6 +45,7 @@ public class MainFrame extends JFrame  {
 	private Canvas canvas;
 	private WorldController controller;
 	private boolean closeDialogEnabled = false;
+	private boolean active = true;
 
 	public MainFrame() {
 		/* These two statements make the frame full screen. (Commented out for now) */
@@ -126,7 +127,7 @@ public class MainFrame extends JFrame  {
 	private class WorldKeyDispatcher implements KeyEventDispatcher {
 		@Override
 		public boolean dispatchKeyEvent(KeyEvent e) {
-			if (closeDialogEnabled) return false;
+			if (closeDialogEnabled || active) return false;
 
 			if (e.getID() == KeyEvent.KEY_RELEASED)
 			{
@@ -256,6 +257,14 @@ public class MainFrame extends JFrame  {
 	 */
 	public void makeGameDialog(String msg) {
 		new GameDialog(this,msg);
+	}
+
+	public void suspend() {
+		this.setVisible(false);
+	}
+	
+	public void awake(){
+		this.setVisible(true);
 	}
 
 }

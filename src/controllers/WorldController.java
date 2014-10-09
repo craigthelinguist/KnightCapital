@@ -29,6 +29,7 @@ import world.World;
 import world.icons.Party;
 import world.icons.WorldIcon;
 import world.tiles.Tile;
+import world.towns.City;
 import GUI.MainFrame;
 import GUI.PartyDialog.PartyDialog;
 
@@ -48,6 +49,9 @@ public class WorldController{
 	// gui and renderer: the view
 	private MainFrame gui;
 
+	// town controller when you have town view up
+	private TownController townController;
+	
 	// world this controller is for: the model
 	private final World world;
 
@@ -62,6 +66,9 @@ public class WorldController{
 
 	// the camera that the player is viewing from
 	private Camera camera;
+	
+	// whether this worldController is currently doing anything
+	private boolean active = true;
 
 	// key bindings
 	private static final int ROTATE_CW = KeyEvent.VK_R;
@@ -214,14 +221,6 @@ public class WorldController{
 
 	/**
 	 * Resets the set of highlighted tiles.
-		world = w;
-		player = p;
-		camera = WorldRenderer.getCentreOfWorld(w);
-		gui = new MainFrame();
-		gui.setController(this);
-		selected = null;
-		highlightedTiles = new HashSet<>();
-
 	 */
 	private void resetHighlightedTiles(){
 		this.highlightedTiles = new HashSet<>();
@@ -255,6 +254,26 @@ public class WorldController{
 		return highlightedTiles.contains(p);
 	}
 
+	public void endTownView(){
+		awake();
+		this.townController = null;
+	}
+	
+	public void startTownView(City city){
+		suspend();
+		this.townController = new TownController(city,this);
+	}
+	
+	public void awake(){
+		gui.awake();
+		this.active = true;
+	}
+	
+	public void suspend(){
+		this.active = false;
+		gui.suspend();
+	}
+	
 	public World getWorld(){
 		return world;
 	}
@@ -278,23 +297,30 @@ public class WorldController{
 		return gui.getSize();
 	}
 	
-	/**
-	 * For testing purposes
-	 * @param args
-	 */
+
 	public static void main(String[] args){
-		generateTestWorldController();
-		
+		aaron_main(args);
 	}
-	
-	/**
-	 * Use this to generate a test world controller whenever you need one.
-	 * @return
-	 */
-	public static WorldController generateTestWorldController(){
+
+	public static void aaron_main(String[] args){
 		Player p = new Player("John The Baptist",4);
 		World w = TemporaryLoader.loadWorld("world_temporary.txt",p);
 		Hero hero = new Hero("ovelia",p);
+		hero.setMovePts(10);
+		Creature[][] members = Party.newEmptyParty();
+		members[0][0] = hero;
+		Party party = new Party(hero, p, members);
+		party.refresh();
+		w.getTile(0,0).setIcon(party);
+		new WorldController(w,p);
+	}
+	
+
+	public static void selemon_main(){
+		Player p = new Player("John The Baptist",4);
+		World w = TemporaryLoader.loadWorld("world_temporary.txt",p);
+		Hero hero = new Hero("ovelia",p);
+
 		Creature[][] members = Party.newEmptyParty();
 		members[0][0] = hero;
 		Party party = new Party(hero, p, members);
@@ -306,27 +332,9 @@ public class WorldController{
 		
 		party.setLeader(hero);
 		party.refresh();
-		w.getTile(0,0).setIcon(party);
-		return new WorldController(w,p);
-		
-
-		/**
-		 * Player p = new Player("John The Baptist",4);
-		World w = TemporaryLoader.loadWorld("world_temporary.txt",p);
-		Hero hero = new Hero("ovelia",p);
-		Party party = new Party(hero, p);
-		//hero.setMovePts(10);
-		XMLReader read = new XMLReader("C:\\Users\\mr\\workspace\\KnightCapital\\src\\storage\\Levels.xml", "levelTwo", hero);
-		read.readLevel();
-		
-		System.out.println(hero.getMovePoints());
-//		System.out.println(hero.);
-		
-		party.setLeader(hero);
-		party.refresh();
+		hero.setMovePts(8);
 		w.getTile(0,0).setIcon(party);
 		new WorldController(w,p);
-		 */
 	}
 	
 	private WorldController(World w, Player p, boolean af){
@@ -337,21 +345,21 @@ public class WorldController{
 		highlightedTiles = new HashSet<>();
 	}
 	
-	public static WorldController testWorldControllerNoGui(){
+	/**
+	 * To test other classes, if they need a WorldController.
+	 * @return
+	 */
+	public static WorldController getTestWorldControllerNoGui(){
 		Player p = new Player("John The Baptist",4);
 		World w = TemporaryLoader.loadWorld("world_temporary.txt",p);
 		Hero hero = new Hero("ovelia",p);
 		Creature[][] members = Party.newEmptyParty();
 		members[0][0] = hero;
 		Party party = new Party(hero, p, members);
+		hero.setMovePts(10);
 		return new WorldController(w,p,true);
 		
 	}
-
-	public void hide() {
-		gui.setVisible(false);
-	}
-
 
 }
 

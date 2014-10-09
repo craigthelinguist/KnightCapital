@@ -34,6 +34,10 @@ public class TownController{
 	
 	// gui stuff
 	private TownGui gui;
+	private boolean active = true;
+	
+	// super
+	private WorldController worldController;
 	
 	/**
 	 * Construct a new session in Town.
@@ -45,6 +49,7 @@ public class TownController{
 		this.garrison = city.getGarrison();
 		this.visitors = city.getVisitors();
 		this.gui = new TownGui(this);
+		this.worldController = controller;
 	}
 	
 	public Party getGarrison(){
@@ -91,8 +96,24 @@ public class TownController{
 		city.setVisitors(party2);
 		
 		Player p = new Player("John",1);
-		TownController tc = new TownController(city,WorldController.testWorldControllerNoGui());
+		TownController tc = new TownController(city,WorldController.getTestWorldControllerNoGui());
 
+	}
+
+	public void buttonPressed(String text) {
+		
+		if (!active) return;
+		text = text.toLowerCase();
+		if (text.equals("leave")){
+			gui.dispose();
+			worldController.endTownView();
+			active = false;
+		}
+		
+	}
+
+	public boolean active(){
+		return active;
 	}
 	
 }

@@ -93,8 +93,8 @@ public class TemporaryLoader {
 					cityTiles[a][b] = ct;
 				}
 			}
-			String[] cityAnimNames = new String[]{ "basic" };
-			City city = new City(cityAnimNames, pl, cityTiles);
+			
+			City city = new City("basic", pl, cityTiles);
 
 			// world data
 			Player[] players = new Player[]{ p };
