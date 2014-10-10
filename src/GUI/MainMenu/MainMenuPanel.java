@@ -53,6 +53,7 @@ public class MainMenuPanel extends JPanel implements ActionListener{
 		newGame = new CustomButton(newGameDefault, newGamePressed, newGameHover);
 		c.gridx = 0;
 		c.gridy = 1;
+		newGame.addActionListener(this);
 		this.add(newGame,c);
 
 		BufferedImage loadGameDefault = ImageLoader.load(Constants.GUI_BUTTONS + "loadMain.png");
@@ -62,6 +63,7 @@ public class MainMenuPanel extends JPanel implements ActionListener{
 		c.insets = new Insets(0,50,0,0);
 		c.gridx = 0;
 		c.gridy = 2;
+		loadGame.addActionListener(this);
 		this.add(loadGame,c);
 
 		BufferedImage joinGameDefault = ImageLoader.load(Constants.GUI_BUTTONS + "joinMain.png");
@@ -71,6 +73,7 @@ public class MainMenuPanel extends JPanel implements ActionListener{
 		c.insets = new Insets(0,50,0,0);
 		c.gridx = 0;
 		c.gridy = 3;
+		joinGame.addActionListener(this);
 		this.add(joinGame,c);
 
 		BufferedImage quitGameDefault = ImageLoader.load(Constants.GUI_BUTTONS + "quitMain.png");
@@ -80,6 +83,7 @@ public class MainMenuPanel extends JPanel implements ActionListener{
 		c.insets = new Insets(0,50,0,0);
 		c.gridx = 0;
 		c.gridy = 4;
+		quitGame.addActionListener(this);
 		this.add(quitGame,c);
 
 
@@ -106,6 +110,18 @@ public class MainMenuPanel extends JPanel implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-
+		
+		if(e.getSource() == newGame) {
+			//what to do if button pressed is new game
+		}
+		else if(e.getSource() == loadGame) {
+			//what do if button pressed is load game
+		}
+		else if(e.getSource() == joinGame) {
+			//what to do if button pressed is join game
+		}
+		else if(e.getSource() == quitGame) {
+			//what to do if button pressed is quit 
+		}
 	}
 }
