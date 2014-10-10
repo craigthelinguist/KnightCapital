@@ -247,7 +247,7 @@ public class TileInformationPanel extends JPanel{
 
 
 				/*Create the label and set icon of label to the player's icon*/
-				tileIcon = new ImageIcon(ii.getPortrait());
+				tileIcon = new ImageIcon(ii.getImage());
 				tileLabel = new JLabel(tileIcon);
 
 				/*set up the label for item description */
