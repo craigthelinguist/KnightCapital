@@ -32,25 +32,25 @@ public class PartyPanel extends JPanel {
 	// data this townPartyPanel displays
 	private Party party;
 	private Point dragging;
-	
+
 	private final int PORTRAIT_WIDTH = Constants.PORTRAIT_DIMENSIONS.width;
 	private final int PORTRAIT_HEIGHT = Constants.PORTRAIT_DIMENSIONS.height;
 	private final int PARTY_ROWS = Party.PARTY_ROWS;
 	private final int PARTY_COLS = Party.PARTY_COLS;
 	private final int WIDTH = Constants.PORTRAIT_DIMENSIONS.width*Party.PARTY_COLS+1;
 	private final int HEIGHT = Constants.PORTRAIT_DIMENSIONS.height*Party.PARTY_ROWS+1;
-	
+
 	public PartyPanel(Party party) {
 		this.setPreferredSize(new Dimension(WIDTH,HEIGHT));
 		this.party = party;
 		dragging = null;
-		
+
 		// listeners
 		this.addMouseListener(new SlotListener());
 		this.addMouseMotionListener(new SlotListener());
-		
+
 	}
-	
+
 	/**
 	 * Get the party represented in this townPartyPanel.
 	 * @return: a party
@@ -62,7 +62,7 @@ public class PartyPanel extends JPanel {
 	private void redraw(){
 		this.repaint();
 	}
-	
+
 	/**
 	 * Return the given point (x,y) as a point in array.
 	 * @param x: x position of point
@@ -74,7 +74,7 @@ public class PartyPanel extends JPanel {
 		y /= PORTRAIT_HEIGHT;
 		return new Point(x,y);
 	}
-	
+
 	/**
 	 * Return true if this is a valid point in the array.
 	 * @param pt
@@ -103,10 +103,10 @@ public class PartyPanel extends JPanel {
 				Creature member = party.getMember(x,y);
 				if (member == null) continue;
 				BufferedImage portrait = member.getPortrait();
-				g.drawImage(portrait,xDraw,yDraw,null);	
+				g.drawImage(portrait,xDraw,yDraw,null);
 			}
 		}
-		
+
 		// TODO: draw the thing being dragged
 		if (dragging != null){
 			Point mousePoint = MouseInfo.getPointerInfo().getLocation();
@@ -118,12 +118,12 @@ public class PartyPanel extends JPanel {
 				g.drawImage(portrait, mousePoint.x-PORTRAIT_WIDTH/2, mousePoint.y-PORTRAIT_WIDTH/2, null);
 			}
 		}
-		
-		
+
+
 	}
 
-	
-	
+
+
 	private class SlotListener implements MouseMotionListener,MouseListener{
 
 		@Override
@@ -136,7 +136,7 @@ public class PartyPanel extends JPanel {
 		@Override
 		public void mouseMoved(MouseEvent arg0) {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		@Override
@@ -146,7 +146,7 @@ public class PartyPanel extends JPanel {
 		@Override
 		public void mouseEntered(MouseEvent e) {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		@Override
@@ -177,7 +177,7 @@ public class PartyPanel extends JPanel {
 		}
 
 	}
-	
+
 	public static void main(String[] args){
 		JFrame frame = new JFrame();
 		JPanel panel = new JPanel();
@@ -197,5 +197,5 @@ public class PartyPanel extends JPanel {
 		frame.setVisible(true);
 	}
 
-	
+
 }
