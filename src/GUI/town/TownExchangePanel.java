@@ -34,6 +34,7 @@ public class TownExchangePanel extends JPanel implements MouseListener, MouseMot
 	private static final int PORTRAIT_HT = Constants.PORTRAIT_DIMENSIONS.height;
 	private static final int HEALTH_BAR_WD = PORTRAIT_WD;
 	private static final int HEALTH_BAR_HT = 15;
+	private static final Color TRANSPARENT = new Color(0,0,0,0);
 	
 	// controller
 	private TownController controller;
@@ -68,6 +69,7 @@ public class TownExchangePanel extends JPanel implements MouseListener, MouseMot
 
 		this.add(partyVisitors);
 		this.add(partyGarrison);
+		this.setOpaque(false);
 		
 		// setup visitor panel
 		
@@ -103,8 +105,10 @@ public class TownExchangePanel extends JPanel implements MouseListener, MouseMot
 	
 	@Override
 	protected void paintComponent(Graphics g){
-		g.setColor(Color.WHITE);
-		g.fillRect(0, 0, getWidth(), getHeight());
+		//g.clearRect(0,0,getWidth(),getHeight());
+		//g.setColor(TRANSPARENT);
+		//g.fillRect(0, 0, getWidth(), getHeight());
+		//g.setColor(Color.WHITE);
 		partyGarrison.repaint();
 		partyVisitors.repaint();
 		
