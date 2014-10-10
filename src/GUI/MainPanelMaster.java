@@ -105,6 +105,11 @@ public class MainPanelMaster extends JPanel {
 	   */
 	public void updateInfo(Tile tile) {
 		tileInfoPanel.updateInfo(tile);
+		try {
+			inventoryPanel.updateInventoryPanel(tile);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 

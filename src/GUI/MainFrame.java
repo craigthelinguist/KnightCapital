@@ -104,6 +104,8 @@ public class MainFrame extends JFrame  {
 	 */
 	public void updateInfo(Tile tile){
 		layeredPanel.updateInfo(tile);
+
+
 	}
 
 
