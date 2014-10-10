@@ -28,7 +28,7 @@ public class PathfindingTests {
 	Hero hero;
 	Party party;
 	Point start = new Point(0,0);
-	
+
 	/**
 	 * Movement from one tile to the same tile.
 	 */
@@ -41,7 +41,7 @@ public class PathfindingTests {
 		assertTrue("you're on same tile so init conditions should be same", initialConditions());
 		assertTrue("still on same tile so shouldn't have used any move pts", movesb4 == party.getMovePoints());
 	}
-	
+
 	/**
 	 * Movement to a valid tile.
 	 */
@@ -57,7 +57,7 @@ public class PathfindingTests {
 		assertTrue("goal tile should now be occupied", world.getTile(goal).occupied());
 		assertTrue("your party should now be occupant in goal tile", world.getTile(goal).occupant() == party);
 	}
-	
+
 	/**
 	 * Movement to an impassable tile.
 	 */
@@ -72,7 +72,7 @@ public class PathfindingTests {
 		assertTrue("haven't moved so init conditions should still be true", initialConditions());
 		assertFalse("invalid move so goal tile shouldn't be occupied", world.getTile(goal).occupied());
 	}
-	
+
 	/**
 	 * This is a movement to a passable tile that is surrounded by impassable tiles.
 	 */
@@ -87,7 +87,7 @@ public class PathfindingTests {
 		assertTrue("haven't moved so init conditions should still be true", initialConditions());
 		assertFalse("invalid move so goal tile shouldn't be occupied", world.getTile(goal).occupied());
 	}
-	
+
 	/**
 	 * valid move to a far away tile
 	 */
@@ -103,7 +103,7 @@ public class PathfindingTests {
 		assertTrue("goal tile should now be occupied", world.getTile(goal).occupied());
 		assertTrue("your party should now be occupant in goal tile", world.getTile(goal).occupant() == party);
 	}
-	
+
 	@Test
 	public void invalidFarAway(){
 		init();
@@ -115,7 +115,7 @@ public class PathfindingTests {
 		assertTrue("haven't moved so init conditions should still be true", initialConditions());
 		assertFalse("invalid move so goal tile shouldn't be occupied", world.getTile(goal).occupied());
 	}
-	
+
 	public boolean initialConditions(){
 		if (!(party.ledBy(hero))) return false;
 		if (!(party.getMovePoints() > 0)) return false;
@@ -152,7 +152,7 @@ public class PathfindingTests {
 		party.refresh();
 		world.setIcon(party, 0, 0);
 	}
-	
+
 	/**
 	 * [P][G][G][G]
 	 * [X][X][G][G]
