@@ -1,6 +1,7 @@
 package GUI.town;
 
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -40,6 +41,8 @@ public class TownPanel extends JPanel{
 		Dimension childDimensions = new Dimension(getWidth()/3,getHeight()/3);
 		panel_exchange = new TownExchangePanel(townController);
 		panel_buttons = new TownButtonPanel(childDimensions,townController);
+		
+		this.setLayout(new FlowLayout(FlowLayout.LEFT));
 		
 		this.add(panel_exchange);
 		this.add(panel_buttons);
