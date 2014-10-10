@@ -33,6 +33,7 @@ public class Party extends WorldIcon{
 		this.hero = hero;
 		owner = player;
 		this.members = members;
+		if (members == null) members = Party.newEmptyParty();
 		inventory = new Item[INVENTORY_COLS][INVENTORY_ROWS];
 	}
 
