@@ -13,11 +13,13 @@ public class CartesianMapping<T> {
 	public final T thing;
 	public final Point point;
 	public final int depth;
-
-	public CartesianMapping(T t, Point p, int d){
+	public final int intensity;
+	
+	public CartesianMapping(int d, T t, Point p, int i){
 		thing = t;
 		point = p;
-		depth =d ;
+		depth = d;
+		intensity = i;
 	}
 
 }

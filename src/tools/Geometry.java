@@ -258,4 +258,8 @@ public class Geometry {
 		return new Point(x,y);
 	}
 	
+	public static Point copyPoint(Point p){
+		return new Point(p.x,p.y);
+	}
+	
 }

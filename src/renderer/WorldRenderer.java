@@ -69,8 +69,9 @@ public class WorldRenderer {
 		for (CartesianMapping<?> mapping : drawBuffer){
 			Object toDraw = mapping.thing;
 			if (toDraw instanceof City) drawCity(graphics,mapping.point,camera,(City)toDraw);
-			else if (toDraw instanceof ItemIcon) drawItemIcon(graphics,mapping.point,camera,(ItemIcon)toDraw);
-			else if (toDraw instanceof WorldIcon) drawIcon(graphics,mapping.point,camera,(WorldIcon)toDraw);
+			else if (toDraw instanceof ItemIcon) drawItemIcon(graphics,(CartesianMapping<ItemIcon>) mapping,camera);
+			else if (toDraw instanceof WorldIcon) drawIcon(graphics,(CartesianMapping<WorldIcon>) mapping,camera);
+			else if (toDraw instanceof Tile) drawTile(graphics,(CartesianMapping<Tile>) mapping,camera);
 		}
 
 		// Some basic debug info
@@ -116,26 +117,25 @@ public class WorldRenderer {
 				Point ptCart = new Point(x,y);
 				if (!isPointOnScreen(ptCart,world.dimensions)) continue;
 
-				// draw the tile
+				// add tile to buffer
 				Tile tile = world.getTile(x,y);
 				Point ptRotated = Geometry.rotateByCamera(ptCart, camera, world.dimensions);
-				Point ptIso = Geometry.cartesianToIsometric(ptRotated, camera);
-				if (tile == controller.getSelectedTile()){
-					tile.drawHighlighted(graphics, ptIso.x, ptIso.y, 55);
-				}
-				else if (controller.isHighlighted(ptCart)){
-					tile.drawHighlighted(graphics, ptIso.x, ptIso.y, 25);
-				}
-				else{
-					tile.draw(graphics, ptIso.x, ptIso.y);
-				}
-
-				// add occupant to buffer, if it exists
-				WorldIcon occupant = tile.occupant();
-				if (occupant != null){
-					CartesianMapping<WorldIcon> iconToDraw = new CartesianMapping<>(occupant,ptRotated,1);
+				
+				int intensity = 0;
+				if (tile == controller.getSelectedTile()) intensity = 55;
+				else if (controller.isHighlighted(ptCart)) intensity = 25;
+				
+				CartesianMapping<Tile> tileToDraw = new CartesianMapping<>(-2,tile,ptRotated,intensity);
+				drawBuffer.add(tileToDraw);
+				
+				// add occupant to buffer
+				if (tile.occupant() != null){
+					WorldIcon occupant = tile.occupant();
+					Point ptRotatedIcon = Geometry.copyPoint(ptRotated);
+					CartesianMapping<WorldIcon> iconToDraw = new CartesianMapping<>(1,occupant,ptRotatedIcon,0);
 					drawBuffer.add(iconToDraw);
 				}
+				
 			}
 		}
 	}
@@ -151,15 +151,14 @@ public class WorldRenderer {
 		final World world = controller.getWorld();
 		final Camera camera = controller.getCamera();
 		Set<? extends City> citySet = world.getCities();
-		int orientation = camera.getOrientation();
-
+		
 		// get mappings and store the tiles to draw them from in a list
 		for (City city : citySet){
 			CityTile ct = null;
 			ct = city.getLeftmostTile(controller.getCamera());
 			Point cityOrigin = new Point(ct.X,ct.Y);
 			Point rotatedPt = Geometry.rotateByCamera(cityOrigin, camera, world.dimensions);
-			CartesianMapping<City> mapping = new CartesianMapping<City>(city,rotatedPt,1);
+			CartesianMapping<City> mapping = new CartesianMapping<City>(1,city,rotatedPt,0);
 			drawBuffer.add(mapping);
 		}
 
@@ -206,26 +205,32 @@ public class WorldRenderer {
 	 * @param camera: viewing perspective
 	 * @param occupant: the icon to be drawn
 	 */
-	private static void drawIcon(Graphics graphics, Point ptIso, Camera camera, WorldIcon occupant){
-		int isoY = ptIso.y;
-		int isoX = ptIso.x;
+	private static void drawIcon(Graphics graphics, CartesianMapping<WorldIcon> mapping, Camera camera){
+		int isoY = mapping.point.y;
+		int isoX = mapping.point.x;
 		final int ICON_WD = Constants.ICON_WD;
 		final int ICON_HT = Constants.ICON_HT;
 		int iconY = isoY - TILE_HT/4;
 		int iconX = isoX + TILE_WD/2 - ICON_WD/2;
-		occupant.draw(graphics,iconX,iconY);
+		mapping.thing.draw(graphics,iconX,iconY);
 	}
 
-	private static void drawItemIcon(Graphics graphics, Point ptIso, Camera camera, ItemIcon toDraw) {
-		int isoY = ptIso.y;
-		int isoX = ptIso.x;
-		final int ICON_WD = toDraw.getImage().getWidth();
-		final int ICON_HT = toDraw.getImage().getHeight();
+	private static void drawItemIcon(Graphics graphics, CartesianMapping<ItemIcon> mapping, Camera camera) {
+		int isoY = mapping.point.y;
+		int isoX = mapping.point.x;
+		final int ICON_WD = mapping.thing.getImage().getWidth();
+		final int ICON_HT = mapping.thing.getImage().getHeight();
 		int iconY = isoY + ICON_HT/4;
 		int iconX = isoX + TILE_WD/2 - ICON_WD/2;
-		toDraw.draw(graphics,iconX,iconY);
+		mapping.thing.draw(graphics,iconX,iconY);
 	}
 
+	private static void drawTile(Graphics graphics, CartesianMapping<Tile> mapping, Camera camera) {
+		Point ptIso = mapping.point;
+		if (mapping.intensity != 0) mapping.thing.drawHighlighted(graphics, ptIso.x, ptIso.y, mapping.intensity);
+		else mapping.thing.draw(graphics, ptIso.x, ptIso.y);
+	}
+	
 	/**
 	 * Return a camera view of the centre of the given world that is north-oriented.
 	 * @param world: the world you're viewing.
