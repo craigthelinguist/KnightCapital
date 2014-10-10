@@ -19,15 +19,19 @@ public class Server{
 
 	private static final int USER_LIMIT = 5;
 	private static final int PORT = 45612;
+	private static final int MOVE_PORT = 45612;
+	
 
 	//host socket and also list of client sockets.
-	private static ServerSocket serverSocket;
+	private static ServerSocket serverMessageSocket;
+	private static ServerSocket ServerMoveSocket;
 	private static ArrayList<Socket> clients;
 	
 
 	//list of running serverprotocol threads. each protocol dealling with one connected user.
-    private static ServerProtocol[] users = new ServerProtocol[10];
+    private static ServerMessagingProtocol[] users = new ServerMessagingProtocol[10];
    
+    private static ServerMovementProtocol[] movingUsers = new ServerMovementProtocol[10];
       
 	private static BufferedReader bufferedReader;
 	private static String inputLine;
@@ -62,11 +66,13 @@ public class Server{
 			//Print Information
 			System.out.println("Simple Server - by Myles and Neal");
 			System.out.println("IP Address : " + InetAddress.getLocalHost());
-			System.out.println("Socket : "+ PORT);
+			System.out.println("MessageSocket : "+ PORT);
+			System.out.println("MoveSocket : " + MOVE_PORT);
 			System.out.println("-------------------------------------------");
 
 			//Create server socket
-			serverSocket = new ServerSocket(PORT);
+			serverMessageSocket = new ServerSocket(PORT);
+			ServerMoveSocket = new ServerSocket(MOVE_PORT);
 
 		} catch(Exception e) {
 			System.out.println(e);
@@ -80,7 +86,8 @@ public class Server{
 		while(true){
 
 			// Accept Client Connection
-			Socket temp = serverSocket.accept();//just testing connections.
+			Socket temp = serverMessageSocket.accept();//just testing connections.
+			
 			clients.add(temp);
 
 		for(int i =0 ; i < 10; i++){
@@ -98,7 +105,7 @@ public class Server{
 			//if this connection spot is vacant fills it with the incoming request.
 			if(users[i] == null){
 
-				users[i] = new ServerProtocol(input, out, users, i);
+				users[i] = new ServerMessagingProtocol(input, out, users, i);
 				Thread thread = new Thread(users[i]);
 				thread.start();
 				
@@ -111,44 +118,6 @@ public class Server{
 
 	}
 
-	/**
-	 * Wait for input from clients
-	 */
-//	private void waitForInput() {
-//		try{
-//			for(int i = 0; i< clients.size() ; i++) {
-//
-//				   if(clients.get(i).getInputStream().read() == -1){
-//
-//                       
-//				        clients.get(i).close();
-//				   }
-//						waitForInput();
-//
-//				}
-//
-//		} catch(Exception e) {
-//			System.out.println(e);
-//		}
-//	}
-
-	/**
-	 * End Server
-	 * Close each of the clients sockets and then the server.
-	 */
-//	private void endServer() {
-//		try {
-//			for(Socket client : clients) {
-//				client.close();
-//			}
-//
-//			serverSocket.close();
-//
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//		System.out.println("SERVER END.");
-//	}
 
 	public static void main(String[] args) {
 		try {

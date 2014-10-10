@@ -33,6 +33,7 @@ public class Party extends WorldIcon{
 		this.hero = hero;
 		owner = player;
 		this.members = members;
+		if (members == null) this.members = Party.newEmptyParty();
 		inventory = new Item[INVENTORY_COLS][INVENTORY_ROWS];
 	}
 
@@ -46,7 +47,7 @@ public class Party extends WorldIcon{
 		members[p1.x][p1.y] = members[p2.x][p2.y];
 		members[p2.x][p2.y] = c1;
 	}
-	
+
 	/**
 	 * Return the party member at the specified position.
 	 * @param x: column
@@ -55,7 +56,7 @@ public class Party extends WorldIcon{
 	public Creature getMember(int x, int y){
 		return members[x][y];
 	}
-	
+
 	/**
 	 * Return true if this Party is owned by the specified player.
 	 * @param p: player you suspect owns this party.
@@ -156,6 +157,10 @@ public class Party extends WorldIcon{
 		return false;
 	}
 
+	public Item[][] getInventory() {
+		return this.inventory;
+	}
+
 	/**
 	 * Return the image needed to represent this party on the mpa.
 	 */
@@ -181,6 +186,16 @@ public class Party extends WorldIcon{
 
 	public static Creature[][] newEmptyParty() {
 		return new Creature[Party.PARTY_COLS][Party.PARTY_ROWS];
+	}
+
+	public void printInventory(){
+		for (int i = 0; i < inventory.length; i++){
+			for (int j = 0; j < inventory[i].length; j++){
+				Item itm = inventory[i][j];
+				if (itm != null) System.out.println(itm.getDescription());
+				else System.out.println("null");
+			}
+		}
 	}
 
 }

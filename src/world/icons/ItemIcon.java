@@ -2,6 +2,8 @@ package world.icons;
 
 import java.awt.image.BufferedImage;
 
+import tools.Constants;
+import tools.ImageLoader;
 import world.tiles.Tile;
 import game.items.Item;
 
@@ -12,10 +14,12 @@ import game.items.Item;
  */
 public class ItemIcon extends WorldIcon {
 
-	private final Item item;
+	public final Item item;
+	private final BufferedImage image;
 
-	public ItemIcon(Item item){
+	public ItemIcon(String description, Item item){
 		this.item = item;
+		this.image = ImageLoader.load(Constants.ITEMS+"itemChest");
 	}
 
 	public boolean pickup(Party p){
@@ -24,7 +28,7 @@ public class ItemIcon extends WorldIcon {
 
 	@Override
 	public BufferedImage getImage() {
-		return item.getImage();
+		return image;
 	}
 
 	@Override

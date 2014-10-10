@@ -19,7 +19,7 @@ public class ItemSlotPanel extends JPanel {
 		this.imageName = imageName;
 
 		/*Initialize the image for the inventory panel*/
-		backgroundImage = ImageLoader.load(Constants.GUI_FILEPATH + imageName);
+		backgroundImage = ImageLoader.load(Constants.ITEMS + imageName+"Slot");
 	}
 
 

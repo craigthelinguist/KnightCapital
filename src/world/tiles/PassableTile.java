@@ -2,6 +2,7 @@ package world.tiles;
 
 import tools.Constants;
 import tools.ImageLoader;
+import world.icons.ItemIcon;
 import world.icons.Party;
 
 /**
@@ -31,7 +32,7 @@ public class PassableTile extends Tile{
 
 	@Override
 	public boolean passable(Party party) {
-		return !occupied();
+		return !occupied() || this.occupant() instanceof ItemIcon;
 	}
 
 

@@ -2,6 +2,7 @@ package game.items;
 
 import game.effects.Buff;
 
+
 import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 import java.util.Map;
@@ -20,12 +21,14 @@ public abstract class Item {
 	private String name;
 	private String description;
 	protected LinkedList<Buff> buffs;
+	private String imgName;
 
 	public Item(String imgName, String name ,String description){
 		this.name = name;
 		this.description = description;
-		animation = ImageLoader.loadAnimation(Constants.ITEMS + imgName);
-		portrait = ImageLoader.load(Constants.ITEMS + imgName);
+		this.animation = ImageLoader.loadAnimation(Constants.ITEMS + imgName);
+		this.portrait = ImageLoader.load(Constants.ITEMS + imgName);
+		this.buffs = new LinkedList<>();
 	}
 
 	public BufferedImage getImage(){
@@ -52,6 +55,10 @@ public abstract class Item {
 		Animation anim = animations.get(name);
 		if (anim == null) Log.print("setting invalid animation name for item, name was " + name);
 		else animation = anim;
+	}
+
+	public String toString(){
+		return description;
 	}
 
 }

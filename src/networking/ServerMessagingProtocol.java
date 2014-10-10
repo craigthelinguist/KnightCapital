@@ -5,16 +5,16 @@ import java.io.DataOutputStream;
 import java.io.EOFException;
 import java.io.IOException;
 
-public class ServerProtocol implements Runnable {
+public class ServerMessagingProtocol implements Runnable {
 
 
 	private DataInputStream in;
 	private DataOutputStream out;
-	private ServerProtocol[] users;
+	private ServerMessagingProtocol[] users;
 	private int iAm;
 	private Boolean clean = true;
 
-	public ServerProtocol(DataInputStream in, DataOutputStream out, ServerProtocol[] users, int playNum){
+	public ServerMessagingProtocol(DataInputStream in, DataOutputStream out, ServerMessagingProtocol[] users, int playNum){
 
 		System.out.println("made a protocol");
 

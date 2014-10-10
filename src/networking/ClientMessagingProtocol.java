@@ -14,7 +14,7 @@ import java.io.InputStreamReader;
  *         deal with different types of incoming messages and how they will
  *         affect the clients current board state.
  */
-public class ClientProtocol implements Runnable {
+public class ClientMessagingProtocol implements Runnable {
 
 	private static DataInputStream in;
 	private boolean clean = true;
@@ -28,7 +28,7 @@ public class ClientProtocol implements Runnable {
 	 * 
 	 * @param in
 	 */
-	public ClientProtocol(DataInputStream in, DataOutputStream out) {
+	public ClientMessagingProtocol(DataInputStream in, DataOutputStream out) {
 		this.in = in;
 		this.out = out;
 	}

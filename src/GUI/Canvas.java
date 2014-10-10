@@ -3,22 +3,25 @@ package GUI;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 import controllers.WorldController;
-
 import renderer.Camera;
 import renderer.WorldRenderer;
 import tools.Constants;
 import world.World;
 
-public class Canvas extends JPanel implements MouseListener{
+public class Canvas extends JPanel implements MouseListener, MouseMotionListener{
 
 	private WorldController controller;
+	private boolean click = false;
+	private Point lastDrag = null;
 
 	public Canvas() {
 
@@ -40,6 +43,7 @@ public class Canvas extends JPanel implements MouseListener{
 
 	    // set up mouse listener
 	    this.addMouseListener(this);
+	    this.addMouseMotionListener(this);
 
 	}
 
@@ -59,10 +63,15 @@ public class Canvas extends JPanel implements MouseListener{
 	public void mouseExited(MouseEvent event) {}
 
 	@Override
-	public void mousePressed(MouseEvent event) {	}
+	public void mousePressed(MouseEvent event) {
+		this.click = true;
+	}
 
 	@Override
-	public void mouseReleased(MouseEvent event) {}
+	public void mouseReleased(MouseEvent event) {
+		this.click = false;
+		this.lastDrag = null;
+	}
 
 	@Override
 	protected void paintComponent(Graphics graphics){
@@ -71,6 +80,18 @@ public class Canvas extends JPanel implements MouseListener{
 		graphics.fillRect(0,0,getWidth(),getHeight());
 		Dimension resolution = this.getSize();
 		WorldRenderer.render(controller, graphics, resolution);
+	}
+
+	@Override
+	public void mouseDragged(MouseEvent e) {
+		if (!click) return;
+		if (lastDrag != null) controller.mouseDragged(lastDrag, new Point(e.getX(),e.getY()));
+		lastDrag = new Point(e.getX(),e.getY());
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent e) {
+		controller.mouseMoved(e);
 	}
 
 }
