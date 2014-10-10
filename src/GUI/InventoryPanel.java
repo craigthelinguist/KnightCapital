@@ -221,12 +221,11 @@ public class InventoryPanel extends JPanel implements MouseListener {
 
 
 	public void updateInventoryPanel(Tile tile) throws Exception {
+		if (tile == null) return;
+		if(!(tile.occupant() instanceof Party)) return;
+
 		Party p =(Party)tile.occupant();
-		/*Make sure the tile occupant is a party*/
-		if(!(p instanceof Party)) {
-			throw new Exception();
-		}
-		items = p.getInventory();
+		Item[][] items = p.getInventory();
 
 		for(int i = 0; i < items.length; i++) {
 			for(int j = 0; j < items[i].length; j++) {
@@ -237,7 +236,6 @@ public class InventoryPanel extends JPanel implements MouseListener {
 						for(int y = 0; y < items[x].length; y++) {
 								if(slots[x][y] == null) {
 									/*Declare and initialize slot1 (panel) */
-									System.out.println(items[i][j].getName());
 									slots[x][y] = new ItemSlotPanel(items[i][j].getName());
 									c.insets = new Insets(15,15,10,10);
 									c.gridx = i;

@@ -67,6 +67,7 @@ public class WorldController{
 
 	// current tile the player has clicked
 	private Point selected;
+	private Point hover; // point your mouse is over
 
 	// highlighted tiles that are showing where the player's selected party can move to
 	private Set<Point> highlightedTiles;
@@ -154,12 +155,7 @@ public class WorldController{
 		}
 		else if(code == KeyEvent.VK_I){
 			System.out.println("xxx");
-
 			PartyDialog partyDialog = new PartyDialog(this.gui, world.getTile(selected));;
-
-
-
-
 		}
 	}
 
@@ -225,18 +221,25 @@ public class WorldController{
 
 	}
 
-
-	public void mouseMoved(Point lastDrag, Point point) {
-
+	/**
+	 * The mouse has moved from lastDrag -> point.
+	 * @param lastDrag: point mouse started at
+	 * @param point: point mouse moved to.
+	 */
+	public void mouseDragged(Point lastDrag, Point point) {
 		int x = point.x - lastDrag.x;
 		int y = point.y - lastDrag.y;
-
-		int cameraPan = 10;
 		camera.pan(x,y);
-
 		gui.redraw();
+	}
 
-		// TODO Auto-generated method stub
+	public void mouseMoved(MouseEvent me){
+
+		Point ptIso = new Point(me.getX(),me.getY());
+		Point ptCartesian = Geometry.isometricToCartesian(ptIso, camera, world.dimensions);
+		Tile tileHover = world.getTile(ptCartesian);
+		if (tileHover == null) this.hover = ptCartesian;
+		else this.hover = null;
 
 	}
 

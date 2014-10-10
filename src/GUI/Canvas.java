@@ -85,14 +85,13 @@ public class Canvas extends JPanel implements MouseListener, MouseMotionListener
 	@Override
 	public void mouseDragged(MouseEvent e) {
 		if (!click) return;
-		if (lastDrag != null) controller.mouseMoved(lastDrag, new Point(e.getX(),e.getY()));
+		if (lastDrag != null) controller.mouseDragged(lastDrag, new Point(e.getX(),e.getY()));
 		lastDrag = new Point(e.getX(),e.getY());
 	}
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		// TODO Auto-generated method stub
-
+		controller.mouseMoved(e);
 	}
 
 }
