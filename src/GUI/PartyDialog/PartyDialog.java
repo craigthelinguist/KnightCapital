@@ -24,6 +24,7 @@ import world.icons.Party;
 import world.tiles.PassableTile;
 import world.tiles.Tile;
 import GUI.MainFrame;
+import GUI.reusable.PartyPanel;
 
 /**
  * Party Dialog
@@ -86,6 +87,7 @@ public class PartyDialog extends JDialog  {
 		super(frame,true);
 		this.frame = frame;
 		this.tile = tile;
+		this.party = (Party) tile.occupant();
 		this.isOwner = isOwner;
 
 		// Set Layout Manager
@@ -138,6 +140,7 @@ public class PartyDialog extends JDialog  {
 
         // Units Panel
         this.unitsPanel = new UnitsPanel(panelDimension);
+        unitsPanel.add(new PartyPanel(party));
         this.unitsPanel.setBackground(Color.RED);
         gc.gridx = 2;
         gc.gridy = 1;
@@ -182,11 +185,13 @@ public class PartyDialog extends JDialog  {
 
 		// set and add add title type
 		JLabel title = new JLabel(Constants.PartyPanelTitle);
+		title.setHorizontalAlignment(JLabel.LEFT);
 		title.setFont(Constants.HeaderFont);
 		this.descriptionPanel.add(title);
 
 		// set and add instruction type
 		JLabel description = new JLabel(Constants.PartyPanelDescription);
+		description.setHorizontalAlignment(JLabel.LEFT);
 		description.setFont(Constants.ParagraphFont);
 		this.descriptionPanel.add(description);
 
