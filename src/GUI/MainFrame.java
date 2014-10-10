@@ -52,8 +52,8 @@ public class MainFrame extends JFrame  {
 		this.setExtendedState(this.MAXIMIZED_BOTH);
 		this.setUndecorated(false); //true means borderless window
 
-		
-		
+
+
 		//this.setSize(1300,200);
 		this.setLayout(new BorderLayout());
 		//this.setVisible(true);
@@ -85,7 +85,7 @@ public class MainFrame extends JFrame  {
 
 	/**
 	 * Enable close dialog. While close dialog is enabled, the only key events that should fire are those in the
-	 * close dialog. 
+	 * close dialog.
 	 */
 	public void enableCloseDialog(){
 		this.closeDialogEnabled = true;
@@ -103,9 +103,11 @@ public class MainFrame extends JFrame  {
 	 */
 	public void updateInfo(Tile tile){
 		layeredPanel.updateInfo(tile);
+
+
 	}
 
-	
+
 	/**
 	 * All button presses should be sent up to the controller.
 	 * @author Aaron
@@ -137,7 +139,7 @@ public class MainFrame extends JFrame  {
 		    {
 				EscapeDialog dialog = new EscapeDialog(MainFrame.this);
 		    }
-		    
+
 			return false;
 		}
 	}
@@ -263,7 +265,7 @@ public class MainFrame extends JFrame  {
 		this.setVisible(false);
 		this.active = false;
 	}
-	
+
 	public void awake(){
 		this.setExtendedState(this.MAXIMIZED_BOTH);
 		this.active = true;

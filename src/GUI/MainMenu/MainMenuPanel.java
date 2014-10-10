@@ -6,6 +6,8 @@ import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -22,16 +24,16 @@ import tools.Constants;
 import tools.ImageLoader;
 import tools.Log;
 
-public class MainMenuPanel extends JPanel {
-	
+public class MainMenuPanel extends JPanel implements ActionListener{
+
     private CustomButton newGame;
     private CustomButton loadGame;
     private CustomButton joinGame;
     private CustomButton quitGame;
-	
+
     private JFrame frame;
     private BufferedImage backgroundImage;
-    
+
 	public MainMenuPanel() {
 		backgroundImage = ImageLoader.load(Constants.GUI_FILEPATH + "mainMenuBackground.png");
 		frame = new JFrame();
@@ -61,7 +63,7 @@ public class MainMenuPanel extends JPanel {
 		c.gridx = 0;
 		c.gridy = 2;
 		this.add(loadGame,c);
-		
+
 		BufferedImage joinGameDefault = ImageLoader.load(Constants.GUI_BUTTONS + "joinMain.png");
 		BufferedImage joinGamePressed = ImageLoader.load(Constants.GUI_BUTTONS + "joinMainClicked.png");
 		BufferedImage joinGameHover = ImageLoader.load(Constants.GUI_BUTTONS + "joinMainHover.png");
@@ -70,7 +72,7 @@ public class MainMenuPanel extends JPanel {
 		c.gridx = 0;
 		c.gridy = 3;
 		this.add(joinGame,c);
-		
+
 		BufferedImage quitGameDefault = ImageLoader.load(Constants.GUI_BUTTONS + "quitMain.png");
 		BufferedImage quitGamePressed = ImageLoader.load(Constants.GUI_BUTTONS + "quitMainClicked.png");
 		BufferedImage quitGameHover = ImageLoader.load(Constants.GUI_BUTTONS + "quitMainHover.png");
@@ -79,8 +81,8 @@ public class MainMenuPanel extends JPanel {
 		c.gridx = 0;
 		c.gridy = 4;
 		this.add(quitGame,c);
-		
-		
+
+
 		frame.setResizable(false);
 		frame.setLayout(new BorderLayout());
 		frame.add(this,BorderLayout.SOUTH);
@@ -88,7 +90,7 @@ public class MainMenuPanel extends JPanel {
 		frame.pack();
 		frame.setVisible(true);
 	}
-	
+
 
 	  @Override
 	  protected void paintComponent(Graphics g) {
@@ -96,8 +98,14 @@ public class MainMenuPanel extends JPanel {
 	    g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
 
 	  }
-	
+
 	public static void main(String[] args) {
 		new MainMenuPanel();
+	}
+
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+
 	}
 }

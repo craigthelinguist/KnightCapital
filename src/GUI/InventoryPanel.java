@@ -1,5 +1,7 @@
 package GUI;
 
+import game.items.Item;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -12,6 +14,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -20,6 +23,8 @@ import javax.swing.JPanel;
 import tools.Constants;
 import tools.ImageLoader;
 import tools.ImageManipulation;
+import world.icons.Party;
+import world.tiles.Tile;
 
 /**
  * This panel displays inventory as an image background for the panel
@@ -28,6 +33,13 @@ import tools.ImageManipulation;
  *
  */
 public class InventoryPanel extends JPanel implements MouseListener {
+
+	public static final int INVENTORY_ROWS = 2;
+	public static final int INVENTORY_COLS = 3;
+
+	GridBagConstraints c;
+
+	private ItemSlotPanel[][] slots;
 
 	/*The item dialogs/descriptions */
 	ItemSlotInformation dSlot1;
@@ -53,6 +65,9 @@ public class InventoryPanel extends JPanel implements MouseListener {
 	public InventoryPanel(MainFrame f) {
 		this.frame = f;
 
+		slots = new ItemSlotPanel[INVENTORY_COLS][INVENTORY_ROWS];
+
+
 		/*set the size of this panel to be size of the image*/
 		this.setPreferredSize(new Dimension(375,200));
 		this.setOpaque(true);
@@ -62,7 +77,7 @@ public class InventoryPanel extends JPanel implements MouseListener {
 
 		/*Initialize the layout and the insets*/
 		this.setLayout(new GridBagLayout());
-		GridBagConstraints c = new GridBagConstraints();
+		c = new GridBagConstraints();
 		c.insets = new Insets(15,15,10,10);
 		//c.anchor = GridBagConstraints.FIRST_LINE_START;
 		c.fill = GridBagConstraints.BOTH;
@@ -76,13 +91,13 @@ public class InventoryPanel extends JPanel implements MouseListener {
 		c.insets = new Insets(15,15,10,10);
 		c.gridx = 0;
 		c.gridy = 0;
-		this.add(slot1,c);
+		//this.add(slot1,c);
 
 		/*Declare and initialize slot2 */
 		slot2 = new ItemSlotPanel("potionSlot.png");
 		c.gridx = 1;
 		c.gridy = 0;
-		this.add(slot2,c);
+		//this.add(slot2,c);
 
 		/*Declare and initialize slot3 */
 		slot3 = new JPanel();
@@ -202,5 +217,38 @@ public class InventoryPanel extends JPanel implements MouseListener {
 	@Override
 	public void mouseReleased(MouseEvent e) {}
 
+
+	public void updateInventoryPanel(Tile tile) throws Exception {
+		Party p =(Party)tile.occupant();
+		/*Make sure the tile occupant is a party*/
+		if(!(p instanceof Party)) {
+			throw new Exception();
+		}
+		Item[][] items = p.getInventory();
+
+		for(int i = 0; i < items.length; i++) {
+			for(int j = 0; j < items[i].length; j++) {
+
+				if(items[i][j] != null) {
+
+					for(int x = 0; x < items.length; x++) {
+						for(int y = 0; y < items[x].length; y++) {
+								if(slots[x][y] == null) {
+									/*Declare and initialize slot1 (panel) */
+									System.out.println(items[i][j].getName());
+									slots[x][y] = new ItemSlotPanel(items[i][j].getName());
+									c.insets = new Insets(15,15,10,10);
+									c.gridx = i;
+									c.gridy = j;
+									this.add(slots[x][y],c);
+
+							}
+						}
+					}
+
+				}
+			}
+		}
+	}
 
 }
