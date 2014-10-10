@@ -381,6 +381,9 @@ public class WorldController{
 		w.getTile(0,0).setIcon(party);
 
 		w.getTile(1,1).setIcon(itemIcon); //place a floor item on this tile
+		w.getTile(1,2).setIcon(itemIcon2); 
+		w.getTile(1,3).setIcon(itemIcon2); 
+		w.getTile(1,4).setIcon(itemIcon); 
 		w.getTile(1,6).setIcon(itemIcon2);
 		w.getTile(8,8).setIcon(itemIcon3); 
 		

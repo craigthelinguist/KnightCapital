@@ -45,17 +45,17 @@ public class InventoryPanel extends JPanel implements MouseListener {
 	/*The item dialogs/descriptions */
 	ItemSlotInformation dSlot1;
 	ItemSlotInformation dSlot2;
-	GameDialog dSlot3;
-	GameDialog dSlot4;
-	GameDialog dSlot5;
-	GameDialog dSlot6;
+	ItemSlotInformation dSlot3;
+	ItemSlotInformation dSlot4;
+	ItemSlotInformation dSlot5;
+	ItemSlotInformation dSlot6;
 
 	/*The main frame */
 	private MainFrame frame;
 
 	/*The item slots*/
-	ItemSlotPanel slot1;
-	ItemSlotPanel slot2;
+	JPanel slot1;
+	JPanel slot2;
 	JPanel slot3;
 	JPanel slot4;
 	JPanel slot5;
@@ -85,24 +85,27 @@ public class InventoryPanel extends JPanel implements MouseListener {
 		c.weightx = 1.0;
 		c.weighty = 1.0;
 
+		
 		/*The top row panels */
 
 		/*Declare and initialize slot1 (panel) */
-		slot1 = new ItemSlotPanel("epipenSlot.png");
+		slot1 = new JPanel();
+		slot1.setOpaque(false);
 		c.insets = new Insets(15,15,10,10);
 		c.gridx = 0;
 		c.gridy = 0;
-		//this.add(slot1,c);
+		this.add(slot1,c);
 
 		/*Declare and initialize slot2 */
-		slot2 = new ItemSlotPanel("potionSlot.png");
+		slot2 = new JPanel();
+		slot2.setOpaque(false);
 		c.gridx = 1;
 		c.gridy = 0;
-		//this.add(slot2,c);
+		this.add(slot2,c);
 
 		/*Declare and initialize slot3 */
 		slot3 = new JPanel();
-		slot3.setBackground(new Color(255,0,0,50));  //this is just to test the position of this panel (third parameter is alpha value)
+		slot3.setOpaque(false);
 		c.insets = new Insets(15,10,10,16);
 		c.gridx = 2;
 		c.gridy = 0;
@@ -113,7 +116,7 @@ public class InventoryPanel extends JPanel implements MouseListener {
 
 		/*Declare and initialize slot4 */
 		slot4 = new JPanel();
-		slot4.setBackground(new Color(255,0,0,50));
+		slot4.setOpaque(false);
 		c.insets = new Insets(10,15,15,10);
 		c.gridx = 0;
 		c.gridy = 1;
@@ -121,27 +124,18 @@ public class InventoryPanel extends JPanel implements MouseListener {
 
 		/*Declare and initialize slot5 */
 		slot5 = new JPanel();
-		slot5.setBackground(new Color(255,0,0,50));
+		slot5.setOpaque(false);
 		c.gridx = 1;
 		c.gridy = 1;
 		this.add(slot5,c);
 
 		/*Declare and initialize slot6 */
 		slot6 = new JPanel();
-		slot6.setBackground(new Color(255,0,0,50));
+		slot6.setOpaque(false);
 		c.insets = new Insets(10,10,15,16);
 		c.gridx = 2;
 		c.gridy = 1;
 		this.add(slot6,c);
-
-		/*Add mouse listener for all slots */
-		slot1.addMouseListener(this);
-		slot2.addMouseListener(this);
-		slot3.addMouseListener(this);
-		slot4.addMouseListener(this);
-		slot5.addMouseListener(this);
-		slot6.addMouseListener(this);
-
 
 	}
 
@@ -167,23 +161,32 @@ public class InventoryPanel extends JPanel implements MouseListener {
 			dSlot1.setLocation(frame.getWidth()-500,frame.getHeight()-400);
 			dSlot1.setVisible(true);
 	    }
-		if(e.getSource() == slot2) {
-			slot2.changeBackground(ImageManipulation.lighten(slot2.getBackgroundImage(),55));
-			dSlot2 = new ItemSlotInformation(frame,"Heals your hero for    100 health.");
+		if(e.getSource() == slots[1][0]) {
+			slots[1][0].changeBackground(ImageManipulation.lighten(slots[1][0].getBackgroundImage(),55));
+			dSlot2 = new ItemSlotInformation(frame,items[1][0].getItem().getDescription());
 			dSlot2.setLocation(frame.getWidth()-425,frame.getHeight()-400);
 			dSlot2.setVisible(true);
 	    }
-		if(e.getSource() == slot3) {
-	        slot3.setBackground(Color.YELLOW);
+		if(e.getSource() == slots[2][0]) {
+			slots[2][0].changeBackground(ImageManipulation.lighten(slots[2][0].getBackgroundImage(),55));
+			dSlot3 = new ItemSlotInformation(frame,items[2][0].getItem().getDescription());
+			dSlot3.setLocation(frame.getWidth()-375,frame.getHeight()-400);
+			dSlot3.setVisible(true);
 	    }
-		if(e.getSource() == slot4) {
-			slot4.setBackground(Color.YELLOW);
+		if(e.getSource() == slots[0][1]) {
+			slots[0][1].changeBackground(ImageManipulation.lighten(slots[0][1].getBackgroundImage(),55));
+			dSlot4 = new ItemSlotInformation(frame,items[0][1].getItem().getDescription());
+			dSlot4.setLocation(frame.getWidth()-500,frame.getHeight()-400);
 		}
-		if(e.getSource() == slot5) {
-	        slot5.setBackground(Color.YELLOW);
+		if(e.getSource() == slots[1][1]) {
+			slots[1][1].changeBackground(ImageManipulation.lighten(slots[1][1].getBackgroundImage(),55));
+			dSlot5 = new ItemSlotInformation(frame,items[0][1].getItem().getDescription());
+			dSlot5.setLocation(frame.getWidth()-500,frame.getHeight()-400);
 	    }
-		if(e.getSource() == slot6) {
-			slot6.setBackground(Color.YELLOW);
+		if(e.getSource() == slots[2][1]) {
+			slots[2][1].changeBackground(ImageManipulation.lighten(slots[2][1].getBackgroundImage(),55));
+			dSlot6 = new ItemSlotInformation(frame,items[2][1].getItem().getDescription());
+			dSlot6.setLocation(frame.getWidth()-500,frame.getHeight()-400);
 		}
 	}
 
@@ -194,21 +197,24 @@ public class InventoryPanel extends JPanel implements MouseListener {
 			slots[0][0].changeBackground(ImageLoader.load(Constants.ITEMS + slots[0][0].getImageName()+"Slot"));
 			dSlot1.dispose();
 	    }
-		if(e.getSource() == slot2) {
-			slot2.changeBackground(ImageLoader.load(Constants.GUI_FILEPATH + slot2.getImageName()));
+		if(e.getSource() == slots[1][0]) {
+			slots[1][0].changeBackground(ImageLoader.load(Constants.ITEMS + slots[1][0].getImageName()+"Slot"));
 			dSlot2.dispose();
 		}
-		if(e.getSource() == slot3) {
-	        slot3.setBackground(new Color(255,0,0,50));
+		if(e.getSource() == slots[2][0]) {
+			slots[2][0].changeBackground(ImageLoader.load(Constants.ITEMS + slots[2][0].getImageName()+"Slot"));
+			dSlot3.dispose();
 	    }
-		if(e.getSource() == slot4) {
-			slot4.setBackground(new Color(255,0,0,50));
+		if(e.getSource() == slots[0][1]) {
+			slots[0][1].changeBackground(ImageLoader.load(Constants.ITEMS + slots[0][1].getImageName()+"Slot"));
+			dSlot4.dispose();
 		}
-		if(e.getSource() == slot5) {
-	        slot5.setBackground(new Color(255,0,0,50));
-	    }
-		if(e.getSource() == slot6) {
-			slot6.setBackground(new Color(255,0,0,50));
+		if(e.getSource() == slots[1][1]) {
+			slots[1][1].changeBackground(ImageLoader.load(Constants.ITEMS + slots[1][1].getImageName()+"Slot"));
+			dSlot5.dispose();	    }
+		if(e.getSource() == slots[2][1]) {
+			slots[2][1].changeBackground(ImageLoader.load(Constants.ITEMS + slots[2][1].getImageName()+"Slot"));
+			dSlot6.dispose();		
 		}
 	}
 
@@ -233,8 +239,27 @@ public class InventoryPanel extends JPanel implements MouseListener {
 				if(items[i][j] != null) {
 					if(slots[i][j] == null) {
 						/*Declare and initialize slot1 (panel) */
+						
+						/*This changes insets depending on which slot it's up to. This is a poverty solution but they are not aligned properly 
+						 * if you don't use different inset. This is because the inventory slots aren't divided equally.
+						 */
+						if(i == 2 && j == 1) {
+							System.out.println("yes");
+							c.insets = new Insets(10,10,15,16);
+						}
+						else if(i == 2 && j == 0) {
+							c.insets = new Insets(15,10,10,16);
+						}
+						else if(i == 0  && j == 1) { 
+							c.insets = new Insets(10,15,15,10);
+						}
+						else if(i == 1 && j == 1) {
+							c.insets = new Insets(10,15,15,10);
+						}
+						else {
+							c.insets = new Insets(15,15,10,10);
+						}
 						slots[i][j] = new ItemSlotPanel(items[i][j].getName());
-						c.insets = new Insets(15,15,10,10);
 						c.gridx = i;
 						c.gridy = j;
 						slots[i][j].addMouseListener(this);
