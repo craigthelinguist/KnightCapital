@@ -328,8 +328,7 @@ public class WorldController{
 		/*Loading items*/
 		Buff[] buffs = new Buff[]{ new Buff(Stat.DAMAGE,1,true) };
 		PassiveItem amulet = new PassiveItem(buffs, "amulet","An amulet that grants sickening gains.\n +5 Damage");
-		FloorItem floorItem = new FloorItem("itemChest", "Uknown Item", amulet);
-		ItemIcon itemIcon = new ItemIcon(floorItem);
+		ItemIcon floorItem = new ItemIcon("Uknown Item", amulet);
 
 		/*Loading the playey*/
 		Player p = new Player("John The Baptist",4);
@@ -342,7 +341,7 @@ public class WorldController{
 		party.refresh();
 		w.getTile(0,0).setIcon(party);
 
-		w.getTile(1,1).setIcon(itemIcon); //place a floor item on this tile
+		w.getTile(1,1).setIcon(floorItem); //place a floor item on this tile
 
 		new WorldController(w,p);
 	}
