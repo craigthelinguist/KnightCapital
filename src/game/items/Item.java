@@ -61,4 +61,8 @@ public abstract class Item {
 		return description;
 	}
 
+	public Item getItem() {
+		return this;
+	}
+
 }

@@ -63,6 +63,7 @@ public class SelectedItemPanel extends JPanel{
 
 		// create label for name
 		nameLabel = new JLabel();
+		nameLabel.setHorizontalAlignment(JLabel.LEFT);
 		nameLabel.setFont(Constants.HeaderFont);
 		gc.gridx = 0;
 		gc.gridy = 1;
@@ -71,6 +72,7 @@ public class SelectedItemPanel extends JPanel{
 		// create label for description
 		descriptionLabel = new JLabel();
 		descriptionLabel.setFont(Constants.SubheaderFont);
+		descriptionLabel.setHorizontalAlignment(JLabel.LEFT);
 		gc.gridx = 0;
 		gc.gridy = 2;
 		this.add(descriptionLabel, gc);
@@ -112,12 +114,12 @@ public class SelectedItemPanel extends JPanel{
 			//if player is owner of party
 			if(this.isOwner) {
 				// display stats
-				System.out.println("Accessor is owner of party");
+				System.out.println("[SelectedItemPanel] Accessor is owner of party");
 			}
 
 			//else nothing
 			else {
-				System.out.println("Accessor is not owner of party");
+				System.out.println("[SelectedItemPanel] Accessor is not owner of party");
 			}
 		}
 

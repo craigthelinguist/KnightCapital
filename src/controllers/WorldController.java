@@ -350,11 +350,25 @@ public class WorldController{
 
 	public static void aaron_main(String[] args){
 		/*Loading items*/
-		Buff[] buffs = new Buff[]{ new Buff(Stat.DAMAGE,1,true) };
-		PassiveItem amulet = new PassiveItem(buffs, "amulet", "Amulet","An amulet that grants sickening gains.\n +5 Damage");
-		FloorItem floorItem = new FloorItem("itemChest", "Chest", "Unknown Item", amulet);
-		ItemIcon itemIcon = new ItemIcon("Pimp Juice", floorItem);
+		Buff[] buffsAmulet = new Buff[]{ new Buff(Stat.DAMAGE,5,true) };
+		PassiveItem amulet = new PassiveItem(buffsAmulet, "amulet", "Amulet","An amulet that grants sickening gains.\n +5 Damage");
+		
+		Buff[] buffsWeapon = new Buff[]{ new Buff(Stat.DAMAGE,5,true), new Buff(Stat.ARMOUR, 10, true) };
+		PassiveItem weapon = new PassiveItem(buffsWeapon, "weapon", "Weapon","A powerful weapon crafted by the mighty Mizza +5 Damage");
 
+		Buff[] buffsArrows= new Buff[]{ new Buff(Stat.DAMAGE,1,true) };
+		PassiveItem arrows = new PassiveItem(buffsArrows, "poisonarrow", "Poison Arrows","Poisonous arrows whose feathers were made from the hairs of Mizza. All archers in party gain +1 damage");
+
+		
+		FloorItem floorItem = new FloorItem("itemChest", "amulet", "Unknown Item", amulet);
+		ItemIcon itemIcon = new ItemIcon("Pimp Juice", floorItem);
+		
+		FloorItem floorItem2 = new FloorItem("itemChest", "weapon", "Unknown Item", weapon);
+		ItemIcon itemIcon2 = new ItemIcon("", floorItem2);
+
+		FloorItem floorItem3 = new FloorItem("itemChest", "poisonarrow", "Unknown Item", arrows);
+		ItemIcon itemIcon3 = new ItemIcon("", floorItem3);
+		
 		/*Loading the playey*/
 		Player p = new Player("John The Baptist",4);
 		World w = TemporaryLoader.loadWorld("world_temporary.txt",p);
@@ -367,7 +381,12 @@ public class WorldController{
 		w.getTile(0,0).setIcon(party);
 
 		w.getTile(1,1).setIcon(itemIcon); //place a floor item on this tile
-
+		w.getTile(1,2).setIcon(itemIcon2); 
+		w.getTile(1,3).setIcon(itemIcon2); 
+		w.getTile(1,4).setIcon(itemIcon); 
+		w.getTile(1,6).setIcon(itemIcon2);
+		w.getTile(8,8).setIcon(itemIcon3); 
+		
 		new WorldController(w,p);
 	}
 
@@ -421,5 +440,6 @@ public class WorldController{
 
 	}
 
+	
 }
 
