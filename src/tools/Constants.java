@@ -38,7 +38,8 @@ public class Constants {
 
 	// image sizing
 	public static final Dimension PORTRAIT_DIMENSIONS = new Dimension(66,100);
-
+	public static final Dimension INVENTORY_DIMENSIONS = new Dimension(102,75);
+	
 	// These are for the Camera
 	public static final int CAMERA_PAN = 10;
 

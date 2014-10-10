@@ -3,8 +3,10 @@ package GUI.town;
 import game.units.Creature;
 import game.units.Hero;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.MouseInfo;
 import java.awt.Point;
@@ -13,12 +15,14 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import tools.Constants;
 import world.icons.Party;
+import world.towns.City;
 
 import controllers.TownController;
 
@@ -51,7 +55,7 @@ public class TownExchangePanel extends JPanel implements MouseListener, MouseMot
 	
 	// buttons
 	private JButton buttonLeave;
-	private JButton trainUnit;
+	private JButton buttonTrain;
 	
 	// thing being dragged
 	private Point draggedPoint;
@@ -60,18 +64,42 @@ public class TownExchangePanel extends JPanel implements MouseListener, MouseMot
 	protected TownExchangePanel(TownController controller){
 		this.controller = controller;
 		
-		partyGarrison = new TownPartyPanel(this,controller.getGarrison());
-		partyVisitors = new TownPartyPanel(this,controller.getVisitors());
-		
-		int WIDTH = partyGarrison.getPreferredSize().width + partyVisitors.getPreferredSize().width;
-		int HEIGHT = partyGarrison.getPreferredSize().height + partyVisitors.getPreferredSize().height;
-		
+		City city = controller.getCity();
+		partyVisitors = new TownPartyPanel(this,controller.getVisitors(),city);
+		partyGarrison = new TownPartyPanel(this,controller.getGarrison(),city);
+		itemsVisitors = new TownItemPanel(this,controller.getVisitors(),city);
+		itemsGarrison = new TownItemPanel(this,controller.getGarrison(),city);
 
-		this.add(partyVisitors);
-		this.add(partyGarrison);
-		this.setOpaque(false);
+		BoxLayout layout = new BoxLayout(this,BoxLayout.Y_AXIS);
+		this.setLayout(layout);
 		
-		// setup visitor panel
+		buttonLeave = new JButton("<-- Leave");
+		JPanel visitorButtons = new JPanel();
+		visitorButtons.setLayout(new BorderLayout());
+		visitorButtons.add(buttonLeave, BorderLayout.SOUTH);
+		
+		buttonTrain = new JButton("Train Unit");
+		JPanel garrisonButtons = new JPanel();
+		garrisonButtons.setLayout(new BorderLayout());
+		garrisonButtons.add(buttonTrain, BorderLayout.SOUTH);
+
+		// parties
+		JPanel parties = new JPanel();
+		parties.setOpaque(false);
+		parties.add(visitorButtons);
+		parties.add(partyVisitors);
+		parties.add(partyGarrison);
+		parties.add(garrisonButtons);
+		this.add(parties);
+		
+		// items
+		JPanel items = new JPanel();
+		items.setOpaque(false);
+		items.add(itemsVisitors);
+		items.add(itemsGarrison);
+		this.add(items);
+		
+		this.setOpaque(false);
 		
 		this.addMouseListener(this);
 		this.addMouseMotionListener(this);
@@ -105,10 +133,6 @@ public class TownExchangePanel extends JPanel implements MouseListener, MouseMot
 	
 	@Override
 	protected void paintComponent(Graphics g){
-		//g.clearRect(0,0,getWidth(),getHeight());
-		//g.setColor(TRANSPARENT);
-		//g.fillRect(0, 0, getWidth(), getHeight());
-		//g.setColor(Color.WHITE);
 		partyGarrison.repaint();
 		partyVisitors.repaint();
 		

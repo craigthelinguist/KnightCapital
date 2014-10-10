@@ -36,9 +36,8 @@ public class ItemPanel extends JPanel {
 	private final int PORTRAIT_HEIGHT = Constants.PORTRAIT_DIMENSIONS.height;
 	private final int INVENTORY_ROWS = Party.INVENTORY_ROWS;
 	private final int INVENTORY_COLS = Party.INVENTORY_COLS;
-
-	private int panelWidth = Constants.PORTRAIT_DIMENSIONS.width * Party.INVENTORY_COLS +1;
-	private int panelHeight = Constants.PORTRAIT_DIMENSIONS.height * Party.INVENTORY_ROWS +1;
+	private final int WIDTH = Constants.PORTRAIT_DIMENSIONS.width*Party.PARTY_COLS+1;
+	private final int HEIGHT = Constants.PORTRAIT_DIMENSIONS.height*Party.PARTY_ROWS+1;
 
 	public ItemPanel(Party party) {
 		this.setPreferredSize(new Dimension(WIDTH,HEIGHT));
@@ -96,6 +95,7 @@ public class ItemPanel extends JPanel {
 				Item item = party.getItem(x,y);
 
 				if (item == null) continue;
+				System.out.println("drawing at not dragged");
 				BufferedImage portrait = item.getPortrait();
 				g.drawImage(portrait,xDraw,yDraw,null);
 			}

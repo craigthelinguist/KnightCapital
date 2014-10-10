@@ -1,4 +1,4 @@
-#Knight Capital
+![Alt text](/assets/logo_256.png?raw=true "Logo")
 
 ##Documentation
 * [Google Drive Folder](https://drive.google.com/open?id=0B8a8yU2Qs_meQUZ6bVVTMklpQ2c&authuser=0)

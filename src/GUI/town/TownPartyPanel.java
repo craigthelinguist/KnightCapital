@@ -19,6 +19,7 @@ import GUI.reusable.PartyPanel;
 
 import tools.Constants;
 import world.icons.Party;
+import world.towns.City;
 
 public class TownPartyPanel extends JPanel {
 	
@@ -39,7 +40,7 @@ public class TownPartyPanel extends JPanel {
 	// top-level component
 	private TownExchangePanel master;
 	
-	protected TownPartyPanel(TownExchangePanel master, Party party){
+	protected TownPartyPanel(TownExchangePanel master, Party party, City city){
 		this.master = master;
 		this.party = party;
 		this.setPreferredSize(new Dimension(CELL_WD*PARTY_COLS+1,CELL_HT*PARTY_ROWS+1));
@@ -61,6 +62,17 @@ public class TownPartyPanel extends JPanel {
 					g.fillRect(xDraw, yDraw+PORTRAIT_HT, (int)(HEALTH_BAR_WD*healthiness), HEALTH_BAR_HT);
 				}
 				
+				// draw portrait
+				boolean weShouldDraw = true;
+				if (member == null) weShouldDraw = false;
+				if (master.getDraggedPanel() != null && master.getDraggedPanel() == this){
+					if (master.getDraggedPoint().equals(new Point(x,y))) weShouldDraw = false; // being dragged
+				}
+				if (weShouldDraw){
+					BufferedImage portrait = member.getPortrait();
+					g.drawImage(portrait,xDraw,yDraw,null);
+				}
+
 				// health bar outline
 				g.setColor(Color.BLACK);
 				g.drawRect(xDraw, yDraw+PORTRAIT_HT, HEALTH_BAR_WD, HEALTH_BAR_HT);
@@ -68,14 +80,7 @@ public class TownPartyPanel extends JPanel {
 				// portrait outline
 				g.drawRect(xDraw, yDraw, PORTRAIT_WD, PORTRAIT_HT);
 				
-				// draw portrait 
-				if (member == null) continue;
-				if (master.getDraggedPanel() != null && master.getDraggedPanel() == this){
-					if (master.getDraggedPoint().equals(new Point(x,y))) continue; // being dragged
 				
-				}
-				BufferedImage portrait = member.getPortrait();
-				g.drawImage(portrait,xDraw,yDraw,null);
 			}
 		}	
 	}
@@ -98,36 +103,6 @@ public class TownPartyPanel extends JPanel {
 
 	public Party getParty() {
 		return this.party;
-	}
-	
-	public static void main(String[] args){
-		JFrame frame = new JFrame();
-		JPanel panel = new JPanel();
-		Player player = new Player("Biggie Smalls",2);
-		Hero hero = new Hero("ovelia",player);
-		Creature[][] members = Party.newEmptyParty();
-		
-		Unit u1 = new Unit("knight",player);
-		u1.setStat(Stat.HEALTH, 100);
-		u1.revive(20);
-		
-		Unit u2 = new Unit("knight",player);
-		u2.setStat(Stat.HEALTH, 100);
-		u2.revive(45);
-		
-		members[1][1] = u1;
-		members[0][0] = u2;
-		members[2][1] = hero;
-		
-		
-		Party party = new Party(hero, player, members);
-		TownPartyPanel tpp = new TownPartyPanel(null,party);
-		//tpp.party = party;
-		panel.add(tpp);
-		frame.add(tpp);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.pack();
-		frame.setVisible(true);
 	}
 	
 }
