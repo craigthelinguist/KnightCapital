@@ -1,5 +1,7 @@
 package world;
 
+import game.items.Item;
+
 import java.awt.Dimension;
 import java.awt.Point;
 import java.util.ArrayDeque;
@@ -11,10 +13,10 @@ import java.util.Set;
 
 import player.Player;
 import renderer.Camera;
-
 import tools.Geometry;
 import tools.Constants;
 import tools.Log;
+import world.icons.ItemIcon;
 import world.icons.Party;
 import world.icons.WorldIcon;
 import world.tiles.Tile;
@@ -155,6 +157,19 @@ public class World {
 
 		// attempt to move party from location to destination
 		if (!pathExists(location,destination)) return false;
+
+		/*Check if an item is at destination, if so, pick up item and move player there*/
+		if(tileDestination.occupant() instanceof ItemIcon) {
+			ItemIcon itemIcon = (ItemIcon)tileDestination.occupant();
+			/*Attempt to add item to inventory, if it returns false (inventory full) return false*/
+			if(party.addItem(itemIcon.item) == false) {
+				//TODO: display dialog "inventory full"
+				return false;
+			}
+		}
+
+		//check to see if item has been added
+		party.printInventory();
 
 		// do it in this order or you disappear if you move to tile you're already
 		// standing on :)

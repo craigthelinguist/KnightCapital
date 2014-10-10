@@ -12,10 +12,12 @@ import game.items.Item;
  */
 public class ItemIcon extends WorldIcon {
 
-	private final Item item;
+	public final Item item;
+	public final String descr;
 
-	public ItemIcon(Item item){
+	public ItemIcon(String description, Item item){
 		this.item = item;
+		this.descr = description;
 	}
 
 	public boolean pickup(Party p){

@@ -327,7 +327,7 @@ public class WorldController{
 	public static void aaron_main(String[] args){
 		/*Loading items*/
 		Buff[] buffs = new Buff[]{ new Buff(Stat.DAMAGE,1,true) };
-		PassiveItem amulet = new PassiveItem("amulet","An amulet that grants sickening gains.\n +5 Damage");
+		PassiveItem amulet = new PassiveItem(buffs, "amulet","An amulet that grants sickening gains.\n +5 Damage");
 		FloorItem floorItem = new FloorItem("itemChest", "Uknown Item", amulet);
 		ItemIcon itemIcon = new ItemIcon(floorItem);
 
@@ -342,7 +342,7 @@ public class WorldController{
 		party.refresh();
 		w.getTile(0,0).setIcon(party);
 
-		w.getTile(8,8).setIcon(itemIcon); //place a floor item on this tile
+		w.getTile(1,1).setIcon(itemIcon); //place a floor item on this tile
 
 		new WorldController(w,p);
 	}
