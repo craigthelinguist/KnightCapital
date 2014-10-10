@@ -352,7 +352,7 @@ public class WorldController{
 		/*Loading items*/
 		Buff[] buffs = new Buff[]{ new Buff(Stat.DAMAGE,1,true) };
 		PassiveItem amulet = new PassiveItem(buffs, "amulet", "Amulet","An amulet that grants sickening gains.\n +5 Damage");
-		FloorItem floorItem = new FloorItem("itemChest", "Chest", "Unknown Item", amulet);
+		FloorItem floorItem = new FloorItem("itemChest", "amulet", "Unknown Item", amulet);
 		ItemIcon itemIcon = new ItemIcon("Pimp Juice", floorItem);
 
 		/*Loading the playey*/
