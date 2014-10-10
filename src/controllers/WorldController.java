@@ -117,6 +117,7 @@ public class WorldController{
 	 * @param ke: details about the key event
 	 */
 	public void keyPressed(KeyEvent ke){
+
 		int code = ke.getKeyCode();
 		if (code == ROTATE_CW){
 			camera.rotateClockwise();
