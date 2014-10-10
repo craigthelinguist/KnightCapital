@@ -1,5 +1,7 @@
 package GUI.PartyDialog;
 
+import java.awt.Dimension;
+
 import javax.swing.JPanel;
 
 /**
@@ -8,5 +10,10 @@ import javax.swing.JPanel;
  *
  */
 public class HeroItemsPanel extends JPanel{
+
+	public HeroItemsPanel(Dimension d) {
+		super();
+		this.setPreferredSize(d);
+	}
 
 }

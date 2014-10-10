@@ -17,10 +17,12 @@ public abstract class Item {
 	private Map<String,Animation> animations;
 	private String animationName;
 	private Animation animation;
+	private String name;
 	private String description;
 	protected LinkedList<Buff> buffs;
 
-	public Item(String imgName, String description){
+	public Item(String imgName, String name ,String description){
+		this.name = name;
 		this.description = description;
 		animation = ImageLoader.loadAnimation(Constants.ITEMS + imgName);
 		portrait = ImageLoader.load(Constants.ITEMS + imgName);
@@ -36,6 +38,10 @@ public abstract class Item {
 
 	public String getAnimationName() {
 		return animationName;
+	}
+
+	public String getName() {
+		return this.name;
 	}
 
 	public String getDescription() {

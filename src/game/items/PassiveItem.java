@@ -15,11 +15,11 @@ public class PassiveItem extends Item {
 	 **/
 	@Deprecated
 	public PassiveItem(String imgName, String description) {
-		super(imgName,description);
+		super(imgName, "harry", description);
 	}
 
-	public PassiveItem(Buff[] buffArray, String imgName, String description){
-		super(imgName,description);
+	public PassiveItem(Buff[] buffArray, String imgName, String name, String description){
+		super(imgName, name, description);
 		for (Buff b : buffArray) buffs.add(b);
 
 	}

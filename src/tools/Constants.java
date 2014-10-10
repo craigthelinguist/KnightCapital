@@ -51,6 +51,9 @@ public class Constants {
 	public static final Font TooltipFont = new Font("DialogInput", Font.PLAIN, 10);
 
 	// Values needed for party panel i'm guessing these will be stored somewhere else eventually
+	public static final int PARTY_PANEL_WIDTH = (int) (WINDOW_WD * 0.8);
+	public static final int PARTY_PANEL_HEIGHT = (int) (WINDOW_HT * 0.8);
+
 	public static final String PartyPanelTitle = "Party Panel";
 	public static final String PartyPanelDescription = "This is a motherfucking description telling you what the fuck this is and what the fuck it does. Got it?";
 

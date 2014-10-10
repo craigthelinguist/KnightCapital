@@ -1,5 +1,7 @@
 package GUI.PartyDialog;
 
+import java.awt.Dimension;
+
 import javax.swing.JPanel;
 
 /**
@@ -8,5 +10,8 @@ import javax.swing.JPanel;
  *
  */
 public class PartyItemsPanel extends JPanel{
-
+	public PartyItemsPanel(Dimension d) {
+		super();
+		this.setPreferredSize(d);
+	}
 }
