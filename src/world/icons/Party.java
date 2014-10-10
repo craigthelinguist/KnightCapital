@@ -157,6 +157,15 @@ public class Party extends WorldIcon{
 		return false;
 	}
 
+	/**
+	 * Return the item member at the specified position.
+	 * @param x: column
+	 * @param y: row
+	 */
+	public Item getItem(int x, int y){
+		return inventory[x][y];
+	}
+
 	public Item[][] getInventory() {
 		return this.inventory;
 	}
@@ -190,6 +199,10 @@ public class Party extends WorldIcon{
 
 	public static Creature[][] newEmptyParty() {
 		return new Creature[Party.PARTY_COLS][Party.PARTY_ROWS];
+	}
+
+	public static Item[][] newEmptyInventory() {
+		return new Item[Party.INVENTORY_COLS][Party.INVENTORY_ROWS];
 	}
 
 	public void printInventory(){
