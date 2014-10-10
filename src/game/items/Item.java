@@ -1,6 +1,9 @@
 package game.items;
 
+import game.effects.Buff;
+
 import java.awt.image.BufferedImage;
+import java.util.LinkedList;
 import java.util.Map;
 
 import renderer.Animation;
@@ -15,6 +18,7 @@ public abstract class Item {
 	private String animationName;
 	private Animation animation;
 	private String description;
+	protected LinkedList<Buff> buffs;
 
 	public Item(String imgName, String description){
 		this.description = description;

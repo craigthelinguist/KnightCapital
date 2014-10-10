@@ -45,7 +45,7 @@ public class TileInformationPanel extends JPanel{
 
 	JLabel tileLabel = new JLabel();
 	JLabel tileInfoTitle = new JLabel();
-	JLabel playerName = new JLabel();
+	JLabel name = new JLabel();
 	JLabel movesLeft = new JLabel();
 	JLabel partySize = new JLabel();
 
@@ -86,7 +86,8 @@ public class TileInformationPanel extends JPanel{
 
 		// nothing selected, display a blank panel
 		if (tile == null){
-
+			/*If user clicks outside of map, reset all labels*/
+			resetPanel();
 		}
 		// city tile selected, draw some info about the city
 		else if (tile instanceof CityTile){
@@ -177,13 +178,13 @@ public class TileInformationPanel extends JPanel{
 				this.add(tileInfoTitle,c);
 
 				/*set up the label that displays how many moves the player has left */
-				playerName = new JLabel("Harry");
-				playerName.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 13));
-				playerName.setForeground(new Color(225,179,55));
+				name = new JLabel("Harry");
+				name.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 13));
+				name.setForeground(new Color(225,179,55));
 				c.insets = new Insets(10,0,0,0);
 				c.gridx = 1;
 				c.gridy = 2;
-				this.add(playerName,c);
+				this.add(name,c);
 
 
 				/*set up the label that displays how many moves the player has left */
@@ -228,7 +229,42 @@ public class TileInformationPanel extends JPanel{
 
 			// item on the tile, draw a picture of a treasure chest or something
 			else if (occupant instanceof ItemIcon){
+				ItemIcon ii = (ItemIcon)occupant;
 
+				/*Rest the panels*/
+				resetPanel();
+
+				/*draw the icon on the panel*/
+				tileInfoTitle = new JLabel("Item");
+				tileInfoTitle.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 30));
+				tileInfoTitle.setForeground(new Color(225,179,55));
+				c.insets = new Insets(0,0,0,120);
+				c.weightx = 1.0;
+				c.weighty = 1.0;
+				c.gridx = 1;
+				c.gridy = 0;
+				this.add(tileInfoTitle,c);
+
+
+				/*Create the label and set icon of label to the player's icon*/
+				tileIcon = new ImageIcon(ii.getPortrait());
+				tileLabel = new JLabel(tileIcon);
+
+				/*set up the label for item description */
+				name = new JLabel("Uknkown Item");
+				name.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 13));
+				name.setForeground(new Color(225,179,55));
+				c.insets = new Insets(10,0,0,0);
+				c.gridx = 1;
+				c.gridy = 2;
+				this.add(name,c);
+
+				/*Insets parameters are top, left, bottom, right */
+				c.insets = new Insets(1,40,0,0);
+				c.gridx = 0;
+				c.gridy = 4;
+				this.add(tileLabel,c);
+				revalidate();
 			}
 
 		}
@@ -239,7 +275,7 @@ public class TileInformationPanel extends JPanel{
 		/*Reset all the labels*/
 		tileLabel.setIcon(null);
 		tileInfoTitle.setText("");
-		playerName.setText("");
+		name.setText("");
 		movesLeft.setText("");
 		partySize.setText("");
 		if(partyButton != null) {

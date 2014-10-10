@@ -1,10 +1,13 @@
 
 package controllers;
 
+import game.effects.Buff;
 import game.items.FloorItem;
 import game.items.Item;
+import game.items.PassiveItem;
 import game.units.Creature;
 import game.units.Hero;
+import game.units.Stat;
 
 import java.awt.Dimension;
 import java.awt.Point;
@@ -323,9 +326,12 @@ public class WorldController{
 
 	public static void aaron_main(String[] args){
 		/*Loading items*/
-		FloorItem floorItem = new FloorItem("itemChest", "Uknown Item", null);
+		Buff[] buffs = new Buff[]{ new Buff(Stat.DAMAGE,1,true) };
+		PassiveItem amulet = new PassiveItem("amulet","An amulet that grants sickening gains.\n +5 Damage");
+		FloorItem floorItem = new FloorItem("itemChest", "Uknown Item", amulet);
 		ItemIcon itemIcon = new ItemIcon(floorItem);
 
+		/*Loading the playey*/
 		Player p = new Player("John The Baptist",4);
 		World w = TemporaryLoader.loadWorld("world_temporary.txt",p);
 		Hero hero = new Hero("ovelia",p);
