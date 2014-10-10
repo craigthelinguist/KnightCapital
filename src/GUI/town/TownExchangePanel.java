@@ -65,10 +65,6 @@ public class TownExchangePanel extends JPanel implements MouseListener, MouseMot
 		partyGarrison = new TownPartyPanel(this,controller.getGarrison(),city);
 		partyVisitors = new TownPartyPanel(this,controller.getVisitors(),city);
 		
-		int WIDTH = partyGarrison.getPreferredSize().width + partyVisitors.getPreferredSize().width;
-		int HEIGHT = partyGarrison.getPreferredSize().height + partyVisitors.getPreferredSize().height;
-		
-
 		this.add(partyVisitors);
 		this.add(partyGarrison);
 		this.setOpaque(false);
