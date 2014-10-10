@@ -214,5 +214,19 @@ public class Party extends WorldIcon{
 			}
 		}
 	}
+	
+	/**
+	 * Return the number of members in this party.
+	 * @return: an int.
+	 */
+	public int size(){
+		int count = 0;
+		for (int i = 0; i < members.length; i++){
+			for (int j = 0; i < members[i].length; j++){
+				if (members[i][j] != null) count++;
+			}
+		}
+		return count;
+	}
 
 }

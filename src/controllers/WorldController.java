@@ -2,7 +2,7 @@
 package controllers;
 
 import game.effects.Buff;
-import game.items.FloorItem;
+import game.items.PassiveItem;
 import game.items.Item;
 import game.items.PassiveItem;
 import game.units.Creature;
@@ -360,14 +360,11 @@ public class WorldController{
 		PassiveItem arrows = new PassiveItem(buffsArrows, "poisonarrow", "Poison Arrows","Poisonous arrows whose feathers were made from the hairs of Mizza. All archers in party gain +1 damage");
 
 
-		FloorItem floorItem = new FloorItem("itemChest", "amulet", "Unknown Item", amulet);
-		ItemIcon itemIcon = new ItemIcon("Pimp Juice", floorItem);
+		ItemIcon itemIcon = new ItemIcon("Pimp Juice", amulet);
 
-		FloorItem floorItem2 = new FloorItem("itemChest", "weapon", "Unknown Item", weapon);
-		ItemIcon itemIcon2 = new ItemIcon("", floorItem2);
+		ItemIcon itemIcon2 = new ItemIcon("", weapon);
 
-		FloorItem floorItem3 = new FloorItem("itemChest", "poisonarrow", "Unknown Item", arrows);
-		ItemIcon itemIcon3 = new ItemIcon("", floorItem3);
+		ItemIcon itemIcon3 = new ItemIcon("", arrows);
 
 		/*Loading the playey*/
 		Player p = new Player("John The Baptist",4);

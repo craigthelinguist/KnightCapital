@@ -5,6 +5,7 @@ import game.units.Hero;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.MouseInfo;
 import java.awt.Point;
@@ -13,12 +14,14 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import tools.Constants;
 import world.icons.Party;
+import world.towns.City;
 
 import controllers.TownController;
 
@@ -60,15 +63,25 @@ public class TownExchangePanel extends JPanel implements MouseListener, MouseMot
 	protected TownExchangePanel(TownController controller){
 		this.controller = controller;
 		
-		partyGarrison = new TownPartyPanel(this,controller.getGarrison());
-		partyVisitors = new TownPartyPanel(this,controller.getVisitors());
-		
-		int WIDTH = partyGarrison.getPreferredSize().width + partyVisitors.getPreferredSize().width;
-		int HEIGHT = partyGarrison.getPreferredSize().height + partyVisitors.getPreferredSize().height;
+		City city = controller.getCity();
+		partyGarrison = new TownPartyPanel(this,controller.getGarrison(),city);
+		partyVisitors = new TownPartyPanel(this,controller.getVisitors(),city);
+		//itemsGarrison = new TownItemPanel(this,controller.getGarrison(),city);
+		//itemsVisitors = new TownItemPanel(this,controller.getVisitors(),city);
 		
 
 		this.add(partyVisitors);
 		this.add(partyGarrison);
+		
+		/*
+		JPanel parties = new JPanel();
+		parties.add(partyGarrison);
+		parties.add(partyVisitors);
+		*/
+		
+		//this.add(parties);
+		//this.add(inventories);
+		
 		this.setOpaque(false);
 		
 		// setup visitor panel
@@ -105,10 +118,6 @@ public class TownExchangePanel extends JPanel implements MouseListener, MouseMot
 	
 	@Override
 	protected void paintComponent(Graphics g){
-		//g.clearRect(0,0,getWidth(),getHeight());
-		//g.setColor(TRANSPARENT);
-		//g.fillRect(0, 0, getWidth(), getHeight());
-		//g.setColor(Color.WHITE);
 		partyGarrison.repaint();
 		partyVisitors.repaint();
 		
