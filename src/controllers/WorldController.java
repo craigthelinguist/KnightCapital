@@ -369,7 +369,7 @@ public class WorldController{
 		/*Loading the playey*/
 		Player p = new Player("John The Baptist",4);
 		World w = TemporaryLoader.loadWorld("world_temporary.txt",p);
-		Hero hero = new Hero("ovelia",p);
+		Hero hero = new Hero("ovelia",p,50,10,10);
 		hero.setMovePts(10);
 		Creature[][] members = Party.newEmptyParty();
 		members[0][0] = hero;
@@ -391,7 +391,7 @@ public class WorldController{
 	public static void selemon_main(){
 		Player p = new Player("John The Baptist",4);
 		World w = TemporaryLoader.loadWorld("world_temporary.txt",p);
-		Hero hero = new Hero("ovelia",p);
+		Hero hero = new Hero("ovelia",p,50,10,10);
 
 		Creature[][] members = Party.newEmptyParty();
 		members[0][0] = hero;
@@ -428,7 +428,7 @@ public class WorldController{
 	public static WorldController getTestWorldControllerNoGui(){
 		Player p = new Player("John The Baptist",4);
 		World w = TemporaryLoader.loadWorld("world_temporary.txt",p);
-		Hero hero = new Hero("ovelia",p);
+		Hero hero = new Hero("ovelia",p,50,10,10);
 		Creature[][] members = Party.newEmptyParty();
 		members[0][0] = hero;
 		Party party = new Party(hero, p, members);

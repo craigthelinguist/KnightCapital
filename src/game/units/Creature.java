@@ -63,7 +63,10 @@ public abstract class Creature {
 		}
 	}
 
-	public Creature(String imgName, Player player) {
+	public Creature(String imgName, Player player, int baseHealth, int baseArmour, int baseDamage) {
+		this.baseHealth = baseHealth;
+		this.baseArmour = baseArmour;
+		this.baseDamage = baseDamage;
 		this.portrait = ImageLoader.load(Constants.PORTRAITS + imgName);
 		imgName = imgName.concat("_" + player.getColour());
 		this.animations = ImageLoader.loadDirectedAnimations(Constants.ICONS + imgName);

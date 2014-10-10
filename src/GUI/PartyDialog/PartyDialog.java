@@ -223,7 +223,7 @@ public class PartyDialog extends JDialog  {
 
 	public static void main(String[] batman) {
 		Player p = new Player("John The Baptist",4);
-		Hero hero = new Hero("ovelia", p);
+		Hero hero = new Hero("ovelia", p, 50, 10,10);
 
 		Creature[][] members = Party.newEmptyParty();
 		members[0][0] = hero;

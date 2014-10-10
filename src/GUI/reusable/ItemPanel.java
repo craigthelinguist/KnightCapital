@@ -177,7 +177,7 @@ public class ItemPanel extends JPanel {
 		JFrame frame = new JFrame();
 		JPanel panel = new JPanel();
 		Player player = new Player("Biggie Smalls",2);
-		Hero hero = new Hero("ovelia",player);
+		Hero hero = new Hero("ovelia",player, 50, 10,10);
 		Creature[][] members = Party.newEmptyParty();
 		members[0][0] = hero;
 		Party party = new Party(hero, player, members);

@@ -75,14 +75,14 @@ public class TownItemPanel extends JPanel{
 		JFrame frame = new JFrame();
 		JPanel panel = new JPanel();
 		Player player = new Player("Biggie Smalls",2);
-		Hero hero = new Hero("ovelia",player);
+		Hero hero = new Hero("ovelia",player,50,10,10);
 		Creature[][] members = Party.newEmptyParty();
 		
-		Unit u1 = new Unit("knight",player);
+		Unit u1 = new Unit("knight",player,50,10,10);
 		u1.setStat(Stat.HEALTH, 100);
 		u1.revive(20);
 		
-		Unit u2 = new Unit("knight",player);
+		Unit u2 = new Unit("knight",player,50,10,10);
 		u2.setStat(Stat.HEALTH, 100);
 		u2.revive(45);
 		

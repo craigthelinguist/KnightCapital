@@ -26,8 +26,8 @@ public class Hero extends Creature {
 	private int maxMovementPoints;
 	private Item[] inventory;
 
-	public Hero(String imgName, Player player){
-		super(imgName,player);
+	public Hero(String imgName, Player player, int baseHealth, int baseArmour, int baseDamage){
+		super(imgName,player, baseHealth, baseArmour, baseDamage);
 		inventory = new Item[INVENTORY_SIZE];
 	}
 

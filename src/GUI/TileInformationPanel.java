@@ -190,8 +190,13 @@ public class TileInformationPanel extends JPanel{
 
 
 				/*set up the label that displays how many moves the player has left */
-				String s = tile.occupant().toString();
-				movesLeft = new JLabel("<html>Health: "+s+" <br>Damage: <br>Armour: <br>Moves Left:");
+				Party p =(Party)occupant;
+				String damage = Integer.toString(p.getHero().getBaseDamage());
+				String health = Integer.toString(p.getHero().getBaseHealth());
+				String armour = Integer.toString(p.getHero().getBaseArmour());
+				String moves = Integer.toString(p.getHero().getMovePoints());
+
+				movesLeft = new JLabel("<html>Health: "+health+" <br>Damage: "+damage+" <br>Armour: "+armour+"<br>Moves Left: "+moves);
 				movesLeft.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 15));
 				movesLeft.setForeground(new Color(225,179,55));
 				c.insets = new Insets(1,0,8,0);

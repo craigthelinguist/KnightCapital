@@ -103,9 +103,9 @@ public class TownController{
 
 		// party
 		Player player = new Player("Pondy",1);
-		Unit u1 = new Unit("knight",player);
-		Unit u2 = new Unit("knight",player);
-		Hero h1 = new Hero("ovelia",player);
+		Unit u1 = new Unit("knight",player,10,3,3);
+		Unit u2 = new Unit("knight",player,10,3,3);
+		Hero h1 = new Hero("ovelia",player,50,10,10);
 		Creature[][] members = Party.newEmptyParty();
 		members[0][0] = u1;
 		members[1][0] = h1;
@@ -113,11 +113,11 @@ public class TownController{
 		Party party = new Party(h1,player,members);
 
 		//party
-		Hero h2 = new Hero("dark_knight",player);
-		Unit u3 = new Unit("knight",player);
-		Unit u4 = new Unit("archer",player);
-		Unit u5 = new Unit("archer",player);
-		Unit u6 = new Unit("knight",player);
+		Hero h2 = new Hero("dark_knight",player,50,10,10);
+		Unit u3 = new Unit("knight",player,10,3,3);
+		Unit u4 = new Unit("archer",player,10,3,3);
+		Unit u5 = new Unit("archer",player,10,3,3);
+		Unit u6 = new Unit("knight",player,10,3,3);
 		Creature[][] members2 = Party.newEmptyParty();
 		members2[0][0] = u3;
 		members2[1][0] = u6;
