@@ -40,6 +40,7 @@ public class InventoryPanel extends JPanel implements MouseListener {
 	GridBagConstraints c;
 
 	private ItemSlotPanel[][] slots;
+	private Item[][] items;
 
 	/*The item dialogs/descriptions */
 	ItemSlotInformation dSlot1;
@@ -159,9 +160,10 @@ public class InventoryPanel extends JPanel implements MouseListener {
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		repaint();
-		if(e.getSource() == slot1) {
-			slot1.changeBackground(ImageManipulation.lighten(slot1.getBackgroundImage(),55));
-			dSlot1 = new ItemSlotInformation(frame,"Epinephrine Autoinjector. Used for intramuscular injection to revive unconscious casualties.");
+
+		if(e.getSource() == slots[0][0]) {
+			slots[0][0].changeBackground(ImageManipulation.lighten(slots[0][0].getBackgroundImage(),55));
+			dSlot1 = new ItemSlotInformation(frame,items[0][0].getDescription());
 			dSlot1.setLocation(frame.getWidth()-500,frame.getHeight()-400);
 			dSlot1.setVisible(true);
 	    }
@@ -188,8 +190,8 @@ public class InventoryPanel extends JPanel implements MouseListener {
 	@Override
 	public void mouseExited(MouseEvent e) {
 		repaint();
-		if(e.getSource() == slot1) {
-			slot1.changeBackground(ImageLoader.load(Constants.GUI_FILEPATH + slot1.getImageName()));
+		if(e.getSource() == slots[0][0]) {
+			slots[0][0].changeBackground(ImageLoader.load(Constants.ITEMS + slots[0][0].getImageName()+"Slot"));
 			dSlot1.dispose();
 	    }
 		if(e.getSource() == slot2) {
@@ -224,7 +226,7 @@ public class InventoryPanel extends JPanel implements MouseListener {
 		if(!(p instanceof Party)) {
 			throw new Exception();
 		}
-		Item[][] items = p.getInventory();
+		items = p.getInventory();
 
 		for(int i = 0; i < items.length; i++) {
 			for(int j = 0; j < items[i].length; j++) {
@@ -240,6 +242,7 @@ public class InventoryPanel extends JPanel implements MouseListener {
 									c.insets = new Insets(15,15,10,10);
 									c.gridx = i;
 									c.gridy = j;
+									slots[x][y].addMouseListener(this);
 									this.add(slots[x][y],c);
 
 							}
