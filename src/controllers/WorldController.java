@@ -165,8 +165,6 @@ public class WorldController{
 	 * @param panel: what they clicked on (inventory, world, etc.)
 	 */
 	public void mousePressed(MouseEvent me){
-		
-		System.out.println(me.paramString());
 
 			Point ptIso = new Point(me.getX(),me.getY());
 			Point ptCartesian = Geometry.isometricToCartesian(ptIso, camera, world.dimensions);
