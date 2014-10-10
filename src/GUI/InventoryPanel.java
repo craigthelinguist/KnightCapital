@@ -231,22 +231,15 @@ public class InventoryPanel extends JPanel implements MouseListener {
 			for(int j = 0; j < items[i].length; j++) {
 
 				if(items[i][j] != null) {
-
-					for(int x = 0; x < items.length; x++) {
-						for(int y = 0; y < items[x].length; y++) {
-								if(slots[x][y] == null) {
-									/*Declare and initialize slot1 (panel) */
-									slots[x][y] = new ItemSlotPanel(items[i][j].getName());
-									c.insets = new Insets(15,15,10,10);
-									c.gridx = i;
-									c.gridy = j;
-									slots[x][y].addMouseListener(this);
-									this.add(slots[x][y],c);
-
-							}
-						}
+					if(slots[i][j] == null) {
+						/*Declare and initialize slot1 (panel) */
+						slots[i][j] = new ItemSlotPanel(items[i][j].getName());
+						c.insets = new Insets(15,15,10,10);
+						c.gridx = i;
+						c.gridy = j;
+						slots[i][j].addMouseListener(this);
+						this.add(slots[i][j],c);
 					}
-
 				}
 			}
 		}
