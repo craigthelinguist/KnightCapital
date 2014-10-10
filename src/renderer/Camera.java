@@ -47,6 +47,11 @@ public class Camera {
 	public int getOriginX() { return origin_x; }
 	public int getOriginY() { return origin_y; }
 
+	public void pan(int xPan, int yPan) {
+		origin_x += xPan;
+		origin_y += yPan;
+	}
+
 	/**
 	 *	Pan Downwards.
 	 *	Panning distance is defined in Tools.GlobalConstants
@@ -119,6 +124,7 @@ public class Camera {
 	public void setOrientation(int orient) {
 		orientation = orient;
 	}
+
 
 
 
