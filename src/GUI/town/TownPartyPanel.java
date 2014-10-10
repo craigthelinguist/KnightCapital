@@ -42,6 +42,7 @@ public class TownPartyPanel extends JPanel {
 	
 	protected TownPartyPanel(TownExchangePanel master, Party party, City city){
 		this.master = master;
+		this.party = party;
 		this.setPreferredSize(new Dimension(CELL_WD*PARTY_COLS+1,CELL_HT*PARTY_ROWS+1));
 	}
 	

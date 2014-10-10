@@ -1,6 +1,8 @@
 package GUI.town;
 
+import game.effects.Buff;
 import game.items.Item;
+import game.items.PassiveItem;
 import game.units.Creature;
 import game.units.Hero;
 import game.units.Stat;
@@ -84,15 +86,23 @@ public class TownItemPanel extends JPanel{
 		members[0][0] = u2;
 		members[2][1] = hero;
 		
-		
 		Party party = new Party(hero, player, members);
+		
+		Buff[] buffsWeapon = new Buff[]{ new Buff(Stat.DAMAGE,5,true), new Buff(Stat.ARMOUR, 10, true) };
+		PassiveItem weapon = new PassiveItem(buffsWeapon, "weapon", "Weapon","A powerful weapon crafted by the mighty Mizza +5 Damage");
+
+		Buff[] buffsArrows= new Buff[]{ new Buff(Stat.DAMAGE,1,true) };
+		PassiveItem arrows = new PassiveItem(buffsArrows, "poisonarrow", "Poison Arrows","Poisonous arrows whose feathers were made from the hairs of Mizza. All archers in party gain +1 damage");
+		
+		party.addItem(weapon);
+		party.addItem(arrows);
 		
 		City c1 = new City("basic", player, null);
 		
-		TownPartyPanel tpp = new TownPartyPanel(null,party,c1);
+		TownItemPanel tip = new TownItemPanel(null,party,c1);
 		//tpp.party = party;
-		panel.add(tpp);
-		frame.add(tpp);
+		panel.add(tip);
+		frame.add(tip);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.pack();
 		frame.setVisible(true);
