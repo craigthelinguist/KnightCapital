@@ -9,16 +9,12 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import GUI.PartyDialog.PartyDialog;
 import tools.Constants;
 import tools.ImageLoader;
 import world.icons.ItemIcon;
@@ -27,6 +23,7 @@ import world.icons.WorldIcon;
 import world.tiles.CityTile;
 import world.tiles.Tile;
 import world.towns.City;
+import GUI.PartyDialog.PartyDialog;
 
 /**
  * This panel holds all of the player's information such as stats, party  etc.
@@ -78,11 +75,14 @@ public class TileInformationPanel extends JPanel{
 		g.drawImage(backgroundImage, 0, 0, 375, 200, this);
 	}
 
+	private Tile lastSelectedTile;
+
 	/**
 	 * Update the information being displayed in this panel to show whatever is on the given tile.
 	 * @param tile: tile whose info you'll display.
 	 */
 	public void updateInfo(Tile tile) {
+		this.lastSelectedTile = tile;
 
 		// nothing selected, display a blank panel
 		if (tile == null){
@@ -153,6 +153,8 @@ public class TileInformationPanel extends JPanel{
 			}
 
 			else if (occupant instanceof Party){
+
+
 				Party party = (Party)occupant;
 
 				resetPanel();
@@ -207,6 +209,7 @@ public class TileInformationPanel extends JPanel{
 					public void mousePressed(MouseEvent e) {
 						// If the user presses this button, we want to display a new partyDialog
 						//TODO: this
+						displayPartyDialog();
 					}
 				};
 
@@ -270,6 +273,13 @@ public class TileInformationPanel extends JPanel{
 		}
 	}
 
+	private void displayPartyDialog() {
+
+		//if isOwner = true
+		if(lastSelectedTile != null && lastSelectedTile.occupant() instanceof Party){
+			new PartyDialog(new JFrame(), this.lastSelectedTile, true);
+		}
+	}
 
 	private void resetPanel() {
 		/*Reset all the labels*/

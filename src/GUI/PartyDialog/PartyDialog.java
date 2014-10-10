@@ -13,6 +13,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -50,7 +51,7 @@ import GUI.MainFrame;
  */
 public class PartyDialog extends JDialog  {
 
-	protected MainFrame frame;
+	protected JFrame frame;
 
 	//is the panel owned by this player?
 	private boolean isOwner;
@@ -81,7 +82,7 @@ public class PartyDialog extends JDialog  {
 	 * @param tile : Tile object currently selected by user on world screen
 	 * @param boolean : is player the owner of this party?
 	 */
-	public PartyDialog (MainFrame frame, Tile tile, boolean isOwner) {
+	public PartyDialog (JFrame frame, Tile tile, boolean isOwner) {
 		super(frame,true);
 		this.frame = frame;
 		this.tile = tile;
