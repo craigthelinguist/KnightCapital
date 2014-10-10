@@ -4,6 +4,7 @@ import game.units.Creature;
 import game.units.Hero;
 import game.units.Unit;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 
 import javax.swing.JFrame;
@@ -18,10 +19,14 @@ public class TownGui extends JFrame {
 	private TownPanel panel;
 	
 	public TownGui(TownController townController) {
+		
+		
+		
 		panel = new TownPanel(townController);
 		
 		
-		this.add(panel);
+		this.setLayout(new BorderLayout());
+		this.add(panel,BorderLayout.EAST);
 		
 		
 		this.pack();

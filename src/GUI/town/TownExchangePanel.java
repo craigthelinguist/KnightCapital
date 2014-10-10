@@ -3,6 +3,7 @@ package GUI.town;
 import game.units.Creature;
 import game.units.Hero;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -54,7 +55,7 @@ public class TownExchangePanel extends JPanel implements MouseListener, MouseMot
 	
 	// buttons
 	private JButton buttonLeave;
-	private JButton trainUnit;
+	private JButton buttonTrain;
 	
 	// thing being dragged
 	private Point draggedPoint;
@@ -64,27 +65,41 @@ public class TownExchangePanel extends JPanel implements MouseListener, MouseMot
 		this.controller = controller;
 		
 		City city = controller.getCity();
-		partyGarrison = new TownPartyPanel(this,controller.getGarrison(),city);
 		partyVisitors = new TownPartyPanel(this,controller.getVisitors(),city);
-		//itemsGarrison = new TownItemPanel(this,controller.getGarrison(),city);
-		//itemsVisitors = new TownItemPanel(this,controller.getVisitors(),city);
-		
+		partyGarrison = new TownPartyPanel(this,controller.getGarrison(),city);
+		itemsVisitors = new TownItemPanel(this,controller.getVisitors(),city);
+		itemsGarrison = new TownItemPanel(this,controller.getGarrison(),city);
 
-		this.add(partyVisitors);
-		this.add(partyGarrison);
+		BoxLayout layout = new BoxLayout(this,BoxLayout.Y_AXIS);
+		this.setLayout(layout);
 		
-		/*
+		buttonLeave = new JButton("<-- Leave");
+		JPanel visitorButtons = new JPanel();
+		visitorButtons.setLayout(new BorderLayout());
+		visitorButtons.add(buttonLeave, BorderLayout.SOUTH);
+		
+		buttonTrain = new JButton("Train Unit");
+		JPanel garrisonButtons = new JPanel();
+		garrisonButtons.setLayout(new BorderLayout());
+		garrisonButtons.add(buttonTrain, BorderLayout.SOUTH);
+
+		// parties
 		JPanel parties = new JPanel();
-		parties.add(partyGarrison);
+		parties.setOpaque(false);
+		parties.add(visitorButtons);
 		parties.add(partyVisitors);
-		*/
+		parties.add(partyGarrison);
+		parties.add(garrisonButtons);
+		this.add(parties);
 		
-		//this.add(parties);
-		//this.add(inventories);
+		// items
+		JPanel items = new JPanel();
+		items.setOpaque(false);
+		items.add(itemsVisitors);
+		items.add(itemsGarrison);
+		this.add(items);
 		
 		this.setOpaque(false);
-		
-		// setup visitor panel
 		
 		this.addMouseListener(this);
 		this.addMouseMotionListener(this);
