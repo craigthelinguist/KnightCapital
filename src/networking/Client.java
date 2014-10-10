@@ -28,7 +28,7 @@ public class Client implements Runnable {
 	private static DataOutputStream out;
 
 
-	private static ClientProtocol client;
+	private static ClientMessagingProtocol client;
 
 	private ObjectInputStream input;
 	private ObjectOutputStream output;
@@ -119,7 +119,7 @@ public class Client implements Runnable {
 
 			//initialises the client protocol thread which is always -
 			//- listening for incoming messages from the server.
-			client = new ClientProtocol(in,out);
+			client = new ClientMessagingProtocol(in,out);
 			Thread listener = new Thread(client);
 			listener.start();
 
@@ -215,7 +215,7 @@ public class Client implements Runnable {
 		}
 		//otherwise it closes the socket
 		else{
-			//			try {
+			//			try { out. 
 			//				socket.close();
 			//				System.out.println("socket closed yo");
 			//				System.exit(0);
