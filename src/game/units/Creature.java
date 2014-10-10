@@ -97,6 +97,14 @@ public abstract class Creature {
 		if (amount < 0 || currentHealth <= 0) return;
 		currentHealth = Math.min(baseHealth, currentHealth+amount);
 	}
+	
+	/**
+	 * Revive the creature with the specified amount of health.
+	 * If the creature is already alive, do nothing.
+	 */
+	public void revive(int amount){
+		if (currentHealth == 0) this.currentHealth = Math.min(amount,baseHealth+buffedHealth);
+	}
 
 	public void fullHeal(){
 		currentHealth = baseHealth + buffedHealth;
@@ -182,16 +190,19 @@ public abstract class Creature {
 		else if (stat == Stat.HEALTH){
 			this.baseHealth = value;
 		}
+		
 	}
 
 	/**
 	 * Return the healthiness of this creature as a percentage
 	 * @return: int
 	 */
-	public int healthiness(){
+	public double healthiness(){
 		int maxHP = this.baseHealth + this.buffedHealth;
 		int currentHP = this.currentHealth;
-		return (int)(maxHP/currentHP*100);
+		if (maxHP == 0) return 1.0;
+		double r = (double)currentHP/(double)maxHP;
+		return r;
 	}
 
 }

@@ -183,6 +183,10 @@ public class Party extends WorldIcon{
 	public String getAnimationName() {
 		return hero.getAnimationName();
 	}
+	
+	public void setMember(Creature c, int x, int y){
+		this.members[x][y] = c;
+	}
 
 	public static Creature[][] newEmptyParty() {
 		return new Creature[Party.PARTY_COLS][Party.PARTY_ROWS];

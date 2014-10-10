@@ -18,7 +18,9 @@ public class TownGui extends JFrame {
 	private TownPanel panel;
 	
 	public TownGui(TownController townController) {
-		panel = new TownPanel(townController, townController.getVisitors(), townController.getGarrison());
+		panel = new TownPanel(townController);
+		
+		
 		this.add(panel);
 		
 		
