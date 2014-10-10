@@ -22,6 +22,11 @@ import world.icons.Party;
 
 import controllers.TownController;
 
+/**
+ * TownExchangePanel lets you exchange units and items between the visiting party and garrisoned party.
+ * @author craigthelinguist
+ *
+ */
 public class TownExchangePanel extends JPanel implements MouseListener, MouseMotionListener{
 
 	// constants
@@ -70,8 +75,30 @@ public class TownExchangePanel extends JPanel implements MouseListener, MouseMot
 		this.addMouseMotionListener(this);
 	}
 
+	/**
+	 * Return the panel whose element you're dragging around.
+	 * @return: a JPanel, or null if nothing is being dragged.
+	 */
+	public JPanel getDraggedPanel() {
+		return this.draggedPanel;
+	}
+
+	/**
+	 * Return the index that you're currently dragging around.
+	 * @return: index being dragged around, or null if none.
+	 */
 	protected Point getDraggedPoint(){
 		return this.draggedPoint;
+	}
+
+	/**
+	 * Reset the panel and point being dragged around.
+	 * Repaint the gui.
+	 */
+	private void resetDragging(){
+		this.draggedPanel = null;
+		this.draggedPoint = null;
+		this.repaint();
 	}
 	
 	@Override
@@ -103,23 +130,6 @@ public class TownExchangePanel extends JPanel implements MouseListener, MouseMot
 	}
 
 	@Override
-	public void mouseMoved(MouseEvent arg0) {
-		
-	}
-
-	@Override
-	public void mouseClicked(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void mouseExited(MouseEvent arg0) {
 		resetDragging();
 	}
@@ -145,12 +155,6 @@ public class TownExchangePanel extends JPanel implements MouseListener, MouseMot
 		
 	}
 
-	private void resetDragging(){
-		this.draggedPanel = null;
-		this.draggedPoint = null;
-		this.repaint();
-	}
-	
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		
@@ -169,6 +173,14 @@ public class TownExchangePanel extends JPanel implements MouseListener, MouseMot
 		this.resetDragging();
 	}
 	
+	/**
+	 * Take the creatures from point1 in the party at panel1, and from point2 in the party at panel2, and
+	 * swap their positions. A hero cannot leave its own party and if you try to do so it will not be moved.
+	 * @param panel1: first panel
+	 * @param point1: index of creature in the party at panel1
+	 * @param panel2: second panel
+	 * @param point2: index of creature in the party at panel2
+	 */
 	private void reorderUnits(TownPartyPanel panel1, Point point1, TownPartyPanel panel2, Point point2){
 		
 		Party p1 = panel1.getParty();
@@ -185,9 +197,12 @@ public class TownExchangePanel extends JPanel implements MouseListener, MouseMot
 		p2.setMember(c1, point2.x, point2.y);
 		
 	}
-
-	public JPanel getDraggedPanel() {
-		return this.draggedPanel;
-	}
+	
+	/**
+	 * Dead methods. Needed for mouse listener interfaces.
+	 */
+	public void mouseMoved(MouseEvent arg0) {}
+	public void mouseClicked(MouseEvent arg0) {}
+	public void mouseEntered(MouseEvent arg0) {}
 
 }
