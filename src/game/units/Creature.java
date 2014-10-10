@@ -205,4 +205,18 @@ public abstract class Creature {
 		return r;
 	}
 
+	public int getBaseHealth() {
+		return baseHealth;
+	}
+
+	public int getBaseDamage() {
+		return baseDamage;
+	}
+
+
+	public int getBaseArmour() {
+		return baseArmour;
+	}
+
+
 }

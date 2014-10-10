@@ -190,7 +190,8 @@ public class TileInformationPanel extends JPanel{
 
 
 				/*set up the label that displays how many moves the player has left */
-				movesLeft = new JLabel("Moves Left:");
+				String s = tile.occupant().toString();
+				movesLeft = new JLabel("<html>Health: "+s+" <br>Damage: <br>Armour: <br>Moves Left:");
 				movesLeft.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 15));
 				movesLeft.setForeground(new Color(225,179,55));
 				c.insets = new Insets(1,0,8,0);
