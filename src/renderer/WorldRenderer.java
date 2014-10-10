@@ -133,7 +133,7 @@ public class WorldRenderer {
 				// add occupant to buffer, if it exists
 				WorldIcon occupant = tile.occupant();
 				if (occupant != null){
-					CartesianMapping<WorldIcon> iconToDraw = new CartesianMapping<>(occupant,ptRotated);
+					CartesianMapping<WorldIcon> iconToDraw = new CartesianMapping<>(occupant,ptRotated,1);
 					drawBuffer.add(iconToDraw);
 				}
 			}
@@ -159,7 +159,7 @@ public class WorldRenderer {
 			ct = city.getLeftmostTile(controller.getCamera());
 			Point cityOrigin = new Point(ct.X,ct.Y);
 			Point rotatedPt = Geometry.rotateByCamera(cityOrigin, camera, world.dimensions);
-			CartesianMapping<City> mapping = new CartesianMapping<City>(city,rotatedPt);
+			CartesianMapping<City> mapping = new CartesianMapping<City>(city,rotatedPt,1);
 			drawBuffer.add(mapping);
 		}
 
