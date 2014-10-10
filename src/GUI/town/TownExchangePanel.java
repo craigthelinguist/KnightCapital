@@ -175,6 +175,12 @@ public class TownExchangePanel extends JPanel implements MouseListener, MouseMot
 		Creature c1 = p1.getMember(point1.x, point1.y);
 		Party p2 = panel2.getParty();
 		Creature c2 = p2.getMember(point2.x, point2.y);
+		
+		// heroes aren't allowed to leave their party
+		if ((c1 instanceof Hero || c2 instanceof Hero) && (panel1 != panel2)){
+			return;
+		}
+		
 		p1.setMember(c2, point1.x, point1.y);
 		p2.setMember(c1, point2.x, point2.y);
 		
