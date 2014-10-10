@@ -20,8 +20,10 @@ public abstract class Item {
 	private Animation animation;
 	private String description;
 	protected LinkedList<Buff> buffs;
+	private String imgName;
 
 	public Item(String imgName, String description){
+		this.imgName = imgName;
 		this.description = description;
 		this.animation = ImageLoader.loadAnimation(Constants.ITEMS + imgName);
 		this.portrait = ImageLoader.load(Constants.ITEMS + imgName);
@@ -42,6 +44,10 @@ public abstract class Item {
 
 	public String getDescription() {
 			return this.description;
+	}
+
+	public String getName() {
+		return imgName;
 	}
 
 	public void setAnimation(String name){

@@ -67,6 +67,7 @@ public class WorldController{
 
 	// current tile the player has clicked
 	private Point selected;
+	private Point hover; // point your mouse is over
 
 	// highlighted tiles that are showing where the player's selected party can move to
 	private Set<Point> highlightedTiles;
@@ -76,6 +77,7 @@ public class WorldController{
 
 	// whether this worldController is currently doing anything
 	private boolean active = true;
+	private long lastMouse = 0;
 
 	// key bindings
 	private static final int ROTATE_CW = KeyEvent.VK_R;
@@ -117,6 +119,7 @@ public class WorldController{
 	 * @param ke: details about the key event
 	 */
 	public void keyPressed(KeyEvent ke){
+
 		int code = ke.getKeyCode();
 		if (code == ROTATE_CW){
 			camera.rotateClockwise();
@@ -152,12 +155,7 @@ public class WorldController{
 		}
 		else if(code == KeyEvent.VK_I){
 			System.out.println("xxx");
-
 			PartyDialog partyDialog = new PartyDialog(this.gui, world.getTile(selected));;
-
-
-
-
 		}
 	}
 
@@ -177,13 +175,15 @@ public class WorldController{
 
 			// double clicked a city
 			if (SwingUtilities.isLeftMouseButton(me) && selectedTile != null
-				&& clickedTile instanceof CityTile && selectedTile instanceof CityTile){
+				&& clickedTile instanceof CityTile && selectedTile instanceof CityTile
+				 && System.currentTimeMillis() - this.lastMouse < 700){
 				{
 					CityTile c1 = (CityTile)clickedTile;
 					CityTile c2 = (CityTile)selectedTile;
 					if (c1.getCity() == c2.getCity()){
 						startTownView(c1.getCity());
 					}
+					this.lastMouse = System.currentTimeMillis();
 				}
 			}
 
@@ -193,6 +193,7 @@ public class WorldController{
 				deselect();
 				gui.updateInfo(null);
 				gui.redraw();
+				this.lastMouse = System.currentTimeMillis();
 			}
 
 			// selected the tile
@@ -201,18 +202,46 @@ public class WorldController{
 				highlightTiles(clickedTile);
 				gui.updateInfo(clickedTile);
 				gui.redraw();
+				this.lastMouse = System.currentTimeMillis();
 			}
 
 			// moved
 			else if (selected != null && SwingUtilities.isRightMouseButton(me)){
+
 				boolean moved = world.moveParty(player, selected, ptCartesian);
 				if (moved){
+
+					// selectedTile <-- party ur moving is standing on here
+					//Party party = (Party) clickedTile.occupant();
 					selected = ptCartesian;
 					highlightTiles(clickedTile);
 					gui.updateInfo(clickedTile);
 					gui.redraw();
+					this.lastMouse = System.currentTimeMillis();
 				}
 			}
+
+	}
+
+	/**
+	 * The mouse has moved from lastDrag -> point.
+	 * @param lastDrag: point mouse started at
+	 * @param point: point mouse moved to.
+	 */
+	public void mouseDragged(Point lastDrag, Point point) {
+		int x = point.x - lastDrag.x;
+		int y = point.y - lastDrag.y;
+		camera.pan(x,y);
+		gui.redraw();
+	}
+
+	public void mouseMoved(MouseEvent me){
+
+		Point ptIso = new Point(me.getX(),me.getY());
+		Point ptCartesian = Geometry.isometricToCartesian(ptIso, camera, world.dimensions);
+		Tile tileHover = world.getTile(ptCartesian);
+		if (tileHover == null) this.hover = ptCartesian;
+		else this.hover = null;
 
 	}
 

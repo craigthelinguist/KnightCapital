@@ -11,6 +11,7 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Set;
 
+import GUI.InventoryPanel;
 import player.Player;
 import renderer.Camera;
 import tools.Geometry;
@@ -284,6 +285,7 @@ public class World {
 			for (int j = 0; j < tiles[i].length; j++){
 				Tile tile = tiles[i][j];
 				WorldIcon wi = tile.occupant();
+				if (!(wi instanceof Party)) continue;
 				if (wi != null){
 					String name = wi.getAnimationName();
 					int playerDir;
