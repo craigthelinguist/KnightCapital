@@ -150,15 +150,7 @@ public class WorldController{
 			notifier();
 			gui.redraw();
 		}
-		else if(code == KeyEvent.VK_I){
-			System.out.println("xxx");
 
-			PartyDialog partyDialog = new PartyDialog(this.gui, world.getTile(selected));;
-
-
-
-
-		}
 	}
 
 	/**
@@ -214,7 +206,7 @@ public class WorldController{
 
 	}
 
-	/**
+	/**wan Mos
 	 * Player has clicked a button.
 	 * @param button: the button they clicked.
 	 */
@@ -327,8 +319,8 @@ public class WorldController{
 	public static void aaron_main(String[] args){
 		/*Loading items*/
 		Buff[] buffs = new Buff[]{ new Buff(Stat.DAMAGE,1,true) };
-		PassiveItem amulet = new PassiveItem("amulet","An amulet that grants sickening gains.\n +5 Damage");
-		FloorItem floorItem = new FloorItem("itemChest", "Uknown Item", amulet);
+		PassiveItem amulet = new PassiveItem(buffs, "amulet", "Amulet","An amulet that grants sickening gains.\n +5 Damage");
+		FloorItem floorItem = new FloorItem("itemChest", "Chest", "Unknown Item", amulet);
 		ItemIcon itemIcon = new ItemIcon(floorItem);
 
 		/*Loading the playey*/
