@@ -5,6 +5,7 @@ import game.units.Hero;
 import game.units.Unit;
 
 import java.awt.Dimension;
+import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
@@ -53,12 +54,38 @@ public class TownController{
 	}
 	
 	public Party getGarrison(){
+		
 		return garrison;
 	}
 	
 	public Party getVisitors(){
 		return visitors;
 	}
+
+	public boolean active(){
+		return active;
+	}
+
+	public void buttonPressed(String text) {
+		
+		if (!active) return;
+		text = text.toLowerCase();
+		if (text.equals("leave")){
+			gui.dispose();
+			worldController.endTownView();
+			active = false;
+		}
+		
+	}
+	
+	protected void mouseMoved(Point from, Point to){
+		
+	}
+	
+	protected void mouseEvent(){
+		
+	}
+
 	
 	public static void main(String[] args){
 
@@ -99,21 +126,4 @@ public class TownController{
 		TownController tc = new TownController(city,WorldController.getTestWorldControllerNoGui());
 
 	}
-
-	public void buttonPressed(String text) {
-		
-		if (!active) return;
-		text = text.toLowerCase();
-		if (text.equals("leave")){
-			gui.dispose();
-			worldController.endTownView();
-			active = false;
-		}
-		
-	}
-
-	public boolean active(){
-		return active;
-	}
-	
 }
