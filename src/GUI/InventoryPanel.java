@@ -225,7 +225,7 @@ public class InventoryPanel extends JPanel implements MouseListener {
 		if(!(tile.occupant() instanceof Party)) return;
 
 		Party p =(Party)tile.occupant();
-		Item[][] items = p.getInventory();
+		items = p.getInventory();
 
 		for(int i = 0; i < items.length; i++) {
 			for(int j = 0; j < items[i].length; j++) {
