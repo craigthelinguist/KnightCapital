@@ -42,7 +42,6 @@ public class TownPartyPanel extends JPanel {
 	
 	protected TownPartyPanel(TownExchangePanel master, Party party, City city){
 		this.master = master;
-		this.party = (party != null) ? party : new Party(null,city.getOwner(),Party.newEmptyParty());
 		this.setPreferredSize(new Dimension(CELL_WD*PARTY_COLS+1,CELL_HT*PARTY_ROWS+1));
 	}
 	
@@ -62,6 +61,17 @@ public class TownPartyPanel extends JPanel {
 					g.fillRect(xDraw, yDraw+PORTRAIT_HT, (int)(HEALTH_BAR_WD*healthiness), HEALTH_BAR_HT);
 				}
 				
+				// draw portrait
+				boolean weShouldDraw = true;
+				if (member == null) weShouldDraw = false;
+				if (master.getDraggedPanel() != null && master.getDraggedPanel() == this){
+					if (master.getDraggedPoint().equals(new Point(x,y))) weShouldDraw = false; // being dragged
+				}
+				if (weShouldDraw){
+					BufferedImage portrait = member.getPortrait();
+					g.drawImage(portrait,xDraw,yDraw,null);
+				}
+
 				// health bar outline
 				g.setColor(Color.BLACK);
 				g.drawRect(xDraw, yDraw+PORTRAIT_HT, HEALTH_BAR_WD, HEALTH_BAR_HT);
@@ -69,14 +79,7 @@ public class TownPartyPanel extends JPanel {
 				// portrait outline
 				g.drawRect(xDraw, yDraw, PORTRAIT_WD, PORTRAIT_HT);
 				
-				// draw portrait 
-				if (member == null) continue;
-				if (master.getDraggedPanel() != null && master.getDraggedPanel() == this){
-					if (master.getDraggedPoint().equals(new Point(x,y))) continue; // being dragged
 				
-				}
-				BufferedImage portrait = member.getPortrait();
-				g.drawImage(portrait,xDraw,yDraw,null);
 			}
 		}	
 	}
