@@ -208,8 +208,8 @@ public class WorldRenderer {
 	private static void drawIcon(Graphics graphics, CartesianMapping<WorldIcon> mapping, Camera camera){
 		int isoY = mapping.point.y;
 		int isoX = mapping.point.x;
-		final int ICON_WD = Constants.ICON_WD;
-		final int ICON_HT = Constants.ICON_HT;
+		final int ICON_WD = mapping.thing.getImage().getWidth();
+		final int ICON_HT = mapping.thing.getImage().getHeight();
 		int iconY = isoY - TILE_HT/4;
 		int iconX = isoX + TILE_WD/2 - ICON_WD/2;
 		mapping.thing.draw(graphics,iconX,iconY);

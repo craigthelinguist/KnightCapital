@@ -205,9 +205,6 @@ public class WorldController{
 
 				boolean moved = world.moveParty(player, selected, ptCartesian);
 				if (moved){
-
-					// selectedTile <-- party ur moving is standing on here
-					//Party party = (Party) clickedTile.occupant();
 					selected = ptCartesian;
 					highlightTiles(clickedTile);
 					gui.updateInfo(clickedTile);
