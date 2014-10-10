@@ -1,7 +1,10 @@
 package controllers;
 
+import game.effects.Buff;
+import game.items.PassiveItem;
 import game.units.Creature;
 import game.units.Hero;
+import game.units.Stat;
 import game.units.Unit;
 
 import java.awt.Dimension;
@@ -64,7 +67,6 @@ public class TownController{
 	}
 	
 	public Party getGarrison(){
-		
 		return garrison;
 	}
 	
@@ -99,6 +101,7 @@ public class TownController{
 	
 	public static void main(String[] args){
 
+		// party
 		Player player = new Player("Pondy",1);
 		Unit u1 = new Unit("knight",player);
 		Unit u2 = new Unit("knight",player);
@@ -108,13 +111,8 @@ public class TownController{
 		members[1][0] = h1;
 		members[2][0] = u2;
 		Party party = new Party(h1,player,members);
-		CityTile[][] tiles = new CityTile[3][3];
-		for (int i = 0; i < 3; i++){
-			for (int j = 0; j < 3; j++){
-				tiles[i][j] = new CityTile(i,j);
-			}
-		}
-		
+
+		//party
 		Hero h2 = new Hero("dark_knight",player);
 		Unit u3 = new Unit("knight",player);
 		Unit u4 = new Unit("archer",player);
@@ -128,10 +126,26 @@ public class TownController{
 		members2[2][1] = u5;
 		Party party2 = new Party(h2,player,members2);
 		
+		// items
+		Buff[] buffsWeapon = new Buff[]{ new Buff(Stat.DAMAGE,5,true), new Buff(Stat.ARMOUR, 10, true) };
+		PassiveItem weapon = new PassiveItem(buffsWeapon, "weapon", "Weapon","A powerful weapon crafted by the mighty Mizza +5 Damage");
+		Buff[] buffsArrows= new Buff[]{ new Buff(Stat.DAMAGE,1,true) };
+		PassiveItem arrows = new PassiveItem(buffsArrows, "poisonarrow", "Poison Arrows","Poisonous arrows whose feathers were made from the hairs of Mizza. All archers in party gain +1 damage");
+		party.addItem(weapon);
+		party.addItem(arrows);
+		
+		// city
+		CityTile[][] tiles = new CityTile[3][3];
+		for (int i = 0; i < 3; i++){
+			for (int j = 0; j < 3; j++){
+				tiles[i][j] = new CityTile(i,j);
+			}
+		}
 		City city = new City("basic",player,tiles);
 		city.setGarrison(party);
 		city.setVisitors(party2);
 		
+		// player + controller
 		Player p = new Player("John",1);
 		TownController tc = new TownController(city,WorldController.getTestWorldControllerNoGui());
 

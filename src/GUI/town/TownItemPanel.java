@@ -21,6 +21,7 @@ import player.Player;
 
 import tools.Constants;
 import world.icons.Party;
+import world.tiles.CityTile;
 import world.towns.City;
 
 public class TownItemPanel extends JPanel{
@@ -35,11 +36,14 @@ public class TownItemPanel extends JPanel{
 	
 	protected TownItemPanel(TownExchangePanel master, Party party, City city){
 		this.master = master;
-		this.setPreferredSize(new Dimension(INVENTORY_ROWS*ITEM_WD+1,INVENTORY_COLS*ITEM_HT+1));
+		this.party = party;
+		this.setPreferredSize(new Dimension(INVENTORY_COLS*ITEM_WD+1,INVENTORY_ROWS*ITEM_HT+1));
 	}
 
 	@Override
 	protected void paintComponent(Graphics g){
+		
+		g.fillRect(0, 0, getWidth(), getHeight());
 		
 		g.setColor(Color.BLACK);
 		
@@ -50,9 +54,9 @@ public class TownItemPanel extends JPanel{
 				Item item = party.getItem(x, y);
 				boolean weShouldDraw = true;
 				if (item == null) weShouldDraw = false;
-				if (master.getDraggedPanel() != null && master.getDraggedPanel() == this){
-					if (master.getDraggedPoint().equals(new Point(x,y))) weShouldDraw = false; // being dragged
-				}
+				//if (master.getDraggedPanel() != null && master.getDraggedPanel() == this){
+				//	if (master.getDraggedPoint().equals(new Point(x,y))) weShouldDraw = false; // being dragged
+				//}
 				if (weShouldDraw){
 					BufferedImage portrait = item.getPortrait();
 					g.drawImage(portrait, x*ITEM_WD, y*ITEM_HT, null);
@@ -97,7 +101,14 @@ public class TownItemPanel extends JPanel{
 		party.addItem(weapon);
 		party.addItem(arrows);
 		
-		City c1 = new City("basic", player, null);
+		CityTile[][] tiles = new CityTile[3][3];
+		for (int i = 0; i < 3; i++){
+			for (int j = 0; j < 3; j++){
+				tiles[i][j] = new CityTile(i,j);
+			}
+		}
+		
+		City c1 = new City("basic", player, tiles);
 		
 		TownItemPanel tip = new TownItemPanel(null,party,c1);
 		//tpp.party = party;
@@ -106,6 +117,7 @@ public class TownItemPanel extends JPanel{
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.pack();
 		frame.setVisible(true);
+		
 	}
 	
 }
