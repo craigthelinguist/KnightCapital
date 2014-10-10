@@ -19,6 +19,7 @@ import javax.swing.JPanel;
 
 import tools.Constants;
 import world.icons.Party;
+import world.towns.City;
 
 import controllers.TownController;
 
@@ -60,8 +61,9 @@ public class TownExchangePanel extends JPanel implements MouseListener, MouseMot
 	protected TownExchangePanel(TownController controller){
 		this.controller = controller;
 		
-		partyGarrison = new TownPartyPanel(this,controller.getGarrison());
-		partyVisitors = new TownPartyPanel(this,controller.getVisitors());
+		City city = controller.getCity();
+		partyGarrison = new TownPartyPanel(this,controller.getGarrison(),city);
+		partyVisitors = new TownPartyPanel(this,controller.getVisitors(),city);
 		
 		int WIDTH = partyGarrison.getPreferredSize().width + partyVisitors.getPreferredSize().width;
 		int HEIGHT = partyGarrison.getPreferredSize().height + partyVisitors.getPreferredSize().height;
@@ -105,10 +107,6 @@ public class TownExchangePanel extends JPanel implements MouseListener, MouseMot
 	
 	@Override
 	protected void paintComponent(Graphics g){
-		//g.clearRect(0,0,getWidth(),getHeight());
-		//g.setColor(TRANSPARENT);
-		//g.fillRect(0, 0, getWidth(), getHeight());
-		//g.setColor(Color.WHITE);
 		partyGarrison.repaint();
 		partyVisitors.repaint();
 		

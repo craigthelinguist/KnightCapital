@@ -19,6 +19,7 @@ import GUI.reusable.PartyPanel;
 
 import tools.Constants;
 import world.icons.Party;
+import world.towns.City;
 
 public class TownPartyPanel extends JPanel {
 	
@@ -39,9 +40,9 @@ public class TownPartyPanel extends JPanel {
 	// top-level component
 	private TownExchangePanel master;
 	
-	protected TownPartyPanel(TownExchangePanel master, Party party){
+	protected TownPartyPanel(TownExchangePanel master, Party party, City city){
 		this.master = master;
-		this.party = party;
+		this.party = (party != null) ? party : new Party(null,city.getOwner(),Party.newEmptyParty());
 		this.setPreferredSize(new Dimension(CELL_WD*PARTY_COLS+1,CELL_HT*PARTY_ROWS+1));
 	}
 	
@@ -121,7 +122,10 @@ public class TownPartyPanel extends JPanel {
 		
 		
 		Party party = new Party(hero, player, members);
-		TownPartyPanel tpp = new TownPartyPanel(null,party);
+		
+		City c1 = new City("basic", player, null);
+		
+		TownPartyPanel tpp = new TownPartyPanel(null,party,c1);
 		//tpp.party = party;
 		panel.add(tpp);
 		frame.add(tpp);

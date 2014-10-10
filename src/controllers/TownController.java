@@ -126,4 +126,8 @@ public class TownController{
 		TownController tc = new TownController(city,WorldController.getTestWorldControllerNoGui());
 
 	}
+
+	public City getCity() {
+		return this.city;
+	}
 }

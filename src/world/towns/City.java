@@ -182,5 +182,9 @@ public class City {
 	public BufferedImage getPortrait() {
 		return portrait;
 	}
+
+	public Player getOwner() {
+		return this.owner;
+	}
 	
 }
