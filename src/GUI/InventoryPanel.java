@@ -163,7 +163,7 @@ public class InventoryPanel extends JPanel implements MouseListener {
 
 		if(e.getSource() == slots[0][0]) {
 			slots[0][0].changeBackground(ImageManipulation.lighten(slots[0][0].getBackgroundImage(),55));
-			dSlot1 = new ItemSlotInformation(frame,items[0][0].getDescription());
+			dSlot1 = new ItemSlotInformation(frame,items[0][0].getItem().getDescription());
 			dSlot1.setLocation(frame.getWidth()-500,frame.getHeight()-400);
 			dSlot1.setVisible(true);
 	    }
