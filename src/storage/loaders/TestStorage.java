@@ -1,5 +1,7 @@
 package storage.loaders;
 
+import game.units.UnitStats;
+
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -15,6 +17,7 @@ import com.thoughtworks.xstream.XStream;
 import renderer.AnimationMap;
 import storage.converters.AnimationMapConverter;
 import storage.converters.KCImageConverter;
+import storage.converters.UnitStatsConverter;
 import tools.Constants;
 import tools.ImageLoader;
 import tools.KCImage;
@@ -34,22 +37,44 @@ public class TestStorage {
 		images.add(kc2);
 		**/
 
-		String file = "test.xml";
+		String filepath = "data" + File.separatorChar + "stats.xml";
+
+		/** Unit Stats
 		XStream stream = new XStream();
-		stream.registerConverter(new AnimationMapConverter());
-		stream.registerConverter(new KCImageConverter());
-		stream.alias("images", AnimationMap.class);
-		stream.alias("image", KCImage.class);
+		stream.alias("STATSUNIT", UnitStats.class);
+		stream.registerConverter(new UnitStatsConverter());
+		UnitStats stats = new UnitStats(100,40,60,50);
+		String str = stream.toXML(stats);
+		**/
+						
 		//String str = stream.toXML(images);
 		//PrintStream ps = new PrintStream(new File("test.xml"));
 		//ps.println(str);
 
+		
+		/**
+		 * 
+		 * 
+<unitstats>
+<baseHealth>20</baseHealth>
+<baseDamage>
+</unitstats>
 
-		FileReader fileReader = new FileReader(new File("test.xml"));
-		AnimationMap map = (AnimationMap)(stream.fromXML(fileReader));
+	protected int baseHealth;
+	protected int baseDamage;
+	protected int baseSpeed;
+	protected int baseArmour;
 
-		System.out.println("stop");
+	protected int buffedDamage;
+	protected int buffedSpeed;
+	protected int buffedArmour;
+	protected int buffedHealth;
 
+	protected int currentHealth;
+
+		 * 
+		 */
+		
 	}
 
 	public static void main(String[] args) throws Exception{
