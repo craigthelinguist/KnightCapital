@@ -120,6 +120,9 @@ public class WorldController{
 	 */
 	public void keyPressed(KeyEvent ke){
 
+
+
+
 		int code = ke.getKeyCode();
 		if (code == ROTATE_CW){
 			camera.rotateClockwise();
