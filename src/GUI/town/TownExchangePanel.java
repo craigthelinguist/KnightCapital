@@ -64,14 +64,17 @@ public class TownExchangePanel extends JPanel implements MouseListener, MouseMot
 	protected TownExchangePanel(TownController controller){
 		this.controller = controller;
 
+		JPanel wrapperPanel = new JPanel();
+
+
 		City city = controller.getCity();
 		partyVisitors = new TownPartyPanel(this,controller.getVisitors(),city);
 		partyGarrison = new TownPartyPanel(this,controller.getGarrison(),city);
 		itemsVisitors = new TownItemPanel(this,controller.getVisitors(),city);
 		itemsGarrison = new TownItemPanel(this,controller.getGarrison(),city);
 
-		BoxLayout layout = new BoxLayout(this,BoxLayout.Y_AXIS);
-		this.setLayout(layout);
+		BoxLayout layout = new BoxLayout(wrapperPanel,BoxLayout.Y_AXIS);
+		wrapperPanel.setLayout(layout);
 
 		buttonLeave = new JButton("<-- Leave");
 		JPanel visitorButtons = new JPanel();
@@ -90,19 +93,24 @@ public class TownExchangePanel extends JPanel implements MouseListener, MouseMot
 		parties.add(partyVisitors);
 		parties.add(partyGarrison);
 		parties.add(garrisonButtons);
-		this.add(parties);
+		wrapperPanel.add(parties);
 
 		// items
 		JPanel items = new JPanel();
 		items.setOpaque(false);
 		items.add(itemsVisitors);
 		items.add(itemsGarrison);
-		this.add(items);
+		wrapperPanel.add(items);
+
+
+		wrapperPanel.setOpaque(false);
+		wrapperPanel.addMouseListener(this);
+		wrapperPanel.addMouseMotionListener(this);
 
 		this.setOpaque(false);
+		this.setLayout(new FlowLayout(FlowLayout.LEFT));
+		this.add(wrapperPanel);
 
-		this.addMouseListener(this);
-		this.addMouseMotionListener(this);
 	}
 
 	/**
@@ -243,7 +251,37 @@ public class TownExchangePanel extends JPanel implements MouseListener, MouseMot
 	/**
 	 * Take the items from point1 in the party at panel1, and from point2 in the party at panel2, and
 	 * swap their positions. A hero cannot leave its own party and if you try to do so it will not be moved.
-	 * @param panel1: first panel
+	 * @p
+	// controller and top-level view
+	private TownController controller;
+	private BufferedImage splash;
+
+	// components
+
+
+	private TownExchangePanel panel_exchange;
+	private TownButtonPanel panel_buttons;
+
+	protected TownPanel(TownController townController) {
+		this.controller = townController;
+		this.splash = ImageLoader.load(FILEPATH + BACKDROP, ".jpg");
+		this.setPreferredSize(new Dimension(splash.getWidth(),splash.getHeight()));
+
+		Dimension childDimensions = new Dimension(getWidth()/3,getHeight()/3);
+		panel_exchange = new TownExchangePanel(townController);
+		//panel_buttons = new TownButtonPanel(childDimensions,townController);
+
+		this.setLayout(new FlowLayout(FlowLayout.LEFT));
+
+		this.add(panel_exchange);
+		//this.add(panel_buttons);
+
+		System.out.println(panel_exchange.getPreferredSize());
+		System.out.println(panel_exchange.getSize());
+
+	}
+
+	@Overridearam panel1: first panel
 	 * @param point1: index of item in the party at panel1
 	 * @param panel2: second panel
 	 * @param point2: index of item in the party at panel2
