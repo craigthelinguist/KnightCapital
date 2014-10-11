@@ -21,6 +21,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import GUI.CustomButton;
 import tools.Constants;
 import tools.ImageLoader;
 import world.icons.Party;
@@ -57,7 +58,7 @@ public class TownExchangePanel extends JPanel implements MouseListener, MouseMot
 	private TownItemPanel itemsVisitors;
 
 	// buttons
-	private JButton buttonLeave;
+	private CustomButton buttonLeave;
 	private JButton buttonTrain;
 
 	// thing being dragged
@@ -87,7 +88,11 @@ public class TownExchangePanel extends JPanel implements MouseListener, MouseMot
 		BoxLayout layout = new BoxLayout(wrapperPanel,BoxLayout.Y_AXIS);
 		wrapperPanel.setLayout(layout);
 
-		buttonLeave = new JButton("<-- Leave");
+		BufferedImage leaveGameDefault = ImageLoader.load(Constants.GUI_TOWN_BUTTONS + "exit.png");
+		BufferedImage leaveGamePressed = ImageLoader.load(Constants.GUI_TOWN_BUTTONS + "exitClicked.png");
+		BufferedImage leaveGameHover = ImageLoader.load(Constants.GUI_TOWN_BUTTONS + "exitHover.png");
+		buttonLeave = new CustomButton(leaveGameDefault, leaveGamePressed, leaveGameHover);
+		
 		JPanel visitorButtons = new JPanel();
 		visitorButtons.setLayout(new BorderLayout());
 		visitorButtons.add(buttonLeave, BorderLayout.SOUTH);
