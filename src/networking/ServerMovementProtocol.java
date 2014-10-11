@@ -6,11 +6,20 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
+
+/**
+ *
+ * @author hartleneal
+ * server side dealing with key events and mouse events sent from the client side movement protocol.
+ */
+
 public class ServerMovementProtocol implements Runnable {
 	private DataInputStream in;
 	private DataOutputStream out;
 	private Connection[] users;
 	private int playNum;
+
+
 
 	public ServerMovementProtocol(DataInputStream in, DataOutputStream out, Connection[] users, int playNum){
 
@@ -22,6 +31,10 @@ public class ServerMovementProtocol implements Runnable {
 		this.playNum = playNum;
 
 	}
+
+	/**
+	 * loops waiting for input. deals with it accordingly.
+	 */
 
 	@Override
 	public void run() {
