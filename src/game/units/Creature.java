@@ -1,4 +1,5 @@
 package game.units;
+
 import java.awt.image.BufferedImage;
 import java.util.Iterator;
 import java.util.LinkedList;

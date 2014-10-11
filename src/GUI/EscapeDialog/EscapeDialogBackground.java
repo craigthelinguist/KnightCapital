@@ -92,7 +92,7 @@ public class EscapeDialogBackground extends JPanel implements ActionListener{
 		c.gridy = 4;
 		this.add(quitGame,c);
 
-	
+
 		/*Set up the action listener for the buttons */
 		quitGame.addActionListener(this);
 	}
@@ -101,9 +101,7 @@ public class EscapeDialogBackground extends JPanel implements ActionListener{
 	  @Override
 	  protected void paintComponent(Graphics g) {
 	    super.paintComponent(g);
-
 	    g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
-
 	  }
 
 	@Override
