@@ -87,9 +87,12 @@ public class Server{
 
 			// Accept Client Connection
 			Socket temp = serverMessageSocket.accept();//just testing connections.
+
+			System.out.println("accepted message socket");
+
 			Socket beast = serverMoveSocket.accept();
 
-
+            System.out.println("accepted move socket");
 
 
 
