@@ -357,7 +357,7 @@ public class WorldController{
 		PassiveItem weapon = new PassiveItem(buffsWeapon, "weapon", "Weapon","A powerful weapon crafted by the mighty Mizza +5 Damage");
 
 		Buff[] buffsArrows= new Buff[]{ new Buff(Stat.DAMAGE,1,true) };
-		PassiveItem arrows = new PassiveItem(buffsArrows, "poisonarrow", "Poison Arrows","Poisonous arrows whose feathers were made from the hairs of Mizza. All archers in party gain +1 damage");
+		PassiveItem arrows = new PassiveItem(buffsArrows, "poisonarrow", "poisonarrow","Poisonous arrows whose feathers were made from the hairs of Mizza. All archers in party gain +1 damage");
 
 
 		ItemIcon itemIcon = new ItemIcon("Pimp Juice", amulet);

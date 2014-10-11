@@ -244,7 +244,6 @@ public class InventoryPanel extends JPanel implements MouseListener {
 						 * if you don't use different inset. This is because the inventory slots aren't divided equally.
 						 */
 						if(i == 2 && j == 1) {
-							System.out.println("yes");
 							c.insets = new Insets(10,10,15,16);
 						}
 						else if(i == 2 && j == 0) {
@@ -259,7 +258,7 @@ public class InventoryPanel extends JPanel implements MouseListener {
 						else {
 							c.insets = new Insets(15,15,10,10);
 						}
-						slots[i][j] = new ItemSlotPanel(items[i][j].getName());
+						slots[i][j] = new ItemSlotPanel(items[i][j].getName()+"Slot");
 						c.gridx = i;
 						c.gridy = j;
 						slots[i][j].addMouseListener(this);
