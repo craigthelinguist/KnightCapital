@@ -8,12 +8,15 @@ import java.io.DataOutputStream;
 public class ServerMovementProtocol {
 	private DataInputStream in;
 	private DataOutputStream out;
+	private Connection[] users;
+	private int playNum;
 	
-	public ServerMovementProtocol(DataInputStream in, DataOutputStream out){
+	public ServerMovementProtocol(DataInputStream in, DataOutputStream out, Connection[] users, int playNum){
 		
 		this.in=in;
 		this.out=out;
-		
+		this.users = users;
+		this.playNum = playNum;
 		
 	}
 	

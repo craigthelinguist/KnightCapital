@@ -10,11 +10,11 @@ public class ServerMessagingProtocol implements Runnable {
 
 	private DataInputStream in;
 	private DataOutputStream out;
-	private ServerMessagingProtocol[] users;
+	private Connection[] users;
 	private int iAm;
 	private Boolean clean = true;
 
-	public ServerMessagingProtocol(DataInputStream in, DataOutputStream out, ServerMessagingProtocol[] users, int playNum){
+	public ServerMessagingProtocol(DataInputStream in, DataOutputStream out, Connection[] users, int playNum){
 
 		System.out.println("made a protocol");
 
@@ -51,7 +51,7 @@ public class ServerMessagingProtocol implements Runnable {
 					if(users[i]!=null){
 						System.out.println("users!=null");
 
-						users[i].getOut().writeUTF( "player "+ iAm + "  : "  +message);
+						users[i].getMessageProt().getOut().writeUTF( "player "+ iAm + "  : "  +message);
 
 					}
 				}

@@ -17,29 +17,30 @@ import java.io.PrintWriter;
 
 public class Server{
 
-	private static final int USER_LIMIT = 5;
-	private static final int PORT = 45612;
+	private static final int USER_LIMIT = 4;
+	public static final int PORT = 45812;
 	private static final int MOVE_PORT = 45612;
-	
 
 	//host socket and also list of client sockets.
 	private static ServerSocket serverMessageSocket;
-	private static ServerSocket ServerMoveSocket;
-	private static ArrayList<Socket> clients;
-	
+	private static ServerSocket serverMoveSocket;
 
-	//list of running serverprotocol threads. each protocol dealling with one connected user.
+
+
+	//list of running serverprotocol threads. each protocol dealing with one connected user.
     private static ServerMessagingProtocol[] users = new ServerMessagingProtocol[10];
-   
-    private static ServerMovementProtocol[] movingUsers = new ServerMovementProtocol[10];
-      
+    private static Connection[] useries = new Connection[10];
+
 	private static BufferedReader bufferedReader;
 	private static String inputLine;
 
-	//input and outputstreams
+	//input and outputstreams for messaging
 	private DataInputStream input;
-	private DataOutputStream output;
-    private DataOutputStream out;
+	private DataOutputStream out;
+
+	//input output for move
+	private DataInputStream moveInput;
+	private DataOutputStream moveOutput;
 
 	public Server() throws IOException{
 		// Initialise Server Socket
@@ -58,8 +59,6 @@ public class Server{
 	 */
 	private void initServer() {
 
-		// Set limit on ammout of users
-		  clients = new ArrayList<Socket>();
 
 		try {
 
@@ -72,7 +71,7 @@ public class Server{
 
 			//Create server socket
 			serverMessageSocket = new ServerSocket(PORT);
-			ServerMoveSocket = new ServerSocket(MOVE_PORT);
+			serverMoveSocket = new ServerSocket(MOVE_PORT);
 
 		} catch(Exception e) {
 			System.out.println(e);
@@ -87,28 +86,40 @@ public class Server{
 
 			// Accept Client Connection
 			Socket temp = serverMessageSocket.accept();//just testing connections.
-			
-			clients.add(temp);
+			Socket beast = serverMoveSocket.accept();
+
+
+
+
 
 		for(int i =0 ; i < 10; i++){
 			System.out.println("got connection socket to client: "+ temp.getInetAddress());
+
+			//create messsaging inputs and outputs
 			input = new DataInputStream(temp.getInputStream());
 			out = new DataOutputStream(temp.getOutputStream());
 
-			
+			//create movement inputs and outputs.
+			moveInput = new DataInputStream(beast.getInputStream());
+			moveOutput = new DataOutputStream(beast.getOutputStream());
+
 			//first checks if any previous connections have become unusable.
-			if(users[i]!=null && !users[i].getStatus() )
+			if(useries[i]!=null && !useries[i].getMessageProt().getStatus() )
 				//if not in use is destroyed.
-				users[i]=null;
-				
-			
+				useries[i]=null;
+
+
 			//if this connection spot is vacant fills it with the incoming request.
 			if(users[i] == null){
+
+
+
+
 
 				users[i] = new ServerMessagingProtocol(input, out, users, i);
 				Thread thread = new Thread(users[i]);
 				thread.start();
-				
+
 				break;
 			}
 		}
