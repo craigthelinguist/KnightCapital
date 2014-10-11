@@ -8,6 +8,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.MouseInfo;
 import java.awt.Point;
@@ -19,8 +20,10 @@ import java.awt.image.BufferedImage;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import GUI.CustomButton;
 import tools.Constants;
 import tools.ImageLoader;
 import world.icons.Party;
@@ -57,7 +60,7 @@ public class TownExchangePanel extends JPanel implements MouseListener, MouseMot
 	private TownItemPanel itemsVisitors;
 
 	// buttons
-	private JButton buttonLeave;
+	private CustomButton buttonLeave;
 	private JButton buttonTrain;
 
 	// thing being dragged
@@ -87,15 +90,33 @@ public class TownExchangePanel extends JPanel implements MouseListener, MouseMot
 		BoxLayout layout = new BoxLayout(wrapperPanel,BoxLayout.Y_AXIS);
 		wrapperPanel.setLayout(layout);
 
-		buttonLeave = new JButton("<-- Leave");
+		/*Load the three images for exiting button*/
+		BufferedImage leaveGameDefault = ImageLoader.load(Constants.GUI_TOWN_BUTTONS + "exit.png");
+		BufferedImage leaveGamePressed = ImageLoader.load(Constants.GUI_TOWN_BUTTONS + "exitClicked.png");
+		BufferedImage leaveGameHover = ImageLoader.load(Constants.GUI_TOWN_BUTTONS + "exitHover.png");
+		buttonLeave = new CustomButton(leaveGameDefault, leaveGamePressed, leaveGameHover);
 		JPanel visitorButtons = new JPanel();
+		JLabel exitLabel = new JLabel("Exit City");
+		exitLabel.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 20));
+		exitLabel.setForeground(new Color(225,179,55));
 		visitorButtons.setLayout(new BorderLayout());
+		visitorButtons.setOpaque(false);
 		visitorButtons.add(buttonLeave, BorderLayout.SOUTH);
-
-		buttonTrain = new JButton("Train Unit");
+		visitorButtons.add(exitLabel, BorderLayout.CENTER);
+		
+		/*Load the three images for train units button*/
+		BufferedImage trainUnitsDefault = ImageLoader.load(Constants.GUI_TOWN_BUTTONS + "trainUnits.png");
+		BufferedImage trainUnitsPressed = ImageLoader.load(Constants.GUI_TOWN_BUTTONS + "trainUnitsClicked.png");
+		BufferedImage trainUnitsHover = ImageLoader.load(Constants.GUI_TOWN_BUTTONS + "trainUnitsHover.png");
+		buttonTrain = new CustomButton(trainUnitsDefault, trainUnitsPressed, trainUnitsHover);
+		JLabel trainUnits = new JLabel("Train Units");
+		trainUnits.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 20));
+		trainUnits.setForeground(new Color(225,179,55));
 		JPanel garrisonButtons = new JPanel();
 		garrisonButtons.setLayout(new BorderLayout());
+		garrisonButtons.setOpaque(false);
 		garrisonButtons.add(buttonTrain, BorderLayout.SOUTH);
+		garrisonButtons.add(trainUnits, BorderLayout.CENTER);
 
 		// parties
 		JPanel parties = new JPanel();

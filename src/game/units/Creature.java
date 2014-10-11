@@ -7,6 +7,7 @@ import java.util.Map;
 
 import player.Player;
 import renderer.Animation;
+import renderer.AnimationMap;
 import tools.Constants;
 import tools.ImageLoader;
 import tools.Log;
@@ -43,7 +44,7 @@ public abstract class Creature {
 	}
 
 	public void setAnimation(String name){
-		animations.setAnimation(name);
+		animations.setImage(name);
 	}
 
 	public Creature(String imgName, Player player, Stats stats) {
@@ -54,13 +55,13 @@ public abstract class Creature {
 
 		// set up images
 		animations = new AnimationMap();
-		animations.addAnimation("portrait", ImageLoader.loadAnimation(Constants.PORTRAITS + imgName));
+		animations.addImage("portrait", ImageLoader.load(Constants.PORTRAITS + imgName));
 		imgName = imgName + "_" + player.getColour();
 		Map<String,BufferedImage> images = ImageLoader.loadDirectedImages(Constants.ICONS + imgName);
 		for (Map.Entry<String,BufferedImage> entry : images.entrySet()){
 			animations.addImage(entry.getKey(), entry.getValue());
 		}
-		animations.setAnimation("north");
+		animations.setImage("north");
 
 	}
 
