@@ -114,7 +114,7 @@ public class WorldController{
 
 		else {
 
-			client = new Client();
+			client = new Client("130.195.6.98", 45612);
 
 		}
 
@@ -126,6 +126,9 @@ public class WorldController{
 	 * @param ke: details about the key event
 	 */
 	public void keyPressed(KeyEvent ke){
+
+
+
 
 		int code = ke.getKeyCode();
 		if (code == ROTATE_CW){

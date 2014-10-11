@@ -100,7 +100,7 @@ public class Client implements Runnable {
 
 
 
-	public Client() {
+	public Client(String ipAddress, int port) {
 		String s = "wrong!";
 
 		try {
@@ -110,7 +110,7 @@ public class Client implements Runnable {
 
 			//connects to socket based on ip and port number. Ip needs to be configured for individual testing on different computers.
 			System.out.println("connecting...");
-			socket = new Socket("130.195.4.174", 45612);
+			socket = new Socket(ipAddress, port);
 			System.out.println("conected!");
 
 			//construct input stream from socket
@@ -179,7 +179,7 @@ public class Client implements Runnable {
 			player = (Player) input.readObject();
 			System.out.println("client request ID: "+ID);
 
-			
+
 			//will do more once we get the player class going
 
 		} catch (IOException | ClassNotFoundException e) {
@@ -215,7 +215,7 @@ public class Client implements Runnable {
 		}
 		//otherwise it closes the socket
 		else{
-			//			try { out. 
+			//			try { out.
 			//				socket.close();
 			//				System.out.println("socket closed yo");
 			//				System.exit(0);
