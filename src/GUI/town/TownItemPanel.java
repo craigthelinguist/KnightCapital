@@ -5,8 +5,10 @@ import game.items.Item;
 import game.items.PassiveItem;
 import game.units.Creature;
 import game.units.Hero;
+import game.units.HeroStats;
 import game.units.Stat;
 import game.units.Unit;
+import game.units.UnitStats;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -86,53 +88,6 @@ public class TownItemPanel extends JPanel{
 
 	public Party getParty(){
 		return this.party;
-	}
-
-	public static void main(String[] args){
-		JFrame frame = new JFrame();
-		JPanel panel = new JPanel();
-		Player player = new Player("Biggie Smalls",2);
-		Hero hero = new Hero("ovelia",player);
-		Creature[][] members = Party.newEmptyParty();
-
-		Unit u1 = new Unit("knight",player);
-		u1.revive(20);
-
-		Unit u2 = new Unit("knight",player);
-		u2.revive(45);
-
-		members[1][1] = u1;
-		members[0][0] = u2;
-		members[2][1] = hero;
-
-		Party party = new Party(hero, player, members);
-
-		Buff[] buffsWeapon = new Buff[]{ Buff.newTempBuff(Stat.DAMAGE,5), Buff.newTempBuff(Stat.ARMOUR, 10) };
-		PassiveItem weapon = new PassiveItem(buffsWeapon, "weapon", "Weapon","A powerful weapon crafted by the mighty Mizza +5 Damage");
-
-		Buff[] buffsArrows= new Buff[]{ Buff.newTempBuff(Stat.DAMAGE,1) };
-		PassiveItem arrows = new PassiveItem(buffsArrows, "poisonarrow", "Poison Arrows","Poisonous arrows whose feathers were made from the hairs of Mizza. All archers in party gain +1 damage");
-
-		party.addItem(weapon);
-		party.addItem(arrows);
-
-		CityTile[][] tiles = new CityTile[3][3];
-		for (int i = 0; i < 3; i++){
-			for (int j = 0; j < 3; j++){
-				tiles[i][j] = new CityTile(i,j);
-			}
-		}
-
-		City c1 = new City("basic", player, tiles);
-
-		TownItemPanel tip = new TownItemPanel(null,party,c1);
-		//tpp.party = party;
-		panel.add(tip);
-		frame.add(tip);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.pack();
-		frame.setVisible(true);
-
 	}
 
 }

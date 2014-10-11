@@ -50,12 +50,13 @@ public abstract class Creature {
 		}
 	}
 
-	public Creature(String imgName, Player player) {
+	public Creature(String imgName, Player player, Stats stats) {
 		this.portrait = ImageLoader.load(Constants.PORTRAITS + imgName);
 		imgName = imgName.concat("_" + player.getColour());
 		this.animations = ImageLoader.loadDirectedAnimations(Constants.ICONS + imgName);
 		this.animation = animations.get("north");
 		this.animationName = "north";
+		this.stats = stats;
 		buffs = new LinkedList<>();
 	}
 

@@ -2,8 +2,10 @@ package GUI.reusable;
 
 import game.units.Creature;
 import game.units.Hero;
+import game.units.HeroStats;
 import game.units.Stat;
 import game.units.Unit;
+import game.units.UnitStats;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -181,11 +183,11 @@ public class PartyPanel extends JPanel {
 		JFrame frame = new JFrame();
 		JPanel panel = new JPanel();
 		Player player = new Player("Biggie Smalls",2);
-		Hero hero = new Hero("ovelia",player);
+		Hero hero = new Hero("ovelia",player, new HeroStats(40,10,80,0,8,8));
 		Creature[][] members = Party.newEmptyParty();
 		members[0][0] = hero;
-		members[0][1] = new Unit("knight",player);
-		members[1][1] = new Unit("knight",player);
+		members[0][1] = new Unit("knight",player, new UnitStats(80,20,20,5));
+		members[1][1] = new Unit("knight",player, new UnitStats(80,20,20,5));
 		Party party = new Party(hero, player, members);
 		PartyPanel tpp = new PartyPanel(party);
 		//tpp.party = party;
