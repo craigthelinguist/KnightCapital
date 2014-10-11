@@ -22,6 +22,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import tools.Constants;
+import tools.ImageLoader;
 import world.icons.Party;
 import world.towns.City;
 import controllers.TownController;
@@ -32,6 +33,8 @@ import controllers.TownController;
  *
  */
 public class TownExchangePanel extends JPanel implements MouseListener, MouseMotionListener{
+
+	BufferedImage backgroundImage;
 
 	// constants
 	private static final int PORTRAIT_WD = Constants.PORTRAIT_DIMENSIONS.width;
@@ -64,8 +67,15 @@ public class TownExchangePanel extends JPanel implements MouseListener, MouseMot
 	protected TownExchangePanel(TownController controller){
 		this.controller = controller;
 
-		JPanel wrapperPanel = new JPanel();
+		JPanel wrapperPanel = new JPanel(){
 
+			@Override
+			protected void paintComponent(Graphics g){
+				super.paintComponent(g);
+			    g.drawImage(backgroundImage = ImageLoader.load(Constants.GUI_FILEPATH + "dialogBackground.png"), 0, 0, getWidth(), getHeight(), this);
+			}
+
+		};
 
 		City city = controller.getCity();
 		partyVisitors = new TownPartyPanel(this,controller.getVisitors(),city);

@@ -195,7 +195,7 @@ public class TileInformationPanel extends JPanel{
 				int health = p.getHero().getBaseHealth();
 				int armour = p.getHero().getBaseArmour();
 				int moves = p.getHero().getMovePoints();
-
+				
 				int buffD = p.getHero().getBuffedDamage();
 				int buffH = p.getHero().getBuffedHealth();
 				int buffA = p.getHero().getBuffedArmour();
