@@ -9,6 +9,7 @@ import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.Map;
 
+import renderer.AnimationMap;
 import tools.Constants;
 import tools.ImageLoader;
 
@@ -22,16 +23,5 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
 
 
 public class AnimationMapLoader {
-
-	// use the static methods
-	private AnimationMapLoader(){}
-
-	public void test() throws IOException{
-		String name = "ovelia_red_south";
-	}
-
-	public static void main(String[] args) throws IOException{
-		new AnimationMapLoader().test();
-	}
 
 }

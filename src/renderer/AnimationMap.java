@@ -1,17 +1,31 @@
 package renderer;
 
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import tools.ImageLoader;
 import tools.KCImage;
 
-public class AnimationMap {
+public class AnimationMap{
 
 	private Map<String,KCImage> animations;
 	private KCImage animation;
 	private String animationName;
+
+	/**
+	 * For data loading only. Don't use.
+	 * @param images
+	 */
+	public AnimationMap(List<KCImage> images){
+		this.animations = new HashMap<>();
+		for (KCImage img : images){
+			animations.put(img.name, img);
+		}
+	}
 
 	public AnimationMap(){
 		animations = new HashMap<>();
@@ -82,6 +96,14 @@ public class AnimationMap {
 
 	public String getName(){
 		return animationName;
+	}
+
+	public List<KCImage> asList(){
+		List<KCImage> images = new ArrayList<>();
+		for (KCImage image : animations.values()){
+			images.add(image);
+		}
+		return images;
 	}
 
 }
