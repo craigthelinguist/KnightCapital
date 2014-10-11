@@ -196,7 +196,11 @@ public class TileInformationPanel extends JPanel{
 				int armour = p.getHero().getBaseArmour();
 				int moves = p.getHero().getMovePoints();
 
-				movesLeft = new JLabel("<html>Health: "+health+" <br>Damage: "+damage+"(+"+p.getHero().getBuffedDamage()+") <br>Armour: "+armour+"<br>Moves Left: "+moves);
+				int buffD = p.getHero().getBuffedDamage();
+				int buffH = p.getHero().getBuffedHealth();
+				int buffA = p.getHero().getBuffedArmour();
+
+				movesLeft = new JLabel("<html>Health: "+health+"<font color='green'> +"+buffH+"</font> <br>Damage: "+damage+"<font color='green'> +"+buffD+"</font> <br>Armour: "+armour+"<font color='green'> +"+buffA+"</font><br>Moves Left: "+moves+"</html>");
 				movesLeft.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 15));
 				movesLeft.setForeground(new Color(225,179,55));
 				c.insets = new Insets(1,0,8,0);
