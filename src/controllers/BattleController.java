@@ -40,8 +40,18 @@ public class BattleController{
 	private void run() {
 
 		// Main Loop for battle. Will run until one party is defeated
-		//while()
+		while(!party1.isDead() || !party2.isDead()) {
+			// Determine next creatures turn.
+			
+			// Take turn for that creature
+			
+			// update battle renderer
+		}
 
+	}
+	
+	public static void main(String[] strungout) {
+		Party p1 = new Party();
 	}
 
 }
