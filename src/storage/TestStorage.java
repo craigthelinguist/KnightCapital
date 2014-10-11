@@ -1,22 +1,51 @@
 package storage;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import com.thoughtworks.xstream.XStream;
 
+import renderer.AnimationMap;
+import storage.converters.KCImageConverter;
+import storage.loaders.LoaderConstants;
 import tools.Constants;
+import tools.ImageLoader;
+import tools.KCImage;
 
 public class TestStorage {
 
 	public void test() throws Exception{
 
-		String file = "knight.xml";
-		FileReader fileReader = new FileReader(Constants.DATA_UNITS + file);
+
+		BufferedImage image1 = ImageLoader.load(Constants.ICONS + "ovelia_red_north");
+		BufferedImage image2 = ImageLoader.load(Constants.ICONS + "ovelia_red_east");
+		KCImage kc1 = new KCImage(image1,"north",Constants.ICONS + "ovelia_red_north");
+		KCImage kc2 = new KCImage(image2,"east",Constants.ICONS + "ovelia_red_east");
+		List<KCImage> images = new ArrayList<>();
+		images.add(kc1);
+		images.add(kc2);
+
+		String file = "test.xml";
 		XStream stream = new XStream();
-		stream.alias("person", storage.Person.class);
-		Person p = (Person) stream.fromXML(fileReader);
-		System.out.println(p);
+		stream.registerConverter(new KCImageConverter());
+		stream.alias("images", AnimationMap.class);
+		stream.alias("image", KCImage.class);
+		String str = stream.toXML(images);
+		PrintStream ps = new PrintStream(new File("test.xml"));
+		ps.println(str);
+
+		FileReader fileReader = new FileReader(new File("test.xml"));
+		images = (List<KCImage>)(stream.fromXML(fileReader));
+		for (KCImage img : images){
+			System.out.println(img.name);
+		}
 
 	}
 

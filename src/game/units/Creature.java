@@ -56,12 +56,9 @@ public abstract class Creature {
 
 		// set up images
 		animations = new AnimationMap();
-		animations.addImage("portrait", ImageLoader.load(Constants.PORTRAITS + imgName));
-		imgName = imgName + "_" + player.getColour();
-		Map<String,BufferedImage> images = ImageLoader.loadDirectedImages(Constants.ICONS + imgName);
-		for (Map.Entry<String,BufferedImage> entry : images.entrySet()){
-			animations.addImage(entry.getKey(), entry.getValue());
-		}
+		animations.addImage("portrait", Constants.PORTRAITS, ImageLoader.load(Constants.PORTRAITS + imgName));
+		String playerColor = player.getColour();
+		animations.addDirectedImages(Constants.ICONS, imgName, playerColor);
 		animations.setImage("north");
 
 	}
