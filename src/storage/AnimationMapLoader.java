@@ -41,7 +41,7 @@ public class AnimationMapLoader {
 	public void test() throws IOException{
 
 		String name = "ovelia_red_south";
-		BufferedImage image = ImageLoader.load(Constants.ICONS + name);
+		/*
 		CraigImage ci = new CraigImage(image,name);
 
 		XStream stream = new XStream(new DomDriver());
@@ -54,7 +54,7 @@ public class AnimationMapLoader {
 		CraigImage craig_image = (CraigImage)stream.fromXML(new FileReader("test.xml"));
 
 		System.out.println(craig_image.name);
-
+*/
 	}
 
 	class CraigImageConverter implements Converter{

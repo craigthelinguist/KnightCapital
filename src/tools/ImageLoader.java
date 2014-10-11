@@ -25,7 +25,9 @@ public class ImageLoader {
 	 */
 
 
-	public static BufferedImage load(String filename){
+	public static BufferedImage load(String base){
+
+		String filename = base;
 
 		if (!filename.endsWith(".png")){
 			filename = filename.concat(".png");
@@ -41,33 +43,18 @@ public class ImageLoader {
 				File file = new File(filename);
 				if(file == null){
 					System.out.println(filename+" failed to load");
-					return new BufferedImage(1,1, BufferedImage.TYPE_INT_RGB);
+					return new BufferedImage(1,1,BufferedImage.TYPE_INT_RGB);
 				}
-				BufferedImage newImage = ImageIO.read(file);
+				BufferedImage bufferedImage = ImageIO.read(file);
 				//Stores the image
-				images.put(filename, newImage);
-				return newImage;
+				images.put(filename, bufferedImage);
+				return bufferedImage;
 			}catch(IOException e){
 				//Display an error and return a 1x1 Image
 				System.err.println("Error loading file \""+filename+"\"\n");
-				return new BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB);
+				return null;
 			}
 		}
-	}
-
-	/**
-	 * Given an array of filenames, loads and returns those images.
-	 * @param filenames: array of the names of the images to load.
-	 * @param frameDelay: delay between each image.
-	 * @return
-	 */
-	public static Animation loadAnimations(String[] filenames, int frameDelay){
-		BufferedImage[] images = new BufferedImage[filenames.length];
-		for (int i = 0; i < filenames.length; i++){
-			if (images == null) break;
-			images[i] = load(filenames[i]);
-		}
-		return new Animation(images,frameDelay);
 	}
 
 	/**
@@ -85,20 +72,15 @@ public class ImageLoader {
 		return map;
 	}
 
-	public static Animation loadAnimation(String name) {
-		BufferedImage bi = ImageLoader.load(name);
-		return new Animation(new BufferedImage[]{bi},1);
-	}
-
 	/**
 	 * Use this if your file extension is not .png
 	 * @param filename
 	 * @param extension
 	 * @return
 	 */
-	public static BufferedImage load(String filename, String extension) {
+	public static BufferedImage load(String base, String extension) {
 
-		filename = filename + extension;
+		String filename = base + extension;
 
 		//If the image already exists then return
 		if(images.containsKey(filename)){
@@ -110,16 +92,17 @@ public class ImageLoader {
 				File file = new File(filename);
 				if(file == null){
 					System.out.println(filename+" failed to load");
-					return new BufferedImage(1,1, BufferedImage.TYPE_INT_RGB);
+					BufferedImage bufferedImage = new BufferedImage(1,1,BufferedImage.TYPE_INT_RGB);
+					return bufferedImage;
 				}
-				BufferedImage newImage = ImageIO.read(file);
+				BufferedImage bufferedImage = ImageIO.read(file);
 				//Stores the image
-				images.put(filename, newImage);
-				return newImage;
+				images.put(filename, bufferedImage);
+				return bufferedImage;
 			}catch(IOException e){
 				//Display an error and return a 1x1 Image
 				System.err.println("Error loading file \""+filename+"\"\n");
-				return new BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB);
+				return new BufferedImage(1,1,BufferedImage.TYPE_INT_RGB);
 			}
 		}
 	}

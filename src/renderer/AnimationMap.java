@@ -4,10 +4,12 @@ import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Map;
 
+import tools.KCImage;
+
 public class AnimationMap {
 
-	private Map<String,BufferedImage> animations;
-	private BufferedImage animation;
+	private Map<String,KCImage> animations;
+	private KCImage animation;
 	private String animationName;
 
 	public AnimationMap(){
@@ -17,23 +19,23 @@ public class AnimationMap {
 	}
 
 	public void addImage(String name, BufferedImage image){
-		animations.put(name,image);
+		animations.put(name,new KCImage(image,name));
 	}
 
 	public BufferedImage getPortrait(){
-		return animations.get("portrait");
+		return animations.get("portrait").image;
 	}
 
 	public BufferedImage getImage(){
-		return animation;
+		return animation.image;
 	}
 
 	public BufferedImage getImage(String name){
-		return animations.get(name);
+		return animations.get(name).image;
 	}
 
 	public void setImage(String name){
-		BufferedImage image = animations.get(name);
+		KCImage image = animations.get(name);
 		if (image != null){
 			animation = image;
 			animationName = name;

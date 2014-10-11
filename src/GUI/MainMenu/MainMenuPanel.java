@@ -110,7 +110,7 @@ public class MainMenuPanel extends JPanel implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
+
 		if(e.getSource() == newGame) {
 			//what to do if button pressed is new game
 		}
@@ -121,7 +121,7 @@ public class MainMenuPanel extends JPanel implements ActionListener{
 			//what to do if button pressed is join game
 		}
 		else if(e.getSource() == quitGame) {
-			//what to do if button pressed is quit 
+			//what to do if button pressed is quit
 		}
 	}
 }
