@@ -1,4 +1,4 @@
-package GUI.PartyDialog;
+package GUI.party;
 
 import game.units.Creature;
 import game.units.Hero;
@@ -129,7 +129,7 @@ public class PartyDialog extends JDialog  {
 
         //Selected Panel
 
-        selectedItemPanel = new SelectedItemPanel(panelDimension, isOwner);
+        selectedItemPanel = new SelectedItemPanel(this, panelDimension);
         selectedItemPanel.setBackground(Color.LIGHT_GRAY);
         gc.gridx = 0;
         gc.gridy = 1;
@@ -220,6 +220,13 @@ public class PartyDialog extends JDialog  {
 	/** Set that shit, not sure if this would be needed **/
 	public void setTile(Tile tile) {
 		this.tile = tile;
+	}
+
+	/**
+	 * Returns true if owner of party
+	 */
+	public boolean isOwner(){
+		return this.isOwner;
 	}
 
 	public static void main(String[] batman) {
