@@ -52,9 +52,9 @@ public class TownItemPanel extends JPanel{
 				Item item = party.getItem(x, y);
 				boolean weShouldDraw = true;
 				if (item == null) weShouldDraw = false;
-				//if (master.getDraggedPanel() != null && master.getDraggedPanel() == this){
-				//	if (master.getDraggedPoint().equals(new Point(x,y))) weShouldDraw = false; // being dragged
-				//}
+				if (master.getDraggedPanel() != null && master.getDraggedPanel() == this){
+					if (master.getDraggedPoint().equals(new Point(x,y))) weShouldDraw = false; // being dragged
+				}
 				if (weShouldDraw){
 					BufferedImage portrait = item.getImage();
 					g.drawImage(portrait, x*ITEM_WD, y*ITEM_HT, null);
@@ -67,6 +67,26 @@ public class TownItemPanel extends JPanel{
 			}
 		}
 
+	}
+
+	/**
+	 * Return the party index at the given mouse click.
+	 * @return: the index of the mouse click, or null if the index wasn't valid.
+	 */
+	protected Point getFromPoint(Point click, Point panelPos){
+		final int CELL_WIDTH = ITEM_WD;
+		final int CELL_HEIGHT = ITEM_HT;
+		Point position = this.getLocationOnScreen();
+		position.x -= panelPos.x; position.y -= panelPos.y;
+		Point withinPanel = new Point(click.x - position.x, click.y - position.y);
+		int x = withinPanel.x/CELL_WIDTH;
+		int y = withinPanel.y/CELL_HEIGHT;
+		if (x >= 0 && x < INVENTORY_COLS && y >= 0 && y < INVENTORY_ROWS) return new Point(x,y);
+		else return null;
+	}
+
+	public Party getParty(){
+		return this.party;
 	}
 
 	public static void main(String[] args){

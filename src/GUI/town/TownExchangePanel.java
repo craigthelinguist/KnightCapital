@@ -1,5 +1,6 @@
 package GUI.town;
 
+import game.items.Item;
 import game.units.Creature;
 import game.units.Hero;
 
@@ -23,7 +24,6 @@ import javax.swing.JPanel;
 import tools.Constants;
 import world.icons.Party;
 import world.towns.City;
-
 import controllers.TownController;
 
 /**
@@ -50,8 +50,8 @@ public class TownExchangePanel extends JPanel implements MouseListener, MouseMot
 	// dynamic components
 	private TownPartyPanel partyGarrison;
 	private TownPartyPanel partyVisitors;
-	private JPanel itemsGarrison;
-	private JPanel itemsVisitors;
+	private TownItemPanel itemsGarrison;
+	private TownItemPanel itemsVisitors;
 
 	// buttons
 	private JButton buttonLeave;
@@ -136,7 +136,8 @@ public class TownExchangePanel extends JPanel implements MouseListener, MouseMot
 		partyGarrison.repaint();
 		partyVisitors.repaint();
 
-		if (draggedPanel != null && draggedPoint != null){
+		if (draggedPanel == null || draggedPoint == null) return;
+		if (draggedPanel instanceof TownPartyPanel){
 			TownPartyPanel tpp = (TownPartyPanel)draggedPanel;
 			Creature member = tpp.getParty().getMember(draggedPoint.x, draggedPoint.y);
 			if (member == null) return;
@@ -146,6 +147,17 @@ public class TownExchangePanel extends JPanel implements MouseListener, MouseMot
 			mousePoint.x = mousePoint.x - pos.x - portrait.getWidth()/2;
 			mousePoint.y = mousePoint.y - pos.y - portrait.getHeight()/2;
 			g.drawImage(portrait,mousePoint.x,mousePoint.y,null);
+		}
+		else if (draggedPanel instanceof TownItemPanel){
+			TownItemPanel tip = (TownItemPanel)draggedPanel;
+			Item item = tip.getParty().getItem(draggedPoint.x, draggedPoint.y);
+			if (item == null) return;
+			Point mousePoint = MouseInfo.getPointerInfo().getLocation();
+			BufferedImage image = item.getImage();
+			Point pos = this.getLocationOnScreen();
+			mousePoint.x = mousePoint.x - pos.x - image.getWidth()/2;
+			mousePoint.y = mousePoint.y - pos.y - image.getHeight()/2;
+			g.drawImage(image,mousePoint.x,mousePoint.y,null);
 		}
 
 	}
@@ -166,19 +178,33 @@ public class TownExchangePanel extends JPanel implements MouseListener, MouseMot
 	public void mousePressed(MouseEvent e) {
 
 		Point click = new Point(e.getX(),e.getY());
+		Point location = this.getLocationOnScreen();
 
-		Point pointVisitorsParty = partyVisitors.getFromPoint(click,this.getLocationOnScreen());
+		Point pointVisitorsParty = partyVisitors.getFromPoint(click,location);
 		if (pointVisitorsParty != null){
 			this.draggedPoint = pointVisitorsParty;
 			this.draggedPanel = this.partyVisitors;
 			return;
 		}
 
-		Point pointGarrisonParty = partyGarrison.getFromPoint(click,this.getLocationOnScreen());
+		Point pointGarrisonParty = partyGarrison.getFromPoint(click,location);
 		if (pointGarrisonParty != null){
 			this.draggedPoint = pointGarrisonParty;
 			this.draggedPanel = this.partyGarrison;
 			return;
+		}
+
+		Point pointVisitorsItems = itemsVisitors.getFromPoint(click,location);
+		if (pointVisitorsItems != null){
+			this.draggedPoint = pointVisitorsItems;
+			this.draggedPanel = this.itemsVisitors;
+			return;
+		}
+
+		Point pointGarrisonItems = itemsGarrison.getFromPoint(click, location);
+		if (pointGarrisonItems != null){
+			this.draggedPoint = pointGarrisonItems;
+			this.draggedPanel = this.itemsGarrison;
 		}
 
 	}
