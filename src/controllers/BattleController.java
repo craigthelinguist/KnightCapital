@@ -1,6 +1,29 @@
 package controllers;
 
+import java.awt.Dimension;
+import java.awt.Point;
+import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.SwingUtilities;
+
+import player.Player;
+import renderer.Camera;
+import renderer.WorldRenderer;
+import storage.BattleWorldLoader;
+import tools.Geometry;
+import world.World;
 import world.icons.Party;
+import world.icons.WorldIcon;
+import world.tiles.CityTile;
+import world.tiles.Tile;
+import world.towns.City;
+import GUI.MainFrame;
 
 /**
  * Battle
@@ -19,21 +42,58 @@ import world.icons.Party;
  */
 public class BattleController{
 
+	// gui shit
+	private MainFrame frame;
+
+	// world facade for battle
+	private World world;
+
+	// Our two battling partys
 	private Party party1;
 	private Party party2;
+
+	// player this controller belongs to
+	private Player player;
+
+	// current tile the player has clicked
+	private Point selected;
+	private Point hover; // point your mouse is over
+
+	// highlighted tiles that are showing where the player's selected party can move to
+	private Set<Point> highlightedTiles;
+
+	// the camera that the player is viewing from
+	private Camera camera;
+
+	// whether this worldController is currently doing anything
+	private boolean active = true;
+	private long lastMouse = 0;
+
+	// key bindings
+	private static final int ROTATE_CW = KeyEvent.VK_R;
+	private static final int ROTATE_CCW = KeyEvent.VK_E;
+	private static final int PAN_UP = KeyEvent.VK_UP;
+	private static final int PAN_DOWN = KeyEvent.VK_DOWN;
+	private static final int PAN_RIGHT = KeyEvent.VK_RIGHT;
+	private static final int PAN_LEFT = KeyEvent.VK_LEFT;
 
 	/**
 	 * Constructs a new battle controller for a new battle instance.
 	 * @param party 1 & 2 : the two party about to battle.
 	 * @param
 	 */
-	public BattleController(Party p1, Party p2) {
+	public BattleController(World w, MainFrame mf, Party p1, Party p2) {
 		// set partys
 		party1 = p1;
 		party2 = p2;
 
-		// construct new battle renderer
+		world = w; // set world
 
+		camera = WorldRenderer.getCentreOfWorld(w);
+		frame = mf;
+
+		selected = null;
+		highlightedTiles = new HashSet<>();
 
 	}
 
@@ -42,16 +102,192 @@ public class BattleController{
 		// Main Loop for battle. Will run until one party is defeated
 		while(!party1.isDead() || !party2.isDead()) {
 			// Determine next creatures turn.
-			
+
 			// Take turn for that creature
-			
+
 			// update battle renderer
 		}
 
 	}
-	
+
+	/**
+	 * Player has pushed a key
+	 * @param ke: details about the key event
+	 */
+	public void keyPressed(KeyEvent ke){
+
+
+
+
+		int code = ke.getKeyCode();
+		if (code == ROTATE_CW){
+			camera.rotateClockwise();
+			world.updateSprites(true);
+			frame.redraw();
+		}
+		else if (code == ROTATE_CCW){
+			camera.rotateCounterClockwise();
+			world.updateSprites(false);
+			frame.redraw();
+		}
+		else if (code == PAN_UP){
+			camera.panUp();
+			frame.redraw();
+		}
+		else if (code == PAN_DOWN){
+			camera.panDown();
+			frame.redraw();
+		}
+		else if (code == PAN_RIGHT){
+			camera.panRight();
+			frame.redraw();
+		}
+		else if (code == PAN_LEFT){
+			camera.panLeft();
+			frame.redraw();
+		}
+
+	}
+
+	/**
+	 * Player has clicked on something.
+	 * @param me: details about the click.
+	 * @param panel: what they clicked on (inventory, world, etc.)
+	 */
+	public void mousePressed(MouseEvent me){
+
+		Point ptIso = new Point(me.getX(),me.getY());
+		Point ptCartesian = Geometry.isometricToCartesian(ptIso, camera, world.dimensions);
+		Tile clickedTile = world.getTile(ptCartesian);
+		Tile selectedTile = world.getTile(selected);
+
+
+		// deselected the tile
+		if (selected != null && SwingUtilities.isLeftMouseButton(me) && selectedTile == clickedTile){
+			System.out.println("deselect");
+			deselect();
+			frame.updateInfo(null);
+			frame.redraw();
+			this.lastMouse = System.currentTimeMillis();
+		}
+
+		// selected the tile
+		else if (selectedTile != clickedTile && SwingUtilities.isLeftMouseButton(me)){
+			selected = ptCartesian;
+			highlightTiles(clickedTile);
+			frame.updateInfo(clickedTile);
+			frame.redraw();
+			this.lastMouse = System.currentTimeMillis();
+		}
+
+		// moved
+		else if (selected != null && SwingUtilities.isRightMouseButton(me)){
+
+			boolean moved = world.moveParty(player, selected, ptCartesian);
+			if (moved){
+				selected = ptCartesian;
+				highlightTiles(clickedTile);
+				frame.updateInfo(clickedTile);
+				frame.redraw();
+				this.lastMouse = System.currentTimeMillis();
+			}
+		}
+
+	}
+
+
+	/**
+	 * The mouse has moved from lastDrag -> point.
+	 * @param lastDrag: point mouse started at
+	 * @param point: point mouse moved to.
+	 */
+	public void mouseDragged(Point lastDrag, Point point) {
+		int x = point.x - lastDrag.x;
+		int y = point.y - lastDrag.y;
+		camera.pan(x,y);
+		frame.redraw();
+	}
+
+	public void mouseMoved(MouseEvent me){
+
+		Point ptIso = new Point(me.getX(),me.getY());
+		Point ptCartesian = Geometry.isometricToCartesian(ptIso, camera, world.dimensions);
+		Tile tileHover = world.getTile(ptCartesian);
+		if (tileHover == null) this.hover = ptCartesian;
+		else this.hover = null;
+
+	}
+
+
+	/**
+	 * Deselect the current tile. Un-highlight everything.
+	 */
+	private void deselect(){
+		selected = null;
+		resetHighlightedTiles();
+	}
+
+	/**
+	 * Resets the set of highlighted tiles.
+	 */
+	private void resetHighlightedTiles(){
+		this.highlightedTiles = new HashSet<>();
+	}
+
+
+	/**
+	 * Return true if this point is being highlighted by the world controller
+	 * @param p: a point in Cartesian space
+	 * @return: true if this point is being highlighted by the world controller
+	 */
+	public boolean isHighlighted(Point p){
+		return highlightedTiles.contains(p);
+	}
+
+	/**
+	 * If the provided tile has a party on it that belongs to this player, highlight
+	 * all the tiles to which the party can move.
+	 * @param tile: tile that a party of the player's is standing on.
+	 */
+	private void highlightTiles(Tile tile){
+		if (tile != null){
+			WorldIcon wi = tile.occupant();
+			if (wi != null && wi instanceof Party){
+				Party p = (Party)wi;
+				if (p.ownedBy(this.player)){
+					highlightedTiles = world.getValidMoves(p,tile);
+					return;
+				}
+			}
+		}
+		resetHighlightedTiles();
+	}
+
+
+	public World getWorld(){
+		return world;
+	}
+
+	public Camera getCamera(){
+		return camera;
+	}
+
+	public Tile getSelectedTile(){
+		return world.getTile(selected);
+	}
+
+	public Dimension getVisualDimensions() {
+		if (frame == null) return Toolkit.getDefaultToolkit().getScreenSize();
+		return frame.getSize();
+	}
+
 	public static void main(String[] strungout) {
-		Party p1 = new Party();
+		// build temp world
+		World w = BattleWorldLoader.loadWorld(100, 100);
+
+		// make new partys with full members
+
+
 	}
 
 }

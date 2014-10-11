@@ -73,15 +73,6 @@ public class TEMPStartMenu extends JFrame {
 		// Logo
 		gc.gridx = 0;
 		gc.gridy = 0;
-		try{
-			BufferedImage logo = ImageIO.read(new File("assets/promo/logo.png"));
-			JLabel logoLabel = new JLabel(new ImageIcon(logo));
-			this.mainPanel.add(logoLabel, gc);
-		} catch(IOException e) {
-			e.printStackTrace();
-			Log.print("Fuck off");
-		}
-
 
 		// Buttons
 		// Start
@@ -119,7 +110,8 @@ public class TEMPStartMenu extends JFrame {
 	}
 
 	private JTextField ip;
-	private JTextField port;
+	private JTextField msgPort;
+	private JTextField movePort;
 	private JButton join;
 
 	private void setJoinPanel() {
@@ -191,7 +183,7 @@ public class TEMPStartMenu extends JFrame {
 	}
 
 	private void joinGame() {
-		new Client("130.195.6.201", 45812);
+		Client c  = new Client("130.195.6.201", 45812, 45612);
 	}
 
 	private void createClient() {

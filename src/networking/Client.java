@@ -22,12 +22,12 @@ import player.Player;
 public class Client implements Runnable {
 
 	private static Socket messageSocket;
-	
+
 	private static Socket moveSocket;
-	
+
 	private static PrintWriter printWriter;
 
-	
+
 	//in and out for messaging.
 	private  static DataInputStream in;
 	private static DataOutputStream out;
@@ -51,7 +51,7 @@ public class Client implements Runnable {
 
 
 
-	public Client(String ipAddress, int port) {
+	public Client(String ipAddress, int msgPort, int movePort) {
 		String s = "wrong!";
 
 		try {
@@ -61,21 +61,21 @@ public class Client implements Runnable {
 
 			//connects to socket based on ip and port number. Ip needs to be configured for individual testing on different computers.
 			System.out.println("connecting...");
-			
-			
+
+
 			//connect messsage socket
-			messageSocket = new Socket(ipAddress, port);
+			messageSocket = new Socket(ipAddress, msgPort);
 			System.out.println("conected messages! waiting for move socket connection.....");
-			
-			moveSocket = new Socket(ipAddress, 45612);
+
+			moveSocket = new Socket(ipAddress, movePort);
 			System.out.println("connected move socket, hopefully fixed chat!");
-			
+
 
 			//construct input stream from socket for messaging
 			in = new DataInputStream(messageSocket.getInputStream());
 			out = new DataOutputStream(messageSocket.getOutputStream());
-			
-			
+
+
 			//construct in and out stream for movement
 			moveIn = new DataInputStream(moveSocket.getInputStream());
 			moveOut = new DataOutputStream(moveSocket.getOutputStream());
@@ -83,13 +83,13 @@ public class Client implements Runnable {
 			//initialises the client protocol thread which is always -
 			//- listening for incoming messages from the server.
 			clientMessager = new ClientMessagingProtocol(in,out);
-			
+
 			clientMover = new ClientMovementProtocol(moveIn, moveOut);
-			
-			
+
+
 			Thread listener = new Thread(clientMessager);
 			Thread movement = new Thread(clientMover);
-			
+
 			movement.start();
 			listener.start();
 
@@ -185,7 +185,7 @@ public class Client implements Runnable {
 		}
 		//otherwise it closes the socket
 		else{
-			
+
 
 			return "error!!!!";
 
