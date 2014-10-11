@@ -1,5 +1,7 @@
 package world.tiles;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+
 import tools.Constants;
 import tools.ImageLoader;
 import world.icons.ItemIcon;
@@ -9,7 +11,9 @@ import world.icons.Party;
  * A PassableTile is something a Creature can stand on.
  * @author: craigthelinguist
  */
+@XStreamAlias("PassableTile")
 public class PassableTile extends Tile{
+
 
 	// instantiate using static factory methods - avoids typos and other things
 	private PassableTile(int x, int y){
@@ -34,6 +38,7 @@ public class PassableTile extends Tile{
 	public boolean passable(Party party) {
 		return !occupied() || this.occupant() instanceof ItemIcon;
 	}
+
 
 
 }
