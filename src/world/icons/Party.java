@@ -235,6 +235,28 @@ public class Party extends WorldIcon{
 		}
 	}
 
+	/**
+	 * Check to see if this party has any memebers still living in it.
+	 * @return
+	 */
+	public boolean isDead() {
+
+		// For each member
+		for (int i = 0; i < members.length; i++){
+			for (int j = 0; j < members[i].length; j++){
+				// if any member is not dead return false
+				Creature creature = members[i][j];
+
+
+				if(creature != null){
+					if (!members[i][j].isDead()) return false;
+				}
+			}
+		}
+		// else return true
+		return true;
+	}
+
 
 	/**
 	 * Return the number of members in this party.

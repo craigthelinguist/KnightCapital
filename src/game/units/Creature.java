@@ -196,4 +196,14 @@ public abstract class Creature {
 		return stats.getTotal(stat);
 	}
 
+	/**
+	 * Returns true if this creature is dead. Dead as a doorknob.
+	 * @return boolean whether dead or not.
+	 */
+	public boolean isDead() {
+		if(this.healthiness() <= 0) {
+			return true;
+		}
+		return false;
+	}
 }
