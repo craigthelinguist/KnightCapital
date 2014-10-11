@@ -149,6 +149,9 @@ public class TEMPStartMenu extends JFrame {
 			}
 
 		});
+
+		joinPanel.add(join);
+
 		joinPanel.setVisible(true);
 	}
 
@@ -188,7 +191,7 @@ public class TEMPStartMenu extends JFrame {
 	}
 
 	private void joinGame() {
-		new Client(ip.getText(), Integer.parseInt(port.getText()));
+		new Client("130.195.6.168", 45612);
 	}
 
 	private void createClient() {
