@@ -29,6 +29,7 @@ public class Constants {
 	public static final String GUI_FILEPATH = Constants.ASSETS + "GUIAssets" + File.separatorChar;
 	public static final String GUI_BUTTONS = Constants.ASSETS + "GUIAssets" + File.separatorChar +"buttons"+ File.separatorChar;
 	public static final String GUI_TOWN = Constants.ASSETS + "gui_town" + File.separatorChar;
+	public static final String GUI_TOWN_BUTTONS = Constants.ASSETS + "gui_town" + File.separatorChar + "buttons" + File.separatorChar;
 
 	// these are temporary values for WorldRenderer prototype - Aaron
 	public static final int TILE_WD = 131;
