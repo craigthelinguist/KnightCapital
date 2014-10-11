@@ -28,8 +28,9 @@ public class Server{
 
 
 	//list of running serverprotocol threads. each protocol dealing with one connected user.
-    private static ServerMessagingProtocol[] users = new ServerMessagingProtocol[10];
-    private static Connection[] useries = new Connection[10];
+   // private static ServerMessagingProtocol[] users = new ServerMessagingProtocol[10];
+    private static Connection[] users = new Connection[10];
+
 
 	private static BufferedReader bufferedReader;
 	private static String inputLine;
@@ -104,9 +105,9 @@ public class Server{
 			moveOutput = new DataOutputStream(beast.getOutputStream());
 
 			//first checks if any previous connections have become unusable.
-			if(useries[i]!=null && !useries[i].getMessageProt().getStatus() )
+			if(users[i]!=null && !users[i].getMessageProt().getStatus() )
 				//if not in use is destroyed.
-				useries[i]=null;
+				users[i]=null;
 
 
 			//if this connection spot is vacant fills it with the incoming request.
@@ -116,9 +117,11 @@ public class Server{
 
 
 
-				users[i] = new ServerMessagingProtocol(input, out, users, i);
-				Thread thread = new Thread(users[i]);
-				thread.start();
+				users[i] = new Connection (new ServerMessagingProtocol(input, out, users, i),     new ServerMovementProtocol(moveInput, moveOutput, users, i) );
+				Thread messageThread = new Thread(users[i].getMessageProt());
+				Thread moveThread = new Thread(users[i].getMoveProt());
+				messageThread.start();
+				moveThread.start();
 
 				break;
 			}

@@ -5,24 +5,30 @@ import java.awt.event.ActionListener;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 
-public class ServerMovementProtocol {
+public class ServerMovementProtocol implements Runnable {
 	private DataInputStream in;
 	private DataOutputStream out;
 	private Connection[] users;
 	private int playNum;
-	
+
 	public ServerMovementProtocol(DataInputStream in, DataOutputStream out, Connection[] users, int playNum){
-		
+
 		this.in=in;
 		this.out=out;
 		this.users = users;
 		this.playNum = playNum;
-		
+
 	}
-	
-	
-	
-	
-	
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+
+	}
+
+
+
+
+
 
 }
