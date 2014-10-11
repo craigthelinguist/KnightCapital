@@ -1,8 +1,6 @@
 package storage.converters;
 
 import java.awt.image.BufferedImage;
-
-import storage.loaders.LoaderConstants;
 import tools.Constants;
 import tools.ImageLoader;
 import tools.KCImage;

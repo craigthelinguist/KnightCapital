@@ -1,6 +1,7 @@
 package storage.converters;
 
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.List;
 
 import renderer.AnimationMap;
@@ -18,7 +19,7 @@ public class AnimationMapConverter implements Converter {
 
 	@Override
 	public boolean canConvert(Class type) {
-		return type.isAssignableFrom(KCImage.class);
+		return type == AnimationMap.class;
 	}
 
 	@Override
@@ -51,21 +52,15 @@ public class AnimationMapConverter implements Converter {
 	 * @return
 	 */
 	public Object unmarshal(HierarchicalStreamReader reader, UnmarshallingContext context) {
-
+		List<KCImage> images = new ArrayList<>();
+		KCImageConverter converter = new KCImageConverter();
 		while(reader.hasMoreChildren()){
-
+			reader.moveDown();
+			KCImage image = (KCImage) converter.unmarshal(reader, context);
+			images.add(image);
+			reader.moveUp();
 		}
-
-		reader.moveDown();
-
-		reader.moveDown();
-		String name = reader.getValue();
-		reader.moveUp();
-		reader.moveDown();
-		String filepath = reader.getValue();
-		reader.moveUp();
-		BufferedImage bi = ImageLoader.load(filepath);
-		return new KCImage(bi,name,filepath);
+		return new AnimationMap(images);
 	}
 
 

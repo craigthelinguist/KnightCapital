@@ -7,6 +7,7 @@ import game.units.Unit;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 
+import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 
 import controllers.TownController;
@@ -24,10 +25,8 @@ public class TownGui extends JFrame {
 		
 		panel = new TownPanel(townController);
 		
-		
-		this.setLayout(new BorderLayout());
-		this.add(panel,BorderLayout.EAST);
-		
+		BoxLayout layout = new BoxLayout(this,BoxLayout.PAGE_AXIS);//this.add(panel);
+		this.add(panel);
 		
 		this.pack();
 		this.setLocationRelativeTo(null);
