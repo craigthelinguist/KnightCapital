@@ -68,6 +68,7 @@ public class Client implements Runnable {
 			System.out.println("conected messages! waiting for move socket connection.....");
 
 			moveSocket = new Socket(ipAddress, movePort);
+
 			System.out.println("connected move socket, hopefully fixed chat!");
 
 

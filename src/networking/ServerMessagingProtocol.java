@@ -5,6 +5,13 @@ import java.io.DataOutputStream;
 import java.io.EOFException;
 import java.io.IOException;
 
+/**
+ *
+ * @author hartleneal
+ *protocol for dealing with messages sent from the chat client. Just an echo server. recieves a message from a given user and bounces it back
+ *to all clients.
+ */
+
 public class ServerMessagingProtocol implements Runnable {
 
 
@@ -42,10 +49,13 @@ public class ServerMessagingProtocol implements Runnable {
 
 		while(clean){
 
+			//trys to read an incoming string from the client.
 			try {
 				message = in.readUTF();
 				System.out.println("incoming message is:" + message);
 
+
+				//goes through all clients output streams, spitting message back across all channels.
 				for(int i=0 ; i < users.length; i++){
 
 					if(users[i]!=null){

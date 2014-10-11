@@ -11,10 +11,12 @@ import java.io.File;
 public final class KCImage{
 
 	public final String name;
+	public final String filepath;
 	public final BufferedImage image;
 
-	public KCImage(BufferedImage img, String nm) {
+	public KCImage(BufferedImage img, String nm, String fp) {
 		this.image = img;
+		this.filepath = fp;
 		this.name = nm;
 	}
 

@@ -69,12 +69,12 @@ public abstract class Tile {
 		occupant = i;
 	}
 
-	public void addPortrait(BufferedImage bi){
-		this.animations.addImage("portrait", bi);
+	public void addPortrait(String filepath, BufferedImage bi){
+		this.animations.addImage("portrait", filepath, bi);
 	}
 
-	public void addImage(BufferedImage bi){
-		this.animations.addImage("world", bi);
+	public void addImage(String filepath, BufferedImage bi){
+		this.animations.addImage("world", filepath, bi);
 	}
 
 	/**

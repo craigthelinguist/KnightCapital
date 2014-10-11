@@ -76,15 +76,10 @@ public class City {
 
 		// set up images for this city
 		animations = new AnimationMap();
-		String icon_filepath = Constants.CITIES + filepath;
-		Map<String,BufferedImage> directedImages = ImageLoader.loadDirectedImages(icon_filepath);
-		for (Map.Entry<String, BufferedImage> entry : directedImages.entrySet()){
-			animations.addImage(entry.getKey(), entry.getValue());
-		}
+		this.animations.addDirectedImages(Constants.CITIES, "basic", "red");
 		animations.setImage("north");
 		String portrait_filepath = Constants.PORTRAITS + "city_" + filepath;
-		animations.addImage("portrait", ImageLoader.load(portrait_filepath));
-
+		animations.addImage("portrait", portrait_filepath, ImageLoader.load(portrait_filepath));
 	}
 
 	/**

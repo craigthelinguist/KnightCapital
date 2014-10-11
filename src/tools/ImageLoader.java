@@ -58,21 +58,6 @@ public class ImageLoader {
 	}
 
 	/**
-	 * Takes the given filepath. Loads all files prefixed by that filepath into a map,
-	 * where they're indexed by the name of their animation (e.g.: north, south).
-	 * @param filepath: load all files prefixed with this.
-	 * @return: map of string -> animation
-	 */
-	public static Map<String,BufferedImage> loadDirectedImages(String filepath){
-		Map<String,BufferedImage> map = new HashMap<>();
-		map.put("north", ImageLoader.load(filepath + "_north.png"));
-		map.put("south", ImageLoader.load(filepath + "_south.png"));
-		map.put("east", ImageLoader.load(filepath + "_east.png"));
-		map.put("west", ImageLoader.load(filepath + "_west.png"));
-		return map;
-	}
-
-	/**
 	 * Use this if your file extension is not .png
 	 * @param filename
 	 * @param extension

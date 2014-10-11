@@ -28,8 +28,8 @@ public class Server{
 
 
 	//list of running serverprotocol threads. each protocol dealing with one connected user.
-   // private static ServerMessagingProtocol[] users = new ServerMessagingProtocol[10];
-    private static Connection[] users = new Connection[10];
+	// private static ServerMessagingProtocol[] users = new ServerMessagingProtocol[10];
+	private static Connection[] users = new Connection[10];
 
 
 	private static BufferedReader bufferedReader;
@@ -51,7 +51,7 @@ public class Server{
 		connectClient();
 
 		//Wait for input/check for disconnect
-		 //waitForInput();
+		//waitForInput();
 	}
 
 	/**
@@ -92,43 +92,46 @@ public class Server{
 
 			Socket beast = serverMoveSocket.accept();
 
-            System.out.println("accepted move socket");
+			System.out.println("accepted move socket");
 
 
 
-		for(int i =0 ; i < 10; i++){
-			System.out.println("got connection socket to client: "+ temp.getInetAddress());
+			for(int i =0 ; i < 10; i++){
+				System.out.println("got connection socket to client: "+ temp.getInetAddress());
 
-			//create messsaging inputs and outputs
-			input = new DataInputStream(temp.getInputStream());
-			out = new DataOutputStream(temp.getOutputStream());
+				//create messsaging inputs and outputs
+				input = new DataInputStream(temp.getInputStream());
+				out = new DataOutputStream(temp.getOutputStream());
 
-			//create movement inputs and outputs.
-			moveInput = new DataInputStream(beast.getInputStream());
-			moveOutput = new DataOutputStream(beast.getOutputStream());
+				//create movement inputs and outputs.
+				moveInput = new DataInputStream(beast.getInputStream());
+				moveOutput = new DataOutputStream(beast.getOutputStream());
 
-			//first checks if any previous connections have become unusable.
-			if(users[i]!=null && !users[i].getMessageProt().getStatus() )
-				//if not in use is destroyed.
-				users[i]=null;
-
-
-			//if this connection spot is vacant fills it with the incoming request.
-			if(users[i] == null){
+				//first checks if any previous connections have become unusable.
+				if(users[i]!=null && !users[i].getMessageProt().getStatus() )
+					//if not in use is destroyed.
+					users[i]=null;
 
 
+				//if this connection spot is vacant fills it with the incoming request.
+				if(users[i] == null){
 
 
 
-				users[i] = new Connection (new ServerMessagingProtocol(input, out, users, i),     new ServerMovementProtocol(moveInput, moveOutput, users, i) );
-				Thread messageThread = new Thread(users[i].getMessageProt());
-				Thread moveThread = new Thread(users[i].getMoveProt());
-				messageThread.start();
-				moveThread.start();
 
-				break;
+
+					users[i] = new Connection (new ServerMessagingProtocol(input, out, users, i),
+							new ServerMovementProtocol(moveInput, moveOutput, users, i) );
+
+					Thread messageThread = new Thread(users[i].getMessageProt());
+					Thread moveThread = new Thread(users[i].getMoveProt());
+
+					messageThread.start();
+					moveThread.start();
+
+					break;
+				}
 			}
-		}
 
 
 		}
@@ -140,7 +143,6 @@ public class Server{
 		try {
 			new Server();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

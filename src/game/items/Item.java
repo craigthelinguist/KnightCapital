@@ -24,8 +24,8 @@ public abstract class Item {
 		this.name = name;
 		this.description = description;
 		this.animations = new AnimationMap();
-		this.animations.addImage("portrait", ImageLoader.load(Constants.ITEMS + imgName));
-		this.animations.addImage("regular", ImageLoader.load(Constants.ITEMS + imgName));
+		this.animations.addImage("portrait", Constants.ITEMS + imgName, ImageLoader.load(Constants.ITEMS + imgName));
+		this.animations.addImage("regular", Constants.ITEMS + imgName, ImageLoader.load(Constants.ITEMS + imgName));
 		this.buffs = new LinkedList<>();
 	}
 

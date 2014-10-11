@@ -22,15 +22,15 @@ public class PassableTile extends Tile{
 
 	public static PassableTile newDirtTile(int x, int y){
 		PassableTile t = new PassableTile(x,y);
-		t.addImage(ImageLoader.load(Constants.ASSETS + "tile_dirt.png"));
-		t.addPortrait(ImageLoader.load(Constants.PORTRAITS + "grass.png"));
+		t.addImage(Constants.ASSETS + "tile_dirt.png",ImageLoader.load(Constants.ASSETS + "tile_dirt.png"));
+		t.addPortrait(Constants.PORTRAITS + "tile_grass.png", ImageLoader.load(Constants.PORTRAITS + "grass.png"));
 		return t;
 	}
 
 	public static PassableTile newGrassTile(int x, int y){
 		PassableTile t = new PassableTile(x,y);
-		t.addImage(ImageLoader.load(Constants.ASSETS + "tile_grass.png"));
-		t.addPortrait(ImageLoader.load(Constants.PORTRAITS + "grass.png"));
+		t.addImage(Constants.ASSETS + "tile_grass.png",ImageLoader.load(Constants.ASSETS + "tile_grass.png"));
+		t.addPortrait(Constants.PORTRAITS + "grass.png",ImageLoader.load(Constants.PORTRAITS + "grass.png"));
 		return t;
 	}
 
