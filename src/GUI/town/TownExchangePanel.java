@@ -73,6 +73,7 @@ public class TownExchangePanel extends JPanel implements MouseListener, MouseMot
 			protected void paintComponent(Graphics g){
 				super.paintComponent(g);
 			    g.drawImage(backgroundImage = ImageLoader.load(Constants.GUI_FILEPATH + "dialogBackground.png"), 0, 0, getWidth(), getHeight(), this);
+			    TownExchangePanel.this.redraw(g);
 			}
 
 		};
@@ -149,8 +150,7 @@ public class TownExchangePanel extends JPanel implements MouseListener, MouseMot
 		this.repaint();
 	}
 
-	@Override
-	protected void paintComponent(Graphics g){
+	protected void redraw(Graphics g){
 		partyGarrison.repaint();
 		partyVisitors.repaint();
 
@@ -261,37 +261,7 @@ public class TownExchangePanel extends JPanel implements MouseListener, MouseMot
 	/**
 	 * Take the items from point1 in the party at panel1, and from point2 in the party at panel2, and
 	 * swap their positions. A hero cannot leave its own party and if you try to do so it will not be moved.
-	 * @p
-	// controller and top-level view
-	private TownController controller;
-	private BufferedImage splash;
-
-	// components
-
-
-	private TownExchangePanel panel_exchange;
-	private TownButtonPanel panel_buttons;
-
-	protected TownPanel(TownController townController) {
-		this.controller = townController;
-		this.splash = ImageLoader.load(FILEPATH + BACKDROP, ".jpg");
-		this.setPreferredSize(new Dimension(splash.getWidth(),splash.getHeight()));
-
-		Dimension childDimensions = new Dimension(getWidth()/3,getHeight()/3);
-		panel_exchange = new TownExchangePanel(townController);
-		//panel_buttons = new TownButtonPanel(childDimensions,townController);
-
-		this.setLayout(new FlowLayout(FlowLayout.LEFT));
-
-		this.add(panel_exchange);
-		//this.add(panel_buttons);
-
-		System.out.println(panel_exchange.getPreferredSize());
-		System.out.println(panel_exchange.getSize());
-
-	}
-
-	@Overridearam panel1: first panel
+	 * @param panel1: first panel
 	 * @param point1: index of item in the party at panel1
 	 * @param panel2: second panel
 	 * @param point2: index of item in the party at panel2
