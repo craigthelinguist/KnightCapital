@@ -351,10 +351,10 @@ public class WorldController{
 	public static void aaron_main(String[] args){
 		/*Loading items*/
 		Buff[] buffsAmulet = new Buff[]{ new Buff(Stat.DAMAGE,5,true) };
-		PassiveItem amulet = new PassiveItem(buffsAmulet, "amulet", "Amulet","An amulet that grants sickening gains.\n +5 Damage");
+		PassiveItem amulet = new PassiveItem(buffsAmulet, "amulet", "amulet","An amulet that grants sickening gains.\n +5 Damage");
 
 		Buff[] buffsWeapon = new Buff[]{ new Buff(Stat.DAMAGE,5,true), new Buff(Stat.ARMOUR, 10, true) };
-		PassiveItem weapon = new PassiveItem(buffsWeapon, "weapon", "Weapon","A powerful weapon crafted by the mighty Mizza +5 Damage");
+		PassiveItem weapon = new PassiveItem(buffsWeapon, "weapon", "weapon","A powerful weapon crafted by the mighty Mizza +5 Damage");
 
 		Buff[] buffsArrows= new Buff[]{ new Buff(Stat.DAMAGE,1,true) };
 		PassiveItem arrows = new PassiveItem(buffsArrows, "poisonarrow", "poisonarrow","Poisonous arrows whose feathers were made from the hairs of Mizza. All archers in party gain +1 damage");
