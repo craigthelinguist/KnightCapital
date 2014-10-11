@@ -14,12 +14,17 @@ import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.security.auth.login.Configuration;
 import javax.swing.JButton;
 import javax.swing.SwingUtilities;
+
+import com.thoughtworks.xstream.XStream;
 
 import networking.Client;
 import networking.Server;
@@ -347,7 +352,7 @@ public class WorldController{
 	}
 
 
-	public static void main(String[] args){
+	public static void main(String[] args) throws FileNotFoundException{
 		aaron_main(args);
 	}
 
@@ -419,6 +424,8 @@ public class WorldController{
 		w.getTile(0,0).setIcon(party);
 		new WorldController(w,p);
 	}
+
+
 
 	/**
 	 * When u don't want a gui use this for testing purposes only
