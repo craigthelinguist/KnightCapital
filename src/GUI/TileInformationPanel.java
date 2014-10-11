@@ -23,7 +23,7 @@ import world.icons.WorldIcon;
 import world.tiles.CityTile;
 import world.tiles.Tile;
 import world.towns.City;
-import GUI.PartyDialog.PartyDialog;
+import GUI.party.PartyDialog;
 
 /**
  * This panel holds all of the player's information such as stats, party  etc.
