@@ -14,10 +14,8 @@ public class Buff{
 	public final int amount;
 	public final boolean permanent;
 
-	public Buff(Stat stat, int amount, boolean permanence){
+	private Buff(Stat stat, int amount, boolean permanence){
 		this.stat = stat;
-		if (stat == Stat.HEALTH)
-			throw new RuntimeException("don't hadd health effects to buffs - use Heal instead");
 		this.amount = amount;
 		this.permanent = permanence;
 	}

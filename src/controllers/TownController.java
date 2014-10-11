@@ -104,14 +104,8 @@ public class TownController{
 		// party
 		Player player = new Player("Pondy",1);
 		Unit u1 = new Unit("knight",player);
-		u1.setStat(Stat.HEALTH, 60);
-		u1.heal(45);
 		Unit u2 = new Unit("knight",player);
-		u2.setStat(Stat.HEALTH, 60);
-		u2.heal(25);
 		Hero h1 = new Hero("ovelia",player);
-		h1.setStat(Stat.HEALTH, 45);
-		h1.heal(6);
 		Creature[][] members = Party.newEmptyParty();
 		members[0][0] = u1;
 		members[1][0] = h1;
@@ -121,20 +115,10 @@ public class TownController{
 		//party
 
 		Hero h2 = new Hero("dark_knight",player);
-		h2.setStat(Stat.HEALTH, 95);
-		h2.heal(80);
 		Unit u3 = new Unit("knight",player);
-		u3.setStat(Stat.HEALTH, 60);
-		u3.heal(60);
 		Unit u4 = new Unit("archer",player);
-		u4.setStat(Stat.HEALTH, 35);
-		u4.heal(15);
 		Unit u5 = new Unit("archer",player);
-		u5.setStat(Stat.HEALTH,35);
-		u5.heal(25);
 		Unit u6 = new Unit("knight",player);
-		u6.setStat(Stat.HEALTH, 60);
-		u6.heal(40);
 		Creature[][] members2 = Party.newEmptyParty();
 		members2[0][0] = u3;
 		members2[1][0] = u6;
@@ -144,9 +128,9 @@ public class TownController{
 		Party party2 = new Party(h2,player,members2);
 
 		// items
-		Buff[] buffsWeapon = new Buff[]{ new Buff(Stat.DAMAGE,5,true), new Buff(Stat.ARMOUR, 10, true) };
+		Buff[] buffsWeapon = new Buff[]{ Buff.newTempBuff(Stat.DAMAGE,5), Buff.newTempBuff(Stat.ARMOUR, 10) };
 		PassiveItem weapon = new PassiveItem(buffsWeapon, "weapon", "Weapon","A powerful weapon crafted by the mighty Mizza +5 Damage");
-		Buff[] buffsArrows= new Buff[]{ new Buff(Stat.DAMAGE,1,true) };
+		Buff[] buffsArrows= new Buff[]{ Buff.newTempBuff(Stat.DAMAGE,1) };
 		PassiveItem arrows = new PassiveItem(buffsArrows, "poisonarrow", "Poison Arrows","Poisonous arrows whose feathers were made from the hairs of Mizza. All archers in party gain +1 damage");
 		party.addItem(weapon);
 		party.addItem(arrows);

@@ -1,11 +1,11 @@
 package game.units;
 
-public class UnitStats{
+public class UnitStats implements Stats{
 
-	protected final int baseHealth;
-	protected final int baseDamage;
-	protected final int baseSpeed;
-	protected final int baseArmour;
+	protected int baseHealth;
+	protected int baseDamage;
+	protected int baseSpeed;
+	protected int baseArmour;
 
 	protected int buffedDamage;
 	protected int buffedSpeed;
@@ -27,14 +27,10 @@ public class UnitStats{
 	}
 
 	/**
-	 *
-	 * is this needed for XML loading? - Aaron
-	 *
-	 *
 	 * Set the base value for some stat.
 	 * @param stat: stat whose base value you will change.
 	 * @param value: new value of the stat.
-
+	 */
 	public void setBase(Stat stat, int value){
 		if (stat == Stat.HEALTH) baseHealth = value;
 		else if (stat == Stat.DAMAGE) baseDamage = value;
@@ -44,7 +40,6 @@ public class UnitStats{
 			throw new RuntimeException("you're setting an unknown stat for a unit");
 		}
 	}
-	*/
 
 	/**
 	 * Set the buffed value for some stat.
@@ -107,6 +102,19 @@ public class UnitStats{
 	public int getCurrent(Stat stat){
 		if (stat == Stat.HEALTH) return currentHealth;
 		else throw new RuntimeException("You're getting an unknown base stat for a unit");
+	}
+
+	/**
+	 * Get the total value of some stat, which is the buffed + base.
+	 * @param stat: stat whose total value you want.
+	 * @return: total value of that stat.
+	 */
+	public int getTotal(Stat stat) {
+		if (stat == Stat.HEALTH) return baseHealth + buffedHealth;
+		else if (stat == Stat.ARMOUR) return baseArmour + buffedArmour;
+		else if (stat == Stat.DAMAGE) return baseDamage + buffedDamage;
+		else if (stat == Stat.SPEED) return baseSpeed + buffedSpeed;
+		else throw new RuntimeException("You're getting an unknown stat for a unit");
 	}
 
 }
