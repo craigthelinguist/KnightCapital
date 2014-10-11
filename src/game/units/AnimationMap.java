@@ -42,6 +42,10 @@ public class AnimationMap {
 		return animation.getSprite();
 	}
 
+	public BufferedImage getImage(String name){
+		return animations.get(name).getSprite();
+	}
+
 	public String getName(){
 		return animationName;
 	}
