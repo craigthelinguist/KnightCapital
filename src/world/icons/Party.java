@@ -2,10 +2,13 @@ package world.icons;
 
 import java.awt.Point;
 import java.awt.image.BufferedImage;
+import java.util.LinkedList;
 
+import game.effects.Buff;
 import game.items.Item;
 import game.units.Creature;
 import game.units.Hero;
+import game.units.Stat;
 import game.units.Unit;
 import player.Player;
 
@@ -150,6 +153,7 @@ public class Party extends WorldIcon{
 			for (int x = 0; x < INVENTORY_COLS; x++){
 				if (inventory[x][y] == null){
 					inventory[x][y] = item;
+					updateHeroStats(item); //TODO: this is temporary, later on when the equipping system takes place replace this
 					return true;
 				}
 			}
@@ -205,15 +209,29 @@ public class Party extends WorldIcon{
 		return new Item[Party.INVENTORY_COLS][Party.INVENTORY_ROWS];
 	}
 
+	/**
+	 * Print the inventory of the player. For testing purposes only.
+	 */
 	public void printInventory(){
 		for (int i = 0; i < inventory.length; i++){
 			for (int j = 0; j < inventory[i].length; j++){
 				Item itm = inventory[i][j];
-				if (itm != null) System.out.println(itm.getDescription());
+				if (itm != null) System.out.println(itm.getName());
 				else System.out.println("null");
 			}
 		}
 	}
+	
+	public void updateHeroStats(Item item) {
+		if (item != null) {	
+			LinkedList<Buff> buffs = item.getBuffs();
+			for(Buff b : buffs) {
+				Stat stat = b.stat;
+				hero.tempBuff(stat,b.amount);
+			}
+		}
+	}
+	
 	
 	/**
 	 * Return the number of members in this party.

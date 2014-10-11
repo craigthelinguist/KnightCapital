@@ -221,5 +221,38 @@ public abstract class Creature {
 		return baseArmour;
 	}
 
+	public int getBuffedDamage() {
+		return buffedDamage;
+	}
+
+	public void setBuffedDamage(int buffedDamage) {
+		this.buffedDamage = buffedDamage;
+	}
+
+	public int getBuffedSpeed() {
+		return buffedSpeed;
+	}
+
+	public void setBuffedSpeed(int buffedSpeed) {
+		this.buffedSpeed = buffedSpeed;
+	}
+
+	public int getBuffedArmour() {
+		return buffedArmour;
+	}
+
+	public void setBuffedArmour(int buffedArmour) {
+		this.buffedArmour = buffedArmour;
+	}
+
+	public int getBuffedHealth() {
+		return buffedHealth;
+	}
+
+	public void setBuffedHealth(int buffedHealth) {
+		this.buffedHealth = buffedHealth;
+	}
+
+	
 
 }

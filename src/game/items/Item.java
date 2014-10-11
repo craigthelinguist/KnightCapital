@@ -65,4 +65,9 @@ public abstract class Item {
 		return this;
 	}
 
+	public LinkedList<Buff> getBuffs() {
+		return buffs;
+	}
+
+
 }

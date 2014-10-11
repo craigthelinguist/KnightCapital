@@ -10,9 +10,9 @@ import game.units.Stat;
  */
 public class Buff{
 
-	private final Stat stat;
-	private final int amount;
-	private final boolean permanent;
+	public final Stat stat;
+	public final int amount;
+	public final boolean permanent;
 
 	public Buff(Stat stat, int amount, boolean permanence){
 		this.stat = stat;
