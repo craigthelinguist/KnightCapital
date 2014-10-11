@@ -1,7 +1,7 @@
 package game.items;
 
 import game.effects.Buff;
-
+import game.units.AnimationMap;
 
 import java.awt.image.BufferedImage;
 import java.util.LinkedList;
@@ -14,33 +14,31 @@ import tools.Log;
 
 public abstract class Item {
 
-	private BufferedImage portrait;
-	private Map<String,Animation> animations;
-	private String animationName;
-	private Animation animation;
 	private String name;
 	private String description;
 	protected LinkedList<Buff> buffs;
 	private String imgName;
+	protected AnimationMap animations;
 
 	public Item(String imgName, String name ,String description){
 		this.name = name;
 		this.description = description;
-		this.animation = ImageLoader.loadAnimation(Constants.ITEMS + imgName);
-		this.portrait = ImageLoader.load(Constants.ITEMS + imgName);
+		this.animations = new AnimationMap();
+		this.animations.addImage("portrait", ImageLoader.load(Constants.ITEMS + imgName));
+		this.animations.addImage("regular", ImageLoader.load(Constants.ITEMS + imgName));
 		this.buffs = new LinkedList<>();
 	}
 
 	public BufferedImage getImage(){
-		return animation.getSprite();
+		return animations.getImage("regular");
 	}
 
 	public BufferedImage getPortrait() {
-		return portrait;
+		return animations.getImage("portrait");
 	}
 
 	public String getAnimationName() {
-		return animationName;
+		return animations.getName();
 	}
 
 	public String getName() {
@@ -48,13 +46,11 @@ public abstract class Item {
 	}
 
 	public String getDescription() {
-			return this.description;
+		return this.description;
 	}
 
 	public void setAnimation(String name){
-		Animation anim = animations.get(name);
-		if (anim == null) Log.print("setting invalid animation name for item, name was " + name);
-		else animation = anim;
+		animations.setAnimation(name);
 	}
 
 	public String toString(){

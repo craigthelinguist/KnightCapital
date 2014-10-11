@@ -5,6 +5,7 @@ import game.items.Item;
 import game.items.PassiveItem;
 import game.units.Creature;
 import game.units.Hero;
+import game.units.HeroStats;
 import game.units.Stat;
 import game.units.Unit;
 
@@ -177,7 +178,7 @@ public class ItemPanel extends JPanel {
 		JFrame frame = new JFrame();
 		JPanel panel = new JPanel();
 		Player player = new Player("Biggie Smalls",2);
-		Hero hero = new Hero("ovelia",player);
+		Hero hero = new Hero("ovelia",player, new HeroStats(40,10,80,0,8,8));
 		Creature[][] members = Party.newEmptyParty();
 		members[0][0] = hero;
 		Party party = new Party(hero, player, members);

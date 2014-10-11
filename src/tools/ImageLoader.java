@@ -76,23 +76,13 @@ public class ImageLoader {
 	 * @param filepath: load all files prefixed with this.
 	 * @return: map of string -> animation
 	 */
-	public static Map<String,Animation> loadDirectedAnimations(String filepath){
-
-		BufferedImage[] north = new BufferedImage[]{ ImageLoader.load(filepath + "_north.png") };
-		Animation animNorth = new Animation(north,1);
-		BufferedImage[] south = new BufferedImage[]{ ImageLoader.load(filepath + "_south.png") };
-		Animation animSouth = new Animation(south,1);
-		BufferedImage[] east = new BufferedImage[]{ ImageLoader.load(filepath + "_east.png") };
-		Animation animEast = new Animation(east,1);
-		BufferedImage[] west = new BufferedImage[]{ ImageLoader.load(filepath + "_west.png") };
-		Animation animWest = new Animation(west,1);
-
-		Map<String,Animation> animationNames = new HashMap<String,Animation>();
-		animationNames.put("north",animNorth);
-		animationNames.put("south",animSouth);
-		animationNames.put("west",animWest);
-		animationNames.put("east",animEast);
-		return animationNames;
+	public static Map<String,BufferedImage> loadDirectedImages(String filepath){
+		Map<String,BufferedImage> map = new HashMap<>();
+		map.put("north", ImageLoader.load(filepath + "_north.png"));
+		map.put("south", ImageLoader.load(filepath + "_south.png"));
+		map.put("east", ImageLoader.load(filepath + "_east.png"));
+		map.put("west", ImageLoader.load(filepath + "_west.png"));
+		return map;
 	}
 
 	public static Animation loadAnimation(String name) {
@@ -107,7 +97,7 @@ public class ImageLoader {
 	 * @return
 	 */
 	public static BufferedImage load(String filename, String extension) {
-		
+
 		filename = filename + extension;
 
 		//If the image already exists then return
