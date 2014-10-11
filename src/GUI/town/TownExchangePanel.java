@@ -88,18 +88,23 @@ public class TownExchangePanel extends JPanel implements MouseListener, MouseMot
 		BoxLayout layout = new BoxLayout(wrapperPanel,BoxLayout.Y_AXIS);
 		wrapperPanel.setLayout(layout);
 
+		/*Load the three images for exiting button*/
 		BufferedImage leaveGameDefault = ImageLoader.load(Constants.GUI_TOWN_BUTTONS + "exit.png");
 		BufferedImage leaveGamePressed = ImageLoader.load(Constants.GUI_TOWN_BUTTONS + "exitClicked.png");
 		BufferedImage leaveGameHover = ImageLoader.load(Constants.GUI_TOWN_BUTTONS + "exitHover.png");
 		buttonLeave = new CustomButton(leaveGameDefault, leaveGamePressed, leaveGameHover);
-		
 		JPanel visitorButtons = new JPanel();
 		visitorButtons.setLayout(new BorderLayout());
 		visitorButtons.add(buttonLeave, BorderLayout.SOUTH);
 
-		buttonTrain = new JButton("Train Unit");
+		/*Load the three images for train units button*/
+		BufferedImage trainUnitsDefault = ImageLoader.load(Constants.GUI_TOWN_BUTTONS + "trainUnits.png");
+		BufferedImage trainUnitsPressed = ImageLoader.load(Constants.GUI_TOWN_BUTTONS + "trainUnitsClicked.png");
+		BufferedImage trainUnitsHover = ImageLoader.load(Constants.GUI_TOWN_BUTTONS + "trainUnitsHover.png");
+		buttonTrain = new CustomButton(trainUnitsDefault, trainUnitsPressed, trainUnitsHover);
 		JPanel garrisonButtons = new JPanel();
 		garrisonButtons.setLayout(new BorderLayout());
+		garrisonButtons.setOpaque(false);
 		garrisonButtons.add(buttonTrain, BorderLayout.SOUTH);
 
 		// parties
