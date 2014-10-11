@@ -43,7 +43,7 @@ import world.tiles.CityTile;
 import world.tiles.Tile;
 import world.towns.City;
 import GUI.MainFrame;
-import GUI.PartyDialog.PartyDialog;
+import GUI.party.PartyDialog;
 
 /**
  * A WorldController. This is the glue between the model (World) and the view (gui, renderer).

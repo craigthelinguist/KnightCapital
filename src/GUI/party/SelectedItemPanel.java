@@ -1,4 +1,4 @@
-package GUI.PartyDialog;
+package GUI.party;
 
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -35,9 +35,8 @@ import world.icons.WorldIcon;
  */
 public class SelectedItemPanel extends JPanel{
 
-
+	private PartyDialog master;
 	private WorldIcon icon;
-	private boolean isOwner;
 
 	// JLabels
 	private JLabel imageLabel;
@@ -45,10 +44,10 @@ public class SelectedItemPanel extends JPanel{
 	private JLabel descriptionLabel;
 
 	/** Construct new empty Item Panel **/
-	public SelectedItemPanel(Dimension d, boolean isOwner) {
+	public SelectedItemPanel(PartyDialog master, Dimension d) {
 		super();
 		this.setPreferredSize(d);
-		this.isOwner = isOwner;
+		this.master = master;
 
 		// Set layout
 		this.setLayout(new GridBagLayout());
@@ -112,7 +111,7 @@ public class SelectedItemPanel extends JPanel{
 
 		else if(this.icon instanceof Party) {
 			//if player is owner of party
-			if(this.isOwner) {
+			if(master.isOwner()) {
 				// display stats
 				System.out.println("[SelectedItemPanel] Accessor is owner of party");
 			}

@@ -1,4 +1,4 @@
-package GUI.PartyDialog;
+package GUI.party;
 
 import java.awt.Dimension;
 
