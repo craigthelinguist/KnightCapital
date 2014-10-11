@@ -2,6 +2,7 @@ package GUI.reusable;
 
 import game.units.Creature;
 import game.units.Hero;
+import game.units.Stat;
 import game.units.Unit;
 
 import java.awt.Color;
@@ -21,9 +22,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import controllers.TownController;
-
 import player.Player;
-
 import tools.Constants;
 import world.icons.Party;
 
@@ -182,11 +181,21 @@ public class PartyPanel extends JPanel {
 		JFrame frame = new JFrame();
 		JPanel panel = new JPanel();
 		Player player = new Player("Biggie Smalls",2);
-		Hero hero = new Hero("ovelia",player,50,10,10);
+		Hero hero = new Hero("ovelia",player);
+		hero.setStat(Stat.HEALTH, 45);
+		hero.setStat(Stat.DAMAGE, 15);
+		hero.setStat(Stat.ARMOUR, 0);
+		hero.setStat(Stat.SPEED, 60);
 		Creature[][] members = Party.newEmptyParty();
 		members[0][0] = hero;
-		members[0][1] = new Unit("knight",player,50,10,10);
-		members[1][1] = new Unit("knight",player,50,10,10);
+		members[0][1] = new Unit("knight",player);
+		members[0][1].setStat(Stat.HEALTH, 50);
+		members[0][1].setStat(Stat.DAMAGE, 10);
+		members[0][1].setStat(Stat.ARMOUR, 10);
+		members[1][1] = new Unit("knight",player);
+		members[1][1].setStat(Stat.HEALTH, 50);
+		members[1][1].setStat(Stat.DAMAGE, 10);
+		members[1][1].setStat(Stat.ARMOUR, 10);
 		Party party = new Party(hero, player, members);
 		PartyPanel tpp = new PartyPanel(party);
 		//tpp.party = party;

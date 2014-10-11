@@ -18,7 +18,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import player.Player;
-
 import tools.Constants;
 import world.icons.Party;
 import world.tiles.CityTile;
@@ -93,15 +92,22 @@ public class TownItemPanel extends JPanel{
 		JFrame frame = new JFrame();
 		JPanel panel = new JPanel();
 		Player player = new Player("Biggie Smalls",2);
-		Hero hero = new Hero("ovelia",player,50,10,10);
+		Hero hero = new Hero("ovelia",player);
+		hero.setStat(Stat.HEALTH, 45);
+		hero.setStat(Stat.DAMAGE, 10);
+		hero.setStat(Stat.ARMOUR, 10);
 		Creature[][] members = Party.newEmptyParty();
 
-		Unit u1 = new Unit("knight",player,50,10,10);
-		u1.setStat(Stat.HEALTH, 100);
+		Unit u1 = new Unit("knight",player);
+		u1.setStat(Stat.HEALTH, 50);
+		u1.setStat(Stat.DAMAGE, 10);
+		u1.setStat(Stat.ARMOUR, 10);
 		u1.revive(20);
 
-		Unit u2 = new Unit("knight",player,50,10,10);
-		u2.setStat(Stat.HEALTH, 100);
+		Unit u2 = new Unit("knight",player);
+		u2.setStat(Stat.HEALTH, 50);
+		u2.setStat(Stat.DAMAGE, 10);
+		u2.setStat(Stat.ARMOUR, 10);
 		u2.revive(45);
 
 		members[1][1] = u1;

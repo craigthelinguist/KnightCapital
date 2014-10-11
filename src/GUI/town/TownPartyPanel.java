@@ -22,7 +22,7 @@ import world.icons.Party;
 import world.towns.City;
 
 public class TownPartyPanel extends JPanel {
-	
+
 	// constants
 	private static final int PORTRAIT_WD = Constants.PORTRAIT_DIMENSIONS.width;
 	private static final int PORTRAIT_HT = Constants.PORTRAIT_DIMENSIONS.height;
@@ -33,19 +33,19 @@ public class TownPartyPanel extends JPanel {
 	private static final int CELL_WD = PORTRAIT_WD;
 	private static final int CELL_HT = PORTRAIT_HT + HEALTH_BAR_HT;
 	private static final Color HEALTH_COLOR = new Color(50,160,70);
-	
+
 	// party
 	private Party party;
-	
+
 	// top-level component
 	private TownExchangePanel master;
-	
+
 	protected TownPartyPanel(TownExchangePanel master, Party party, City city){
 		this.master = master;
 		this.party = party;
 		this.setPreferredSize(new Dimension(CELL_WD*PARTY_COLS+1,CELL_HT*PARTY_ROWS+1));
 	}
-	
+
 	@Override
 	protected void paintComponent(Graphics g){
 		g.setColor(Color.BLACK);
@@ -54,14 +54,14 @@ public class TownPartyPanel extends JPanel {
 				int xDraw = x * CELL_WD;
 				int yDraw = y * CELL_HT;
 				Creature member = party.getMember(x,y);
-				
+
 				// draw health bar
 				if (member != null){
 					double healthiness = party.getMember(x,y).healthiness();
 					g.setColor(HEALTH_COLOR);
 					g.fillRect(xDraw, yDraw+PORTRAIT_HT, (int)(HEALTH_BAR_WD*healthiness), HEALTH_BAR_HT);
 				}
-				
+
 				// draw portrait
 				boolean weShouldDraw = true;
 				if (member == null) weShouldDraw = false;
@@ -76,15 +76,15 @@ public class TownPartyPanel extends JPanel {
 				// health bar outline
 				g.setColor(Color.BLACK);
 				g.drawRect(xDraw, yDraw+PORTRAIT_HT, HEALTH_BAR_WD, HEALTH_BAR_HT);
-				
+
 				// portrait outline
 				g.drawRect(xDraw, yDraw, PORTRAIT_WD, PORTRAIT_HT);
-				
-				
+
+
 			}
-		}	
+		}
 	}
-	
+
 	/**
 	 * Return the party index at the given mouse click.
 	 * @return: the index of the mouse click, or null if the index wasn't valid.
@@ -104,5 +104,5 @@ public class TownPartyPanel extends JPanel {
 	public Party getParty() {
 		return this.party;
 	}
-	
+
 }

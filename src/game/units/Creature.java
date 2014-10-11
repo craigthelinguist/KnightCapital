@@ -63,10 +63,7 @@ public abstract class Creature {
 		}
 	}
 
-	public Creature(String imgName, Player player, int baseHealth, int baseArmour, int baseDamage) {
-		this.baseHealth = baseHealth;
-		this.baseArmour = baseArmour;
-		this.baseDamage = baseDamage;
+	public Creature(String imgName, Player player) {
 		this.portrait = ImageLoader.load(Constants.PORTRAITS + imgName);
 		imgName = imgName.concat("_" + player.getColour());
 		this.animations = ImageLoader.loadDirectedAnimations(Constants.ICONS + imgName);
@@ -100,7 +97,7 @@ public abstract class Creature {
 		if (amount < 0 || currentHealth <= 0) return;
 		currentHealth = Math.min(baseHealth, currentHealth+amount);
 	}
-	
+
 	/**
 	 * Revive the creature with the specified amount of health.
 	 * If the creature is already alive, do nothing.
@@ -193,7 +190,7 @@ public abstract class Creature {
 		else if (stat == Stat.HEALTH){
 			this.baseHealth = value;
 		}
-		
+
 	}
 
 	/**
@@ -253,6 +250,6 @@ public abstract class Creature {
 		this.buffedHealth = buffedHealth;
 	}
 
-	
+
 
 }
