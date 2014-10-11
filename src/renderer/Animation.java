@@ -52,6 +52,15 @@ public class Animation {
 		this.totalFrames = frames.length;
 	}
 
+	public Animation(BufferedImage bi){
+		this.frameDelay = 1;
+		this.stopped = true;
+		addFrame(bi,1);
+		this.frameCount = 0;
+		this.currentFrame = 0;
+		this.totalFrames = 1;
+	}
+
 	/**
 	 * Start Animation from the currentFrame position.
 	 * Use Restart to ensure animation is played from beginning

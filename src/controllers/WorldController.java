@@ -7,7 +7,9 @@ import game.items.Item;
 import game.items.PassiveItem;
 import game.units.Creature;
 import game.units.Hero;
+import game.units.HeroStats;
 import game.units.Stat;
+import game.units.Stats;
 
 import java.awt.Dimension;
 import java.awt.Point;
@@ -377,7 +379,9 @@ public class WorldController{
 		/*Loading the playey*/
 		Player p = new Player("John The Baptist",4);
 		World w = TemporaryLoader.loadWorld("world_temporary.txt",p);
-		Hero hero = new Hero("ovelia",p);
+		HeroStats stats_hero = new HeroStats(60,10,80,0,6,8);
+		Hero hero = new Hero("ovelia",p,stats_hero);
+
 		hero.setMovePts(10);
 		Creature[][] members = Party.newEmptyParty();
 		members[0][0] = hero;
@@ -399,7 +403,8 @@ public class WorldController{
 	public static void selemon_main(){
 		Player p = new Player("John The Baptist",4);
 		World w = TemporaryLoader.loadWorld("world_temporary.txt",p);
-		Hero hero = new Hero("ovelia",p);
+		HeroStats stats_hero = new HeroStats(60,10,80,0,6,8);
+		Hero hero = new Hero("ovelia",p,stats_hero);
 
 		Creature[][] members = Party.newEmptyParty();
 		members[0][0] = hero;
@@ -438,7 +443,8 @@ public class WorldController{
 	public static WorldController getTestWorldControllerNoGui(){
 		Player p = new Player("John The Baptist",4);
 		World w = TemporaryLoader.loadWorld("world_temporary.txt",p);
-		Hero hero = new Hero("ovelia",p);
+		HeroStats stats_hero = new HeroStats(60,10,80,0,6,8);
+		Hero hero = new Hero("ovelia",p,stats_hero);
 		Creature[][] members = Party.newEmptyParty();
 		members[0][0] = hero;
 		Party party = new Party(hero, p, members);

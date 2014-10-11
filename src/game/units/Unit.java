@@ -9,8 +9,8 @@ import player.Player;
  */
 public class Unit extends Creature {
 
-	public Unit(String imgName, Player player) {
-		super(imgName, player);
+	public Unit(String imgName, Player player, UnitStats stats) {
+		super(imgName, player,stats);
 	}
 
 }

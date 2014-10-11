@@ -2,6 +2,7 @@ package GUI.party;
 
 import game.units.Creature;
 import game.units.Hero;
+import game.units.HeroStats;
 import game.units.Stat;
 
 import java.awt.Color;
@@ -231,7 +232,7 @@ public class PartyDialog extends JDialog  {
 
 	public static void main(String[] batman) {
 		Player p = new Player("John The Baptist",4);
-		Hero hero = new Hero("ovelia",p);
+		Hero hero = new Hero("ovelia",p, new HeroStats(45,10,80,0,8,8));
 
 		Creature[][] members = Party.newEmptyParty();
 		members[0][0] = hero;

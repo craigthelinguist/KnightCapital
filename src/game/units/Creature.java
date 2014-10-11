@@ -19,44 +19,49 @@ import game.effects.Buff;
  */
 public abstract class Creature {
 
-	protected BufferedImage portrait;
+	protected AnimationMap animations;
+
+	/*
 	protected Map<String,Animation> animations;
 	protected String animationName;
 	protected Animation animation;
+*/
 
 	protected LinkedList<Buff> buffs;
 	protected Stats stats;
 
 	public BufferedImage getImage(){
-		return animation.getSprite();
+		return animations.getImage();
 	}
 
 	public BufferedImage getPortrait(){
-		return portrait;
+		return animations.getPortrait();
 	}
 
 	public String getAnimationName(){
-		return animationName;
+		return animations.getName();
 	}
 
 	public void setAnimation(String name){
-		Animation anim = animations.get(name);
-		if (anim == null) Log.print("setting animation that doesn't exist for creature, animation name was " + name);
-		else{
-
-			this.animationName = name;
-			this.animation = animations.get(name);
-
-		}
+		animations.setAnimation(name);
 	}
 
-	public Creature(String imgName, Player player) {
-		this.portrait = ImageLoader.load(Constants.PORTRAITS + imgName);
-		imgName = imgName.concat("_" + player.getColour());
-		this.animations = ImageLoader.loadDirectedAnimations(Constants.ICONS + imgName);
-		this.animation = animations.get("north");
-		this.animationName = "north";
+	public Creature(String imgName, Player player, Stats stats) {
+
+		// stats
+		this.stats = stats;
 		buffs = new LinkedList<>();
+
+		// set up images
+		animations = new AnimationMap();
+		animations.addAnimation("portrait", ImageLoader.loadAnimation(Constants.PORTRAITS + imgName));
+		imgName = imgName + "_" + player.getColour();
+		Map<String,BufferedImage> images = ImageLoader.loadDirectedImages(Constants.ICONS + imgName);
+		for (Map.Entry<String,BufferedImage> entry : images.entrySet()){
+			animations.addImage(entry.getKey(), entry.getValue());
+		}
+		animations.setAnimation("north");
+
 	}
 
 	/**
