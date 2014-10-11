@@ -218,13 +218,46 @@ public class TownExchangePanel extends JPanel implements MouseListener, MouseMot
 			Point ptVisitors = partyVisitors.getFromPoint(eventClick, position);
 			Point ptGarrison = partyGarrison.getFromPoint(eventClick, position);
 			Point release = ptVisitors == null ? ptGarrison : ptVisitors;
-			if (release == null) return;
-			TownPartyPanel releasePanel = (release == ptGarrison) ? partyGarrison : partyVisitors;
-			TownPartyPanel draggedPanel = (TownPartyPanel)(this.draggedPanel);
-			reorderUnits(draggedPanel,draggedPoint,releasePanel,release);
+			if (release != null){
+				TownPartyPanel releasePanel = (release == ptGarrison) ? partyGarrison : partyVisitors;
+				TownPartyPanel draggedPanel = (TownPartyPanel)(this.draggedPanel);
+				reorderUnits(draggedPanel,draggedPoint,releasePanel,release);
+			}
+		}
+		else if (this.draggedPanel instanceof TownItemPanel){
+			Point eventClick = new Point(e.getX(),e.getY());
+			Point position = this.getLocationOnScreen();
+			Point ptVisitors = itemsVisitors.getFromPoint(eventClick, position);
+			Point ptGarrison = itemsGarrison.getFromPoint(eventClick, position);
+			Point release = ptVisitors == null ? ptGarrison : ptVisitors;
+			if (release != null){
+				TownItemPanel releasePanel = (release == ptGarrison) ? itemsGarrison : itemsVisitors;
+				TownItemPanel draggedPanel = (TownItemPanel)(this.draggedPanel);
+				reorderItems(draggedPanel,draggedPoint,releasePanel,release);
+			}
 		}
 
 		this.resetDragging();
+	}
+
+	/**
+	 * Take the items from point1 in the party at panel1, and from point2 in the party at panel2, and
+	 * swap their positions. A hero cannot leave its own party and if you try to do so it will not be moved.
+	 * @param panel1: first panel
+	 * @param point1: index of item in the party at panel1
+	 * @param panel2: second panel
+	 * @param point2: index of item in the party at panel2
+	 */
+	private void reorderItems(TownItemPanel panel1, Point point1, TownItemPanel panel2, Point point2) {
+
+		Party p1 = panel1.getParty();
+		Item i1 = p1.getItem(point1.x, point1.y);
+		Party p2 = panel2.getParty();
+		Item i2 = p2.getItem(point2.x, point2.y);
+
+		p1.setItem(i2, point1.x, point1.y);
+		p2.setItem(i1, point2.x, point2.y);
+
 	}
 
 	/**

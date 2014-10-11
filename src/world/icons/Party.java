@@ -196,7 +196,7 @@ public class Party extends WorldIcon{
 	public String getAnimationName() {
 		return hero.getAnimationName();
 	}
-	
+
 	public void setMember(Creature c, int x, int y){
 		this.members[x][y] = c;
 	}
@@ -221,9 +221,9 @@ public class Party extends WorldIcon{
 			}
 		}
 	}
-	
+
 	public void updateHeroStats(Item item) {
-		if (item != null) {	
+		if (item != null) {
 			LinkedList<Buff> buffs = item.getBuffs();
 			for(Buff b : buffs) {
 				Stat stat = b.stat;
@@ -231,8 +231,8 @@ public class Party extends WorldIcon{
 			}
 		}
 	}
-	
-	
+
+
 	/**
 	 * Return the number of members in this party.
 	 * @return: an int.
@@ -245,6 +245,10 @@ public class Party extends WorldIcon{
 			}
 		}
 		return count;
+	}
+
+	public void setItem(Item i1, int x, int y) {
+		inventory[x][y] = i1;
 	}
 
 }

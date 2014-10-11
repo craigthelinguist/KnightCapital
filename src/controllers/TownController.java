@@ -35,14 +35,14 @@ public class TownController{
 	protected final City city;
 	protected Party garrison;
 	protected Party visitors;
-	
+
 	// gui stuff
 	private TownGui gui;
 	private boolean active = true;
-	
+
 	// super
 	private WorldController worldController;
-	
+
 	/**
 	 * Construct a new session in Town.
 	 * @param city: the city that this session is describing.
@@ -50,7 +50,7 @@ public class TownController{
 	 */
 	public TownController(City city, WorldController controller){
 		this.city = city;
-		
+
 		if (city.getGarrison() == null){
 			Party g = new Party(null,city.getOwner(),Party.newEmptyParty());
 			city.setGarrison(g);
@@ -59,17 +59,17 @@ public class TownController{
 			Party v = new Party(null,city.getOwner(),Party.newEmptyParty());
 			city.setVisitors(v);
 		}
-		
+
 		this.garrison = city.getGarrison();
 		this.visitors = city.getVisitors();
 		this.gui = new TownGui(this);
 		this.worldController = controller;
 	}
-	
+
 	public Party getGarrison(){
 		return garrison;
 	}
-	
+
 	public Party getVisitors(){
 		return visitors;
 	}
@@ -79,7 +79,7 @@ public class TownController{
 	}
 
 	public void buttonPressed(String text) {
-		
+
 		if (!active) return;
 		text = text.toLowerCase();
 		if (text.equals("leave")){
@@ -87,18 +87,18 @@ public class TownController{
 			worldController.endTownView();
 			active = false;
 		}
-		
-	}
-	
-	protected void mouseMoved(Point from, Point to){
-		
-	}
-	
-	protected void mouseEvent(){
-		
+
 	}
 
-	
+	protected void mouseMoved(Point from, Point to){
+
+	}
+
+	protected void mouseEvent(){
+
+	}
+
+
 	public static void main(String[] args){
 
 		// party
@@ -125,7 +125,7 @@ public class TownController{
 		members2[0][1] = u4;
 		members2[2][1] = u5;
 		Party party2 = new Party(h2,player,members2);
-		
+
 		// items
 		Buff[] buffsWeapon = new Buff[]{ new Buff(Stat.DAMAGE,5,true), new Buff(Stat.ARMOUR, 10, true) };
 		PassiveItem weapon = new PassiveItem(buffsWeapon, "weapon", "Weapon","A powerful weapon crafted by the mighty Mizza +5 Damage");
@@ -133,7 +133,7 @@ public class TownController{
 		PassiveItem arrows = new PassiveItem(buffsArrows, "poisonarrow", "Poison Arrows","Poisonous arrows whose feathers were made from the hairs of Mizza. All archers in party gain +1 damage");
 		party.addItem(weapon);
 		party.addItem(arrows);
-		
+
 		// city
 		CityTile[][] tiles = new CityTile[3][3];
 		for (int i = 0; i < 3; i++){
@@ -144,7 +144,7 @@ public class TownController{
 		City city = new City("basic",player,tiles);
 		city.setGarrison(party);
 		city.setVisitors(party2);
-		
+
 		// player + controller
 		Player p = new Player("John",1);
 		TownController tc = new TownController(city,WorldController.getTestWorldControllerNoGui());
