@@ -6,7 +6,7 @@ public class Person {
 	private final String name;
 	public final int AGE_DOUBLE;
 
-	private Person(int a, String n){
+	public Person(int a, String n){
 		age = a;
 		name = n;
 		AGE_DOUBLE = age*age;
