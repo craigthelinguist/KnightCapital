@@ -191,7 +191,7 @@ public class TEMPStartMenu extends JFrame {
 	}
 
 	private void joinGame() {
-		new Client("130.195.6.168", 45612);
+		new Client("130.195.6.201", 45812);
 	}
 
 	private void createClient() {

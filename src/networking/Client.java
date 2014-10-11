@@ -21,14 +21,23 @@ import player.Player;
  */
 public class Client implements Runnable {
 
-	private static Socket socket;
+	private static Socket messageSocket;
+	
+	private static Socket moveSocket;
+	
 	private static PrintWriter printWriter;
 
+	
+	//in and out for messaging.
 	private  static DataInputStream in;
 	private static DataOutputStream out;
 
+	//in and out for movement.
+	private static DataInputStream moveIn;
+	private static DataOutputStream moveOut;
 
-	private static ClientMessagingProtocol client;
+	private static ClientMessagingProtocol clientMessager;
+	private static ClientMovementProtocol clientMover;
 
 	private ObjectInputStream input;
 	private ObjectOutputStream output;
@@ -37,65 +46,7 @@ public class Client implements Runnable {
 
 	public static void main(String[] args) {
 
-//		String s = "wrong!";
-//
-//		try {
-//
-//			System.out.println("'exit' to terminate connection.");
-//			System.out.println("Send a message to the server.");
-//
-//			//connects to socket based on ip and port number. Ip needs to be configured for individual testing on different computers.
-//			System.out.println("connecting...");
-//			socket = new Socket("130.195.4.155", 45612);
-//			System.out.println("conected!");
-//
-//			//construct input stream from socket
-//			in = new DataInputStream(socket.getInputStream());
-//			out = new DataOutputStream(socket.getOutputStream());
-//
-//			//initialises the client protocol thread which is always -
-//			//- listening for incoming messages from the server.
-//			client = new ClientProtocol(in,out);
-//			Thread listener = new Thread(client);
-//			listener.start();
-//
-//
-//			//printwriter that prints a message to the socket for the server to see.
-//			printWriter = new PrintWriter(socket.getOutputStream(),true);
-//
-//		}
-//		catch(Exception e) {
-//			System.out.println(e);
-//		}
-//
-//		while(true){
-//
-//			try {
-//
-//				    if(!client.getStatus()){
-//
-//				    	System.out.println("server inactive...closing application");
-//				    	System.exit(0);
-//
-//				    }
-//					out.writeUTF(message());
-//
-//
-//			}
-//			//suppress the exception shutdown the client
-//			catch (EOFException e) {
-//
-//			System.out.println("server no longer active, shutting down");
-//			System.exit(0);
-//
-//			}
-//
-//			catch (IOException e) {
-//
-//				e.printStackTrace();
-//			}
-//
-//		}
+
 	}
 
 
@@ -110,22 +61,41 @@ public class Client implements Runnable {
 
 			//connects to socket based on ip and port number. Ip needs to be configured for individual testing on different computers.
 			System.out.println("connecting...");
-			socket = new Socket(ipAddress, port);
-			System.out.println("conected!");
+			
+			
+			//connect messsage socket
+			messageSocket = new Socket(ipAddress, port);
+			System.out.println("conected messages! waiting for move socket connection.....");
+			
+			moveSocket = new Socket(ipAddress, 45612);
+			System.out.println("connected move socket, hopefully fixed chat!");
+			
 
-			//construct input stream from socket
-			in = new DataInputStream(socket.getInputStream());
-			out = new DataOutputStream(socket.getOutputStream());
+			//construct input stream from socket for messaging
+			in = new DataInputStream(messageSocket.getInputStream());
+			out = new DataOutputStream(messageSocket.getOutputStream());
+			
+			
+			//construct in and out stream for movement
+			moveIn = new DataInputStream(moveSocket.getInputStream());
+			moveOut = new DataOutputStream(moveSocket.getOutputStream());
 
 			//initialises the client protocol thread which is always -
 			//- listening for incoming messages from the server.
-			client = new ClientMessagingProtocol(in,out);
-			Thread listener = new Thread(client);
+			clientMessager = new ClientMessagingProtocol(in,out);
+			
+			clientMover = new ClientMovementProtocol(moveIn, moveOut);
+			
+			
+			Thread listener = new Thread(clientMessager);
+			Thread movement = new Thread(clientMover);
+			
+			movement.start();
 			listener.start();
 
 
 			//printwriter that prints a message to the socket for the server to see.
-			printWriter = new PrintWriter(socket.getOutputStream(),true);
+			printWriter = new PrintWriter(messageSocket.getOutputStream(),true);
 
 		}
 		catch(Exception e) {
@@ -136,7 +106,7 @@ public class Client implements Runnable {
 
 			try {
 
-				    if(!client.getStatus()){
+				    if(!clientMessager.getStatus()){
 
 				    	System.out.println("server inactive...closing application");
 				    	System.exit(0);
@@ -171,9 +141,9 @@ public class Client implements Runnable {
 	public void run() {
 
 		try {
-			output = new ObjectOutputStream(socket.getOutputStream());
+			output = new ObjectOutputStream(messageSocket.getOutputStream());
 			out.flush();
-			input = new ObjectInputStream(socket.getInputStream());
+			input = new ObjectInputStream(messageSocket.getInputStream());
 			ID = in.readInt();
 
 			player = (Player) input.readObject();
@@ -215,14 +185,7 @@ public class Client implements Runnable {
 		}
 		//otherwise it closes the socket
 		else{
-			//			try { out.
-			//				socket.close();
-			//				System.out.println("socket closed yo");
-			//				System.exit(0);
-			//			} catch (IOException e) {
-
-			//				e.printStackTrace();
-			//			}
+			
 
 			return "error!!!!";
 
@@ -234,7 +197,7 @@ public class Client implements Runnable {
 
 	public void notifyThread(){
 		System.out.println("notifying via Client");
-		client.notifyChange();
+		clientMessager.notifyChange();
 
 	}
 

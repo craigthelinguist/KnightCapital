@@ -16,7 +16,7 @@ public class ServerMessagingProtocol implements Runnable {
 
 	public ServerMessagingProtocol(DataInputStream in, DataOutputStream out, Connection[] users, int playNum){
 
-		System.out.println("made a protocol");
+		System.out.println("made a  messaging protocol protocol");
 
 
 		for(int i = 0; i<users.length; i++){
@@ -73,11 +73,11 @@ public class ServerMessagingProtocol implements Runnable {
 		return this.out;
 
 	}
-	
+
 	public Boolean getStatus(){
-		
+
 		return clean;
-		
+
 	}
 
 }

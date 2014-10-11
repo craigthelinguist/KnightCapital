@@ -1,9 +1,6 @@
 package controllers;
 
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
-
-import javax.swing.JButton;
+import world.icons.Party;
 
 /**
  * Battle
@@ -22,6 +19,39 @@ import javax.swing.JButton;
  */
 public class BattleController{
 
+	private Party party1;
+	private Party party2;
 
+	/**
+	 * Constructs a new battle controller for a new battle instance.
+	 * @param party 1 & 2 : the two party about to battle.
+	 * @param
+	 */
+	public BattleController(Party p1, Party p2) {
+		// set partys
+		party1 = p1;
+		party2 = p2;
+
+		// construct new battle renderer
+
+
+	}
+
+	private void run() {
+
+		// Main Loop for battle. Will run until one party is defeated
+		while(!party1.isDead() || !party2.isDead()) {
+			// Determine next creatures turn.
+			
+			// Take turn for that creature
+			
+			// update battle renderer
+		}
+
+	}
+	
+	public static void main(String[] strungout) {
+		Party p1 = new Party();
+	}
 
 }
