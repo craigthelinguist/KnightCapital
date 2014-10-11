@@ -10,8 +10,13 @@ import javax.swing.JPanel;
  *
  */
 public class PartyItemsPanel extends JPanel{
-	public PartyItemsPanel(Dimension d) {
+
+	// the parent of this
+	private PartyDialog master;
+
+	public PartyItemsPanel(PartyDialog master, Dimension d) {
 		super();
 		this.setPreferredSize(d);
+		this.master = master;
 	}
 }

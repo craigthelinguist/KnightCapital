@@ -387,6 +387,7 @@ public class WorldController{
 		members[0][0] = hero;
 		Party party = new Party(hero, p, members);
 		party.refresh();
+		party.addItem(arrows);
 		w.getTile(0,0).setIcon(party);
 
 		w.getTile(1,1).setIcon(itemIcon); //place a floor item on this tile

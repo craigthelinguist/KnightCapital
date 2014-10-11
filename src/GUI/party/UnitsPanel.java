@@ -4,6 +4,8 @@ import java.awt.Dimension;
 
 import javax.swing.JPanel;
 
+import GUI.reusable.PartyPanel;
+
 /**
  * This panel is responsible for displaying the current status of your units,
  * as well as allowing the user to move and set the positions of each of the units
@@ -20,9 +22,13 @@ import javax.swing.JPanel;
  */
 public class UnitsPanel extends JPanel{
 
-	public UnitsPanel(Dimension d) {
+	// the parent of this panel
+	private PartyDialog master;
+
+	public UnitsPanel(PartyDialog master, Dimension d) {
 		super();
 		this.setPreferredSize(d); // give it the d here
+		this.master = master;
 	}
 
 }
