@@ -1,5 +1,6 @@
 package GUI.town;
 
+import game.items.Item;
 import game.units.Creature;
 import game.units.Hero;
 
@@ -23,7 +24,6 @@ import javax.swing.JPanel;
 import tools.Constants;
 import world.icons.Party;
 import world.towns.City;
-
 import controllers.TownController;
 
 /**
@@ -39,31 +39,31 @@ public class TownExchangePanel extends JPanel implements MouseListener, MouseMot
 	private static final int HEALTH_BAR_WD = PORTRAIT_WD;
 	private static final int HEALTH_BAR_HT = 15;
 	private static final Color TRANSPARENT = new Color(0,0,0,0);
-	
+
 	// controller
 	private TownController controller;
-	
+
 	// static components
 	private JPanel visitorPanel;
 	private JPanel garrisonPanel;
-	
+
 	// dynamic components
 	private TownPartyPanel partyGarrison;
 	private TownPartyPanel partyVisitors;
-	private JPanel itemsGarrison;
-	private JPanel itemsVisitors;
-	
+	private TownItemPanel itemsGarrison;
+	private TownItemPanel itemsVisitors;
+
 	// buttons
 	private JButton buttonLeave;
 	private JButton buttonTrain;
-	
+
 	// thing being dragged
 	private Point draggedPoint;
 	private JPanel draggedPanel;
-	
+
 	protected TownExchangePanel(TownController controller){
 		this.controller = controller;
-		
+
 		City city = controller.getCity();
 		partyVisitors = new TownPartyPanel(this,controller.getVisitors(),city);
 		partyGarrison = new TownPartyPanel(this,controller.getGarrison(),city);
@@ -72,12 +72,12 @@ public class TownExchangePanel extends JPanel implements MouseListener, MouseMot
 
 		BoxLayout layout = new BoxLayout(this,BoxLayout.Y_AXIS);
 		this.setLayout(layout);
-		
+
 		buttonLeave = new JButton("<-- Leave");
 		JPanel visitorButtons = new JPanel();
 		visitorButtons.setLayout(new BorderLayout());
 		visitorButtons.add(buttonLeave, BorderLayout.SOUTH);
-		
+
 		buttonTrain = new JButton("Train Unit");
 		JPanel garrisonButtons = new JPanel();
 		garrisonButtons.setLayout(new BorderLayout());
@@ -91,16 +91,16 @@ public class TownExchangePanel extends JPanel implements MouseListener, MouseMot
 		parties.add(partyGarrison);
 		parties.add(garrisonButtons);
 		this.add(parties);
-		
+
 		// items
 		JPanel items = new JPanel();
 		items.setOpaque(false);
 		items.add(itemsVisitors);
 		items.add(itemsGarrison);
 		this.add(items);
-		
+
 		this.setOpaque(false);
-		
+
 		this.addMouseListener(this);
 		this.addMouseMotionListener(this);
 	}
@@ -130,13 +130,14 @@ public class TownExchangePanel extends JPanel implements MouseListener, MouseMot
 		this.draggedPoint = null;
 		this.repaint();
 	}
-	
+
 	@Override
 	protected void paintComponent(Graphics g){
 		partyGarrison.repaint();
 		partyVisitors.repaint();
-		
-		if (draggedPanel != null && draggedPoint != null){
+
+		if (draggedPanel == null || draggedPoint == null) return;
+		if (draggedPanel instanceof TownPartyPanel){
 			TownPartyPanel tpp = (TownPartyPanel)draggedPanel;
 			Creature member = tpp.getParty().getMember(draggedPoint.x, draggedPoint.y);
 			if (member == null) return;
@@ -147,9 +148,20 @@ public class TownExchangePanel extends JPanel implements MouseListener, MouseMot
 			mousePoint.y = mousePoint.y - pos.y - portrait.getHeight()/2;
 			g.drawImage(portrait,mousePoint.x,mousePoint.y,null);
 		}
-		
+		else if (draggedPanel instanceof TownItemPanel){
+			TownItemPanel tip = (TownItemPanel)draggedPanel;
+			Item item = tip.getParty().getItem(draggedPoint.x, draggedPoint.y);
+			if (item == null) return;
+			Point mousePoint = MouseInfo.getPointerInfo().getLocation();
+			BufferedImage image = item.getImage();
+			Point pos = this.getLocationOnScreen();
+			mousePoint.x = mousePoint.x - pos.x - image.getWidth()/2;
+			mousePoint.y = mousePoint.y - pos.y - image.getHeight()/2;
+			g.drawImage(image,mousePoint.x,mousePoint.y,null);
+		}
+
 	}
-	
+
 	@Override
 	public void mouseDragged(MouseEvent arg0) {
 		if (draggedPoint != null){
@@ -164,28 +176,42 @@ public class TownExchangePanel extends JPanel implements MouseListener, MouseMot
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		
+
 		Point click = new Point(e.getX(),e.getY());
-		
-		Point pointVisitorsParty = partyVisitors.getFromPoint(click,this.getLocationOnScreen());
+		Point location = this.getLocationOnScreen();
+
+		Point pointVisitorsParty = partyVisitors.getFromPoint(click,location);
 		if (pointVisitorsParty != null){
 			this.draggedPoint = pointVisitorsParty;
 			this.draggedPanel = this.partyVisitors;
 			return;
 		}
-		
-		Point pointGarrisonParty = partyGarrison.getFromPoint(click,this.getLocationOnScreen());
+
+		Point pointGarrisonParty = partyGarrison.getFromPoint(click,location);
 		if (pointGarrisonParty != null){
 			this.draggedPoint = pointGarrisonParty;
 			this.draggedPanel = this.partyGarrison;
 			return;
 		}
-		
+
+		Point pointVisitorsItems = itemsVisitors.getFromPoint(click,location);
+		if (pointVisitorsItems != null){
+			this.draggedPoint = pointVisitorsItems;
+			this.draggedPanel = this.itemsVisitors;
+			return;
+		}
+
+		Point pointGarrisonItems = itemsGarrison.getFromPoint(click, location);
+		if (pointGarrisonItems != null){
+			this.draggedPoint = pointGarrisonItems;
+			this.draggedPanel = this.itemsGarrison;
+		}
+
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		
+
 		if (this.draggedPanel instanceof TownPartyPanel){
 			Point eventClick = new Point(e.getX(),e.getY());
 			Point position = this.getLocationOnScreen();
@@ -197,10 +223,10 @@ public class TownExchangePanel extends JPanel implements MouseListener, MouseMot
 			TownPartyPanel draggedPanel = (TownPartyPanel)(this.draggedPanel);
 			reorderUnits(draggedPanel,draggedPoint,releasePanel,release);
 		}
-		
+
 		this.resetDragging();
 	}
-	
+
 	/**
 	 * Take the creatures from point1 in the party at panel1, and from point2 in the party at panel2, and
 	 * swap their positions. A hero cannot leave its own party and if you try to do so it will not be moved.
@@ -210,22 +236,22 @@ public class TownExchangePanel extends JPanel implements MouseListener, MouseMot
 	 * @param point2: index of creature in the party at panel2
 	 */
 	private void reorderUnits(TownPartyPanel panel1, Point point1, TownPartyPanel panel2, Point point2){
-		
+
 		Party p1 = panel1.getParty();
 		Creature c1 = p1.getMember(point1.x, point1.y);
 		Party p2 = panel2.getParty();
 		Creature c2 = p2.getMember(point2.x, point2.y);
-		
+
 		// heroes aren't allowed to leave their party
 		if ((c1 instanceof Hero || c2 instanceof Hero) && (panel1 != panel2)){
 			return;
 		}
-		
+
 		p1.setMember(c2, point1.x, point1.y);
 		p2.setMember(c1, point2.x, point2.y);
-		
+
 	}
-	
+
 	/**
 	 * Dead methods. Needed for mouse listener interfaces.
 	 */
