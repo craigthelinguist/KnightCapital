@@ -1,4 +1,5 @@
 <person>
     <age>20</age>
     <name>john</name>
+    <AGE_DOUBLE>20*20</AGE_DOUBLE>
 </person>
