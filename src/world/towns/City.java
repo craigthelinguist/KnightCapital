@@ -1,7 +1,6 @@
 package world.towns;
 
 import game.items.Item;
-import game.units.AnimationMap;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -15,6 +14,7 @@ import javax.swing.ImageIcon;
 
 import player.Player;
 import renderer.Animation;
+import renderer.AnimationMap;
 import renderer.Camera;
 import tools.Constants;
 import tools.ImageLoader;
@@ -81,7 +81,7 @@ public class City {
 		for (Map.Entry<String, BufferedImage> entry : directedImages.entrySet()){
 			animations.addImage(entry.getKey(), entry.getValue());
 		}
-		animations.setAnimation("north");
+		animations.setImage("north");
 		String portrait_filepath = Constants.PORTRAITS + "city_" + filepath;
 		animations.addImage("portrait", ImageLoader.load(portrait_filepath));
 
@@ -150,7 +150,7 @@ public class City {
 	}
 
 	public void setAnimationName(String name){
-		animations.setAnimation(name);
+		animations.setImage(name);
 	}
 
 	public String getAnimationName(){

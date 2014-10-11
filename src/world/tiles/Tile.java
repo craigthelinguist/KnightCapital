@@ -1,7 +1,5 @@
 package world.tiles;
 
-import game.units.AnimationMap;
-
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -10,6 +8,7 @@ import java.awt.image.DataBufferByte;
 import java.awt.image.DataBufferInt;
 import java.awt.image.WritableRaster;
 
+import renderer.AnimationMap;
 import tools.ImageManipulation;
 import world.icons.Party;
 import world.icons.WorldIcon;

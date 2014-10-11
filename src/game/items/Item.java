@@ -1,13 +1,13 @@
 package game.items;
 
 import game.effects.Buff;
-import game.units.AnimationMap;
 
 import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 import java.util.Map;
 
 import renderer.Animation;
+import renderer.AnimationMap;
 import tools.Constants;
 import tools.ImageLoader;
 import tools.Log;
@@ -50,7 +50,7 @@ public abstract class Item {
 	}
 
 	public void setAnimation(String name){
-		animations.setAnimation(name);
+		animations.setImage(name);
 	}
 
 	public String toString(){
