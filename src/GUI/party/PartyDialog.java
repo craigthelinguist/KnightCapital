@@ -141,7 +141,7 @@ public class PartyDialog extends JDialog  {
         updateSelected();
 
         // Units Panel
-        this.unitsPanel = new UnitsPanel(panelDimension);
+        this.unitsPanel = new UnitsPanel(this, panelDimension);
         unitsPanel.add(new PartyPanel(party));
         this.unitsPanel.setBackground(Color.RED);
         gc.gridx = 2;
@@ -151,7 +151,7 @@ public class PartyDialog extends JDialog  {
         this.add(unitsPanel, gc);
 
         // Party Items Panel
-        this.partyItemsPanel = new PartyItemsPanel(new Dimension(COMPONENT_WIDTH, COMPONENT_HEIGHT / 2));
+        this.partyItemsPanel = new PartyItemsPanel(this, new Dimension(COMPONENT_WIDTH, COMPONENT_HEIGHT / 2));
         partyItemsPanel.setBackground(Color.BLUE);
         partyItemsPanel.add(new PartyPanel(party));
         gc.gridx = 4;
@@ -161,9 +161,8 @@ public class PartyDialog extends JDialog  {
         this.add(partyItemsPanel, gc);
 
         // Hero Items Panel
-        heroItemsPanel = new HeroItemsPanel(new Dimension(COMPONENT_WIDTH, COMPONENT_HEIGHT / 2));
+        heroItemsPanel = new HeroItemsPanel(this, party, new Dimension(COMPONENT_WIDTH, COMPONENT_HEIGHT / 2));
         heroItemsPanel.setBackground(Color.GREEN);
-        heroItemsPanel.add(new PartyPanel(party));
         gc.gridx = 4;
         gc.gridy = 4;
         gc.gridwidth = 2;

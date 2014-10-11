@@ -167,7 +167,10 @@ public class Party extends WorldIcon{
 	 * @param y: row
 	 */
 	public Item getItem(int x, int y){
-		return inventory[x][y];
+		if(inventory[x][y] != null) {
+			return inventory[x][y];
+		}
+		else return null;
 	}
 
 	public Item[][] getInventory() {
