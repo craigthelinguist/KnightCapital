@@ -1,5 +1,7 @@
 package GUI;
 
+import game.units.Stat;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -191,14 +193,14 @@ public class TileInformationPanel extends JPanel{
 
 				/*set up the label that displays how many moves the player has left */
 				Party p =(Party)occupant;
-				int damage = p.getHero().getBaseDamage();
-				int health = p.getHero().getBaseHealth();
-				int armour = p.getHero().getBaseArmour();
-				int moves = p.getHero().getMovePoints();
-				
-				int buffD = p.getHero().getBuffedDamage();
-				int buffH = p.getHero().getBuffedHealth();
-				int buffA = p.getHero().getBuffedArmour();
+				int damage = p.getHero().getBase(Stat.DAMAGE);
+				int health = p.getHero().getBase(Stat.HEALTH);
+				int armour = p.getHero().getBase(Stat.ARMOUR);
+				int moves = p.getHero().getBase(Stat.MOVEMENT);
+
+				int buffD = p.getHero().getBuffed(Stat.DAMAGE);
+				int buffH = p.getHero().getBuffed(Stat.HEALTH);
+				int buffA = p.getHero().getBuffed(Stat.ARMOUR);
 
 				movesLeft = new JLabel("<html>Health: "+health+"<font color='green'> +"+buffH+"</font> <br>Damage: "+damage+"<font color='green'> +"+buffD+"</font> <br>Armour: "+armour+"<font color='green'> +"+buffA+"</font><br>Moves Left: "+moves+"</html>");
 				movesLeft.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 15));

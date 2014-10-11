@@ -93,21 +93,12 @@ public class TownItemPanel extends JPanel{
 		JPanel panel = new JPanel();
 		Player player = new Player("Biggie Smalls",2);
 		Hero hero = new Hero("ovelia",player);
-		hero.setStat(Stat.HEALTH, 45);
-		hero.setStat(Stat.DAMAGE, 10);
-		hero.setStat(Stat.ARMOUR, 10);
 		Creature[][] members = Party.newEmptyParty();
 
 		Unit u1 = new Unit("knight",player);
-		u1.setStat(Stat.HEALTH, 50);
-		u1.setStat(Stat.DAMAGE, 10);
-		u1.setStat(Stat.ARMOUR, 10);
 		u1.revive(20);
 
 		Unit u2 = new Unit("knight",player);
-		u2.setStat(Stat.HEALTH, 50);
-		u2.setStat(Stat.DAMAGE, 10);
-		u2.setStat(Stat.ARMOUR, 10);
 		u2.revive(45);
 
 		members[1][1] = u1;
@@ -116,10 +107,10 @@ public class TownItemPanel extends JPanel{
 
 		Party party = new Party(hero, player, members);
 
-		Buff[] buffsWeapon = new Buff[]{ new Buff(Stat.DAMAGE,5,true), new Buff(Stat.ARMOUR, 10, true) };
+		Buff[] buffsWeapon = new Buff[]{ Buff.newTempBuff(Stat.DAMAGE,5), Buff.newTempBuff(Stat.ARMOUR, 10) };
 		PassiveItem weapon = new PassiveItem(buffsWeapon, "weapon", "Weapon","A powerful weapon crafted by the mighty Mizza +5 Damage");
 
-		Buff[] buffsArrows= new Buff[]{ new Buff(Stat.DAMAGE,1,true) };
+		Buff[] buffsArrows= new Buff[]{ Buff.newTempBuff(Stat.DAMAGE,1) };
 		PassiveItem arrows = new PassiveItem(buffsArrows, "poisonarrow", "Poison Arrows","Poisonous arrows whose feathers were made from the hairs of Mizza. All archers in party gain +1 damage");
 
 		party.addItem(weapon);

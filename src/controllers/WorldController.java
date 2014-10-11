@@ -350,13 +350,13 @@ public class WorldController{
 
 	public static void aaron_main(String[] args){
 		/*Loading items*/
-		Buff[] buffsAmulet = new Buff[]{ new Buff(Stat.DAMAGE,5,true) };
+		Buff[] buffsAmulet = new Buff[]{ Buff.newTempBuff(Stat.DAMAGE,5) };
 		PassiveItem amulet = new PassiveItem(buffsAmulet, "amulet", "amulet","An amulet that grants sickening gains.\n +5 Damage");
 
-		Buff[] buffsWeapon = new Buff[]{ new Buff(Stat.DAMAGE,5,true), new Buff(Stat.ARMOUR, 10, true) };
+		Buff[] buffsWeapon = new Buff[]{ Buff.newTempBuff(Stat.DAMAGE,5), Buff.newTempBuff(Stat.ARMOUR, 10) };
 		PassiveItem weapon = new PassiveItem(buffsWeapon, "weapon", "weapon","A powerful weapon crafted by the mighty Mizza +5 Damage");
 
-		Buff[] buffsArrows= new Buff[]{ new Buff(Stat.DAMAGE,1,true) };
+		Buff[] buffsArrows= new Buff[]{ Buff.newTempBuff(Stat.DAMAGE,1) };
 		PassiveItem arrows = new PassiveItem(buffsArrows, "poisonarrow", "poisonarrow","Poisonous arrows whose feathers were made from the hairs of Mizza. All archers in party gain +1 damage");
 
 
@@ -370,10 +370,6 @@ public class WorldController{
 		Player p = new Player("John The Baptist",4);
 		World w = TemporaryLoader.loadWorld("world_temporary.txt",p);
 		Hero hero = new Hero("ovelia",p);
-		hero.setStat(Stat.HEALTH, 45);
-		hero.setStat(Stat.DAMAGE, 15);
-		hero.setStat(Stat.ARMOUR, 0);
-		hero.setStat(Stat.SPEED, 60);
 		hero.setMovePts(10);
 		Creature[][] members = Party.newEmptyParty();
 		members[0][0] = hero;
@@ -396,10 +392,6 @@ public class WorldController{
 		Player p = new Player("John The Baptist",4);
 		World w = TemporaryLoader.loadWorld("world_temporary.txt",p);
 		Hero hero = new Hero("ovelia",p);
-		hero.setStat(Stat.HEALTH, 45);
-		hero.setStat(Stat.DAMAGE, 15);
-		hero.setStat(Stat.ARMOUR, 0);
-		hero.setStat(Stat.SPEED, 60);
 
 		Creature[][] members = Party.newEmptyParty();
 		members[0][0] = hero;
@@ -437,10 +429,6 @@ public class WorldController{
 		Player p = new Player("John The Baptist",4);
 		World w = TemporaryLoader.loadWorld("world_temporary.txt",p);
 		Hero hero = new Hero("ovelia",p);
-		hero.setStat(Stat.HEALTH, 45);
-		hero.setStat(Stat.DAMAGE, 15);
-		hero.setStat(Stat.ARMOUR, 0);
-		hero.setStat(Stat.SPEED, 60);
 		Creature[][] members = Party.newEmptyParty();
 		members[0][0] = hero;
 		Party party = new Party(hero, p, members);

@@ -225,10 +225,6 @@ public class PartyDialog extends JDialog  {
 	public static void main(String[] batman) {
 		Player p = new Player("John The Baptist",4);
 		Hero hero = new Hero("ovelia",p);
-		hero.setStat(Stat.HEALTH, 45);
-		hero.setStat(Stat.DAMAGE, 15);
-		hero.setStat(Stat.ARMOUR, 0);
-		hero.setStat(Stat.SPEED, 60);
 
 		Creature[][] members = Party.newEmptyParty();
 		members[0][0] = hero;

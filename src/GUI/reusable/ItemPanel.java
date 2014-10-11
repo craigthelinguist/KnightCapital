@@ -178,14 +178,10 @@ public class ItemPanel extends JPanel {
 		JPanel panel = new JPanel();
 		Player player = new Player("Biggie Smalls",2);
 		Hero hero = new Hero("ovelia",player);
-		hero.setStat(Stat.HEALTH, 45);
-		hero.setStat(Stat.DAMAGE, 15);
-		hero.setStat(Stat.ARMOUR, 0);
-		hero.setStat(Stat.SPEED, 60);
 		Creature[][] members = Party.newEmptyParty();
 		members[0][0] = hero;
 		Party party = new Party(hero, player, members);
-		Buff[] buffsAmulet = new Buff[]{ new Buff(Stat.DAMAGE, 5, true) };
+		Buff[] buffsAmulet = new Buff[]{ Buff.newTempBuff(Stat.DAMAGE, 5) };
 		party.addItem(new PassiveItem(buffsAmulet, "amulet", "Amulet","An amulet that grants sickening gains.\n +5 Damage"));
 		ItemPanel tpp = new ItemPanel(party);
 

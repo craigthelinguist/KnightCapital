@@ -19,6 +19,12 @@ public class HeroStats extends UnitStats{
 		currentMovement = baseMovement;
 	}
 
+	public void setBase(Stat stat, int value){
+		if (stat == Stat.SIGHT) baseSight = value;
+		else if (stat == Stat.MOVEMENT) baseMovement = value;
+		else super.setBase(stat, value);
+	}
+
 	/**
 	 * Set the buffed value for some stat.
 	 * @param stat: stat whose buffed value you will change.
@@ -71,9 +77,22 @@ public class HeroStats extends UnitStats{
 	 * @param stat: stat whose current value you want.
 	 * @return: current value of that stat.
 	 */
+	@Override
 	public int getCurrent(Stat stat){
 		if (stat == Stat.MOVEMENT) return currentMovement;
-		else throw new RuntimeException("You're getting an unknown base stat for a unit");
+		else return super.getCurrent(stat);
+	}
+
+	/**
+	 * Get the total value of some stat, which is the buffed + base.
+	 * @param stat: stat whose total value you want.
+	 * @return: total value of that stat.
+	 */
+	@Override
+	public int getTotal(Stat stat) {
+		if (stat == Stat.SIGHT) return baseSight + buffedSight;
+		else if (stat == Stat.MOVEMENT) return baseMovement + buffedMovement;
+		else return super.getTotal(stat);
 	}
 
 }

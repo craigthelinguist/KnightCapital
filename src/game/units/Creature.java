@@ -19,26 +19,13 @@ import game.effects.Buff;
  */
 public abstract class Creature {
 
-	private int baseHealth;
-	private int baseDamage;
-	private int baseSpeed;
-	private int baseArmour;
-
-	private int buffedDamage;
-	private int buffedSpeed;
-	private int buffedArmour;
-	private int buffedHealth;
-
-
-	private int currentHealth;
-
 	protected BufferedImage portrait;
 	protected Map<String,Animation> animations;
 	protected String animationName;
 	protected Animation animation;
 
 	protected LinkedList<Buff> buffs;
-	private Targets targets;
+	protected Stats stats;
 
 	public BufferedImage getImage(){
 		return animation.getSprite();
@@ -72,20 +59,17 @@ public abstract class Creature {
 		buffs = new LinkedList<>();
 	}
 
-	public enum Targets{
-		MELEE, RANGED, AOE;
-	}
-
-	/** GETTERS AND SETTERS **/
-
 	/**
 	 * Damage this creature by the amount specified.
-	 * @param amount: amount by which to damage this creature.
+	 * @param damageDealt: amount of damage this creature has suffered.
 	 */
-	public void damage(int amount){
-		if (amount < 0) return;
-		int damage = amount - baseArmour + buffedArmour;
-		currentHealth = Math.min(0,currentHealth-damage);
+	public void damage(int damageDealt){
+		int totalArmour = stats.getTotal(Stat.ARMOUR);
+		int hp = stats.getCurrent(Stat.HEALTH);
+		damageDealt = damageDealt - totalArmour;
+		if (damageDealt <= 0) return;
+		hp -= damageDealt;
+		stats.setCurrent(Stat.HEALTH, hp);
 	}
 
 	/**
@@ -94,8 +78,10 @@ public abstract class Creature {
 	 * @param magnitude: amount of hit points to heal.
 	 */
 	public void heal(int amount) {
-		if (amount < 0 || currentHealth <= 0) return;
-		currentHealth = Math.min(baseHealth, currentHealth+amount);
+		int hpTotal = stats.getTotal(Stat.HEALTH);
+		int hp = stats.getCurrent(Stat.HEALTH);
+		if (amount <= 0 || hp <= 0) return;
+		hp = Math.min(hpTotal, hp+amount);
 	}
 
 	/**
@@ -103,46 +89,41 @@ public abstract class Creature {
 	 * If the creature is already alive, do nothing.
 	 */
 	public void revive(int amount){
-		if (currentHealth == 0) this.currentHealth = Math.min(amount,baseHealth+buffedHealth);
-	}
-
-	public void fullHeal(){
-		currentHealth = baseHealth + buffedHealth;
+		int hp = stats.getCurrent(Stat.HEALTH);
+		if (hp != 0) return;
+		stats.setCurrent(Stat.HEALTH, 1);
+		heal(amount-1);
 	}
 
 	/**
-	 * Heal this creature by the specified amount. The creature may be healed above their
-	 * base hit points. If the creature is dead they don't get healed.
+	 * Heal this creature back up to max HP. If they're dead, they don't get healed.
 	 * @param amount: amount of hit points to heal.
 	 */
-	public void healOverload(int amount){
-		if (amount < 0 || currentHealth <= 0) return;
-		currentHealth = currentHealth+amount;
+	public void fullHeal(int amount){
+		int hp = stats.getCurrent(Stat.HEALTH);
+		if (hp <= 0) return;
+		int totalhp = stats.getTotal(Stat.HEALTH);
+		stats.setCurrent(Stat.HEALTH, totalhp);
 	}
 
 	/**
-	 * Regenerate this creature by 5% of their max hit points.
+	 * Regenerate this creature by 5% of their total hit points.
 	 */
 	public void regenHealth(){
-		int hpToRegen = (int)(this.baseHealth/20);
+		int totalHP = stats.getTotal(Stat.HEALTH);
+		int hpToRegen = (int)(totalHP/20);
 		heal(hpToRegen);
 	}
 
 	/**
-	 * Increase or decrease the units armour, damage, or speed by the specified amount.
+	 * Increase or decrease the units stat by the specified amount.
 	 * @param stat: stat to increase
 	 * @param amount: amount to increase by (may be positive)
 	 */
 	public void tempBuff(Stat stat, int amount) {
-		if (stat == Stat.ARMOUR){
-			buffedArmour = buffedArmour + amount;
-		}
-		else if (stat == Stat.DAMAGE){
-			buffedDamage = buffedDamage + amount;
-		}
-		else if (stat == Stat.SPEED){
-			buffedSpeed = buffedSpeed + amount;
-		}
+		int currentBuffedValue = stats.getBuff(stat);
+		int newBuffedValue = amount + currentBuffedValue;
+		stats.setBuff(stat,newBuffedValue);
 	}
 
 	/**
@@ -151,18 +132,9 @@ public abstract class Creature {
 	 * @param amount: amount to increase by (may be negative)
 	 */
 	public void permaBuff(Stat stat, int amount) {
-		if (stat == Stat.ARMOUR){
-			baseArmour = baseArmour + amount;
-		}
-		else if (stat == Stat.DAMAGE){
-			baseDamage = baseDamage + amount;
-		}
-		else if (stat == Stat.SPEED){
-			baseSpeed = baseSpeed + amount;
-		}
-		else if (stat == Stat.HEALTH){
-			baseHealth = baseHealth + amount;
-		}
+		int baseValue = stats.getBase(stat);
+		int newValue = amount + baseValue;
+		stats.setBase(stat, newValue);
 	}
 
 	/**
@@ -179,77 +151,43 @@ public abstract class Creature {
 		}
 	}
 
-	public void setStat(Stat stat, int value){
-
-		if (stat == Stat.ARMOUR){
-			this.baseArmour = value;
-		}
-		else if (stat == Stat.DAMAGE){
-			this.baseDamage = value;
-		}
-		else if (stat == Stat.HEALTH){
-			this.baseHealth = value;
-		}
-
-	}
-
 	/**
 	 * Return the healthiness of this creature as a percentage
 	 * @return: int
 	 */
 	public double healthiness(){
-		int maxHP = this.baseHealth + this.buffedHealth;
-		int currentHP = this.currentHealth;
+		int maxHP = stats.getTotal(Stat.HEALTH);
+		int hp = stats.getCurrent(Stat.HEALTH);
 		if (maxHP == 0) return 1.0;
-		double r = (double)currentHP/(double)maxHP;
+		double r = (double)hp/(double)maxHP;
 		return r;
 	}
 
-	public int getBaseHealth() {
-		return baseHealth;
+	/**
+	 * Get the base value of one of this creature's stats.
+	 * @param stat: stat you want
+	 * @return: base value of the stat
+	 */
+	public int getBase(Stat stat){
+		return stats.getBase(stat);
 	}
 
-	public int getBaseDamage() {
-		return baseDamage;
+	/**
+	 * Get the buffed value of one of this creature's stats.
+	 * @param stat: stat you want
+	 * @return: buffed value of the stat
+	 */
+	public int getBuffed(Stat stat){
+		return stats.getBuff(stat);
 	}
 
-
-	public int getBaseArmour() {
-		return baseArmour;
+	/**
+	 * Get the total value (base + buffed) of one of this creature's stats.
+	 * @param stat: stat you want
+	 * @return: total value of the stat
+	 */
+	public int get(Stat stat){
+		return stats.getTotal(stat);
 	}
-
-	public int getBuffedDamage() {
-		return buffedDamage;
-	}
-
-	public void setBuffedDamage(int buffedDamage) {
-		this.buffedDamage = buffedDamage;
-	}
-
-	public int getBuffedSpeed() {
-		return buffedSpeed;
-	}
-
-	public void setBuffedSpeed(int buffedSpeed) {
-		this.buffedSpeed = buffedSpeed;
-	}
-
-	public int getBuffedArmour() {
-		return buffedArmour;
-	}
-
-	public void setBuffedArmour(int buffedArmour) {
-		this.buffedArmour = buffedArmour;
-	}
-
-	public int getBuffedHealth() {
-		return buffedHealth;
-	}
-
-	public void setBuffedHealth(int buffedHealth) {
-		this.buffedHealth = buffedHealth;
-	}
-
-
 
 }
