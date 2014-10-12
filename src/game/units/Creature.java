@@ -26,6 +26,7 @@ public abstract class Creature {
 	protected LinkedList<Buff> buffs;
 	protected Stats stats;
 	protected Player owner;
+	protected AttackType attackType;
 	
 	/*
 	protected Map<String,Animation> animations;

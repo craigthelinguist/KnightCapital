@@ -39,17 +39,15 @@ public class TestStorage {
 
 		String filepath = "data" + File.separatorChar + "stats.xml";
 
-		/** Unit Stats
+		// Unit Stats
 		XStream stream = new XStream();
 		stream.alias("STATSUNIT", UnitStats.class);
 		stream.registerConverter(new UnitStatsConverter());
 		UnitStats stats = new UnitStats(100,40,60,50);
 		String str = stream.toXML(stats);
-		**/
-						
-		//String str = stream.toXML(images);
-		//PrintStream ps = new PrintStream(new File("test.xml"));
-		//ps.println(str);
+		System.out.println(str);
+		PrintStream ps = new PrintStream(new File("test.xml"));
+		ps.println(str);
 
 	}
 
