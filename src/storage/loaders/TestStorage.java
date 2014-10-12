@@ -1,6 +1,7 @@
 package storage.loaders;
 
 import game.units.AttackType;
+import game.units.Stat;
 import game.units.Unit;
 import game.units.UnitStats;
 
@@ -21,6 +22,7 @@ import com.thoughtworks.xstream.XStream;
 import renderer.AnimationMap;
 import storage.converters.AnimationMapConverter;
 import storage.converters.KCImageConverter;
+import storage.converters.PlayerConverter;
 import storage.converters.UnitConverter;
 import storage.converters.UnitStatsConverter;
 import tools.Constants;
@@ -42,12 +44,31 @@ public class TestStorage {
 		images.add(kc2);
 		**/
 
-		String filepath = "data" + File.separatorChar + "units" + File.separatorChar + "knight.xml";
+		
+		
 		
 		
 		// Unit Stats
+		/**
+		 * 
+
+		**/
+		
+	}
+
+	public static void test_player(){
+		String filepath = "data" + File.separatorChar + "player.xml";
 		XStream stream = new XStream();
-		stream.alias("STATSUNIT", UnitStats.class);
+		stream.alias("player", Player.class);
+		stream.registerConverter(new PlayerConverter());
+		Player player = (Player) stream.fromXML(new File(filepath));
+	}
+	
+	public static void test_unit(){
+		String filepath = "data" + File.separatorChar + "unit.xml";
+		
+		XStream stream = new XStream();
+		stream.alias("unitstats", UnitStats.class);
 		stream.alias("player", Player.class);
 		stream.alias("attack", AttackType.class);
 		stream.alias("unit", Unit.class);
@@ -57,11 +78,33 @@ public class TestStorage {
 		Unit unit = (Unit) stream.fromXML(new File(filepath));
 		
 	}
-
+	
+	public static void test_unit_stats(){
+		String filepath = Constants.DATA_STATS + "knight.xml";
+		
+		XStream stream = new XStream();
+		stream.alias("unitstats", UnitStats.class);
+		stream.alias("attack", AttackType.class);
+		
+		stream.registerConverter(new UnitStatsConverter());
+		
+		UnitStats stats = (UnitStats) stream.fromXML(new File(filepath));
+		
+	}
+	
+	public static void test_external_stats(){
+		String filepath = "data" + File.separatorChar + "other.xml";
+		
+		XStream stream = new XStream();
+		stream.alias("unitstats", UnitStats.class);
+		stream.registerConverter(new UnitStatsConverter());
+		
+		UnitStats stats = (UnitStats) stream.fromXML(new File(filepath));	
+		
+	}
+	
 	public static void main(String[] args) throws Exception{
-
-		new TestStorage().test();
-
+		test_unit();
 	}
 
 }

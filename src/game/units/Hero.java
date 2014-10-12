@@ -30,6 +30,11 @@ public class Hero extends Creature {
 		super(imgName,player,stats);
 		inventory = new Item[INVENTORY_SIZE];
 	}
+	
+	public Hero(String name, String imgName, Player player, HeroStats stats){
+		super(name,imgName,player,stats);
+		inventory = new Item[INVENTORY_SIZE];
+	}
 
 	public int getMovePoints(){
 		return movementPoints;

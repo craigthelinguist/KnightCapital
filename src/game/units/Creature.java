@@ -23,6 +23,7 @@ public abstract class Creature {
 
 	protected AnimationMap animations;
 	protected String name;
+	protected String imgName;
 	protected LinkedList<Buff> buffs;
 	protected Stats stats;
 	protected Player owner;
@@ -33,14 +34,26 @@ public abstract class Creature {
 	protected Animation animation;
 */
 
-
-	public Creature(String imgName, Player player, Stats stats) {
+	@Deprecated
+	/** Use the other one **/
+	protected Creature(String imgName, Player player, Stats stats) {
 		this.name = imgName;
+		this.imgName = imgName;
 		this.stats = stats;
 		buffs = new LinkedList<>();
 		changeOwner(player);
 	}
 	
+	public Creature(String name, String imgName, Player player, UnitStats stats) {
+		this.name = name;
+		this.stats = stats;
+		this.name = name;
+		this.imgName = imgName;
+		this.owner = player;
+		buffs = new LinkedList<>();
+		changeOwner(player);
+	}
+
 	/**
 	 * Change who owns this creature. Update its images to the right colour.
 	 * @param newOwner: player who now owns this creature.
@@ -48,9 +61,10 @@ public abstract class Creature {
 	public void changeOwner(Player newOwner){
 		this.owner = newOwner;
 		animations = new AnimationMap();
-		animations.addImage("portrait", Constants.PORTRAITS, ImageLoader.load(Constants.PORTRAITS + name));
+		animations.addImage("portrait", Constants.PORTRAITS, ImageLoader.load(Constants.PORTRAITS + imgName));
+		if (newOwner == null) return;
 		String playerColor = owner.getColour();
-		animations.addDirectedImages(Constants.ICONS, name, playerColor);
+		animations.addDirectedImages(Constants.ICONS, imgName, playerColor);
 		animations.setImage("north");
 	}
 	
@@ -211,6 +225,10 @@ public abstract class Creature {
 
 	public void setAnimation(String name){
 		animations.setImage(name);
+	}
+	
+	public String getName(){
+		return name;
 	}
 	
 }

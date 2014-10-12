@@ -1,10 +1,14 @@
 package storage.converters;
 
+import java.io.File;
+
 import player.Player;
+import tools.Constants;
 import game.units.AttackType;
 import game.units.Unit;
 import game.units.UnitStats;
 
+import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.converters.Converter;
 import com.thoughtworks.xstream.converters.MarshallingContext;
 import com.thoughtworks.xstream.converters.UnmarshallingContext;
@@ -40,18 +44,13 @@ public class UnitConverter implements Converter{
 		reader.moveDown();
 			Player player = (Player) new PlayerConverter().unmarshal(reader,context);
 		reader.moveUp();
-			
-		// load attack type
-		reader.moveDown();
-			AttackType type = (AttackType) new AttackTypeConverter().unmarshal(reader, context);
-		reader.moveUp();
 		
 		// load stats
 		reader.moveDown();
 			UnitStats stats = (UnitStats) new UnitStatsConverter().unmarshal(reader, context);
 		reader.moveUp();
 		
-		return new Unit(name,null,type,stats);
+		return new Unit(name,imgName,null,stats);
 	}
 
 }
