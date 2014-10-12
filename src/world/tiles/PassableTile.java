@@ -31,6 +31,11 @@ public class PassableTile extends Tile{
 		return !occupied() || this.occupant() instanceof ItemIcon;
 	}
 
+	@Override
+	public String asString() {
+		return "passable";
+	}
+
 
 
 }

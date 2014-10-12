@@ -17,6 +17,11 @@ public class ImpassableTile extends Tile{
 		return false; //fuck your passability
 	}
 
+	@Override
+	public String asString() {
+		return "impassable";
+	}
+
 	
 	
 }
