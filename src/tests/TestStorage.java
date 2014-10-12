@@ -71,12 +71,18 @@ public class TestStorage {
 		
 	}
 
-	public static void test_player(){
+	@Test
+	public void test_player(){
 		String filepath = "data" + File.separatorChar + "player.xml";
 		XStream stream = new XStream();
 		stream.alias("player", Player.class);
 		stream.registerConverter(new PlayerConverter());
 		Player player = (Player) stream.fromXML(new File(filepath));
+		
+		assertTrue(player.name.equals("john the baptist"));
+		assertFalse(player.name.equals("Mizza"));
+		assertTrue(player.slot == 0);
+		assertFalse(player.slot == 1);
 	}
 	
 	public static void test_unit(){
