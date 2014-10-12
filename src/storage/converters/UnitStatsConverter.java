@@ -36,7 +36,6 @@ public class UnitStatsConverter implements Converter {
 	@Override
 	public Object unmarshal(HierarchicalStreamReader reader, UnmarshallingContext context) {
 		int hp; int dmg; int spd; int arm;
-		
 		reader.moveDown();
 			hp = Integer.parseInt(reader.getValue());
 		reader.moveUp();
@@ -49,9 +48,7 @@ public class UnitStatsConverter implements Converter {
 		reader.moveDown();
 			arm = Integer.parseInt(reader.getValue());
 		reader.moveUp();
-		
 		return new UnitStats(hp,dmg,spd,arm);
-		
 	}
 
 }

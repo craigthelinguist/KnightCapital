@@ -9,5 +9,6 @@ public interface Stats {
 	int getBuff(Stat stat);
 	int getCurrent(Stat stat);
 	int getTotal(Stat stat);
+	AttackType getAttackType();
 
 }

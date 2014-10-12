@@ -1,5 +1,7 @@
 package storage.loaders;
 
+import game.units.AttackType;
+import game.units.Unit;
 import game.units.UnitStats;
 
 import java.awt.image.BufferedImage;
@@ -12,11 +14,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import player.Player;
+
 import com.thoughtworks.xstream.XStream;
 
 import renderer.AnimationMap;
 import storage.converters.AnimationMapConverter;
 import storage.converters.KCImageConverter;
+import storage.converters.UnitConverter;
 import storage.converters.UnitStatsConverter;
 import tools.Constants;
 import tools.ImageLoader;
@@ -37,18 +42,20 @@ public class TestStorage {
 		images.add(kc2);
 		**/
 
-		String filepath = "data" + File.separatorChar + "stats.xml";
-
+		String filepath = "data" + File.separatorChar + "units" + File.separatorChar + "knight.xml";
+		
+		
 		// Unit Stats
 		XStream stream = new XStream();
 		stream.alias("STATSUNIT", UnitStats.class);
+		stream.alias("player", Player.class);
+		stream.alias("attack", AttackType.class);
+		stream.alias("unit", Unit.class);
 		stream.registerConverter(new UnitStatsConverter());
-		UnitStats stats = new UnitStats(100,40,60,50);
-		String str = stream.toXML(stats);
-		System.out.println(str);
-		PrintStream ps = new PrintStream(new File("test.xml"));
-		ps.println(str);
-
+		stream.registerConverter(new UnitConverter());
+		
+		Unit unit = (Unit) stream.fromXML(new File(filepath));
+		
 	}
 
 	public static void main(String[] args) throws Exception{

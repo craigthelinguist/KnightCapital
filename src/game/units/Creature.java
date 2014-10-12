@@ -26,7 +26,6 @@ public abstract class Creature {
 	protected LinkedList<Buff> buffs;
 	protected Stats stats;
 	protected Player owner;
-	protected AttackType attackType;
 	
 	/*
 	protected Map<String,Animation> animations;
@@ -41,7 +40,7 @@ public abstract class Creature {
 		buffs = new LinkedList<>();
 		changeOwner(player);
 	}
-
+	
 	/**
 	 * Change who owns this creature. Update its images to the right colour.
 	 * @param newOwner: player who now owns this creature.
@@ -195,7 +194,7 @@ public abstract class Creature {
 	}
 	
 	public AttackType getAttackType(){
-		return this.attackType;
+		return stats.getAttackType();
 	}
 
 	public BufferedImage getImage(){
