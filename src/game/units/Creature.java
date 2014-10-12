@@ -1,4 +1,5 @@
 package game.units;
+
 import java.awt.image.BufferedImage;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -7,6 +8,7 @@ import java.util.Map;
 
 import player.Player;
 import renderer.Animation;
+import renderer.AnimationMap;
 import tools.Constants;
 import tools.ImageLoader;
 import tools.Log;
@@ -19,73 +21,65 @@ import game.effects.Buff;
  */
 public abstract class Creature {
 
-	private int baseHealth;
-	private int baseDamage;
-	private int baseSpeed;
-	private int baseArmour;
-
-	private int buffedDamage;
-	private int buffedSpeed;
-	private int buffedArmour;
-	private int buffedHealth;
-
-
-	private int currentHealth;
-
-	protected BufferedImage portrait;
+	protected AnimationMap animations;
+	protected String name;
+	protected String imgName;
+	protected LinkedList<Buff> buffs;
+	protected Stats stats;
+	protected Player owner;
+	
+	/*
 	protected Map<String,Animation> animations;
 	protected String animationName;
 	protected Animation animation;
+*/
 
-	protected LinkedList<Buff> buffs;
-	private Targets targets;
-
-	public BufferedImage getImage(){
-		return animation.getSprite();
-	}
-
-	public BufferedImage getPortrait(){
-		return portrait;
-	}
-
-	public String getAnimationName(){
-		return animationName;
-	}
-
-	public void setAnimation(String name){
-		Animation anim = animations.get(name);
-		if (anim == null) Log.print("setting animation that doesn't exist for creature, animation name was " + name);
-		else{
-
-			this.animationName = name;
-			this.animation = animations.get(name);
-
-		}
-	}
-
-	public Creature(String imgName, Player player) {
-		this.portrait = ImageLoader.load(Constants.PORTRAITS + imgName);
-		imgName = imgName.concat("_" + player.getColour());
-		this.animations = ImageLoader.loadDirectedAnimations(Constants.ICONS + imgName);
-		this.animation = animations.get("north");
-		this.animationName = "north";
+	@Deprecated
+	/** Use the other one **/
+	protected Creature(String imgName, Player player, Stats stats) {
+		this.name = imgName;
+		this.imgName = imgName;
+		this.stats = stats;
 		buffs = new LinkedList<>();
+		changeOwner(player);
 	}
-
-	public enum Targets{
-		MELEE, RANGED, AOE;
+	
+	public Creature(String name, String imgName, Player player, UnitStats stats) {
+		this.name = name;
+		this.stats = stats;
+		this.name = name;
+		
+		this.imgName = imgName;
+		this.owner = player;
+		buffs = new LinkedList<>();
+		changeOwner(player);
 	}
-
-	/** GETTERS AND SETTERS **/
 
 	/**
-	 * Damage this creature by the amount specified.
-	 * @param amount: amount by which to damage this creature.
+	 * Change who owns this creature. Update its images to the right colour.
+	 * @param newOwner: player who now owns this creature.
 	 */
-	public void damage(int amount){
-		if (amount < 0) return;
-		int damage = amount - baseArmour + buffedArmour;
-		currentHealth = Math.min(0,currentHealth-damage);
+	public void changeOwner(Player newOwner){
+		this.owner = newOwner;
+		animations = new AnimationMap();
+		animations.addImage("portrait", Constants.PORTRAITS, ImageLoader.load(Constants.PORTRAITS + imgName));
+		if (newOwner == null) return;
+		String playerColor = owner.getColour();
+		animations.addDirectedImages(Constants.ICONS, imgName, playerColor);
+		animations.setImage("north");
+	}
+	
+	/**
+	 * Damage this creature by the amount specified.
+	 * @param damageDealt: amount of damage this creature has suffered.
+	 */
+	public void damage(int damageDealt){
+		int totalArmour = stats.getTotal(Stat.ARMOUR);
+		int hp = stats.getCurrent(Stat.HEALTH);
+		damageDealt = damageDealt - totalArmour;
+		if (damageDealt <= 0) return;
+		hp -= damageDealt;
+		stats.setCurrent(Stat.HEALTH, hp);
 	}
 
 	/**
@@ -94,75 +88,62 @@ public abstract class Creature {
 	 * @param magnitude: amount of hit points to heal.
 	 */
 	public void heal(int amount) {
-		if (amount < 0 || currentHealth <= 0) return;
-		currentHealth = Math.min(baseHealth, currentHealth+amount);
+		int hpTotal = stats.getTotal(Stat.HEALTH);
+		int hp = stats.getCurrent(Stat.HEALTH);
+		if (amount <= 0 || hp <= 0) return;
+		hp = Math.min(hpTotal, hp+amount);
 	}
-	
+
 	/**
 	 * Revive the creature with the specified amount of health.
 	 * If the creature is already alive, do nothing.
 	 */
 	public void revive(int amount){
-		if (currentHealth == 0) this.currentHealth = Math.min(amount,baseHealth+buffedHealth);
-	}
-
-	public void fullHeal(){
-		currentHealth = baseHealth + buffedHealth;
+		int hp = stats.getCurrent(Stat.HEALTH);
+		if (hp != 0) return;
+		stats.setCurrent(Stat.HEALTH, 1);
+		heal(amount-1);
 	}
 
 	/**
-	 * Heal this creature by the specified amount. The creature may be healed above their
-	 * base hit points. If the creature is dead they don't get healed.
+	 * Heal this creature back up to max HP. If they're dead, they don't get healed.
 	 * @param amount: amount of hit points to heal.
 	 */
-	public void healOverload(int amount){
-		if (amount < 0 || currentHealth <= 0) return;
-		currentHealth = currentHealth+amount;
+	public void fullHeal(int amount){
+		int hp = stats.getCurrent(Stat.HEALTH);
+		if (hp <= 0) return;
+		int totalhp = stats.getTotal(Stat.HEALTH);
+		stats.setCurrent(Stat.HEALTH, totalhp);
 	}
 
 	/**
-	 * Regenerate this creature by 5% of their max hit points.
+	 * Regenerate this creature by 5% of their total hit points.
 	 */
 	public void regenHealth(){
-		int hpToRegen = (int)(this.baseHealth/20);
+		int totalHP = stats.getTotal(Stat.HEALTH);
+		int hpToRegen = (int)(totalHP/20);
 		heal(hpToRegen);
 	}
-
+	
 	/**
-	 * Increase or decrease the units armour, damage, or speed by the specified amount.
-	 * @param stat: stat to increase
-	 * @param amount: amount to increase by (may be positive)
+	 * Add the specified buff to this creature.
+	 * @param buff: buff to apply.
 	 */
-	public void tempBuff(Stat stat, int amount) {
-		if (stat == Stat.ARMOUR){
-			buffedArmour = buffedArmour + amount;
-		}
-		else if (stat == Stat.DAMAGE){
-			buffedDamage = buffedDamage + amount;
-		}
-		else if (stat == Stat.SPEED){
-			buffedSpeed = buffedSpeed + amount;
-		}
+	public void addBuff(Buff buff){
+		buff.applyTo(this);
+		buffs.add(buff);
 	}
-
-	/**
-	 * Permanently increase or decrease the units armour, damage, or speed by the specified amount.
-	 * @param stat: stat to increase
-	 * @param amount: amount to increase by (may be negative)
-	 */
-	public void permaBuff(Stat stat, int amount) {
-		if (stat == Stat.ARMOUR){
-			baseArmour = baseArmour + amount;
+	
+	public void removeBuff(Buff buffToRemove){
+		for (int i = 0; i < buffs.size(); i++){
+			Buff buff = buffs.get(i);
+			if (buff.equals(buffToRemove)){
+				buffs.remove(i);
+				buff.removeFrom(this);
+				return;
+			}
 		}
-		else if (stat == Stat.DAMAGE){
-			baseDamage = baseDamage + amount;
-		}
-		else if (stat == Stat.SPEED){
-			baseSpeed = baseSpeed + amount;
-		}
-		else if (stat == Stat.HEALTH){
-			baseHealth = baseHealth + amount;
-		}
+		Log.print("[Creature] Tried to remove a buff but it wasn't found.");
 	}
 
 	/**
@@ -179,30 +160,91 @@ public abstract class Creature {
 		}
 	}
 
-	public void setStat(Stat stat, int value){
-
-		if (stat == Stat.ARMOUR){
-			this.baseArmour = value;
-		}
-		else if (stat == Stat.DAMAGE){
-			this.baseDamage = value;
-		}
-		else if (stat == Stat.HEALTH){
-			this.baseHealth = value;
-		}
-		
-	}
-
 	/**
 	 * Return the healthiness of this creature as a percentage
-	 * @return: int
+	 * @return: an int in the range[0,100]
 	 */
 	public double healthiness(){
-		int maxHP = this.baseHealth + this.buffedHealth;
-		int currentHP = this.currentHealth;
+		int maxHP = stats.getTotal(Stat.HEALTH);
+		int hp = stats.getCurrent(Stat.HEALTH);
 		if (maxHP == 0) return 1.0;
-		double r = (double)currentHP/(double)maxHP;
+		double r = (double)hp/(double)maxHP;
 		return r;
 	}
 
+	/**
+	 * Get the base value of one of this creature's stats.
+	 * @param stat: stat you want
+	 * @return: base value of the stat
+	 */
+	public int getBase(Stat stat){
+		return stats.getBase(stat);
+	}
+
+	/**
+	 * Get the buffed value of one of this creature's stats.
+	 * @param stat: stat you want
+	 * @return: buffed value of the stat
+	 */
+	public int getBuffed(Stat stat){
+		return stats.getBuff(stat);
+	}
+
+	/**
+	 * Get the total value (base + buffed) of one of this creature's stats.
+	 * @param stat: stat you want
+	 * @return: total value of the stat
+	 */
+	public int get(Stat stat){
+		return stats.getTotal(stat);
+	}
+
+	public void setCurrent(Stat stat, int amount){
+		stats.setCurrent(stat, amount);
+	}
+	
+	public void setBuffed(Stat stat, int amount){
+		stats.setBuff(stat, amount);
+	}
+	
+	/**
+	 * Returns true if this creature is dead. Dead as a doorknob.
+	 * @return boolean whether dead or not.
+	 */
+	public boolean isDead() {
+		return stats.getTotal(Stat.HEALTH) <= 0;
+	}
+	
+	public AttackType getAttackType(){
+		return stats.getAttackType();
+	}
+
+	public BufferedImage getImage(){
+		return animations.getImage();
+	}
+
+	public BufferedImage getPortrait(){
+		return animations.getPortrait();
+	}
+
+	public String getAnimationName(){
+		return animations.getName();
+	}
+
+	public void setAnimation(String name){
+		animations.setImage(name);
+	}
+	
+	public Player getOwner(){
+		return this.owner;
+	}
+	
+	public String getName(){
+		return name;
+	}
+	
+	public String getImageName(){
+		return this.imgName;
+	}
+	
 }

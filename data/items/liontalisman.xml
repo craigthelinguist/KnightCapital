@@ -1,0 +1,17 @@
+<item>
+	<name>Lion's Talisman</name>
+	<image>amulet</image>
+	<description>grants sickening gains</description>
+	<type>passive</type>
+	<target>HERO</target>
+	<buff>
+		<stat>DAMAGE</stat>
+		<amount>5</amount>
+		<permanent>true</permanent>
+	</buff>
+	<buff>
+		<stat>HEALTH</stat>
+		<amount>10</amount>
+		<permanent>true</permanent>
+	</buff>
+</item>

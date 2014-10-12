@@ -26,7 +26,7 @@ public class CreatureTests {
 
 	public void generateUnit(){
 		Player p1 = new Player("tupac",4);
-		unit = new Unit("knight", p1);
+		unit = new Unit("knight", p1,10,3,3);
 	}
 
 

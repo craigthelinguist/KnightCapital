@@ -5,21 +5,29 @@ import game.effects.Buff;
 import game.items.PassiveItem;
 import game.items.Item;
 import game.items.PassiveItem;
+import game.items.Target;
 import game.units.Creature;
 import game.units.Hero;
+import game.units.HeroStats;
 import game.units.Stat;
+import game.units.Stats;
 
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.security.auth.login.Configuration;
 import javax.swing.JButton;
 import javax.swing.SwingUtilities;
+
+import com.thoughtworks.xstream.XStream;
 
 import networking.Client;
 import networking.Server;
@@ -38,7 +46,7 @@ import world.tiles.CityTile;
 import world.tiles.Tile;
 import world.towns.City;
 import GUI.MainFrame;
-import GUI.PartyDialog.PartyDialog;
+import GUI.party.PartyDialog;
 
 /**
  * A WorldController. This is the glue between the model (World) and the view (gui, renderer).
@@ -107,7 +115,7 @@ public class WorldController{
 
 		else {
 
-			client = new Client();
+			//client = new Client("130.195.6.98", 45612);
 
 		}
 
@@ -119,6 +127,9 @@ public class WorldController{
 	 * @param ke: details about the key event
 	 */
 	public void keyPressed(KeyEvent ke){
+
+
+
 
 		int code = ke.getKeyCode();
 		if (code == ROTATE_CW){
@@ -171,7 +182,7 @@ public class WorldController{
 			// double clicked a city
 			if (SwingUtilities.isLeftMouseButton(me) && selectedTile != null
 				&& clickedTile instanceof CityTile && selectedTile instanceof CityTile
-				 && System.currentTimeMillis() - this.lastMouse < 700){
+				 && System.currentTimeMillis() - this.lastMouse < 700)
 				{
 					CityTile c1 = (CityTile)clickedTile;
 					CityTile c2 = (CityTile)selectedTile;
@@ -179,8 +190,8 @@ public class WorldController{
 						startTownView(c1.getCity());
 					}
 					this.lastMouse = System.currentTimeMillis();
+				
 				}
-			}
 
 			// deselected the tile
 			else if (selected != null && SwingUtilities.isLeftMouseButton(me) && selectedTile == clickedTile){
@@ -344,37 +355,42 @@ public class WorldController{
 	}
 
 
-	public static void main(String[] args){
+	public static void main(String[] args) throws FileNotFoundException{
 		aaron_main(args);
 	}
 
 	public static void aaron_main(String[] args){
 		/*Loading items*/
-		Buff[] buffsAmulet = new Buff[]{ new Buff(Stat.DAMAGE,5,true) };
-		PassiveItem amulet = new PassiveItem(buffsAmulet, "amulet", "Amulet","An amulet that grants sickening gains.\n +5 Damage");
+		Buff[] buffsAmulet = new Buff[]{ Buff.newTempBuff(Stat.DAMAGE,5) };
+		PassiveItem amulet = new PassiveItem("amulet", "amulet", "An amulet that grants sickening gains.\n +5 Damage",buffsAmulet,Target.HERO);
 
-		Buff[] buffsWeapon = new Buff[]{ new Buff(Stat.DAMAGE,5,true), new Buff(Stat.ARMOUR, 10, true) };
-		PassiveItem weapon = new PassiveItem(buffsWeapon, "weapon", "Weapon","A powerful weapon crafted by the mighty Mizza +5 Damage");
+		Buff[] buffsWeapon = new Buff[]{ Buff.newPermaBuff(Stat.DAMAGE,5), Buff.newTempBuff(Stat.ARMOUR, 10) };
+		PassiveItem weapon = new PassiveItem("weapon", "weapon", "A powerful weapon crafted by the mighty Mizza +5 Damage",buffsWeapon,Target.HERO);
 
-		Buff[] buffsArrows= new Buff[]{ new Buff(Stat.DAMAGE,1,true) };
-		PassiveItem arrows = new PassiveItem(buffsArrows, "poisonarrow", "Poison Arrows","Poisonous arrows whose feathers were made from the hairs of Mizza. All archers in party gain +1 damage");
+		Buff[] buffsArrows= new Buff[]{ Buff.newTempBuff(Stat.DAMAGE,1) };
+		PassiveItem arrows = new PassiveItem("poisonarrow", "poisonarrow", "Poisonous arrows whose feathers were made from the hairs of Mizza. All archers in party gain +1 damage",buffsArrows, Target.PARTY);
 
 
-		ItemIcon itemIcon = new ItemIcon("Pimp Juice", amulet);
+		ItemIcon itemIcon = new ItemIcon(amulet);
 
-		ItemIcon itemIcon2 = new ItemIcon("", weapon);
+		ItemIcon itemIcon2 = new ItemIcon(weapon);
 
-		ItemIcon itemIcon3 = new ItemIcon("", arrows);
+		ItemIcon itemIcon3 = new ItemIcon(arrows);
 
+		
 		/*Loading the playey*/
 		Player p = new Player("John The Baptist",4);
 		World w = TemporaryLoader.loadWorld("world_temporary.txt",p);
-		Hero hero = new Hero("ovelia",p);
+		HeroStats stats_hero = new HeroStats(60,10,80,0,6,8);
+		Hero hero = new Hero("ovelia",p,stats_hero);
+
 		hero.setMovePts(10);
 		Creature[][] members = Party.newEmptyParty();
 		members[0][0] = hero;
 		Party party = new Party(hero, p, members);
 		party.refresh();
+
+		party.addItem(arrows);
 		w.getTile(0,0).setIcon(party);
 
 		w.getTile(1,1).setIcon(itemIcon); //place a floor item on this tile
@@ -391,7 +407,8 @@ public class WorldController{
 	public static void selemon_main(){
 		Player p = new Player("John The Baptist",4);
 		World w = TemporaryLoader.loadWorld("world_temporary.txt",p);
-		Hero hero = new Hero("ovelia",p);
+		HeroStats stats_hero = new HeroStats(60,10,80,0,6,8);
+		Hero hero = new Hero("ovelia",p,stats_hero);
 
 		Creature[][] members = Party.newEmptyParty();
 		members[0][0] = hero;
@@ -408,6 +425,8 @@ public class WorldController{
 		w.getTile(0,0).setIcon(party);
 		new WorldController(w,p);
 	}
+
+
 
 	/**
 	 * When u don't want a gui use this for testing purposes only
@@ -428,7 +447,8 @@ public class WorldController{
 	public static WorldController getTestWorldControllerNoGui(){
 		Player p = new Player("John The Baptist",4);
 		World w = TemporaryLoader.loadWorld("world_temporary.txt",p);
-		Hero hero = new Hero("ovelia",p);
+		HeroStats stats_hero = new HeroStats(60,10,80,0,6,8);
+		Hero hero = new Hero("ovelia",p,stats_hero);
 		Creature[][] members = Party.newEmptyParty();
 		members[0][0] = hero;
 		Party party = new Party(hero, p, members);

@@ -2,10 +2,15 @@ package world.icons;
 
 import java.awt.Point;
 import java.awt.image.BufferedImage;
+import java.util.Iterator;
+import java.util.LinkedList;
 
+import game.effects.Buff;
 import game.items.Item;
+import game.items.PassiveItem;
 import game.units.Creature;
 import game.units.Hero;
+import game.units.Stat;
 import game.units.Unit;
 import player.Player;
 
@@ -14,12 +19,13 @@ import player.Player;
  * @author craigthelinguist
  *
  */
-public class Party extends WorldIcon{
+public class Party extends WorldIcon implements Iterable<Creature>{
 
 	public static final int PARTY_ROWS = 2;
 	public static final int PARTY_COLS = 3;
 	public static final int INVENTORY_ROWS = 2;
 	public static final int INVENTORY_COLS = 3;
+	public static final int INVENTORY_SIZE = INVENTORY_ROWS*INVENTORY_COLS;
 
 	private Player owner;
 	private int movementPoints;
@@ -75,12 +81,22 @@ public class Party extends WorldIcon{
 	}
 
 	/**
-	 * Decrease the remaining movement points by the specified amount. Doesn't check to see if
-	 * the final result will make sense.
+	 * Add to this parties movement points. A party's movement points can go over their maximum.s
+	 * @param amount
+	 */
+	public void addMovementPoints(int amount) {
+		if (amount < 0) return;
+		this.movementPoints += amount;
+	}
+
+	/**
+	 * Decrease the remaining movement points by the specified amount. A party's movement points cannot go
+	 * below zero.
 	 * @param amount: amount to decrease by.
 	 */
 	public void decreaseMovePoints(int amount){
-		movementPoints -= amount;
+		if (amount < 0) return;
+		this.movementPoints = Math.max(0,movementPoints-amount);
 	}
 
 	/**
@@ -150,6 +166,10 @@ public class Party extends WorldIcon{
 			for (int x = 0; x < INVENTORY_COLS; x++){
 				if (inventory[x][y] == null){
 					inventory[x][y] = item;
+					if (item instanceof PassiveItem){
+						PassiveItem passive = (PassiveItem)item;
+						passive.applyEffectsTo(this);
+					}
 					return true;
 				}
 			}
@@ -163,7 +183,10 @@ public class Party extends WorldIcon{
 	 * @param y: row
 	 */
 	public Item getItem(int x, int y){
-		return inventory[x][y];
+		if(inventory[x][y] != null) {
+			return inventory[x][y];
+		}
+		else return null;
 	}
 
 	public Item[][] getInventory() {
@@ -192,7 +215,7 @@ public class Party extends WorldIcon{
 	public String getAnimationName() {
 		return hero.getAnimationName();
 	}
-	
+
 	public void setMember(Creature c, int x, int y){
 		this.members[x][y] = c;
 	}
@@ -205,16 +228,42 @@ public class Party extends WorldIcon{
 		return new Item[Party.INVENTORY_COLS][Party.INVENTORY_ROWS];
 	}
 
+	/**
+	 * Print the inventory of the player. For testing purposes only.
+	 */
 	public void printInventory(){
 		for (int i = 0; i < inventory.length; i++){
 			for (int j = 0; j < inventory[i].length; j++){
 				Item itm = inventory[i][j];
-				if (itm != null) System.out.println(itm.getDescription());
+				if (itm != null) System.out.println(itm.getName());
 				else System.out.println("null");
 			}
 		}
 	}
-	
+
+	/**
+	 * Check to see if this party has any memebers still living in it.
+	 * @return
+	 */
+	public boolean isDead() {
+
+		// For each member
+		for (int i = 0; i < members.length; i++){
+			for (int j = 0; j < members[i].length; j++){
+				// if any member is not dead return false
+				Creature creature = members[i][j];
+
+
+				if(creature != null){
+					if (!members[i][j].isDead()) return false;
+				}
+			}
+		}
+		// else return true
+		return true;
+	}
+
+
 	/**
 	 * Return the number of members in this party.
 	 * @return: an int.
@@ -229,4 +278,62 @@ public class Party extends WorldIcon{
 		return count;
 	}
 
+	/**
+	 * Should not be used to add items! Only use to swap items.
+	 * @param i1
+	 * @param x
+	 * @param y
+	 */
+	public void setItem(Item i1, int x, int y) {
+		inventory[x][y] = i1;
+	}
+
+	@Override
+	public Iterator<Creature> iterator() {
+		return new PartyIterator();
+	}
+
+	private class PartyIterator implements Iterator<Creature>{
+
+		int row = 0;
+		int col = 0;
+		
+		@Override
+		public boolean hasNext() {
+			for (int y = row ; y < Party.PARTY_ROWS; y++){
+				for (int x = col ; x < Party.PARTY_COLS; x++){
+					if (members[x][y] != null) return true;
+				}
+			}
+			return false;
+		}
+
+		@Override
+		public Creature next() {
+			int newRow = row;
+			int newCol = col;
+			for (int y = newRow; y < Party.PARTY_ROWS; y++){
+				for (int x = newCol; x < Party.PARTY_COLS; x++){
+					if (members[x][y] != null){
+						row = newRow;
+						col = newCol;
+						col++;
+						if (col == Party.PARTY_COLS){
+							col = 0;
+							row++;
+						}
+						return members[x][y];
+					}
+				}
+			}
+			return null;
+		}
+
+		@Override
+		public void remove() {
+			throw new UnsupportedOperationException();
+		}
+		
+	}
+	
 }

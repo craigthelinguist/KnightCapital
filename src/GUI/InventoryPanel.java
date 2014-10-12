@@ -194,26 +194,26 @@ public class InventoryPanel extends JPanel implements MouseListener {
 	public void mouseExited(MouseEvent e) {
 		repaint();
 		if(e.getSource() == slots[0][0]) {
-			slots[0][0].changeBackground(ImageLoader.load(Constants.ITEMS + slots[0][0].getImageName()+"Slot"));
+			slots[0][0].changeBackground(ImageLoader.load(Constants.ITEMS + slots[0][0].getImageName()));
 			dSlot1.dispose();
 	    }
 		if(e.getSource() == slots[1][0]) {
-			slots[1][0].changeBackground(ImageLoader.load(Constants.ITEMS + slots[1][0].getImageName()+"Slot"));
+			slots[1][0].changeBackground(ImageLoader.load(Constants.ITEMS + slots[1][0].getImageName()));
 			dSlot2.dispose();
 		}
 		if(e.getSource() == slots[2][0]) {
-			slots[2][0].changeBackground(ImageLoader.load(Constants.ITEMS + slots[2][0].getImageName()+"Slot"));
+			slots[2][0].changeBackground(ImageLoader.load(Constants.ITEMS + slots[2][0].getImageName()));
 			dSlot3.dispose();
 	    }
 		if(e.getSource() == slots[0][1]) {
-			slots[0][1].changeBackground(ImageLoader.load(Constants.ITEMS + slots[0][1].getImageName()+"Slot"));
+			slots[0][1].changeBackground(ImageLoader.load(Constants.ITEMS + slots[0][1].getImageName()));
 			dSlot4.dispose();
 		}
 		if(e.getSource() == slots[1][1]) {
-			slots[1][1].changeBackground(ImageLoader.load(Constants.ITEMS + slots[1][1].getImageName()+"Slot"));
+			slots[1][1].changeBackground(ImageLoader.load(Constants.ITEMS + slots[1][1].getImageName()));
 			dSlot5.dispose();	    }
 		if(e.getSource() == slots[2][1]) {
-			slots[2][1].changeBackground(ImageLoader.load(Constants.ITEMS + slots[2][1].getImageName()+"Slot"));
+			slots[2][1].changeBackground(ImageLoader.load(Constants.ITEMS + slots[2][1].getImageName()));
 			dSlot6.dispose();		
 		}
 	}
@@ -244,7 +244,6 @@ public class InventoryPanel extends JPanel implements MouseListener {
 						 * if you don't use different inset. This is because the inventory slots aren't divided equally.
 						 */
 						if(i == 2 && j == 1) {
-							System.out.println("yes");
 							c.insets = new Insets(10,10,15,16);
 						}
 						else if(i == 2 && j == 0) {
@@ -259,7 +258,7 @@ public class InventoryPanel extends JPanel implements MouseListener {
 						else {
 							c.insets = new Insets(15,15,10,10);
 						}
-						slots[i][j] = new ItemSlotPanel(items[i][j].getName());
+						slots[i][j] = new ItemSlotPanel(items[i][j].getName()+"Slot");
 						c.gridx = i;
 						c.gridy = j;
 						slots[i][j].addMouseListener(this);

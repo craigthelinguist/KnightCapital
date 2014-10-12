@@ -26,8 +26,15 @@ public class Hero extends Creature {
 	private int maxMovementPoints;
 	private Item[] inventory;
 
-	public Hero(String imgName, Player player){
-		super(imgName,player);
+	@Deprecated
+	/** Use the other constructor **/
+	public Hero(String imgName,Player player, HeroStats stats){
+		super(imgName,player,stats);
+		inventory = new Item[INVENTORY_SIZE];
+	}
+	
+	public Hero(String name, String imgName, Player player, HeroStats stats){
+		super(name,imgName,player,stats);
 		inventory = new Item[INVENTORY_SIZE];
 	}
 
@@ -37,26 +44,6 @@ public class Hero extends Creature {
 
 	public void setMovePts(int newPts){
 		movementPoints = newPts;
-	}
-
-	/**
-	 * Equip an item to this Hero. Should apply all buffs to the Hero.
-	 * @param itm: item to be equipped.
-	 */
-	public void equip(EquippedItem itm){
-		for (Buff buff : itm.getBuffs()){
-			buff.applyTo(this);
-		}
-	}
-
-	/**
-	 * Unequip an item from this hero. Should take away all buffs that were granted.
-	 * @param itm: item to be removed.
-	 */
-	public void unequip(EquippedItem itm){
-		for (Buff buff : itm.getBuffs()){
-			buff.applyTo(this);
-		}
 	}
 
 }

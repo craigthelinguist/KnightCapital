@@ -18,17 +18,20 @@ public class Constants {
 	public static final int WINDOW_WD = 1300;
 	public static final int WINDOW_HT = 800;
 
+	
 	// all images are stored in this relative filepath
 	public static final String ASSETS = "assets" + File.separatorChar;
 	public static final String ICONS = ASSETS + "icons" + File.separatorChar;
 	public static final String CITIES = Constants.ASSETS + "cities" + File.separatorChar;
 	public static final String PORTRAITS = "assets" + File.separatorChar+ "portraits" +   File.separatorChar;
 	public static final String ITEMS = Constants.ASSETS + "itemIcons" + File.separatorChar;
+	public static final String ASSETS_TILES = Constants.ASSETS + "tiles" + File.separatorChar;
 
 	// all images inside the GUIAssets
 	public static final String GUI_FILEPATH = Constants.ASSETS + "GUIAssets" + File.separatorChar;
 	public static final String GUI_BUTTONS = Constants.ASSETS + "GUIAssets" + File.separatorChar +"buttons"+ File.separatorChar;
 	public static final String GUI_TOWN = Constants.ASSETS + "gui_town" + File.separatorChar;
+	public static final String GUI_TOWN_BUTTONS = Constants.ASSETS + "gui_town" + File.separatorChar + "buttons" + File.separatorChar;
 
 	// these are temporary values for WorldRenderer prototype - Aaron
 	public static final int TILE_WD = 131;
@@ -39,7 +42,7 @@ public class Constants {
 	// image sizing
 	public static final Dimension PORTRAIT_DIMENSIONS = new Dimension(66,100);
 	public static final Dimension INVENTORY_DIMENSIONS = new Dimension(102,75);
-	
+
 	// These are for the Camera
 	public static final int CAMERA_PAN = 10;
 
@@ -56,4 +59,10 @@ public class Constants {
 	public static final String PartyPanelTitle = "Party Panel";
 	public static final String PartyPanelDescription = "This is a motherfucking description telling you what the fuck this is and what the fuck it does. Got it?";
 
+	// shit for data loading.
+	public static final String XMLTESTS = "data" + File.separatorChar + "test" + File.separatorChar;
+	public static final String DATA_UNITS = "data" + File.separatorChar + "units" + File.separatorChar;
+	public static final String DATA_ITEMS = "data" + File.separatorChar + "items" + File.separatorChar;
+	public static final String DATA_HEROES = "data" + File.separatorChar + "heroes" + File.separatorChar;
+	
 }

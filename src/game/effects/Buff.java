@@ -1,23 +1,30 @@
 package game.effects;
 
 import game.items.ChargedItem;
+import game.items.Target;
 import game.units.Creature;
+import game.units.Hero;
 import game.units.Stat;
 
 /**
  * A Buff changes the stats of a target.
  * @author craigthelinguist
  */
-public class Buff{
+public class Buff implements Effect{
 
-	private final Stat stat;
-	private final int amount;
-	private final boolean permanent;
+	public final Stat stat;
+	public final int amount;
+	public final boolean permanent;
 
-	public Buff(Stat stat, int amount, boolean permanence){
+	/**
+	 * 
+	 * @param stat: stat this buff affects
+	 * @param amount: how much to increase or decrease that stat
+	 * @param permanence: if this buff isn't permanent, it will expire after 1 turn
+	 * @param target: who does this buff affect (only the hero, the entire party etc.)?
+	 */
+	private Buff(Stat stat, int amount, boolean permanence){
 		this.stat = stat;
-		if (stat == Stat.HEALTH)
-			throw new RuntimeException("don't hadd health effects to buffs - use Heal instead");
 		this.amount = amount;
 		this.permanent = permanence;
 	}
@@ -45,21 +52,25 @@ public class Buff{
 
 	/**
 	 * Apply this buff to a creature.
-	 * @param c
+	 * SHOULD ONLY BE CALLED FROM CREATURE.
+	 * @param c: creature to apply buff to
 	 */
 	public void applyTo(Creature c){
-		if (permanent) c.permaBuff(stat, amount);
-		else c.tempBuff(stat, amount);
+		int buffedValue = c.getBuffed(this.stat);
+		int newValue = buffedValue + this.amount;
+		c.setBuffed(stat, newValue);
 	}
 
 	/**
 	 * Remove this buff from a creature.
-	 * If this buff is permanent, does nothing.
-	 * Otherwise this method should 'undo' whatever buff it applied.
-	 * @param c: creature to apply this buff to.
+	 * This method should 'undo' the effects of applyTo(c)
+	 * SHOULD ONLY BE CALLED FROM CREATURE.
+	 * @param c: creature to remove buff from.
 	 */
-	public void removeFrom(Creature c){
-		if (!permanent) c.tempBuff(stat, -amount);
+	public void removeFrom(Creature c){ 
+		int buffedValue = c.getBuffed(this.stat);
+		int newValue = buffedValue - this.amount;
+		c.setBuffed(stat,newValue);
 	}
 
 	/**

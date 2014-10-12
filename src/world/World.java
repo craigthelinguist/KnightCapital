@@ -11,6 +11,8 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Set;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+
 import GUI.InventoryPanel;
 import player.Player;
 import renderer.Camera;
@@ -29,6 +31,7 @@ import world.towns.City;
  * tiles).
  * @author Aaron
  */
+@XStreamAlias("DATA")
 public class World {
 
 	// assumes the world is rectangular
@@ -42,6 +45,7 @@ public class World {
 	private final Set<City> cities;
 	private final Player[] players;
 	private int currentPlayer;
+
 	private Tile[][] tiles;
 	private int currentDay;
 
@@ -379,6 +383,5 @@ public class World {
 
 		return visited;
 	}
-
 
 }

@@ -3,8 +3,10 @@ package GUI.reusable;
 import game.effects.Buff;
 import game.items.Item;
 import game.items.PassiveItem;
+import game.items.Target;
 import game.units.Creature;
 import game.units.Hero;
+import game.units.HeroStats;
 import game.units.Stat;
 import game.units.Unit;
 
@@ -177,12 +179,12 @@ public class ItemPanel extends JPanel {
 		JFrame frame = new JFrame();
 		JPanel panel = new JPanel();
 		Player player = new Player("Biggie Smalls",2);
-		Hero hero = new Hero("ovelia",player);
+		Hero hero = new Hero("ovelia",player, new HeroStats(40,10,80,0,8,8));
 		Creature[][] members = Party.newEmptyParty();
 		members[0][0] = hero;
 		Party party = new Party(hero, player, members);
-		Buff[] buffsAmulet = new Buff[]{ new Buff(Stat.DAMAGE, 5, true) };
-		party.addItem(new PassiveItem(buffsAmulet, "amulet", "Amulet","An amulet that grants sickening gains.\n +5 Damage"));
+		Buff[] buffsAmulet = new Buff[]{ Buff.newTempBuff(Stat.DAMAGE, 5) };
+		party.addItem(new PassiveItem("Amulet", "amulet", "An amulet that grants sickening gains.\n +5 Damage",buffsAmulet,Target.HERO));
 		ItemPanel tpp = new ItemPanel(party);
 
 		panel.add(tpp);

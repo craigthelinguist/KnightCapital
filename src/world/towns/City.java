@@ -14,6 +14,7 @@ import javax.swing.ImageIcon;
 
 import player.Player;
 import renderer.Animation;
+import renderer.AnimationMap;
 import renderer.Camera;
 import tools.Constants;
 import tools.ImageLoader;
@@ -25,9 +26,9 @@ import world.tiles.CityTile;
  * There are cities on the world. They train units. What units a city can train
  * depends on what buildings the city has. You can construct buildings in a
  * city. On the overworld, a city is represented by a collection of tiles.
- * 
+ *
  * Let's assume on the overworld all cities are 3x3.
- * 
+ *
  * @author craigthelinguist
  */
 public class City {
@@ -44,7 +45,7 @@ public class City {
 
 	// party inside this city
 	private Party garrison;
-	
+
 	// party staying in this city
 	private Party visitors;
 
@@ -52,13 +53,10 @@ public class City {
 	private LinkedList<Item> items;
 
 	// image representing this city
-	private Animation animation;
-	private String animationName;
-	private Map<String, Animation> animationNames;
-	private BufferedImage portrait;
-	
-	public City(String filepath, Player player, CityTile[][] overworldTiles){
-	
+	private AnimationMap animations;
+
+	public City(String name, String filepath, Player player, CityTile[][] overworldTiles){
+
 		// set up owner and fields storing details about this city
 		owner = player;
 		buildings = new HashSet<>();
@@ -75,22 +73,19 @@ public class City {
 				tiles[i][j].setCity(this);
 			}
 		}
-		
-		String filepathIcon = Constants.CITIES + filepath;
-		animationNames = ImageLoader.loadDirectedAnimations(filepathIcon);
-		animation = animationNames.get("north");
-		animationName = "north";
-		
-		// set up portrait
-		String filepathPortrait = Constants.PORTRAITS + "city_" + filepath;
-		this.portrait = ImageLoader.load(filepathPortrait);
-		
+
+		// set up images for this city
+		animations = new AnimationMap();
+		this.animations.addDirectedImages(Constants.CITIES, "basic", "red");
+		animations.setImage("north");
+		String portrait_filepath = Constants.PORTRAITS + "city_" + filepath;
+		animations.addImage("portrait", portrait_filepath, ImageLoader.load(portrait_filepath));
 	}
 
 	/**
 	 * Attempt to add the specified building, or do nothing if it is already in
 	 * this city.
-	 * 
+	 *
 	 * @param b
 	 *            : building to add.
 	 * @return: true if the building was added, false otherwise.
@@ -101,7 +96,7 @@ public class City {
 
 	/**
 	 * Check if the given player owns this city.
-	 * 
+	 *
 	 * @param player
 	 *            : see if this person owns the city.
 	 * @return true if the person owns the city.
@@ -112,7 +107,7 @@ public class City {
 
 	/**
 	 * Set the city to be owned by the specified player.
-	 * 
+	 *
 	 * @param player
 	 *            : player who now owns the city.
 	 */
@@ -124,11 +119,15 @@ public class City {
 	 * Draw this city on the given graphics object at the point (x,y)
 	 */
 	public void draw(Graphics g, int x, int y) {
-		g.drawImage(animation.getSprite(), x, y, null);
+		g.drawImage(animations.getImage(), x, y, null);
 	}
 
 	public int getImageHeight(){
-		return animation.getSprite().getHeight();
+		return animations.getImage().getHeight();
+	}
+
+	public int getImageWidth(){
+		return animations.getImage().getWidth();
 	}
 
 	/**
@@ -144,26 +143,20 @@ public class City {
 		else if (orientation == Camera.EAST) return tiles[WIDTH-1][WIDTH-1];
 		else throw new RuntimeException("unknown camera orientation: " + orientation);
 	}
-	
+
 	public void setAnimationName(String name){
-		if (animationNames.containsKey(name)){
-			animationName = name;
-			animation = animationNames.get(name);
-		}
-	}
-	
-	public String getAnimationName(){
-		return animationName;
+		animations.setImage(name);
 	}
 
-	public int getImageWidth(){
-		return animation.getSprite().getWidth();
+	public String getAnimationName(){
+		return animations.getName();
 	}
+
 
 	public Party getVisitors() {
 		return visitors;
 	}
-	
+
 	public Party getGarrison(){
 		return garrison;
 	}
@@ -180,11 +173,11 @@ public class City {
 
 
 	public BufferedImage getPortrait() {
-		return portrait;
+		return animations.getPortrait();
 	}
 
 	public Player getOwner() {
 		return this.owner;
 	}
-	
+
 }
