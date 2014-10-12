@@ -59,8 +59,6 @@ public class UnitConverter implements Converter{
 	@Override
 	public Object unmarshal(HierarchicalStreamReader reader, UnmarshallingContext context) {
 		
-		System.out.println("RIP=============");
-		
 		if (!reader.hasMoreChildren()){
 			XStream stream = new XStream();
 			stream.alias("unit", Unit.class);

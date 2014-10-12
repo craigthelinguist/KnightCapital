@@ -34,6 +34,9 @@ public class IconConverter implements Converter{
 	@Override
 	public Object unmarshal(HierarchicalStreamReader reader, UnmarshallingContext context) {
 		
+		if (!reader.hasMoreChildren()){
+			return null;
+		}
 		
 		reader.moveDown();
 			String type = reader.getValue();

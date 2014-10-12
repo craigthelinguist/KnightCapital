@@ -90,6 +90,12 @@ public abstract class Tile {
 	public void addImage(String filepath, BufferedImage bi){
 		this.animations.addImage("world", filepath, bi);
 	}
+	
+	/**
+	 * For data loading/saving. Return this class as a string representation.
+	 * @return: a string.
+	 */
+	public abstract String asString();
 
 	/**
 	 * Draws this tile, but a little lighter.

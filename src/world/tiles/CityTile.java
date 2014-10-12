@@ -56,5 +56,10 @@ public class CityTile extends Tile {
 		// that way world will put the party inside the city garrison.
 		return false;
 	}
+
+	@Override
+	public String asString() {
+		return "city";
+	}
 		
 }
