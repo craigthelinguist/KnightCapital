@@ -24,6 +24,9 @@ public class CityTile extends Tile {
 	}
 	
 	public void setCity(City newCity){
+		if (city != null){
+			throw new RuntimeException("you're setting a cityTile's city after it has already been set!");
+		}
 		city = newCity;
 	}
 	

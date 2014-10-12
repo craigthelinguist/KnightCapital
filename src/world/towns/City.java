@@ -54,6 +54,9 @@ public class City {
 
 	// image representing this city
 	private AnimationMap animations;
+	
+	private String name;
+	
 
 	public City(String name, String filepath, Player player, CityTile[][] overworldTiles){
 
@@ -62,6 +65,7 @@ public class City {
 		buildings = new HashSet<>();
 		visitors = garrison = null;
 		items = new LinkedList<>();
+		this.name = name;
 
 		// set up tiles; set tiles so that they have a reference to this.
 		tiles = overworldTiles;
@@ -178,6 +182,10 @@ public class City {
 
 	public Player getOwner() {
 		return this.owner;
+	}
+
+	public String getName() {
+		return this.name;
 	}
 
 }

@@ -2,11 +2,14 @@ package storage.converters;
 
 import javax.swing.Icon;
 
+import storage.loaders.DataLoader;
+
 import world.icons.WorldIcon;
 import world.tiles.CityTile;
 import world.tiles.ImpassableTile;
 import world.tiles.PassableTile;
 import world.tiles.Tile;
+import world.towns.City;
 
 import com.thoughtworks.xstream.converters.Converter;
 import com.thoughtworks.xstream.converters.MarshallingContext;
@@ -23,10 +26,10 @@ public class TileConverter implements Converter {
 
 	@Override
 	public void marshal(Object object, HierarchicalStreamWriter writer, MarshallingContext context) {
-		
-		
-		// TODO Auto-generated method stub
-		
+		if (object instanceof PassableTile) marshal_passable(object,writer,context);
+		else if (object instanceof ImpassableTile) marshal_passable(object,writer,context);
+		else if (object instanceof CityTile) marshal_passable (object,writer,context);
+		else throw new RuntimeException("trying to marshal some unknown kind of tile");
 	}
 
 	@Override
@@ -80,21 +83,64 @@ public class TileConverter implements Converter {
 	}
 	
 	private void marshal_impassable(Object object, HierarchicalStreamWriter writer, MarshallingContext context) {
-		
+		ImpassableTile it = (ImpassableTile)object;
+		writer.startNode("type");
+		writer.setValue(it.asString());
+		writer.endNode();
+		writer.startNode("x");
+		writer.setValue(""+it.X);
+		writer.endNode();
+		writer.startNode("y");
+		writer.setValue(""+it.Y);
+		writer.endNode();
 	}
 	
 	public Object unmarshal_impassable(HierarchicalStreamReader reader, UnmarshallingContext context) {
-		// TODO Auto-generated method stub
-		return null;
+		reader.moveDown();
+			String imageName = reader.getValue();
+		reader.moveUp();
+		reader.moveDown();
+		int x = Integer.parseInt(reader.getValue());
+		reader.moveUp();
+		reader.moveDown();
+			int y = Integer.parseInt(reader.getValue());
+		reader.moveUp();
+		return new ImpassableTile(imageName,x,y);
 	}
 	
 	private void marshal_city(Object object, HierarchicalStreamWriter writer, MarshallingContext context) {
-		
+		CityTile ct = (CityTile)object;
+		writer.startNode("x");
+		writer.setValue(""+ct.X);
+		writer.endNode();
+		writer.startNode("y");
+		writer.setValue(""+ct.Y);
+		writer.endNode();
+		writer.startNode("city");
+		writer.setValue(ct.getCity().getName());
+		writer.endNode();
 	}
 	
 	public Object unmarshal_city(HierarchicalStreamReader reader, UnmarshallingContext context) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		reader.moveDown();
+			int x = Integer.parseInt(reader.getValue());
+		reader.moveUp();
+		reader.moveDown();
+			int y = Integer.parseInt(reader.getValue());
+		reader.moveUp();
+		reader.moveDown();
+			String cityName = reader.getValue();
+			City city = DataLoader.cities.get(cityName);
+			if (city == null){
+				throw new RuntimeException("Error! You're setting a city tile's city to be null. City name was " + cityName);
+			}
+		reader.moveUp();
+		
+		CityTile ct = new CityTile(x,y);
+		ct.setCity(city);
+		return new CityTile(x,y);
+		
 	}
 	
 }
