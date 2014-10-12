@@ -114,7 +114,7 @@ public class WorldController{
 
 		else {
 
-			client = new Client("130.195.6.98", 45612);
+			//client = new Client("130.195.6.98", 45612);
 
 		}
 

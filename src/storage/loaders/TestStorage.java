@@ -51,30 +51,6 @@ public class TestStorage {
 		//PrintStream ps = new PrintStream(new File("test.xml"));
 		//ps.println(str);
 
-		
-		/**
-		 * 
-		 * 
-<unitstats>
-<baseHealth>20</baseHealth>
-<baseDamage>
-</unitstats>
-
-	protected int baseHealth;
-	protected int baseDamage;
-	protected int baseSpeed;
-	protected int baseArmour;
-
-	protected int buffedDamage;
-	protected int buffedSpeed;
-	protected int buffedArmour;
-	protected int buffedHealth;
-
-	protected int currentHealth;
-
-		 * 
-		 */
-		
 	}
 
 	public static void main(String[] args) throws Exception{
