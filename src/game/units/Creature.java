@@ -124,27 +124,26 @@ public abstract class Creature {
 		int hpToRegen = (int)(totalHP/20);
 		heal(hpToRegen);
 	}
-
+	
 	/**
-	 * Increase or decrease the units stat by the specified amount.
-	 * @param stat: stat to increase
-	 * @param amount: amount to increase by (may be positive)
+	 * Add the specified buff to this creature.
+	 * @param buff: buff to apply.
 	 */
-	public void tempBuff(Stat stat, int amount) {
-		int currentBuffedValue = stats.getBuff(stat);
-		int newBuffedValue = amount + currentBuffedValue;
-		stats.setBuff(stat,newBuffedValue);
+	public void addBuff(Buff buff){
+		buff.applyTo(this);
+		buffs.add(buff);
 	}
-
-	/**
-	 * Permanently increase or decrease the units armour, damage, or speed by the specified amount.
-	 * @param stat: stat to increase
-	 * @param amount: amount to increase by (may be negative)
-	 */
-	public void permaBuff(Stat stat, int amount) {
-		int baseValue = stats.getBase(stat);
-		int newValue = amount + baseValue;
-		stats.setBase(stat, newValue);
+	
+	public void removeBuff(Buff buffToRemove){
+		for (int i = 0; i < buffs.size(); i++){
+			Buff buff = buffs.get(i);
+			if (buff.equals(buffToRemove)){
+				buffs.remove(i);
+				buff.removeFrom(this);
+				return;
+			}
+		}
+		Log.print("[Creature] Tried to remove a buff but it wasn't found.");
 	}
 
 	/**
@@ -200,6 +199,14 @@ public abstract class Creature {
 		return stats.getTotal(stat);
 	}
 
+	public void setCurrent(Stat stat, int amount){
+		stats.setCurrent(stat, amount);
+	}
+	
+	public void setBuffed(Stat stat, int amount){
+		stats.setBuff(stat, amount);
+	}
+	
 	/**
 	 * Returns true if this creature is dead. Dead as a doorknob.
 	 * @return boolean whether dead or not.

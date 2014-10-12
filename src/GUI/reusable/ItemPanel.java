@@ -3,6 +3,7 @@ package GUI.reusable;
 import game.effects.Buff;
 import game.items.Item;
 import game.items.PassiveItem;
+import game.items.Target;
 import game.units.Creature;
 import game.units.Hero;
 import game.units.HeroStats;
@@ -182,7 +183,7 @@ public class ItemPanel extends JPanel {
 		Creature[][] members = Party.newEmptyParty();
 		members[0][0] = hero;
 		Party party = new Party(hero, player, members);
-		Buff[] buffsAmulet = new Buff[]{ Buff.newTempBuff(Stat.DAMAGE, 5) };
+		Buff[] buffsAmulet = new Buff[]{ Buff.newTempBuff(Stat.DAMAGE, 5,Target.HERO) };
 		party.addItem(new PassiveItem(buffsAmulet, "amulet", "Amulet","An amulet that grants sickening gains.\n +5 Damage"));
 		ItemPanel tpp = new ItemPanel(party);
 

@@ -5,6 +5,7 @@ import game.effects.Buff;
 import game.items.PassiveItem;
 import game.items.Item;
 import game.items.PassiveItem;
+import game.items.Target;
 import game.units.Creature;
 import game.units.Hero;
 import game.units.HeroStats;
@@ -181,7 +182,7 @@ public class WorldController{
 			// double clicked a city
 			if (SwingUtilities.isLeftMouseButton(me) && selectedTile != null
 				&& clickedTile instanceof CityTile && selectedTile instanceof CityTile
-				 && System.currentTimeMillis() - this.lastMouse < 700){
+				 && System.currentTimeMillis() - this.lastMouse < 700)
 				{
 					CityTile c1 = (CityTile)clickedTile;
 					CityTile c2 = (CityTile)selectedTile;
@@ -189,8 +190,8 @@ public class WorldController{
 						startTownView(c1.getCity());
 					}
 					this.lastMouse = System.currentTimeMillis();
+				
 				}
-			}
 
 			// deselected the tile
 			else if (selected != null && SwingUtilities.isLeftMouseButton(me) && selectedTile == clickedTile){
@@ -360,13 +361,13 @@ public class WorldController{
 
 	public static void aaron_main(String[] args){
 		/*Loading items*/
-		Buff[] buffsAmulet = new Buff[]{ Buff.newTempBuff(Stat.DAMAGE,5) };
+		Buff[] buffsAmulet = new Buff[]{ Buff.newTempBuff(Stat.DAMAGE,5,Target.HERO) };
 		PassiveItem amulet = new PassiveItem(buffsAmulet, "amulet", "amulet","An amulet that grants sickening gains.\n +5 Damage");
 
-		Buff[] buffsWeapon = new Buff[]{ Buff.newTempBuff(Stat.DAMAGE,5), Buff.newTempBuff(Stat.ARMOUR, 10) };
+		Buff[] buffsWeapon = new Buff[]{ Buff.newPermaBuff(Stat.DAMAGE,5,Target.HERO), Buff.newTempBuff(Stat.ARMOUR, 10,Target.HERO) };
 		PassiveItem weapon = new PassiveItem(buffsWeapon, "weapon", "weapon","A powerful weapon crafted by the mighty Mizza +5 Damage");
 
-		Buff[] buffsArrows= new Buff[]{ Buff.newTempBuff(Stat.DAMAGE,1) };
+		Buff[] buffsArrows= new Buff[]{ Buff.newTempBuff(Stat.DAMAGE,1, Target.PARTY) };
 		PassiveItem arrows = new PassiveItem(buffsArrows, "poisonarrow", "poisonarrow","Poisonous arrows whose feathers were made from the hairs of Mizza. All archers in party gain +1 damage");
 
 
@@ -376,6 +377,7 @@ public class WorldController{
 
 		ItemIcon itemIcon3 = new ItemIcon("", arrows);
 
+		
 		/*Loading the playey*/
 		Player p = new Player("John The Baptist",4);
 		World w = TemporaryLoader.loadWorld("world_temporary.txt",p);
@@ -387,6 +389,7 @@ public class WorldController{
 		members[0][0] = hero;
 		Party party = new Party(hero, p, members);
 		party.refresh();
+
 		party.addItem(arrows);
 		w.getTile(0,0).setIcon(party);
 

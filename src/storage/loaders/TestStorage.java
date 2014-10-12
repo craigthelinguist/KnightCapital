@@ -103,8 +103,14 @@ public class TestStorage {
 		
 	}
 	
+	public static void test_items(){
+		
+		//String filepath = Constants.DATA_ITEMS + "rune_sword.xml";
+		
+	}
+	
 	public static void main(String[] args) throws Exception{
-		test_unit();
+		test_items();
 	}
 
 }

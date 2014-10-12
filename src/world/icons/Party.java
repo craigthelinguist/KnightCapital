@@ -2,10 +2,12 @@ package world.icons;
 
 import java.awt.Point;
 import java.awt.image.BufferedImage;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 import game.effects.Buff;
 import game.items.Item;
+import game.items.PassiveItem;
 import game.units.Creature;
 import game.units.Hero;
 import game.units.Stat;
@@ -17,7 +19,7 @@ import player.Player;
  * @author craigthelinguist
  *
  */
-public class Party extends WorldIcon{
+public class Party extends WorldIcon implements Iterable<Creature>{
 
 	public static final int PARTY_ROWS = 2;
 	public static final int PARTY_COLS = 3;
@@ -153,6 +155,12 @@ public class Party extends WorldIcon{
 			for (int x = 0; x < INVENTORY_COLS; x++){
 				if (inventory[x][y] == null){
 					inventory[x][y] = item;
+					
+					if (item instanceof PassiveItem){
+						PassiveItem passive = (PassiveItem)item;
+						passive.applyEffectsTo(this);
+					}
+					
 					updateHeroStats(item); //TODO: this is temporary, later on when the equipping system takes place replace this
 					return true;
 				}
@@ -231,7 +239,7 @@ public class Party extends WorldIcon{
 			for (int i = 0; i < buffs.length; i++){
 				Buff b = buffs[i];
 				Stat stat = b.stat;
-				hero.tempBuff(stat,b.amount);
+				hero.addBuff(b);
 			}
 		}
 	}
@@ -273,6 +281,12 @@ public class Party extends WorldIcon{
 		return count;
 	}
 
+	/**
+	 * Should not be used to add items! Only use to swap items.
+	 * @param i1
+	 * @param x
+	 * @param y
+	 */
 	public void setItem(Item i1, int x, int y) {
 		inventory[x][y] = i1;
 	}
@@ -281,4 +295,52 @@ public class Party extends WorldIcon{
 		this.movementPoints += amount;
 	}
 
+	@Override
+	public Iterator<Creature> iterator() {
+		return new PartyIterator();
+	}
+
+	private class PartyIterator implements Iterator<Creature>{
+
+		int row = 0;
+		int col = 0;
+		
+		@Override
+		public boolean hasNext() {
+			for (int y = row ; y < Party.PARTY_ROWS; y++){
+				for (int x = col ; x < Party.PARTY_COLS; x++){
+					if (members[x][y] != null) return true;
+				}
+			}
+			return false;
+		}
+
+		@Override
+		public Creature next() {
+			int newRow = row;
+			int newCol = col;
+			for (int y = newRow; y < Party.PARTY_ROWS; y++){
+				for (int x = newCol; x < Party.PARTY_COLS; x++){
+					if (members[x][y] != null){
+						row = newRow;
+						col = newCol;
+						col++;
+						if (col == Party.PARTY_COLS){
+							col = 0;
+							row++;
+						}
+						return members[x][y];
+					}
+				}
+			}
+			return null;
+		}
+
+		@Override
+		public void remove() {
+			throw new UnsupportedOperationException();
+		}
+		
+	}
+	
 }
