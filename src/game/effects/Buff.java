@@ -10,7 +10,7 @@ import game.units.Stat;
  * A Buff changes the stats of a target.
  * @author craigthelinguist
  */
-public class Buff{
+public class Buff implements Effect{
 
 	public final Stat stat;
 	public final int amount;

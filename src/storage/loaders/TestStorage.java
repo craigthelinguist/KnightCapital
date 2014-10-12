@@ -1,5 +1,6 @@
 package storage.loaders;
 
+import game.effects.Buff;
 import game.units.AttackType;
 import game.units.Stat;
 import game.units.Unit;
@@ -21,6 +22,7 @@ import com.thoughtworks.xstream.XStream;
 
 import renderer.AnimationMap;
 import storage.converters.AnimationMapConverter;
+import storage.converters.BuffConverter;
 import storage.converters.KCImageConverter;
 import storage.converters.PlayerConverter;
 import storage.converters.UnitConverter;
@@ -103,6 +105,19 @@ public class TestStorage {
 		
 	}
 	
+	public static void test_buff(){
+		
+		String filepath = "data" + File.separatorChar + "buff.xml";
+		XStream stream = new XStream();
+		stream.alias("buff", Buff.class);
+		stream.registerConverter(new BuffConverter());
+		
+		Buff buff = Buff.newTempBuff(Stat.ARMOUR, 5);
+		String xml = stream.toXML(buff);
+		System.out.println(xml);
+		
+	}
+	
 	public static void test_items(){
 		
 		//String filepath = Constants.DATA_ITEMS + "rune_sword.xml";
@@ -110,7 +125,7 @@ public class TestStorage {
 	}
 	
 	public static void main(String[] args) throws Exception{
-		test_items();
+		test_buff();
 	}
 
 }

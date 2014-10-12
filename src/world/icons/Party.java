@@ -80,12 +80,22 @@ public class Party extends WorldIcon implements Iterable<Creature>{
 	}
 
 	/**
-	 * Decrease the remaining movement points by the specified amount. Doesn't check to see if
-	 * the final result will make sense.
+	 * Add to this parties movement points. A party's movement points can go over their maximum.s
+	 * @param amount
+	 */
+	public void addMovementPoints(int amount) {
+		if (amount < 0) return;
+		this.movementPoints += amount;
+	}
+
+	/**
+	 * Decrease the remaining movement points by the specified amount. A party's movement points cannot go
+	 * below zero.
 	 * @param amount: amount to decrease by.
 	 */
 	public void decreaseMovePoints(int amount){
-		movementPoints -= amount;
+		if (amount < 0) return;
+		this.movementPoints = Math.max(0,movementPoints-amount);
 	}
 
 	/**
@@ -289,10 +299,6 @@ public class Party extends WorldIcon implements Iterable<Creature>{
 	 */
 	public void setItem(Item i1, int x, int y) {
 		inventory[x][y] = i1;
-	}
-
-	public void addMovementPoints(int amount) {
-		this.movementPoints += amount;
 	}
 
 	@Override

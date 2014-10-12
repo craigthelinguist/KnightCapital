@@ -5,7 +5,7 @@ import game.units.Creature;
 import game.units.Hero;
 import game.units.Stat;
 
-public class Heal {
+public class Heal implements Effect{
 
 	public final int amount;
 	public final Stat stat;
@@ -21,17 +21,25 @@ public class Heal {
 		
 	}
 	
+	@Override
 	public void applyTo(Creature c){
-		if (!(c instanceof Hero) && stat == stat.MOVEMENT){ 
-			throw new RuntimeException("applying movement heal to something that isn't a hero");
-		}
+		if (stat == Stat.MOVEMENT) throw new RuntimeException("movement healing must be applied to party, not creature!");
 		c.heal(amount);
 	}
 	
+	@Override
+	public void removeFrom(Creature c) {
+		if (stat == Stat.MOVEMENT) throw new RuntimeException("movement healing must be removed from party, not creature!");
+		c.damage(amount);	
+	}
+	
 	public void applyTo(Party p){
-		if (stat != stat.MOVEMENT){
-			throw new RuntimeException("must apply movement heal to a party");
-		}
+		if (stat == Stat.HEALTH) throw new RuntimeException("healing must be applied to creature, not party!");
+		p.addMovementPoints(amount);
+	}
+
+	public void removeFrom(Party p){
+		if (stat == Stat.HEALTH) throw new RuntimeException("healing must be applied to creature, not party!");
 		p.addMovementPoints(amount);
 	}
 	
