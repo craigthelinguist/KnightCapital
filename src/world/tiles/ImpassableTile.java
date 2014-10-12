@@ -4,6 +4,10 @@ import world.icons.Party;
 
 public class ImpassableTile extends Tile{
 
+	public ImpassableTile(String imgName, int x, int y){
+		super(imgName,x,y);
+	}
+	
 	private ImpassableTile(int x, int y){
 		super(x,y);
 	}
