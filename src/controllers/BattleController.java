@@ -94,6 +94,7 @@ public class BattleController{
 
 		camera = WorldRenderer.getCentreOfWorld(w);
 		frame = mf;
+		frame.setController(this);
 
 		selected = null;
 		highlightedTiles = new HashSet<>();

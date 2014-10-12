@@ -26,6 +26,7 @@ import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
 import GUI.EscapeDialog.EscapeDialog;
+import controllers.BattleController;
 import controllers.WorldController;
 import tools.Constants;
 import tools.ImageLoader;
@@ -45,6 +46,7 @@ public class MainFrame extends JFrame  {
 	private LayeredPanel layeredPanel;
 	private Canvas canvas;
 	private WorldController controller;
+	private BattleController battleController;
 	private boolean closeDialogEnabled = false;
 	private boolean active = true;
 
@@ -82,6 +84,11 @@ public class MainFrame extends JFrame  {
 	public void setController(WorldController wc){
 		controller = wc;
 		canvas.setController(wc);
+	}
+
+	public void setController(BattleController bc) {
+		battleController = bc;
+		canvas.setController(battleController);
 	}
 
 	/**
