@@ -6,11 +6,14 @@ import game.items.PassiveItem;
 import game.items.Item;
 import game.items.PassiveItem;
 import game.items.Target;
+import game.units.AttackType;
 import game.units.Creature;
 import game.units.Hero;
 import game.units.HeroStats;
 import game.units.Stat;
 import game.units.Stats;
+import game.units.Unit;
+import game.units.UnitStats;
 
 import java.awt.Dimension;
 import java.awt.Point;
@@ -72,7 +75,9 @@ public class WorldController{
 
 	// player this controller belongs to
 	private Player player;
-
+	private Hero hero;
+	private Party party;
+	
 	// current tile the player has clicked
 	private Point selected;
 	private Point hover; // point your mouse is over
@@ -95,9 +100,10 @@ public class WorldController{
 	private static final int PAN_RIGHT = KeyEvent.VK_RIGHT;
 	private static final int PAN_LEFT = KeyEvent.VK_LEFT;
 
-	public WorldController(World w, Player p){
+	public WorldController(World w, Player p, Party part){
 		world = w;
 		player = p;
+		party = part;
 		camera = WorldRenderer.getCentreOfWorld(w);
 		gui = new MainFrame();
 		gui.setController(this);
@@ -381,14 +387,31 @@ public class WorldController{
 		/*Loading the playey*/
 		Player p = new Player("John The Baptist",4);
 		World w = TemporaryLoader.loadWorld("world_temporary.txt",p);
-		HeroStats stats_hero = new HeroStats(60,10,80,0,6,8);
-		Hero hero = new Hero("ovelia",p,stats_hero);
+		HeroStats stats_hero = new HeroStats(60,10,80,0,6,8,AttackType.MELEE);
+		Hero hero = new Hero("ovelia","ovelia",p,stats_hero);
 
 		hero.setMovePts(10);
+		/*
 		Creature[][] members = Party.newEmptyParty();
 		members[0][0] = hero;
 		Party party = new Party(hero, p, members);
+		party.refresh();*/
+		
+		/*load a party*/
+		//Hero h2 = new Hero("dark_knight","knight",p,new HeroStats(140,35,55,5,8,6,AttackType.MELEE));
+		Unit u3 = new Unit("knight","knight",p,new UnitStats(100,25,40,1,AttackType.MELEE));
+		Unit u4 = new Unit("archer","archer",p,new UnitStats(60,15,70,0,AttackType.RANGED));
+		Unit u5 = new Unit("archer","archer",p,new UnitStats(60,15,70,0,AttackType.RANGED));
+		Unit u6 = new Unit("knight","knight",p,new UnitStats(100,25,40,1,AttackType.MELEE));
+		Creature[][] members2 = Party.newEmptyParty();
+		members2[0][0] = u3;
+		members2[1][0] = u6;
+		members2[2][0] = hero;
+		members2[0][1] = u4;
+		members2[2][1] = u5;
+		Party party = new Party(hero,p,members2);
 		party.refresh();
+		
 
 		party.addItem(arrows);
 		w.getTile(0,0).setIcon(party);
@@ -400,7 +423,7 @@ public class WorldController{
 		w.getTile(1,6).setIcon(itemIcon2);
 		w.getTile(8,8).setIcon(itemIcon3);
 
-		new WorldController(w,p);
+		new WorldController(w,p,party);
 	}
 
 
@@ -423,7 +446,7 @@ public class WorldController{
 		party.refresh();
 		//hero.setMovePts(8); //we dont need this line since the move point is being set in XMLReader class
 		w.getTile(0,0).setIcon(party);
-		new WorldController(w,p);
+		new WorldController(w,p,party);
 	}
 
 
@@ -457,6 +480,20 @@ public class WorldController{
 
 	}
 
-
+	/**
+	 * Returns the player this controller belongs to.
+	 * @return
+	 */
+	public Player getPlayer() {
+		return this.player;
+	}
+	
+	/**
+	 * Returns the party this controller belongs to.
+	 * @return
+	 */
+	public Party getParty() {
+		return this.party;
+	}
 }
 

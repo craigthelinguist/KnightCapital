@@ -335,5 +335,14 @@ public class Party extends WorldIcon implements Iterable<Creature>{
 		}
 		
 	}
+
+	/**
+	 * Returns a 2-d array of the Creatures inside this party.
+	 * @return Creature[][]
+	 */
+	public Creature[][] getMembers() {
+		return members;
+	}
+
 	
 }

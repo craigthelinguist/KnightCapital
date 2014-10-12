@@ -1,4 +1,4 @@
-package GUI.town;
+	package GUI.town;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;

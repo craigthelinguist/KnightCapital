@@ -49,7 +49,9 @@ public class TownController{
 	 */
 	public TownController(City city, WorldController controller){
 		this.city = city;
-
+		Party visitors = new Party(controller.getParty().getHero(), city.getOwner(), controller.getParty().getMembers());
+		city.setVisitors(visitors);
+		
 		if (city.getGarrison() == null){
 			Party g = new Party(null,city.getOwner(),Party.newEmptyParty());
 			city.setGarrison(g);
