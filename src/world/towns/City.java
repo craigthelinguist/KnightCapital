@@ -55,7 +55,7 @@ public class City {
 	// image representing this city
 	private AnimationMap animations;
 
-	public City(String filepath, Player player, CityTile[][] overworldTiles){
+	public City(String name, String filepath, Player player, CityTile[][] overworldTiles){
 
 		// set up owner and fields storing details about this city
 		owner = player;

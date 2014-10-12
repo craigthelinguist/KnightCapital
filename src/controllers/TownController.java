@@ -140,7 +140,7 @@ public class TownController{
 				tiles[i][j] = new CityTile(i,j);
 			}
 		}
-		City city = new City("basic",player,tiles);
+		City city = new City("Porirua","basic",player,tiles);
 		city.setGarrison(party);
 		city.setVisitors(party2);
 

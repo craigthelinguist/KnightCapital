@@ -94,7 +94,7 @@ public class TemporaryLoader {
 				}
 			}
 			
-			City city = new City("basic", pl, cityTiles);
+			City city = new City("Porirua","basic", pl, cityTiles);
 
 			// world data
 			Player[] players = new Player[]{ p };
