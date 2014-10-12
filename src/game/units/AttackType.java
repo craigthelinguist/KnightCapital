@@ -15,7 +15,10 @@ public enum AttackType {
 	LINE,
 	
 	// hits everyone in the row
-	ROW;
+	ROW,
+	
+	// hit a random enemy
+	RANDOM;
 	
 	@Override
 	public String toString(){
@@ -23,7 +26,8 @@ public enum AttackType {
 		else if (this == RANGED) return "ranged";
 		else if (this == AOE) return "aoe";
 		else if (this == LINE) return "line";
-		else return "row";
+		else if (this == ROW) return "row";
+		else return "random";
 	}
 	
 	public static AttackType fromString(String str){
@@ -32,6 +36,7 @@ public enum AttackType {
 		else if (str.equals("aoe")) return AOE;
 		else if (str.equals("line")) return LINE;
 		else if (str.equals("row")) return ROW;
+		else if (str.equals("random")) return RANDOM;
 		else throw new RuntimeException("unrecognised string for attack type");
 	}
 	

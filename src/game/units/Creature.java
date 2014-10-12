@@ -149,7 +149,7 @@ public abstract class Creature {
 
 	/**
 	 * Return the healthiness of this creature as a percentage
-	 * @return: int
+	 * @return: an int in the range[0,100]
 	 */
 	public double healthiness(){
 		int maxHP = stats.getTotal(Stat.HEALTH);
