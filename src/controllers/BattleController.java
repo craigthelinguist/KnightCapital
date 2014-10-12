@@ -1,5 +1,12 @@
 package controllers;
 
+import game.units.AttackType;
+import game.units.Creature;
+import game.units.Hero;
+import game.units.HeroStats;
+import game.units.Unit;
+import game.units.UnitStats;
+
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Toolkit;
@@ -8,21 +15,17 @@ import java.awt.event.MouseEvent;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.SwingUtilities;
 
 import player.Player;
 import renderer.Camera;
 import renderer.WorldRenderer;
-import storage.BattleWorldLoader;
+import storage.TemporaryLoader;
 import tools.Geometry;
 import world.World;
 import world.icons.Party;
 import world.icons.WorldIcon;
-import world.tiles.CityTile;
 import world.tiles.Tile;
-import world.towns.City;
 import GUI.MainFrame;
 
 /**
@@ -115,10 +118,6 @@ public class BattleController{
 	 * @param ke: details about the key event
 	 */
 	public void keyPressed(KeyEvent ke){
-
-
-
-
 		int code = ke.getKeyCode();
 		if (code == ROTATE_CW){
 			camera.rotateClockwise();
@@ -283,11 +282,34 @@ public class BattleController{
 
 	public static void main(String[] strungout) {
 		// build temp world
-		World w = BattleWorldLoader.loadWorld(100, 100);
+		World w = TemporaryLoader.loadWorld(100, 100);
 
-		// make new partys with full members
+		// make new players
+		Player p1 = new Player("Fruit", 1);
+		Player p2 = new Player("Vegetable", 2);
 
+		//make new partys
+		Hero h1 = new Hero("Mr Fruit Salad", "ovelia", p1, new HeroStats(100, 100, 100, 100, 100, 100, AttackType.MELEE));
+		Party party1 = new Party(h1, p1, quickParty(p1));
+
+		Hero h2 = new Hero("Lord Vegetables", "ovelia", p2, new HeroStats(100, 100, 100, 100, 100, 100, AttackType.MELEE));
+		Party party2 = new Party(h2, p2, quickParty(p2));
+
+
+		//create battle controller
+		new BattleController(w, new MainFrame(), party1, party2);
 
 	}
 
+	private static Creature[][] quickParty(Player p) {
+		Creature[][] creatures = new Creature[Party.PARTY_ROWS][Party.PARTY_COLS];
+
+		for( int x = 0; x < Party.PARTY_ROWS; x++) {
+			for( int y = 0; y < Party.PARTY_COLS; y++) {
+				creatures[x][y] = new Unit("Knight", "knight", p, new UnitStats(10, 10, 1, 10, AttackType.MELEE));
+			}
+		}
+
+		return creatures;
+	}
 }

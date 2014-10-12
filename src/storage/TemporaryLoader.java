@@ -93,7 +93,7 @@ public class TemporaryLoader {
 					cityTiles[a][b] = ct;
 				}
 			}
-			
+
 			City city = new City("Porirua","basic", pl, cityTiles);
 
 			// world data
@@ -112,6 +112,18 @@ public class TemporaryLoader {
 			if (scan != null) scan.close();
 		}
 
+	}
+
+	public static World loadWorld(int worldWidth, int worldHeight) {
+		Tile[][] tiles = new Tile[worldWidth][worldHeight];
+
+		for(int x = 0; x < worldWidth; x++) {
+			for(int y = 0; y < worldHeight; y++) {
+				tiles[x][y] = PassableTile.newGrassTile(x, y);
+			}
+		}
+
+		return new World(tiles, null, null);
 	}
 
 }
