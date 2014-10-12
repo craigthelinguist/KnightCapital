@@ -1,5 +1,6 @@
 package game.items;
 
+import game.effects.Effect;
 import game.units.Creature;
 
 /**
@@ -8,8 +9,11 @@ import game.units.Creature;
  * @author craigthelinguist
  *
  */
-public abstract class ChargedItem {
+public class ChargedItem extends Item{
 	
-	public abstract void apply(Creature c);
+	public ChargedItem(String name, String imgName, String description, Effect[] effects, Target target) {
+		super(name, imgName, description, effects, target);
+	}
+
 	
 }

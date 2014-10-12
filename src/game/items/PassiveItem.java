@@ -2,13 +2,15 @@ package game.items;
 
 import world.icons.Party;
 import game.effects.Buff;
+import game.effects.Effect;
 import game.units.Creature;
 import game.units.Hero;
+import game.items.Target;
 
 public class PassiveItem extends Item{
 
-	public PassiveItem(String name, String imgName, String description, Buff[] buffs, Target target) {
-		super(name,imgName,description,buffs,target);
+	public PassiveItem(String name, String imgName, String description, Effect[] effectsArray, Target target) {
+		super(name,imgName,description,effectsArray,target);
 		
 		
 		/*
@@ -44,8 +46,8 @@ public class PassiveItem extends Item{
 	 * @param applying: are you applying the buffs or removing them
 	 */
 	private void apply(Party party, boolean applying){
-		for (int i = 0; i < buffs.length; i++){
-			Buff buff = buffs[i];
+		for (int i = 0; i < effects.length; i++){
+			Buff buff = (Buff)effects[i];
 			if (this.target == Target.PARTY){
 				for (Creature creature : party){
 					if (applying) creature.addBuff(buff);

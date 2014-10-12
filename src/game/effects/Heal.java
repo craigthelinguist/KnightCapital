@@ -7,12 +7,12 @@ import game.units.Stat;
 
 public class Heal implements Effect{
 
-	public final int amount;
 	public final Stat stat;
+	public final int amount;
 	
 	public Heal(Stat stat, int amount){
 		
-		if (stat != Stat.MOVEMENT || stat != Stat.HEALTH){
+		if (stat != Stat.MOVEMENT && stat != Stat.HEALTH){
 			throw new RuntimeException("illegal stat for healing effect, it was " + stat + " but it can only be health or movement");
 		}
 		

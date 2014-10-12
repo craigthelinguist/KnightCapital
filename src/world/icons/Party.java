@@ -165,13 +165,10 @@ public class Party extends WorldIcon implements Iterable<Creature>{
 			for (int x = 0; x < INVENTORY_COLS; x++){
 				if (inventory[x][y] == null){
 					inventory[x][y] = item;
-					
 					if (item instanceof PassiveItem){
 						PassiveItem passive = (PassiveItem)item;
 						passive.applyEffectsTo(this);
 					}
-					
-					updateHeroStats(item); //TODO: this is temporary, later on when the equipping system takes place replace this
 					return true;
 				}
 			}
@@ -239,17 +236,6 @@ public class Party extends WorldIcon implements Iterable<Creature>{
 				Item itm = inventory[i][j];
 				if (itm != null) System.out.println(itm.getName());
 				else System.out.println("null");
-			}
-		}
-	}
-
-	public void updateHeroStats(Item item) {
-		if (item != null) {
-			Buff[] buffs = item.getBuffs();
-			for (int i = 0; i < buffs.length; i++){
-				Buff b = buffs[i];
-				Stat stat = b.stat;
-				hero.addBuff(b);
 			}
 		}
 	}

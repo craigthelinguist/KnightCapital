@@ -59,5 +59,6 @@ public class Constants {
 
 	//
 	public static final String DATA_STATS = "data" + File.separatorChar + "stats" + File.separatorChar;
+	public static final String DATA_ITEMS = "data" + File.separatorChar + "items" + File.separatorChar;
 	
 }
