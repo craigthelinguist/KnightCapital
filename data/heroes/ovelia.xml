@@ -1,3 +1,4 @@
+<hero>
 <name>Ovelia</name>
 <imageName>ovelia</imageName>
 <player>null</player>
@@ -10,3 +11,4 @@
 	<baseMovement>8</baseMovement>
 	<baseAttack>aoe</baseAttack>
 </herostats>
+</hero>

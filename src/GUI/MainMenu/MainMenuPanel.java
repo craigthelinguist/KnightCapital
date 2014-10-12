@@ -1,5 +1,8 @@
 package GUI.MainMenu;
 
+import game.units.Hero;
+import game.units.HeroStats;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -26,6 +29,7 @@ import GUI.CustomButton;
 import storage.LoadXML;
 import storage.SaveXML;
 import storage.States;
+import storage.XMLReader;
 import tools.Constants;
 import tools.ImageLoader;
 import tools.Log;
@@ -33,13 +37,13 @@ import world.World;
 
 public class MainMenuPanel extends JPanel implements ActionListener{
 
-    private CustomButton newGame;
-    private CustomButton loadGame;
-    private CustomButton joinGame;
-    private CustomButton quitGame;
+	private CustomButton newGame;
+	private CustomButton loadGame;
+	private CustomButton joinGame;
+	private CustomButton quitGame;
 
-    private JFrame frame;
-    private BufferedImage backgroundImage;
+	private JFrame frame;
+	private BufferedImage backgroundImage;
 
 	public MainMenuPanel() {
 		backgroundImage = ImageLoader.load(Constants.GUI_FILEPATH + "mainMenuBackground.png");
@@ -103,12 +107,12 @@ public class MainMenuPanel extends JPanel implements ActionListener{
 	}
 
 
-	  @Override
-	  protected void paintComponent(Graphics g) {
-	    super.paintComponent(g);
-	    g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+	@Override
+	protected void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
 
-	  }
+	}
 
 	public static void main(String[] args) {
 		new MainMenuPanel();
@@ -118,9 +122,36 @@ public class MainMenuPanel extends JPanel implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-
+//not completed yet guys #Selemon
 		if(e.getSource() == newGame) {
 			//what to do if button pressed is new game
+			Object[] options = {"Level one",
+			"Level two"};
+			int n = JOptionPane.showOptionDialog(frame,
+					"What level would "
+							+ "you like to play in?",
+							"Pick Level",
+							JOptionPane.YES_NO_CANCEL_OPTION,
+							JOptionPane.QUESTION_MESSAGE,
+							null,
+							options,
+							options[0]);
+			String level = null;
+			//will change this code once we integrate this page with worldcontroller
+			XMLReader reader = null;			
+			if(n==0){
+				level = "LevelOne";
+				reader = new XMLReader(Constants.ASSETS+"Levels.xml", level, new Hero("knight", new Player("ggg", 3), new HeroStats(0, 0, 0, 0, 0, 0)));
+				
+				
+			}
+			else if(n==1){
+				level = "LevelTwo";
+				reader = new XMLReader(Constants.ASSETS+"Levels.xml", level, new Hero("ovelia", new Player("gcgg", 3), new HeroStats(0, 0, 0, 0, 0, 0)));
+
+
+			}
+			reader.readLevel();
 		}
 		else if(e.getSource() == loadGame) {
 			//what do if button pressed is load game
@@ -137,17 +168,17 @@ public class MainMenuPanel extends JPanel implements ActionListener{
 			//what to do if button pressed is quit
 			//Custom button text
 			Object[] options = {"Yes, please",
-			                    "No, thanks"};
+			"No, thanks"};
 			int n = JOptionPane.showOptionDialog(frame,
-				    "Would you like to save "
-				    + "the game?",
-				    "Save Game",
-				    JOptionPane.YES_NO_CANCEL_OPTION,
-				    JOptionPane.QUESTION_MESSAGE,
-				    null,
-				    options,
-				    options[0]);
-			
+					"Would you like to save "
+							+ "the game?",
+							"Save Game",
+							JOptionPane.YES_NO_CANCEL_OPTION,
+							JOptionPane.QUESTION_MESSAGE,
+							null,
+							options,
+							options[0]);
+
 			if(n==0){
 				//this will change as soon as i talk to aaron and ewan
 				States s = new States(new Player("selemon", 1), null);				
@@ -158,7 +189,7 @@ public class MainMenuPanel extends JPanel implements ActionListener{
 			else{
 				System.exit(-1);
 			}
-			
+
 		}
 	}
 }

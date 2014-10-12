@@ -11,7 +11,9 @@ import java.awt.event.MouseMotionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
+import controllers.BattleController;
 import controllers.WorldController;
+import renderer.BattleRenderer;
 import renderer.Camera;
 import renderer.WorldRenderer;
 import tools.Constants;
@@ -20,6 +22,8 @@ import world.World;
 public class Canvas extends JPanel implements MouseListener, MouseMotionListener{
 
 	private WorldController controller;
+	private BattleController battleController;
+	private boolean battle;
 	private boolean click = false;
 	private Point lastDrag = null;
 
@@ -49,6 +53,12 @@ public class Canvas extends JPanel implements MouseListener, MouseMotionListener
 
 	public void setController(WorldController wc){
 		controller = wc;
+		battle = false;
+	}
+
+	public void setController(BattleController bc){
+		battleController = bc;
+		battle = true;
 	}
 
 	@Override
@@ -75,24 +85,36 @@ public class Canvas extends JPanel implements MouseListener, MouseMotionListener
 
 	@Override
 	protected void paintComponent(Graphics graphics){
-		if (controller == null) return;
+		if (controller == null && !battle) return;
+
 		graphics.setColor(Color.WHITE);
 		graphics.fillRect(0,0,getWidth(),getHeight());
 		Dimension resolution = this.getSize();
-		WorldRenderer.render(controller, graphics, resolution);
+		if(battle) BattleRenderer.render(battleController, graphics, resolution);
+		else WorldRenderer.render(controller, graphics, resolution);
 	}
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
 		if (!click) return;
-		if (lastDrag != null) controller.mouseDragged(lastDrag, new Point(e.getX(),e.getY()));
+
+		if(lastDrag != null) {
+			if(battle) battleController.mouseDragged(lastDrag, new Point(e.getX(),e.getY()));
+			else controller.mouseDragged(lastDrag, new Point(e.getX(),e.getY()));
+		}
+
 		lastDrag = new Point(e.getX(),e.getY());
 	}
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		if(controller != null)
-			controller.mouseMoved(e);
+		if(battle) {
+			battleController.mouseMoved(e);
+		}
+		else {
+			if(controller != null)
+				controller.mouseMoved(e);
+		}
 	}
 
 }

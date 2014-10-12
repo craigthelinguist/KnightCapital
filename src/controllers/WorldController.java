@@ -196,7 +196,7 @@ public class WorldController{
 						startTownView(c1.getCity());
 					}
 					this.lastMouse = System.currentTimeMillis();
-				
+
 				}
 
 			// deselected the tile
@@ -383,7 +383,7 @@ public class WorldController{
 
 		ItemIcon itemIcon3 = new ItemIcon(arrows);
 
-		
+
 		/*Loading the playey*/
 		Player p = new Player("John The Baptist",4);
 		World w = TemporaryLoader.loadWorld("world_temporary.txt",p);
