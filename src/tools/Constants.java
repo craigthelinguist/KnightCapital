@@ -60,7 +60,7 @@ public class Constants {
 	public static final String PartyPanelDescription = "This is a motherfucking description telling you what the fuck this is and what the fuck it does. Got it?";
 
 	// shit for data loading.
-	public static final String XMLTESTS = "data" + File.separatorChar + "testXML" + File.separatorChar;
+	public static final String XMLTESTS = "data" + File.separatorChar + "test" + File.separatorChar;
 	public static final String DATA_UNITS = "data" + File.separatorChar + "units" + File.separatorChar;
 	public static final String DATA_ITEMS = "data" + File.separatorChar + "items" + File.separatorChar;
 	public static final String DATA_HEROES = "data" + File.separatorChar + "heroes" + File.separatorChar;
