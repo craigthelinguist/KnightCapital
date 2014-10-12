@@ -134,7 +134,9 @@ public class TownExchangePanel extends JPanel implements MouseListener, MouseMot
 		items.add(itemsGarrison);
 		wrapperPanel.add(items);
 
-
+		StoragePanel storagePanel = new StoragePanel();
+		//Add the storage panel
+		
 		wrapperPanel.setOpaque(false);
 		wrapperPanel.addMouseListener(this);
 		wrapperPanel.addMouseMotionListener(this);
@@ -142,7 +144,7 @@ public class TownExchangePanel extends JPanel implements MouseListener, MouseMot
 		this.setOpaque(false);
 		this.setLayout(new FlowLayout(FlowLayout.LEFT));
 		this.add(wrapperPanel);
-
+		this.add(storagePanel);
 	}
 
 	/**
