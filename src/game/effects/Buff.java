@@ -15,7 +15,6 @@ public class Buff{
 	public final Stat stat;
 	public final int amount;
 	public final boolean permanent;
-	public final Target target;
 
 	/**
 	 * 
@@ -24,11 +23,10 @@ public class Buff{
 	 * @param permanence: if this buff isn't permanent, it will expire after 1 turn
 	 * @param target: who does this buff affect (only the hero, the entire party etc.)?
 	 */
-	private Buff(Stat stat, int amount, boolean permanence, Target target){
+	private Buff(Stat stat, int amount, boolean permanence){
 		this.stat = stat;
 		this.amount = amount;
 		this.permanent = permanence;
-		this.target = target;
 	}
 
 	/**
@@ -38,8 +36,8 @@ public class Buff{
 	 * @param amount: amount by which the stat changes.
 	 * @return: a new Buff effect.
 	 */
-	public static Buff newTempBuff(Stat stat, int amount, Target target){
-		return new Buff(stat,amount,false,target);
+	public static Buff newTempBuff(Stat stat, int amount){
+		return new Buff(stat,amount,false);
 	}
 
 	/**
@@ -48,8 +46,8 @@ public class Buff{
 	 * @param amount: amount by which the stat changes.
 	 * @return: a new Buff effect.
 	 */
-	public static Buff newPermaBuff(Stat stat, int amount, Target target){
-		return new Buff(stat,amount,true,target);
+	public static Buff newPermaBuff(Stat stat, int amount){
+		return new Buff(stat,amount,true);
 	}
 
 	/**

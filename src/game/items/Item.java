@@ -19,8 +19,9 @@ public abstract class Item {
 	protected Buff[] buffs;
 	private String imgName;
 	protected AnimationMap animations;
+	protected Target target;
 
-	public Item(String name, String imgName ,String description, Buff[] buffs){
+	public Item(String name, String imgName ,String description, Buff[] buffs, Target target){
 		this.name = name;
 		this.description = description;
 		this.animations = new AnimationMap();
@@ -28,6 +29,7 @@ public abstract class Item {
 		this.animations.addImage("regular", Constants.ITEMS + imgName, ImageLoader.load(Constants.ITEMS + imgName));
 		this.buffs = buffs;
 		if (buffs == null) buffs = new Buff[0];
+		this.target = target;
 	}
 
 	public BufferedImage getImage(){

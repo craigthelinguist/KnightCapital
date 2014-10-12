@@ -361,14 +361,14 @@ public class WorldController{
 
 	public static void aaron_main(String[] args){
 		/*Loading items*/
-		Buff[] buffsAmulet = new Buff[]{ Buff.newTempBuff(Stat.DAMAGE,5,Target.HERO) };
-		PassiveItem amulet = new PassiveItem(buffsAmulet, "amulet", "amulet","An amulet that grants sickening gains.\n +5 Damage");
+		Buff[] buffsAmulet = new Buff[]{ Buff.newTempBuff(Stat.DAMAGE,5) };
+		PassiveItem amulet = new PassiveItem(buffsAmulet, "amulet", "amulet","An amulet that grants sickening gains.\n +5 Damage",Target.HERO);
 
-		Buff[] buffsWeapon = new Buff[]{ Buff.newPermaBuff(Stat.DAMAGE,5,Target.HERO), Buff.newTempBuff(Stat.ARMOUR, 10,Target.HERO) };
-		PassiveItem weapon = new PassiveItem(buffsWeapon, "weapon", "weapon","A powerful weapon crafted by the mighty Mizza +5 Damage");
+		Buff[] buffsWeapon = new Buff[]{ Buff.newPermaBuff(Stat.DAMAGE,5), Buff.newTempBuff(Stat.ARMOUR, 10) };
+		PassiveItem weapon = new PassiveItem(buffsWeapon, "weapon", "weapon","A powerful weapon crafted by the mighty Mizza +5 Damage",Target.HERO);
 
-		Buff[] buffsArrows= new Buff[]{ Buff.newTempBuff(Stat.DAMAGE,1, Target.PARTY) };
-		PassiveItem arrows = new PassiveItem(buffsArrows, "poisonarrow", "poisonarrow","Poisonous arrows whose feathers were made from the hairs of Mizza. All archers in party gain +1 damage");
+		Buff[] buffsArrows= new Buff[]{ Buff.newTempBuff(Stat.DAMAGE,1) };
+		PassiveItem arrows = new PassiveItem(buffsArrows, "poisonarrow", "poisonarrow","Poisonous arrows whose feathers were made from the hairs of Mizza. All archers in party gain +1 damage", Target.PARTY);
 
 
 		ItemIcon itemIcon = new ItemIcon("Pimp Juice", amulet);

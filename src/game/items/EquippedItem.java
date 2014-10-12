@@ -9,8 +9,8 @@ import game.effects.Buff;
  */
 public class EquippedItem extends Item{
 
-	public EquippedItem(Buff[] buffs, String imgName, String name, String description) {
-		super(name,imgName,description,buffs);
+	public EquippedItem(Buff[] buffs, String imgName, String name, String description, Target target) {
+		super(name,imgName,description,buffs,target);
 	}
 	
 }

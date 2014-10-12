@@ -7,8 +7,8 @@ import game.units.Hero;
 
 public class PassiveItem extends Item{
 
-	public PassiveItem(Buff[] buffs, String imgName, String name, String description) {
-		super(name,imgName,description,buffs);
+	public PassiveItem(Buff[] buffs, String imgName, String name, String description, Target target) {
+		super(name,imgName,description,buffs,target);
 		
 		
 		/*
@@ -46,13 +46,13 @@ public class PassiveItem extends Item{
 	private void apply(Party party, boolean applying){
 		for (int i = 0; i < buffs.length; i++){
 			Buff buff = buffs[i];
-			if (buff.target == Target.PARTY){
+			if (this.target == Target.PARTY){
 				for (Creature creature : party){
 					if (applying) creature.addBuff(buff);
 					else creature.removeBuff(buff);
 				}
 			}
-			else if (buff.target == Target.HERO){
+			else if (this.target == Target.HERO){
 				Hero hero = party.getHero();
 				if (applying) hero.addBuff(buff);
 				else hero.removeBuff(buff);
