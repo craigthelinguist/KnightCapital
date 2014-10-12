@@ -9,6 +9,8 @@ import java.awt.image.DataBufferInt;
 import java.awt.image.WritableRaster;
 
 import renderer.AnimationMap;
+import tools.Constants;
+import tools.ImageLoader;
 import tools.ImageManipulation;
 import world.icons.Party;
 import world.icons.WorldIcon;
@@ -25,10 +27,22 @@ public abstract class Tile {
 	protected WorldIcon occupant = null;
 	public final int X;
 	public final int Y;
+	private String imageName;
 
 	protected Tile(int x, int y){
-		X = x; Y = y;
+		X = x;
+		Y = y;
 		animations = new AnimationMap();
+	}
+	
+	protected Tile(String imgName, int x, int y){
+		X = x; Y = y;
+		imageName = imgName;
+		animations = new AnimationMap();
+		String tile_filepath = Constants.ASSETS_TILES + imgName;
+		animations.addImage("world",tile_filepath,ImageLoader.load(tile_filepath));
+		String portrait_filepath = Constants.PORTRAITS + imgName;
+		animations.addImage("portrait",portrait_filepath,ImageLoader.load(portrait_filepath));
 	}
 
 	/**

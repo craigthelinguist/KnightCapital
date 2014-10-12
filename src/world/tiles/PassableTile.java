@@ -14,24 +14,16 @@ import world.icons.Party;
 @XStreamAlias("PassableTile")
 public class PassableTile extends Tile{
 
-
-	// instantiate using static factory methods - avoids typos and other things
-	private PassableTile(int x, int y){
-		super(x,y);
+	public PassableTile(String imageName, int x, int y){
+		super(imageName,x,y);
 	}
-
+	
 	public static PassableTile newDirtTile(int x, int y){
-		PassableTile t = new PassableTile(x,y);
-		t.addImage(Constants.ASSETS + "tile_dirt.png",ImageLoader.load(Constants.ASSETS + "tile_dirt.png"));
-		t.addPortrait(Constants.PORTRAITS + "tile_grass.png", ImageLoader.load(Constants.PORTRAITS + "grass.png"));
-		return t;
+		return new PassableTile("dirt",x,y);
 	}
 
 	public static PassableTile newGrassTile(int x, int y){
-		PassableTile t = new PassableTile(x,y);
-		t.addImage(Constants.ASSETS + "tile_grass.png",ImageLoader.load(Constants.ASSETS + "tile_grass.png"));
-		t.addPortrait(Constants.PORTRAITS + "grass.png",ImageLoader.load(Constants.PORTRAITS + "grass.png"));
-		return t;
+		return new PassableTile("grass",x,y);
 	}
 
 	@Override

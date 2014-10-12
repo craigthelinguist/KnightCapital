@@ -25,7 +25,7 @@ public class Constants {
 	public static final String CITIES = Constants.ASSETS + "cities" + File.separatorChar;
 	public static final String PORTRAITS = "assets" + File.separatorChar+ "portraits" +   File.separatorChar;
 	public static final String ITEMS = Constants.ASSETS + "itemIcons" + File.separatorChar;
-
+	public static final String ASSETS_TILES = Constants.ASSETS + "tiles" + File.separatorChar;
 
 	//all xml tests are stored in this relative file path
 	public static final String XMLTESTS = Constants.ASSETS + "testXML" + File.separatorChar;
