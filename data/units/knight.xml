@@ -1,11 +1,12 @@
-
-<name>Knight</name>
-<imageName>knight</imageName>
-<player>null</player>
-<unitstats>
-	<baseHealth>100</baseHealth>
-	<baseDamage>25</baseDamage>
-	<baseSpeed>40</baseSpeed>
-	<baseArmour>5</baseArmour>
-	<attack>melee</attack>
-</unitstats>
+<unit>
+	<name>Knight</name>
+	<imageName>knight</imageName>
+	<player>null</player>
+	<unitstats>
+		<baseHealth>100</baseHealth>
+		<baseDamage>25</baseDamage>
+		<baseSpeed>40</baseSpeed>
+		<baseArmour>5</baseArmour>
+		<attack>melee</attack>
+	</unitstats>
+</unit>
