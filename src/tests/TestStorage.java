@@ -71,6 +71,11 @@ public class TestStorage {
 		
 	}
 
+	
+	/**
+	 * Read from a player.xml files the variables for name and slot and initialize a player 
+	 * with those values and check if it read the xml file properly. 
+	 */
 	@Test
 	public void test_player(){
 		String filepath = "data" + File.separatorChar + "player.xml";
@@ -82,11 +87,16 @@ public class TestStorage {
 		assertTrue(player.name.equals("john the baptist"));
 		assertFalse(player.name.equals("Mizza"));
 		assertTrue(player.slot == 0);
-		assertFalse(player.slot == 1);
+		assertFalse(player.slot == 2);
 	}
 	
-	public static void test_unit(){
-		String filepath = "data" + File.separatorChar + "unit.xml";
+	/**
+	 * Load the knight.xml file and instantiate a knight unit using the values inside knigth.xml.
+	 * Check whether the values read in are the values that the object has.
+	 */
+	@Test
+	public void test_unit_Knight(){
+		String filepath = Constants.DATA_UNITS + "knight.xml";
 		
 		XStream stream = new XStream();
 		stream.alias("unitstats", UnitStats.class);
@@ -97,6 +107,42 @@ public class TestStorage {
 		stream.registerConverter(new UnitConverter());
 		
 		Unit unit = (Unit) stream.fromXML(new File(filepath));
+		
+		assertTrue(unit.getName().equals("Knight"));
+		assertTrue(unit.getImageName().equals("knight")); 
+		assertTrue(unit.getBase(Stat.ARMOUR) == 5);
+		assertTrue(unit.getBase(Stat.HEALTH) == 100);
+		assertTrue(unit.getBase(Stat.DAMAGE) == 25);
+		assertTrue(unit.getBase(Stat.SPEED) == 40);
+		assertTrue(unit.getAttackType() == AttackType.MELEE);
+		
+	}
+	
+	/**
+	 * Load the archer.xml file and instantiate an archer unit using the values inside archer.xml.
+	 * Check whether the values read in are the values that the object has.
+	 */	
+	@Test
+	public void test_unit_archer(){
+		String filepath = Constants.DATA_UNITS + "archer.xml";
+		
+		XStream stream = new XStream();
+		stream.alias("unitstats", UnitStats.class);
+		stream.alias("player", Player.class);
+		stream.alias("attack", AttackType.class);
+		stream.alias("unit", Unit.class);
+		stream.registerConverter(new UnitStatsConverter());
+		stream.registerConverter(new UnitConverter());
+		
+		Unit unit = (Unit) stream.fromXML(new File(filepath));
+		
+		assertTrue(unit.getName().equals("Archer"));
+		assertTrue(unit.getImageName().equals("archer")); 
+		assertTrue(unit.getBase(Stat.ARMOUR) == 0);
+		assertTrue(unit.getBase(Stat.HEALTH) == 60);
+		assertTrue(unit.getBase(Stat.DAMAGE) == 15);
+		assertTrue(unit.getBase(Stat.SPEED) == 90);
+		assertTrue(unit.getAttackType() == AttackType.RANGED);
 		
 	}
 	
@@ -123,6 +169,13 @@ public class TestStorage {
 		Unit unit = (Unit) stream.fromXML(new File(filepath));
 	}
 	
+	
+	/**
+	 * Create a new xml file and write to it a new temporary buff object(with some values) then read 
+	 * it back in and initialize a new object with these values. Then it tests to see if the values 
+	 * saved (on the xml file) are the ones it read back into the temporary buff object.
+	 * @throws FileNotFoundException
+	 */
 	@Test
 	public void test_buff() throws FileNotFoundException{
 		String filepath = Constants.XMLTESTS + "buff.xml";
