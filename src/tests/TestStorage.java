@@ -109,22 +109,12 @@ public class TestStorage {
 	
 	@Test
 	public void test_external_stats() throws FileNotFoundException{
-		String filepath = Constants.XMLTESTS + "unitstats.xml";
-		
+		String filepath = Constants.XMLTESTS + "external_unit.xml";
 		XStream stream = new XStream();
-		stream.alias("unitstats", UnitStats.class);
-		stream.registerConverter(new UnitStatsConverter());
+		stream.alias("Unit", Unit.class); 
+		stream.registerConverter(new UnitConverter());
 		
-		/*Constructor for UnitStats(int health, int damage, int speed, int armour, AttackType type)*/
-		UnitStats stats = new UnitStats(10,20,5,0,AttackType.MELEE);
-		String xml = stream.toXML(stats);
-		PrintStream ps = new PrintStream(new File(filepath));
-		ps.print(xml);
-		
-		/*Instantiate an object for UnitStats from the xml*/
-		stats = (UnitStats) stream.fromXML(new File(filepath));	
-		
-		//assertTrue(stats.)
+		Unit unit = (Unit) stream.fromXML(new File(Constants.DATA_UNITS + "knight.xml"));
 	}
 	
 	@Test
