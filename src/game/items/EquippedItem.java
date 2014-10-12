@@ -7,16 +7,10 @@ import game.effects.Buff;
  * e.g.: a sword that increases attack
  * @author craigthelinguist
  */
-public class EquippedItem {
+public class EquippedItem extends Item{
 
-	private Buff[] buffs;
+	public EquippedItem(Buff[] buffs, String imgName, String name, String description) {
+		super(imgName,name,description,buffs);
+	}
 	
-	public EquippedItem(Buff[] buffs){
-		this.buffs = buffs;
-	}
-
-	public Buff[] getBuffs() {
-		return buffs;
-	}
-
 }

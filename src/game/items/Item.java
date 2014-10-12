@@ -16,17 +16,18 @@ public abstract class Item {
 
 	private String name;
 	private String description;
-	protected LinkedList<Buff> buffs;
+	protected Buff[] buffs;
 	private String imgName;
 	protected AnimationMap animations;
 
-	public Item(String imgName, String name ,String description){
+	public Item(String imgName, String name ,String description, Buff[] buffs){
 		this.name = name;
 		this.description = description;
 		this.animations = new AnimationMap();
 		this.animations.addImage("portrait", Constants.ITEMS + imgName, ImageLoader.load(Constants.ITEMS + imgName));
 		this.animations.addImage("regular", Constants.ITEMS + imgName, ImageLoader.load(Constants.ITEMS + imgName));
-		this.buffs = new LinkedList<>();
+		this.buffs = buffs;
+		if (buffs == null) buffs = new Buff[0];
 	}
 
 	public BufferedImage getImage(){
@@ -61,7 +62,7 @@ public abstract class Item {
 		return this;
 	}
 
-	public LinkedList<Buff> getBuffs() {
+	public Buff[] getBuffs() {
 		return buffs;
 	}
 

@@ -5,10 +5,7 @@ import game.effects.Buff;
 public class PassiveItem extends Item{
 
 	public PassiveItem(Buff[] buffs, String imgName, String name, String description) {
-		super(imgName,name,description);
-		for (Buff buff : buffs){
-			this.buffs.add(buff);
-		}
+		super(imgName,name,description,buffs);
 	}
 
 }

@@ -227,8 +227,9 @@ public class Party extends WorldIcon{
 
 	public void updateHeroStats(Item item) {
 		if (item != null) {
-			LinkedList<Buff> buffs = item.getBuffs();
-			for(Buff b : buffs) {
+			Buff[] buffs = item.getBuffs();
+			for (int i = 0; i < buffs.length; i++){
+				Buff b = buffs[i];
 				Stat stat = b.stat;
 				hero.tempBuff(stat,b.amount);
 			}
@@ -274,6 +275,10 @@ public class Party extends WorldIcon{
 
 	public void setItem(Item i1, int x, int y) {
 		inventory[x][y] = i1;
+	}
+
+	public void addMovementPoints(int amount) {
+		this.movementPoints += amount;
 	}
 
 }

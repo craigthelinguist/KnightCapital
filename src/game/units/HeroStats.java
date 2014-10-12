@@ -8,8 +8,6 @@ public class HeroStats extends UnitStats{
 	protected int buffedSight;
 	protected int buffedMovement;
 
-	protected int currentMovement;
-
 	@Deprecated
 	/**
 	 * USE THE CONSTRUCTOR WITH ATTACK TYPE PARAMETER
@@ -20,7 +18,6 @@ public class HeroStats extends UnitStats{
 		baseSight = sight;
 		buffedMovement = 0;
 		buffedSight = 0;
-		currentMovement = baseMovement;
 	}
 
 	public HeroStats(int health, int damage, int speed, int armour, int sight, int movement, AttackType type) {
@@ -29,7 +26,6 @@ public class HeroStats extends UnitStats{
 		baseSight = sight;
 		buffedMovement = 0;
 		buffedSight = 0;
-		currentMovement = baseMovement;
 	}
 	
 	public void setBase(Stat stat, int value){
@@ -48,17 +44,6 @@ public class HeroStats extends UnitStats{
 		if (stat == Stat.SIGHT) buffedSight = value;
 		else if (stat == Stat.MOVEMENT) buffedMovement = value;
 		else super.setBuff(stat, value);
-	}
-
-	/**
-	 * Set the current value for some stat.
-	 * @param stat: stat whose current value you will change.
-	 * @param value: new value of the stat.
-	 */
-	@Override
-	public void setCurrent(Stat stat, int value){
-		if (stat == Stat.MOVEMENT) currentMovement = value;
-		else super.setCurrent(stat, value);
 	}
 
 	/**
@@ -83,17 +68,6 @@ public class HeroStats extends UnitStats{
 		if (stat == Stat.SIGHT) return buffedSight;
 		else if (stat == Stat.MOVEMENT) return buffedMovement;
 		else return super.getBuff(stat);
-	}
-
-	/**
-	 * Get the current value for some stat.
-	 * @param stat: stat whose current value you want.
-	 * @return: current value of that stat.
-	 */
-	@Override
-	public int getCurrent(Stat stat){
-		if (stat == Stat.MOVEMENT) return currentMovement;
-		else return super.getCurrent(stat);
 	}
 
 	/**
