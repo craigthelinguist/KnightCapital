@@ -421,7 +421,7 @@ public class WorldController{
 
 		party.setLeader(hero);
 		party.refresh();
-		hero.setMovePts(8);
+		//hero.setMovePts(8); //we dont need this line since the move point is being set in XMLReader class
 		w.getTile(0,0).setIcon(party);
 		new WorldController(w,p);
 	}
