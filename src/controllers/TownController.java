@@ -80,7 +80,6 @@ public class TownController{
 	}
 
 	public void buttonPressed(String text) {
-
 		if (!active) return;
 		text = text.toLowerCase();
 		if (text.equals("leave")){

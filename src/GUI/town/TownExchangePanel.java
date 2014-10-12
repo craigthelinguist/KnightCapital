@@ -12,6 +12,8 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.MouseInfo;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -35,7 +37,7 @@ import controllers.TownController;
  * @author craigthelinguist
  *
  */
-public class TownExchangePanel extends JPanel implements MouseListener, MouseMotionListener{
+public class TownExchangePanel extends JPanel implements MouseListener, MouseMotionListener, ActionListener{
 
 	BufferedImage backgroundImage;
 
@@ -61,7 +63,7 @@ public class TownExchangePanel extends JPanel implements MouseListener, MouseMot
 
 	// buttons
 	private CustomButton buttonLeave;
-	private JButton buttonTrain;
+	private CustomButton buttonTrain;
 
 	// thing being dragged
 	private Point draggedPoint;
@@ -95,6 +97,7 @@ public class TownExchangePanel extends JPanel implements MouseListener, MouseMot
 		BufferedImage leaveGamePressed = ImageLoader.load(Constants.GUI_TOWN_BUTTONS + "exitClicked.png");
 		BufferedImage leaveGameHover = ImageLoader.load(Constants.GUI_TOWN_BUTTONS + "exitHover.png");
 		buttonLeave = new CustomButton(leaveGameDefault, leaveGamePressed, leaveGameHover);
+		buttonLeave.addActionListener(this);
 		JPanel visitorButtons = new JPanel();
 		JLabel exitLabel = new JLabel("Exit City");
 		exitLabel.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 20));
@@ -109,6 +112,7 @@ public class TownExchangePanel extends JPanel implements MouseListener, MouseMot
 		BufferedImage trainUnitsPressed = ImageLoader.load(Constants.GUI_TOWN_BUTTONS + "trainUnitsClicked.png");
 		BufferedImage trainUnitsHover = ImageLoader.load(Constants.GUI_TOWN_BUTTONS + "trainUnitsHover.png");
 		buttonTrain = new CustomButton(trainUnitsDefault, trainUnitsPressed, trainUnitsHover);
+		buttonTrain.addActionListener(this);
 		JLabel trainUnits = new JLabel("Train Units");
 		trainUnits.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 20));
 		trainUnits.setForeground(new Color(225,179,55));
@@ -332,5 +336,12 @@ public class TownExchangePanel extends JPanel implements MouseListener, MouseMot
 	public void mouseMoved(MouseEvent arg0) {}
 	public void mouseClicked(MouseEvent arg0) {}
 	public void mouseEntered(MouseEvent arg0) {}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() == buttonLeave) {
+			controller.buttonPressed("leave");
+		}
+	}
 
 }
