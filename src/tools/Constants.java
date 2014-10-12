@@ -18,6 +18,7 @@ public class Constants {
 	public static final int WINDOW_WD = 1300;
 	public static final int WINDOW_HT = 800;
 
+	
 	// all images are stored in this relative filepath
 	public static final String ASSETS = "assets" + File.separatorChar;
 	public static final String ICONS = ASSETS + "icons" + File.separatorChar;
@@ -25,6 +26,10 @@ public class Constants {
 	public static final String PORTRAITS = "assets" + File.separatorChar+ "portraits" +   File.separatorChar;
 	public static final String ITEMS = Constants.ASSETS + "itemIcons" + File.separatorChar;
 
+
+	//all xml tests are stored in this relative file path
+	public static final String XMLTESTS = Constants.ASSETS + "testXML" + File.separatorChar;
+	
 	// all images inside the GUIAssets
 	public static final String GUI_FILEPATH = Constants.ASSETS + "GUIAssets" + File.separatorChar;
 	public static final String GUI_BUTTONS = Constants.ASSETS + "GUIAssets" + File.separatorChar +"buttons"+ File.separatorChar;
