@@ -1,0 +1,24 @@
+<icon>
+	<type>ItemIcon</type>
+	<item>liontalisman.xml</item>
+</icon>
+
+<icon>
+	<type>Party</type>
+	<player></player>
+	<member>
+		<row></row>
+		<col></col>
+		<unit>
+		</unit>
+	</member>
+	<member>
+		<row></row>
+		<col></col>
+		<hero>
+		</hero>
+	</member>
+	<item>
+	</item>
+
+</icon>

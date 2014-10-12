@@ -1,5 +1,11 @@
-<person>
-    <age>20</age>
-    <name>john</name>
-    <AGE_DOUBLE>20*20</AGE_DOUBLE>
-</person>
+
+<name>Knight</name>
+<imageName>knight</imageName>
+<player>null</player>
+<unitstats>
+	<baseHealth>100</baseHealth>
+	<baseDamage>25</baseDamage>
+	<baseSpeed>40</baseSpeed>
+	<baseArmour>5</baseArmour>
+	<attack>melee</attack>
+</unitstats>

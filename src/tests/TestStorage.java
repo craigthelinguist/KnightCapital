@@ -95,7 +95,7 @@ public class TestStorage {
 	}
 	
 	public static void test_unit_stats(){
-		String filepath = Constants.DATA_STATS + "knight.xml";
+		String filepath = Constants.DATA_UNITS + "knight.xml";
 		
 		XStream stream = new XStream();
 		stream.alias("unitstats", UnitStats.class);
@@ -111,10 +111,10 @@ public class TestStorage {
 	public void test_external_stats() throws FileNotFoundException{
 		String filepath = Constants.XMLTESTS + "external_unit.xml";
 		XStream stream = new XStream();
-		stream.alias("Unit", Unit.class); 
+		stream.alias("unit", Unit.class); 
 		stream.registerConverter(new UnitConverter());
 		
-		Unit unit = (Unit) stream.fromXML(new File(Constants.DATA_UNITS + "knight.xml"));
+		Unit unit = (Unit) stream.fromXML(new File(filepath));
 	}
 	
 	@Test

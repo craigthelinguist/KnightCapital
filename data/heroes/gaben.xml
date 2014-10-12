@@ -1,0 +1,15 @@
+<hero>
+	<name>Gaben</name>
+	<imageName>dark_knight</imageName>
+	<player>null</null>
+	<herostats>
+		<baseHealth>120</baseHealth>
+		<baseDamage>55</baseDamage>
+		<baseSpeed>10</baseSpeed>
+		<baseArmour>10</baseArmour>
+		<baseSight>6</baseSight>
+		<baseMovement>6</baseMovement>
+		<attack>melee</attack>
+	</herostats>
+</hero>
+

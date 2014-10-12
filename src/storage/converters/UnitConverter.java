@@ -22,7 +22,7 @@ public class UnitConverter implements Converter{
 
 	@Override
 	public boolean canConvert(Class clazz) {
-		return clazz.isAssignableFrom(Unit.class);
+		return clazz == Unit.class;
 	}
 
 	@Override
@@ -59,13 +59,15 @@ public class UnitConverter implements Converter{
 	@Override
 	public Object unmarshal(HierarchicalStreamReader reader, UnmarshallingContext context) {
 		
+		System.out.println("RIP=============");
+		
 		if (!reader.hasMoreChildren()){
 			XStream stream = new XStream();
 			stream.alias("unit", Unit.class);
 			stream.registerConverter(new UnitConverter());
 			String filename = reader.getValue();
 			File file = new File(Constants.DATA_UNITS + filename);
-			return (Item)(stream.fromXML(file));
+			return (Unit)(stream.fromXML(file));
 		}
 		
 		// load name
