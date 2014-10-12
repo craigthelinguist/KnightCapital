@@ -194,7 +194,9 @@ public abstract class Creature {
 		return stats.getTotal(Stat.HEALTH) <= 0;
 	}
 	
-
+	public AttackType getAttackType(){
+		return this.attackType;
+	}
 
 	public BufferedImage getImage(){
 		return animations.getImage();
