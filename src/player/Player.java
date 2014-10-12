@@ -13,6 +13,11 @@ public class Player {
 	public static final int GREEN = 3;
 	public static final int VIOLET = 4;
 	
+	/**
+	 * Constructs a new player.
+	 * @param name : string of player name
+	 * @param slot : int corresponding to playe num. ex 1 = player 1
+	 */
 	public Player(String name, int slot){
 		this.name = name;
 		this.slot = slot;
