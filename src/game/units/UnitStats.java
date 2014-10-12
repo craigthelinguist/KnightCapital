@@ -13,7 +13,13 @@ public class UnitStats implements Stats{
 	protected int buffedHealth;
 
 	protected int currentHealth;
+	
+	protected AttackType attackType;
 
+	@Deprecated
+	/**
+	 * USE THE CONSTRUCTOR WITH ATTACK TYPE PARAMETER
+	 */
 	public UnitStats(int health, int damage, int speed, int armour){
 		baseHealth = health;
 		baseDamage = damage;
@@ -25,7 +31,20 @@ public class UnitStats implements Stats{
 		buffedArmour = 0;
 		buffedHealth = 0;
 	}
-
+	
+	public UnitStats(int health, int damage, int speed, int armour, AttackType type){
+		baseHealth = health;
+		baseDamage = damage;
+		baseSpeed = speed;
+		baseArmour = armour;
+		currentHealth = baseHealth;
+		buffedDamage = 0;
+		buffedSpeed = 0;
+		buffedArmour = 0;
+		buffedHealth = 0;
+		attackType = type;
+	}
+	
 	/**
 	 * Set the base value for some stat.
 	 * @param stat: stat whose base value you will change.
@@ -115,6 +134,11 @@ public class UnitStats implements Stats{
 		else if (stat == Stat.DAMAGE) return baseDamage + buffedDamage;
 		else if (stat == Stat.SPEED) return baseSpeed + buffedSpeed;
 		else throw new RuntimeException("You're getting an unknown stat for a unit");
+	}
+
+	@Override
+	public AttackType getAttackType() {
+		return this.attackType;
 	}
 
 }

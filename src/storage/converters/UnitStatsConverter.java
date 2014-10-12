@@ -1,8 +1,13 @@
 package storage.converters;
 
+import java.io.File;
+
+import tools.Constants;
+import game.units.AttackType;
 import game.units.Stat;
 import game.units.UnitStats;
 
+import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.converters.Converter;
 import com.thoughtworks.xstream.converters.MarshallingContext;
 import com.thoughtworks.xstream.converters.UnmarshallingContext;
@@ -35,23 +40,52 @@ public class UnitStatsConverter implements Converter {
 
 	@Override
 	public Object unmarshal(HierarchicalStreamReader reader, UnmarshallingContext context) {
-		int hp; int dmg; int spd; int arm;
+
+		UnitStats stats;
 		
-		reader.moveDown();
-			hp = Integer.parseInt(reader.getValue());
-		reader.moveUp();
-		reader.moveDown();
-			dmg = Integer.parseInt(reader.getValue());
-		reader.moveUp();
-		reader.moveDown();
-			spd = Integer.parseInt(reader.getValue());
-		reader.moveUp();
-		reader.moveDown();
-			arm = Integer.parseInt(reader.getValue());
-		reader.moveUp();
+		// load from file
+		if (!reader.hasMoreChildren()){
+			XStream stream = new XStream();
+			stream.alias("unitstats", UnitStats.class);
+			stream.registerConverter(new UnitStatsConverter());
+			String filename = reader.getValue();
+			File file = new File(Constants.DATA_STATS + filename);
+			stats = (UnitStats)(stream.fromXML(file));
+		}
+		else{
+			int hp; int dmg; int spd; int arm; AttackType type;
+			
+			// hp
+			reader.moveDown();
+				hp = Integer.parseInt(reader.getValue());
+			reader.moveUp();
 		
-		return new UnitStats(hp,dmg,spd,arm);
+			// damage
+			reader.moveDown();
+				dmg = Integer.parseInt(reader.getValue());
+			reader.moveUp();
 		
+			// speed
+			reader.moveDown();
+				spd = Integer.parseInt(reader.getValue());
+			reader.moveUp();
+		
+			// armour
+			reader.moveDown();
+				arm = Integer.parseInt(reader.getValue());
+			reader.moveUp();
+		
+			// attack type
+			reader.moveDown();
+				type = AttackType.fromString(reader.getValue());
+			reader.moveUp();
+		
+			stats = new UnitStats(hp,dmg,spd,arm,type);
+		
+		}
+		
+		return stats;
+
 	}
 
 }

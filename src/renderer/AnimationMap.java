@@ -52,7 +52,7 @@ public class AnimationMap{
 	public void addDirectedImages(String directory, String base, String color){
 		String baseFilepath = directory + base;
 		String filepath;
-
+		
 		filepath = baseFilepath + "_" + color + "_north.png";
 		BufferedImage imgNorth = ImageLoader.load(filepath);
 		KCImage kcNorth = new KCImage(imgNorth, "north", filepath);
@@ -73,7 +73,58 @@ public class AnimationMap{
 		KCImage kcwest = new KCImage(imgwest, "west", filepath);
 		animations.put("west", kcwest);
 	}
+	
+	public void updateColours(String newColor){
+		
+		// we're looking for these colours
+		List<String> colours = new ArrayList<>();
+		colours.add("red"); colours.add("violet"); colours.add("blue"); colours.add("green");
+		colours.remove(newColor);
+		
+		// load new KCImages
+		List<KCImage> newKeys = new ArrayList<>();
+		for (Map.Entry<String,KCImage> image : animations.entrySet()){
+			String key = image.getKey();
+			KCImage oldImage = image.getValue();
+			String oldFilepath = oldImage.filepath;
+			if (colours.contains(oldFilepath)){
+				String newFilepath = substringExchange(oldFilepath,key,newColor);
+				BufferedImage bi = ImageLoader.load(newFilepath);
+				KCImage kcimage = new KCImage(bi, key, newFilepath);
+				newKeys.add(kcimage);
+			}
+		}
+		
+		// store KCIMages in the map
+		for (KCImage img : newKeys){
+			this.animations.put(img.name, img);
+		}
+		
+	}
 
+	/**
+	 * Get the substring old within the string string, and replace it with replacement.
+	 * Return the new string.
+	 * @param string: string whose substring you want to replace.
+	 * @param old: substring being replaced
+	 * @param replacement: replacement substring
+	 * @return: a new string with the substring replaced.
+	 */
+	private static String substringExchange(String string, String old, String replacement){
+		StringBuilder sb = new StringBuilder();
+		int index = string.indexOf(old);
+		for (int i = 0; i < index; i++){
+			sb.append(string.charAt(i));
+		}
+		for (int i = 0; i < replacement.length(); i++){
+			sb.append(replacement.charAt(i));
+		}
+		for (int i = index + old.length(); i < string.length(); i++){
+			sb.append(string.charAt(i));
+		}
+		return sb.toString();
+	}
+	
 	public BufferedImage getPortrait(){
 		return animations.get("portrait").image;
 	}

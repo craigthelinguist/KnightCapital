@@ -22,47 +22,52 @@ import game.effects.Buff;
 public abstract class Creature {
 
 	protected AnimationMap animations;
-
+	protected String name;
+	protected String imgName;
+	protected LinkedList<Buff> buffs;
+	protected Stats stats;
+	protected Player owner;
+	
 	/*
 	protected Map<String,Animation> animations;
 	protected String animationName;
 	protected Animation animation;
 */
 
-	protected LinkedList<Buff> buffs;
-	protected Stats stats;
-
-	public BufferedImage getImage(){
-		return animations.getImage();
-	}
-
-	public BufferedImage getPortrait(){
-		return animations.getPortrait();
-	}
-
-	public String getAnimationName(){
-		return animations.getName();
-	}
-
-	public void setAnimation(String name){
-		animations.setImage(name);
-	}
-
-	public Creature(String imgName, Player player, Stats stats) {
-
-		// stats
+	@Deprecated
+	/** Use the other one **/
+	protected Creature(String imgName, Player player, Stats stats) {
+		this.name = imgName;
+		this.imgName = imgName;
 		this.stats = stats;
 		buffs = new LinkedList<>();
-
-		// set up images
-		animations = new AnimationMap();
-		animations.addImage("portrait", Constants.PORTRAITS, ImageLoader.load(Constants.PORTRAITS + imgName));
-		String playerColor = player.getColour();
-		animations.addDirectedImages(Constants.ICONS, imgName, playerColor);
-		animations.setImage("north");
-
+		changeOwner(player);
+	}
+	
+	public Creature(String name, String imgName, Player player, UnitStats stats) {
+		this.name = name;
+		this.stats = stats;
+		this.name = name;
+		this.imgName = imgName;
+		this.owner = player;
+		buffs = new LinkedList<>();
+		changeOwner(player);
 	}
 
+	/**
+	 * Change who owns this creature. Update its images to the right colour.
+	 * @param newOwner: player who now owns this creature.
+	 */
+	public void changeOwner(Player newOwner){
+		this.owner = newOwner;
+		animations = new AnimationMap();
+		animations.addImage("portrait", Constants.PORTRAITS, ImageLoader.load(Constants.PORTRAITS + imgName));
+		if (newOwner == null) return;
+		String playerColor = owner.getColour();
+		animations.addDirectedImages(Constants.ICONS, imgName, playerColor);
+		animations.setImage("north");
+	}
+	
 	/**
 	 * Damage this creature by the amount specified.
 	 * @param damageDealt: amount of damage this creature has suffered.
@@ -157,7 +162,7 @@ public abstract class Creature {
 
 	/**
 	 * Return the healthiness of this creature as a percentage
-	 * @return: int
+	 * @return: an int in the range[0,100]
 	 */
 	public double healthiness(){
 		int maxHP = stats.getTotal(Stat.HEALTH);
@@ -199,9 +204,31 @@ public abstract class Creature {
 	 * @return boolean whether dead or not.
 	 */
 	public boolean isDead() {
-		if(this.healthiness() <= 0) {
-			return true;
-		}
-		return false;
+		return stats.getTotal(Stat.HEALTH) <= 0;
 	}
+	
+	public AttackType getAttackType(){
+		return stats.getAttackType();
+	}
+
+	public BufferedImage getImage(){
+		return animations.getImage();
+	}
+
+	public BufferedImage getPortrait(){
+		return animations.getPortrait();
+	}
+
+	public String getAnimationName(){
+		return animations.getName();
+	}
+
+	public void setAnimation(String name){
+		animations.setImage(name);
+	}
+	
+	public String getName(){
+		return name;
+	}
+	
 }
