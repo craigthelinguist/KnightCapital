@@ -48,6 +48,7 @@ public abstract class Creature {
 		this.name = name;
 		this.stats = stats;
 		this.name = name;
+		
 		this.imgName = imgName;
 		this.owner = player;
 		buffs = new LinkedList<>();

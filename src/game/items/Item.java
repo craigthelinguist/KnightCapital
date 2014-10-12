@@ -20,7 +20,7 @@ public abstract class Item {
 	private String imgName;
 	protected AnimationMap animations;
 
-	public Item(String imgName, String name ,String description, Buff[] buffs){
+	public Item(String name, String imgName ,String description, Buff[] buffs){
 		this.name = name;
 		this.description = description;
 		this.animations = new AnimationMap();
