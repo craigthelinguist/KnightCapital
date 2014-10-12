@@ -371,11 +371,11 @@ public class WorldController{
 		PassiveItem arrows = new PassiveItem("poisonarrow", "poisonarrow", "Poisonous arrows whose feathers were made from the hairs of Mizza. All archers in party gain +1 damage",buffsArrows, Target.PARTY);
 
 
-		ItemIcon itemIcon = new ItemIcon("Pimp Juice", amulet);
+		ItemIcon itemIcon = new ItemIcon(amulet);
 
-		ItemIcon itemIcon2 = new ItemIcon("", weapon);
+		ItemIcon itemIcon2 = new ItemIcon(weapon);
 
-		ItemIcon itemIcon3 = new ItemIcon("", arrows);
+		ItemIcon itemIcon3 = new ItemIcon(arrows);
 
 		
 		/*Loading the playey*/

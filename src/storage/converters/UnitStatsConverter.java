@@ -42,17 +42,7 @@ public class UnitStatsConverter implements Converter {
 	public Object unmarshal(HierarchicalStreamReader reader, UnmarshallingContext context) {
 
 		UnitStats stats;
-		
-		// load from file
-		if (!reader.hasMoreChildren()){
-			XStream stream = new XStream();
-			stream.alias("unitstats", UnitStats.class);
-			stream.registerConverter(new UnitStatsConverter());
-			String filename = reader.getValue();
-			File file = new File(Constants.DATA_STATS + filename);
-			stats = (UnitStats)(stream.fromXML(file));
-		}
-		else{
+	
 			int hp; int dmg; int spd; int arm; AttackType type;
 			
 			// hp
@@ -91,9 +81,6 @@ public class UnitStatsConverter implements Converter {
 			if (currentHP != null){
 				stats.setCurrent(Stat.HEALTH, currentHP);
 			}
-			
-			
-		}
 		
 		return stats;
 

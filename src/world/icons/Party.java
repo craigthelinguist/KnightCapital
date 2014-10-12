@@ -25,6 +25,7 @@ public class Party extends WorldIcon implements Iterable<Creature>{
 	public static final int PARTY_COLS = 3;
 	public static final int INVENTORY_ROWS = 2;
 	public static final int INVENTORY_COLS = 3;
+	public static final int INVENTORY_SIZE = INVENTORY_ROWS*INVENTORY_COLS;
 
 	private Player owner;
 	private int movementPoints;
