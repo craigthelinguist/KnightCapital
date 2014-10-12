@@ -235,6 +235,10 @@ public abstract class Creature {
 		animations.setImage(name);
 	}
 	
+	public Player getOwner(){
+		return this.owner;
+	}
+	
 	public String getName(){
 		return name;
 	}

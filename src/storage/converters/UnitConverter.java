@@ -1,10 +1,12 @@
 package storage.converters;
 
 import java.io.File;
+import java.lang.reflect.Field;
 
 import player.Player;
 import tools.Constants;
 import game.units.AttackType;
+import game.units.Stats;
 import game.units.Unit;
 import game.units.UnitStats;
 
@@ -25,11 +27,39 @@ public class UnitConverter implements Converter{
 	@Override
 	public void marshal(Object obj, HierarchicalStreamWriter writer, MarshallingContext context) {
 		
+		Unit unit = (Unit)obj;
+		
+		writer.startNode("name");
+			writer.setValue(unit.getName());
+		writer.endNode();
+		
+		writer.startNode("imageName");
+			writer.setValue(unit.getAnimationName());
+		writer.endNode();
+		
+		writer.startNode("player");
+			writer.setValue(""+unit.getOwner().slot);
+		writer.endNode();
+		
+		writer.startNode("stats");
+			UnitStatsConverter statsConverter = new UnitStatsConverter();
+			Stats stats;
+			try{
+				Field f = unit.getClass().getDeclaredField("stats");
+				f.setAccessible(true);
+				stats = (Stats) f.get(unit);
+				statsConverter.marshal(stats,writer,context);
+			}
+			catch(Exception e){
+				System.err.println("Error writing unit stats to file");
+			}
+		writer.endNode();
+			
 	}
 
 	@Override
 	public Object unmarshal(HierarchicalStreamReader reader, UnmarshallingContext context) {
-		
+
 		// load name
 		reader.moveDown();
 			String name = reader.getValue();

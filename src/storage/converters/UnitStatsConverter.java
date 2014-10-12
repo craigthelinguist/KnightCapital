@@ -81,7 +81,8 @@ public class UnitStatsConverter implements Converter {
 			reader.moveUp();
 		
 			stats = new UnitStats(hp,dmg,spd,arm,type);
-		
+			
+			
 		}
 		
 		return stats;
