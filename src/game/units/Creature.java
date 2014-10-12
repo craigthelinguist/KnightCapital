@@ -243,4 +243,8 @@ public abstract class Creature {
 		return name;
 	}
 	
+	public String getImageName(){
+		return this.imgName;
+	}
+	
 }

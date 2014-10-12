@@ -1,11 +1,13 @@
 package storage.converters;
 
+import game.units.AttackType;
+import game.units.HeroStats;
+import game.units.Stat;
+import game.units.UnitStats;
+
 import java.io.File;
 
 import tools.Constants;
-import game.units.AttackType;
-import game.units.Stat;
-import game.units.UnitStats;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.converters.Converter;
@@ -14,46 +16,36 @@ import com.thoughtworks.xstream.converters.UnmarshallingContext;
 import com.thoughtworks.xstream.io.HierarchicalStreamReader;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 
-public class UnitStatsConverter implements Converter {
+public class HeroStatsConverter implements Converter{
 
 	@Override
-	public boolean canConvert(Class type) {
-		return type == UnitStats.class;
+	public boolean canConvert(Class clazz) {
+		return clazz == HeroStats.class;
 	}
 
 	@Override
-	public void marshal(Object source, HierarchicalStreamWriter writer, MarshallingContext context) {
-		UnitStats stats = (UnitStats)source;
-		writer.startNode("baseHealth");
-			writer.setValue(""+stats.getBase(Stat.HEALTH));
-		writer.endNode();
-		writer.startNode("baseDamage");
-			writer.setValue(""+stats.getBase(Stat.DAMAGE));
-		writer.endNode();
-		writer.startNode("baseSpeed");
-			writer.setValue(""+stats.getBase(Stat.SPEED));
-		writer.endNode();
-		writer.startNode("baseArmour");
-			writer.setValue(""+stats.getBase(Stat.ARMOUR));
-		writer.endNode();
+	public void marshal(Object object, HierarchicalStreamWriter writer, MarshallingContext context) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
 	public Object unmarshal(HierarchicalStreamReader reader, UnmarshallingContext context) {
 
-		UnitStats stats;
+		HeroStats stats;
 		
 		// load from file
 		if (!reader.hasMoreChildren()){
 			XStream stream = new XStream();
-			stream.alias("unitstats", UnitStats.class);
-			stream.registerConverter(new UnitStatsConverter());
+			stream.alias("herostats", HeroStats.class);
+			stream.registerConverter(new HeroStatsConverter());
 			String filename = reader.getValue();
 			File file = new File(Constants.DATA_STATS + filename);
-			stats = (UnitStats)(stream.fromXML(file));
+			stats = (HeroStats)(stream.fromXML(file));
 		}
 		else{
-			int hp; int dmg; int spd; int arm; AttackType type;
+			int hp; int dmg; int spd; int arm;
+			int sight; int movement; AttackType type;
 			
 			// hp
 			reader.moveDown();
@@ -75,11 +67,21 @@ public class UnitStatsConverter implements Converter {
 				arm = Integer.parseInt(reader.getValue());
 			reader.moveUp();
 		
+			// sight
+			reader.moveDown();
+				sight = Integer.parseInt(reader.getValue());
+			reader.moveUp();
+			
+			// movement
+			reader.moveDown();
+				movement = Integer.parseInt(reader.getValue());
+			reader.moveUp();
+
 			// attack type
 			reader.moveDown();
 				type = AttackType.fromString(reader.getValue());
 			reader.moveUp();
-		
+				
 			Integer currentHP = null;
 			if (reader.hasMoreChildren()){
 				reader.moveDown();
@@ -87,7 +89,7 @@ public class UnitStatsConverter implements Converter {
 				reader.moveUp();
 			}
 			
-			stats = new UnitStats(hp,dmg,spd,arm,type);
+			stats = new HeroStats(hp,dmg,spd,arm,sight,movement,type);
 			if (currentHP != null){
 				stats.setCurrent(Stat.HEALTH, currentHP);
 			}
