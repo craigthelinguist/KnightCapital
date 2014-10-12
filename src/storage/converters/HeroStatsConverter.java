@@ -34,16 +34,6 @@ public class HeroStatsConverter implements Converter{
 
 		HeroStats stats;
 		
-		// load from file
-		if (!reader.hasMoreChildren()){
-			XStream stream = new XStream();
-			stream.alias("herostats", HeroStats.class);
-			stream.registerConverter(new HeroStatsConverter());
-			String filename = reader.getValue();
-			File file = new File(Constants.DATA_STATS + filename);
-			stats = (HeroStats)(stream.fromXML(file));
-		}
-		else{
 			int hp; int dmg; int spd; int arm;
 			int sight; int movement; AttackType type;
 			
@@ -95,8 +85,6 @@ public class HeroStatsConverter implements Converter{
 			}
 			
 			
-		}
-		
 		return stats;
 
 	}

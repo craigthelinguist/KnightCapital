@@ -8,13 +8,17 @@ import game.items.EquippedItem;
 import game.items.Item;
 import game.items.PassiveItem;
 import game.items.Target;
+import game.units.UnitStats;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.LinkedList;
 
+import tools.Constants;
 import tools.ImageLoader;
 import tools.KCImage;
 
+import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.converters.Converter;
 import com.thoughtworks.xstream.converters.MarshallingContext;
 import com.thoughtworks.xstream.converters.UnmarshallingContext;
@@ -33,6 +37,8 @@ public class ItemConverter implements Converter{
 	public void marshal(Object source, HierarchicalStreamWriter writer, MarshallingContext context) {
 		
 		Item item = (Item)source;
+		
+		
 		
 		// write attributes
 		writer.startNode("name");
@@ -73,6 +79,15 @@ public class ItemConverter implements Converter{
 
 	@Override
 	public Object unmarshal(HierarchicalStreamReader reader, UnmarshallingContext context) {
+		
+		if (!reader.hasMoreChildren()){
+			XStream stream = new XStream();
+			stream.alias("item", Item.class);
+			stream.registerConverter(new ItemConverter());
+			String filename = reader.getValue();
+			File file = new File(Constants.DATA_ITEMS + filename);
+			return (Item)(stream.fromXML(file));
+		}
 		
 		reader.moveDown();
 			String name = reader.getValue();

@@ -17,7 +17,7 @@ public class ItemIcon extends WorldIcon {
 	public final Item item;
 	private final BufferedImage image;
 
-	public ItemIcon(String description, Item item){
+	public ItemIcon(Item item){
 		this.item = item;
 		this.image = ImageLoader.load(Constants.ITEMS+"itemChest");
 	}

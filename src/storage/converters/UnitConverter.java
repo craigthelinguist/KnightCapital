@@ -5,6 +5,7 @@ import java.lang.reflect.Field;
 
 import player.Player;
 import tools.Constants;
+import game.items.Item;
 import game.units.AttackType;
 import game.units.Stats;
 import game.units.Unit;
@@ -37,9 +38,7 @@ public class UnitConverter implements Converter{
 			writer.setValue(unit.getAnimationName());
 		writer.endNode();
 		
-		writer.startNode("player");
-			writer.setValue(""+unit.getOwner().slot);
-		writer.endNode();
+		new PlayerConverter().marshal(unit.getOwner(), writer, context);
 		
 		writer.startNode("stats");
 			UnitStatsConverter statsConverter = new UnitStatsConverter();
@@ -59,7 +58,16 @@ public class UnitConverter implements Converter{
 
 	@Override
 	public Object unmarshal(HierarchicalStreamReader reader, UnmarshallingContext context) {
-
+		
+		if (!reader.hasMoreChildren()){
+			XStream stream = new XStream();
+			stream.alias("unit", Unit.class);
+			stream.registerConverter(new UnitConverter());
+			String filename = reader.getValue();
+			File file = new File(Constants.DATA_UNITS + filename);
+			return (Item)(stream.fromXML(file));
+		}
+		
 		// load name
 		reader.moveDown();
 			String name = reader.getValue();
