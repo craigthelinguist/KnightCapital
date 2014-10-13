@@ -75,8 +75,6 @@ public class WorldController{
 
 	// player this controller belongs to
 	private Player player;
-	private Hero hero;
-	private Party party;
 	
 	// current tile the player has clicked
 	private Point selected;
@@ -100,10 +98,9 @@ public class WorldController{
 	private static final int PAN_RIGHT = KeyEvent.VK_RIGHT;
 	private static final int PAN_LEFT = KeyEvent.VK_LEFT;
 
-	public WorldController(World w, Player p, Party part){
+	public WorldController(World w, Player p){
 		world = w;
 		player = p;
-		party = part;
 		camera = WorldRenderer.getCentreOfWorld(w);
 		gui = new MainFrame();
 		gui.setController(this);
@@ -423,7 +420,7 @@ public class WorldController{
 		w.getTile(1,6).setIcon(itemIcon2);
 		w.getTile(8,8).setIcon(itemIcon3);
 
-		new WorldController(w,p,party);
+		new WorldController(w,p);
 	}
 
 
@@ -446,7 +443,7 @@ public class WorldController{
 		party.refresh();
 		//hero.setMovePts(8); //we dont need this line since the move point is being set in XMLReader class
 		w.getTile(0,0).setIcon(party);
-		new WorldController(w,p,party);
+		new WorldController(w,p);
 	}
 
 
@@ -487,13 +484,6 @@ public class WorldController{
 	public Player getPlayer() {
 		return this.player;
 	}
-	
-	/**
-	 * Returns the party this controller belongs to.
-	 * @return
-	 */
-	public Party getParty() {
-		return this.party;
-	}
+
 }
 
