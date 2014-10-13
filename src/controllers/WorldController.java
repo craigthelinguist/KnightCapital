@@ -206,6 +206,7 @@ public class WorldController{
 				CityTile c1 = (CityTile)clickedTile; //cast the selected tile to CityTile
 				City city = c1.getCity(); //get the city from CityTile
 				
+				/*Check the clicked tile to make sure it's the entrance tile before moving party inside*/
 				if(clickedTile == city.getEntryTile()) {
 					/*This if statement seems useless. Need to verify this code/delete later (maybe use whiley later on?)
 					Cast selectedTile to party*/
@@ -219,6 +220,7 @@ public class WorldController{
 
 					//checks that the owner of city is the same as the owner of the party being moved there
 					if(city.getOwner() == p.getOwner()) {
+						new GameDialog(gui, "Your party have entered the    city!");
 						city.setVisitors(p);
 						System.out.println("yep");
 					}
