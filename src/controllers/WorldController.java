@@ -465,11 +465,11 @@ public class WorldController{
 		PassiveItem arrows = new PassiveItem("poisonarrow", "poisonarrow", "Poisonous arrows whose feathers were made from the hairs of Mizza. All archers in party gain +1 damage",buffsArrows, Target.PARTY);
 
 		
-		ItemIcon itemIcon = new ItemIcon(amulet);
+		ItemIcon amuletChest = new ItemIcon(amulet);
 
-		ItemIcon itemIcon2 = new ItemIcon(weapon);
+		ItemIcon weaponChest = new ItemIcon(weapon);
 
-		ItemIcon itemIcon3 = new ItemIcon(arrows);
+		ItemIcon arrowsChest = new ItemIcon(arrows);
 		
 		
 		/*Loading the playey*/
@@ -494,14 +494,36 @@ public class WorldController{
 		party.refresh();
 		party.addItem(arrows);
 		
+		
+		
+		Tile[][] tiles = w.getTiles();
+		for (int y = 1; y < 10; y++){
+			for (int x = 1; x < 10; x++){
+				double rand = Math.floor((Math.random() * 20) + 1); 
+				if(rand > 18 && (!(w.getTile(x,y) instanceof ImpassableTile))) {
+					w.getTile(x,y).setIcon(weaponChest);
+				}
+				else if(rand > 17 && (!(w.getTile(x,y) instanceof ImpassableTile))) {
+					w.getTile(x,y).setIcon(amuletChest);
+				}
+				else if(rand > 16 && (!(w.getTile(x,y) instanceof ImpassableTile))) {
+					w.getTile(x,y).setIcon(arrowsChest);
+				}
+				else {
+					
+				}
+			}
+		}
+		
+		
 		/*Lay the items down on the tiles*/
 		w.getTile(0,0).setIcon(party);
-		w.getTile(1,1).setIcon(itemIcon); //place a floor item on this tile
+		/**w.getTile(1,1).setIcon(itemIcon); //place a floor item on this tile
 		w.getTile(1,2).setIcon(itemIcon2);
 		w.getTile(1,3).setIcon(itemIcon2);
 		w.getTile(1,4).setIcon(itemIcon);
 		w.getTile(1,6).setIcon(itemIcon2);
-		w.getTile(8,8).setIcon(itemIcon3);
+		w.getTile(8,8).setIcon(itemIcon3);*/
 		
 		new WorldController(w,p);
 	}
@@ -553,20 +575,21 @@ public class WorldController{
 	 */
 	public static World ewan_world() {
 		Player p = new Player("John The Baptist",4);
-
+			
+		
 		
 		// create tiles
 		Tile[][] tiles = new Tile[10][10];
 		for (int y = 0; y < 10; y++){
 			for (int x = 0; x < 10; x++){
-				double rand = Math.floor((Math.random() * 10) + 1); 
-				if(rand > 9) {
+				double rand = Math.floor((Math.random() * 50) + 1); 
+				if(rand > 48) {
 					tiles[x][y] = new ImpassableTile("tree",8,9);
 				}
-				else if(rand > 8) {
+				else if(rand > 45) {
 					tiles[x][y] = new ImpassableTile("bigTree",8,9);
 				}
-				else if(rand >7 ) {
+				else if(rand > 40 ) {
 					tiles[x][y] = PassableTile.newDirtTile(x,y);
 				}
 				else {
