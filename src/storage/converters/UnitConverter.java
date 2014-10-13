@@ -88,7 +88,7 @@ public class UnitConverter implements Converter{
 			UnitStats stats = (UnitStats) new UnitStatsConverter().unmarshal(reader, context);
 		reader.moveUp();
 		
-		return new Unit(name,imgName,null,stats);
+		return new Unit(name,imgName,player,stats);
 	}
 
 }

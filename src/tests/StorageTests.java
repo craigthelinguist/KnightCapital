@@ -35,6 +35,7 @@ import renderer.AnimationMap;
 import storage.converters.AnimationMapConverter;
 import storage.converters.BuffConverter;
 import storage.converters.HealConverter;
+import storage.converters.IconConverter;
 import storage.converters.ItemConverter;
 import storage.converters.KCImageConverter;
 import storage.converters.PlayerConverter;
@@ -45,6 +46,8 @@ import tools.Constants;
 import tools.ImageLoader;
 import tools.KCImage;
 import world.World;
+import world.icons.Party;
+import world.icons.WorldIcon;
 
 public class StorageTests {
 
@@ -285,7 +288,19 @@ public class StorageTests {
 		ps.print(xml);
 		ps.close();
 		
+	}
+	
+	@Test
+	public void test_party() throws Exception{
 		
+		String filepath = Constants.XMLTESTS + "party.xml";
+		File file = new File(filepath);
+
+		XStream stream = new XStream();
+		stream.alias("icon", WorldIcon.class);
+		stream.registerConverter(new IconConverter());
+		
+		Party party = (Party) stream.fromXML(file);		
 		
 	}
 	

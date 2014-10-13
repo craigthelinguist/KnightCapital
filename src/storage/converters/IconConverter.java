@@ -27,6 +27,10 @@ public class IconConverter implements Converter{
 
 	@Override
 	public void marshal(Object object, HierarchicalStreamWriter writer, MarshallingContext context) {
+		
+		writer.startNode("owner");
+			
+		
 		// TODO Auto-generated method stub
 		
 	}
@@ -81,7 +85,7 @@ public class IconConverter implements Converter{
 		}
 		
 		// validate items
-		if (items.size() != Party.INVENTORY_SIZE){
+		if (items.size() >= Party.INVENTORY_SIZE){
 			throw new RuntimeException("error loading party! too many items.");
 		}
 		
@@ -94,7 +98,9 @@ public class IconConverter implements Converter{
 				if (c instanceof Hero && hero != null){
 					throw new RuntimeException("error loading multiple heroes in party! " + hero.getName() + " and " + c.getName());
 				}
-				else hero = (Hero)c;
+				else if (c instanceof Hero && hero == null){
+					hero = (Hero)c;
+				}
 			}
 		}
 		
@@ -133,7 +139,9 @@ public class IconConverter implements Converter{
 			members[col][row] = hero;
 		}
 		else if (node.equals("unit")){
-			members[col][row] = (Unit) new UnitConverter().unmarshal(reader, context);
+			Unit unit = (Unit) new UnitConverter().unmarshal(reader,context);
+			unit.changeOwner(player);
+			members[col][row] = unit;
 		}
 		else throw new RuntimeException("party member specified that isn't a hero or a unit: " + node);
 		reader.moveUp();

@@ -46,7 +46,16 @@ public class PlayerConverter implements Converter {
 	 * @return
 	 */
 	public Object unmarshal(HierarchicalStreamReader reader, UnmarshallingContext context) {
-		if (!reader.hasMoreChildren()) return null;
+		if (!reader.hasMoreChildren()){
+			
+			String str = reader.getValue();
+			if (str.equals("null")) return null;
+			else{
+				int index = Integer.parseInt(str);
+				return WorldLoader.getPlayer(index);
+			}
+			
+		}
 		Player player;
 		reader.moveDown();
 			int slot = Integer.parseInt(reader.getValue());
