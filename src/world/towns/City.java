@@ -188,4 +188,19 @@ public class City {
 		return this.name;
 	}
 
+	/**
+	 * Test method to print out the items of the visitors.
+	 */
+	public void printVisitorsItems() {
+		for(int i = 0; i < visitors.getInventory().length; i++) {	
+			for(int j = 0; j < visitors.getInventory()[i].length; j++) {
+				//System.out.println(visitors.getMembers()[i].toString());
+				if(visitors.getItem(i,j) != null) {
+					System.out.println("sdfsdfsdf");
+					System.out.println(visitors.getItem(i,j).getName());
+				}
+			}
+		}
+	}
+
 }

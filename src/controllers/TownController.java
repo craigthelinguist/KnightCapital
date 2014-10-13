@@ -1,6 +1,7 @@
 package controllers;
 
 import game.effects.Buff;
+import game.items.Item;
 import game.items.PassiveItem;
 import game.items.Target;
 import game.units.Creature;
@@ -34,7 +35,8 @@ public class TownController{
 	protected final City city;
 	protected Party garrison;
 	protected Party visitors;
-
+	protected Item[][] items;
+	
 	// gui stuff
 	private TownGui gui;
 	private boolean active = true;
@@ -52,6 +54,8 @@ public class TownController{
 		Party visitors = new Party(controller.getParty().getHero(), city.getOwner(), controller.getParty().getMembers());
 		city.setVisitors(visitors);
 		
+		city.printVisitorsItems(); //test method
+
 		if (city.getGarrison() == null){
 			Party g = new Party(null,city.getOwner(),Party.newEmptyParty());
 			city.setGarrison(g);
