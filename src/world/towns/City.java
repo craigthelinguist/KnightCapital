@@ -201,4 +201,12 @@ public class City {
 		}
 	}
 
+	/**
+	 * Set the owner of this city to the Player from parameter.
+	 * @param owner
+	 */
+	public void setOwner(Player owner) {
+		this.owner = owner;
+	}
+
 }
