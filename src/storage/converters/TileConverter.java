@@ -2,7 +2,6 @@ package storage.converters;
 
 import javax.swing.Icon;
 
-import storage.loaders.DataLoader;
 
 import world.icons.WorldIcon;
 import world.tiles.CityTile;
@@ -19,6 +18,14 @@ import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 
 public class TileConverter implements Converter {
 
+	private WorldConverter worldLoader;
+	
+	public TileConverter(){}
+	
+	public TileConverter(WorldConverter wc){
+		worldLoader = wc;
+	}
+	
 	@Override
 	public boolean canConvert(Class clazz) {
 		return clazz == Tile.class || clazz == PassableTile.class || clazz == ImpassableTile.class || clazz == CityTile.class;
@@ -27,8 +34,8 @@ public class TileConverter implements Converter {
 	@Override
 	public void marshal(Object object, HierarchicalStreamWriter writer, MarshallingContext context) {
 		if (object instanceof PassableTile) marshal_passable(object,writer,context);
-		else if (object instanceof ImpassableTile) marshal_passable(object,writer,context);
-		else if (object instanceof CityTile) marshal_passable (object,writer,context);
+		else if (object instanceof ImpassableTile) marshal_impassable(object,writer,context);
+		else if (object instanceof CityTile) marshal_city (object,writer,context);
 		else throw new RuntimeException("trying to marshal some unknown kind of tile");
 	}
 
@@ -66,7 +73,7 @@ public class TileConverter implements Converter {
 		
 	}
 
-	public Object unmarshal_passable(HierarchicalStreamReader reader, UnmarshallingContext context) {
+	private Object unmarshal_passable(HierarchicalStreamReader reader, UnmarshallingContext context) {
 		reader.moveDown();
 			String imageName = reader.getValue();
 		reader.moveUp();
@@ -95,7 +102,7 @@ public class TileConverter implements Converter {
 		writer.endNode();
 	}
 	
-	public Object unmarshal_impassable(HierarchicalStreamReader reader, UnmarshallingContext context) {
+	private Object unmarshal_impassable(HierarchicalStreamReader reader, UnmarshallingContext context) {
 		reader.moveDown();
 			String imageName = reader.getValue();
 		reader.moveUp();
@@ -121,7 +128,7 @@ public class TileConverter implements Converter {
 		writer.endNode();
 	}
 	
-	public Object unmarshal_city(HierarchicalStreamReader reader, UnmarshallingContext context) {
+	private Object unmarshal_city(HierarchicalStreamReader reader, UnmarshallingContext context) {
 		
 		reader.moveDown();
 			int x = Integer.parseInt(reader.getValue());
@@ -131,15 +138,18 @@ public class TileConverter implements Converter {
 		reader.moveUp();
 		reader.moveDown();
 			String cityName = reader.getValue();
-			City city = DataLoader.cities.get(cityName);
-			if (city == null){
-				throw new RuntimeException("Error! You're setting a city tile's city to be null. City name was " + cityName);
-			}
 		reader.moveUp();
 		
 		CityTile ct = new CityTile(x,y);
-		ct.setCity(city);
-		return new CityTile(x,y);
+		
+		// if you're loading a world then check the specified city name exists.
+		if (this.worldLoader != null){
+			if (!worldLoader.doesCityExist(cityName)){
+				throw new RuntimeException("couldn't find the city belonging to a city tile, city name was " + cityName);
+			}
+			this.worldLoader.addCityTile(cityName,ct);
+		}
+		return ct;
 		
 	}
 	

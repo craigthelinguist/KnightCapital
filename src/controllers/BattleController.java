@@ -92,6 +92,7 @@ public class BattleController{
 
 		world = w; // set world
 
+		
 		camera = WorldRenderer.getCentreOfWorld(w);
 		frame = mf;
 		frame.setController(this);

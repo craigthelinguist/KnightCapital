@@ -58,7 +58,7 @@ public class City {
 	private String name;
 	
 
-	public City(String name, String filepath, Player player, CityTile[][] overworldTiles){
+	public City(String name, String imageName, Player player, CityTile[][] overworldTiles){
 
 		// set up owner and fields storing details about this city
 		owner = player;
@@ -69,12 +69,14 @@ public class City {
 
 		// set up tiles; set tiles so that they have a reference to this.
 		tiles = overworldTiles;
-		if (overworldTiles.length != WIDTH) Log.print("Error! City must be " + WIDTH + "x" + WIDTH + "tiles!");
-		for (int i = 0; i < WIDTH; i++){
-			if (overworldTiles[i].length != WIDTH) Log.print("Error! City must be " + WIDTH + "x" + WIDTH + "tiles!");
-			for (int j = 0; j < WIDTH; j++){
-				tiles[i][j] = overworldTiles[i][j];
-				tiles[i][j].setCity(this);
+		if (overworldTiles != null){
+			if (overworldTiles.length != WIDTH) Log.print("Error! City must be " + WIDTH + "x" + WIDTH + "tiles!");
+			for (int i = 0; i < WIDTH; i++){
+				if (overworldTiles[i].length != WIDTH) Log.print("Error! City must be " + WIDTH + "x" + WIDTH + "tiles!");
+				for (int j = 0; j < WIDTH; j++){
+					tiles[i][j] = overworldTiles[i][j];
+					tiles[i][j].setCity(this);
+				}
 			}
 		}
 
@@ -82,7 +84,7 @@ public class City {
 		animations = new AnimationMap();
 		this.animations.addDirectedImages(Constants.CITIES, "basic", "red");
 		animations.setImage("north");
-		String portrait_filepath = Constants.PORTRAITS + "city_" + filepath;
+		String portrait_filepath = Constants.PORTRAITS + "city_" + imageName;
 		animations.addImage("portrait", portrait_filepath, ImageLoader.load(portrait_filepath));
 	}
 

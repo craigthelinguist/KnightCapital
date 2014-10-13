@@ -4,7 +4,6 @@ import java.awt.image.BufferedImage;
 
 import player.Player;
 
-import storage.loaders.DataLoader;
 import tools.ImageLoader;
 import tools.KCImage;
 
@@ -34,7 +33,9 @@ public class PlayerConverter implements Converter {
 			return;
 		}
 		Player player = (Player)source;
+		writer.startNode("slot");
 		writer.setValue("" + player.slot);
+		writer.endNode();
 	}
 
 	@Override
@@ -45,17 +46,20 @@ public class PlayerConverter implements Converter {
 	 * @return
 	 */
 	public Object unmarshal(HierarchicalStreamReader reader, UnmarshallingContext context) {
-		
-		String name = reader.getValue();
-		if (name.equals("null")) return null;
-		else{
+		if (!reader.hasMoreChildren()) return null;
+		Player player;
+		reader.moveDown();
 			int slot = Integer.parseInt(reader.getValue());
-			if (DataLoader.players.containsKey(slot)) return DataLoader.players.get(slot);
-			else{
-				throw new RuntimeException("Player hasn't been defined! Player: " + slot);
+			if (!reader.hasMoreChildren()){
+				player = DataLoader.getPlayer(slot);
+				if (player == null) throw new RuntimeException("PLayer hasn't been defined! Player: " + slot);
 			}
-		}
-		
+			else{
+				String name = reader.getValue();
+				player = new Player(name,slot);
+			}
+		reader.moveUp();
+		return player;
 	}
 
 

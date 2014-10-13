@@ -64,5 +64,6 @@ public class Constants {
 	public static final String DATA_UNITS = "data" + File.separatorChar + "units" + File.separatorChar;
 	public static final String DATA_ITEMS = "data" + File.separatorChar + "items" + File.separatorChar;
 	public static final String DATA_HEROES = "data" + File.separatorChar + "heroes" + File.separatorChar;
+	public static final String DATA_WORLDS = "data" + File.separatorChar + "worlds" + File.separatorChar;
 	
 }
