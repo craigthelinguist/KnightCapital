@@ -195,6 +195,14 @@ public class City {
 	public String getImageName(){
 		return this.imageName;
 	}
+		
+	/**
+	 * Gets the entrance tile for the city
+	 * @return CityTile 
+	 */
+	public CityTile getEntryTile() {
+		return tiles[1][2];
+	}
 
 	/**
 	 * Test method to print out the items of the visitors.

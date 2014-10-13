@@ -201,24 +201,29 @@ public class WorldController{
 			
 			//selected party and right clicked a city
 			if (SwingUtilities.isRightMouseButton(me) && selectedTile.occupant() instanceof Party && clickedTile instanceof CityTile) {
+				
 				System.out.println("User selected a party and is trying to move the party into the city");
 				CityTile c1 = (CityTile)clickedTile; //cast the selected tile to CityTile
 				City city = c1.getCity(); //get the city from CityTile
 				
-				/*This if statement seems useless. Need to verify this code/delete later (maybe use whiley later on?)
-				Cast selectedTile to party*/
-				if(!(selectedTile.occupant() instanceof Party)) return;
-				Party p =(Party)selectedTile.occupant();
-				
-				/*If city is empty/no owner, the party moving there now owns the city*/
-				if(city.getOwner() == null) {
-					city.setOwner(p.getOwner());
-				}
+				/*Check the clicked tile to make sure it's the entrance tile before moving party inside*/
+				if(clickedTile == city.getEntryTile()) {
+					/*This if statement seems useless. Need to verify this code/delete later (maybe use whiley later on?)
+					Cast selectedTile to party*/
+					if(!(selectedTile.occupant() instanceof Party)) return;
+					Party p =(Party)selectedTile.occupant();
+					
+					/*If city is empty/no owner, the party moving there now owns the city*/
+					if(city.getOwner() == null) {
+						city.setOwner(p.getOwner());
+					}
 
-				//checks that the owner of city is the same as the owner of the party being moved there
-				if(city.getOwner() == p.getOwner()) {
-					city.setVisitors(p);
-					System.out.println("yep");
+					//checks that the owner of city is the same as the owner of the party being moved there
+					if(city.getOwner() == p.getOwner()) {
+						new GameDialog(gui, "Your party have entered the    city!");
+						city.setVisitors(p);
+						System.out.println("yep");
+					}
 				}
 			}
 			
@@ -253,7 +258,7 @@ public class WorldController{
 				}
 				else if (clickedTile != null) {
 					if(clickedTile.occupant() instanceof ItemIcon) {
-						new GameDialog(gui,"Inventory full! You cannot pick   up more items!");
+						new GameDialog(gui,"Inventory full! You cannot pick up more items!");
 					}
 				}
 			}
