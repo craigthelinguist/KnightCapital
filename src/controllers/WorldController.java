@@ -200,7 +200,8 @@ public class WorldController{
 				}
 
 			//selected party and right clicked a city
-			if (SwingUtilities.isRightMouseButton(me) && selectedTile.occupant() instanceof Party && clickedTile instanceof CityTile) {
+			else if (SwingUtilities.isRightMouseButton(me) && selectedTile != null &&
+					selectedTile.occupant() instanceof Party && clickedTile instanceof CityTile) {
 
 				// get the city
 				CityTile c1 = (CityTile)clickedTile;

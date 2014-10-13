@@ -101,9 +101,7 @@ public class TownController{
 
 			// get exit point
 			Point pt = tile.asPoint();
-			pt = new Point(pt.x,pt.y+1);
-			pt = Geometry.rotateByCamera(pt, camera, world.dimensions);
-			System.out.println("CITY EXIT: ("+pt.x+","+pt.y+")");
+			pt.y = pt.y + 1;
 
 			// check tile exists, kick them onto world map
 			if (pt.x >= 0 && pt.y >= 0 && pt.x < world.NUM_TILES_ACROSS && pt.y < world.NUM_TILES_DOWN){
