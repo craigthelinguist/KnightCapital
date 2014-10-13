@@ -3,6 +3,7 @@ package storage.converters;
 import java.awt.Point;
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -33,9 +34,10 @@ public class WorldLoader {
 	/**
 	 * Load the world described in the specified file.
 	 * @param filepath: location of the file containing the world you want to read.
-	 * @return: a World.
+	 * @return: the world specified in this file
+	 * @throws IOException: if it failed to find the file or if there was an error constructing the world in the file.
 	 */
-	public static World loadWorld(String filepath) throws IOException{
+	public static World load(String filepath) throws IOException{
 		reset();
 		File file = new File(filepath);
 		XStream stream = new XStream();
@@ -46,6 +48,24 @@ public class WorldLoader {
 		reset();
 		return world;
 	}
+	
+	/**
+	 * Save the world at the specified file.
+	 * @param filepath: location where you want to save the file
+	 * @param world: the world you want to save
+	 * @throws IOException: if it failed to create the specified filepath
+	 */
+	public static void save(String filepath, World world) throws IOException{
+		File file = new File(filepath);
+		XStream stream = new XStream();
+		stream.registerConverter(new WorldConverter());
+		stream.alias("world", World.class);
+		String xml = stream.toXML(world);
+		PrintStream ps = new PrintStream(file);
+		ps.print(xml);
+		ps.close();
+	}
+	
 	
 	protected static World constructWorld(){
 		
