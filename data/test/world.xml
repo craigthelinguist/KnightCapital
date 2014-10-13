@@ -11,40 +11,14 @@
   </players>
   <cities/>
   <tiles>
-    <width>2</width>
-    <height>2</height>
+    <width>1</width>
+    <height>1</height>
     <tile>
       <type>passable</type>
       <x>0</x>
       <y>0</y>
       <imageName>grass</imageName>
-      <icon>
-        <owner/>
-      </icon>
-      <tile>
-        <type>passable</type>
-        <x>0</x>
-        <y>1</y>
-        <imageName>grass</imageName>
-        <icon>
-          <owner/>
-        </icon>
-        <tile>
-          <type>passable</type>
-          <x>1</x>
-          <y>0</y>
-          <imageName>grass</imageName>
-          <icon>
-            <owner/>
-          </icon>
-          <tile>
-            <type>passable</type>
-            <x>1</x>
-            <y>1</y>
-            <imageName>grass</imageName>
-            <icon>
-              <owner/>
-            </icon>
-          </tile>
-        </tile>
-      </tile>
+      <icon>null</icon>
+    </tile>
+  </tiles>
+</world>

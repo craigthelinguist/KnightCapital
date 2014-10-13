@@ -42,6 +42,7 @@ import storage.converters.PlayerConverter;
 import storage.converters.UnitConverter;
 import storage.converters.UnitStatsConverter;
 import storage.converters.WorldConverter;
+import storage.converters.WorldLoader;
 import tools.Constants;
 import tools.ImageLoader;
 import tools.KCImage;
@@ -276,17 +277,9 @@ public class StorageTests {
 	public void test_world() throws Exception{
 		
 		String filepath = Constants.XMLTESTS + "world.xml";
+		World world = WorldLoader.load(filepath);
+		WorldLoader.save(filepath, world);
 		File file = new File(filepath);
-		
-		XStream stream = new XStream();
-		stream.alias("world", World.class);
-		stream.registerConverter(new WorldConverter());
-		
-		World world = (World) stream.fromXML(file);
-		PrintStream ps = new PrintStream(file);
-		String xml = stream.toXML(world);
-		ps.print(xml);
-		ps.close();
 		
 	}
 	
