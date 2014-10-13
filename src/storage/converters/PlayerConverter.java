@@ -46,19 +46,31 @@ public class PlayerConverter implements Converter {
 	 * @return
 	 */
 	public Object unmarshal(HierarchicalStreamReader reader, UnmarshallingContext context) {
-		if (!reader.hasMoreChildren()) return null;
+		if (!reader.hasMoreChildren()){
+			
+			String str = reader.getValue();
+			if (str.equals("null")) return null;
+			else{
+				int index = Integer.parseInt(str);
+				return WorldLoader.getPlayer(index);
+			}
+			
+		}
 		Player player;
 		reader.moveDown();
 			int slot = Integer.parseInt(reader.getValue());
-			if (!reader.hasMoreChildren()){
-				player = DataLoader.getPlayer(slot);
-				if (player == null) throw new RuntimeException("PLayer hasn't been defined! Player: " + slot);
-			}
-			else{
+		reader.moveUp();
+		if (!reader.hasMoreChildren()){
+			player = WorldLoader.getPlayer(slot);
+			if (player == null) throw new RuntimeException("PLayer hasn't been defined! Player: " + slot);
+		}
+		else{
+			reader.moveDown();
 				String name = reader.getValue();
 				player = new Player(name,slot);
-			}
-		reader.moveUp();
+			reader.moveUp();
+			WorldLoader.insertPlayer(player.slot, player);
+		}
 		return player;
 	}
 

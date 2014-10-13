@@ -66,7 +66,7 @@ public class HeroConverter implements Converter {
 			stream.registerConverter(new HeroConverter());
 			String filename = reader.getValue();
 			File file = new File(Constants.DATA_HEROES + filename);
-			return (Item)(stream.fromXML(file));
+			return (Hero)(stream.fromXML(file));
 		}
 		
 		// load name
@@ -81,7 +81,10 @@ public class HeroConverter implements Converter {
 		
 		// player
 		reader.moveDown();
-			Player player = (Player) new PlayerConverter().unmarshal(reader,context);
+			Object obj = new PlayerConverter().unmarshal(reader,context);
+			Player player;
+			if (obj == null) player = null;
+			else player = (Player)obj;
 		reader.moveUp();
 		
 		// load stats

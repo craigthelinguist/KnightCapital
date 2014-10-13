@@ -108,4 +108,8 @@ public abstract class Tile {
 		graphics.drawImage(lighterImage,x,y,null);
 	}
 
+	public String getImageName(){
+		return this.imageName;
+	}
+	
 }

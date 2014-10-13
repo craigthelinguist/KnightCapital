@@ -1,7 +1,7 @@
 <hero>
 	<name>Gaben</name>
 	<imageName>dark_knight</imageName>
-	<player>null</null>
+	<player>null</player>
 	<herostats>
 		<baseHealth>120</baseHealth>
 		<baseDamage>55</baseDamage>

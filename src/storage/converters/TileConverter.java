@@ -17,14 +17,6 @@ import com.thoughtworks.xstream.io.HierarchicalStreamReader;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 
 public class TileConverter implements Converter {
-
-	private WorldConverter worldLoader;
-	
-	public TileConverter(){}
-	
-	public TileConverter(WorldConverter wc){
-		worldLoader = wc;
-	}
 	
 	@Override
 	public boolean canConvert(Class clazz) {
@@ -59,13 +51,16 @@ public class TileConverter implements Converter {
 		PassableTile pt = (PassableTile)object;
 		
 		writer.startNode("type");
-		writer.setValue(pt.asString());
+			writer.setValue(pt.asString());
 		writer.endNode();
 		writer.startNode("x");
-		writer.setValue(""+pt.X);
+			writer.setValue(""+pt.X);
 		writer.endNode();
 		writer.startNode("y");
-		writer.setValue(""+pt.Y);
+			writer.setValue(""+pt.Y);
+		writer.endNode();
+		writer.startNode("imageName");
+			writer.setValue(""+pt.getImageName());
 		writer.endNode();
 		writer.startNode("icon");
 		new IconConverter().marshal(pt.occupant(), writer, context);
@@ -75,15 +70,19 @@ public class TileConverter implements Converter {
 
 	private Object unmarshal_passable(HierarchicalStreamReader reader, UnmarshallingContext context) {
 		reader.moveDown();
-			String imageName = reader.getValue();
-		reader.moveUp();
-		reader.moveDown();
 			int x = Integer.parseInt(reader.getValue());
 		reader.moveUp();
 		reader.moveDown();
 			int y = Integer.parseInt(reader.getValue());
 		reader.moveUp();
-		WorldIcon icon = (WorldIcon)new IconConverter().unmarshal(reader, context);
+		reader.moveDown();
+			String imageName = reader.getValue();
+		reader.moveUp();
+		
+		reader.moveDown();
+			WorldIcon icon = (WorldIcon)new IconConverter().unmarshal(reader, context);
+		reader.moveUp();
+			
 		PassableTile tile = new PassableTile(imageName,x,y);
 		tile.setIcon(icon);
 		return tile;
@@ -104,15 +103,16 @@ public class TileConverter implements Converter {
 	
 	private Object unmarshal_impassable(HierarchicalStreamReader reader, UnmarshallingContext context) {
 		reader.moveDown();
-			String imageName = reader.getValue();
-		reader.moveUp();
-		reader.moveDown();
-		int x = Integer.parseInt(reader.getValue());
+			int x = Integer.parseInt(reader.getValue());
 		reader.moveUp();
 		reader.moveDown();
 			int y = Integer.parseInt(reader.getValue());
 		reader.moveUp();
-		return new ImpassableTile(imageName,x,y);
+		reader.moveDown();
+			String imageName = reader.getValue();
+		reader.moveUp();
+		if (imageName == null) return ImpassableTile.newVoidTile(x, y);
+		else return new ImpassableTile(imageName, x, y);
 	}
 	
 	private void marshal_city(Object object, HierarchicalStreamWriter writer, MarshallingContext context) {
@@ -143,12 +143,11 @@ public class TileConverter implements Converter {
 		CityTile ct = new CityTile(x,y);
 		
 		// if you're loading a world then check the specified city name exists.
-		if (this.worldLoader != null){
-			if (!worldLoader.doesCityExist(cityName)){
-				throw new RuntimeException("couldn't find the city belonging to a city tile, city name was " + cityName);
-			}
-			this.worldLoader.addCityTile(cityName,ct);
+		if (!WorldLoader.doesCityExist(cityName)){
+			throw new RuntimeException("couldn't find the city belonging to a city tile, city name was " + cityName);
 		}
+		
+		WorldLoader.addCityTile(ct, cityName);
 		return ct;
 		
 	}

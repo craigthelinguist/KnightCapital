@@ -35,16 +35,22 @@ import renderer.AnimationMap;
 import storage.converters.AnimationMapConverter;
 import storage.converters.BuffConverter;
 import storage.converters.HealConverter;
+import storage.converters.IconConverter;
 import storage.converters.ItemConverter;
 import storage.converters.KCImageConverter;
 import storage.converters.PlayerConverter;
 import storage.converters.UnitConverter;
 import storage.converters.UnitStatsConverter;
+import storage.converters.WorldConverter;
+import storage.converters.WorldLoader;
 import tools.Constants;
 import tools.ImageLoader;
 import tools.KCImage;
+import world.World;
+import world.icons.Party;
+import world.icons.WorldIcon;
 
-public class TestStorage {
+public class StorageTests {
 
 	public void test() throws Exception{
 
@@ -266,9 +272,29 @@ public class TestStorage {
 		assertTrue(talisman.getImageName().equals("amulet"));
 		assertTrue(talisman.getTarget().equals(Target.HERO));	
 	}
-	
-	public static void main(String[] args) throws Exception{
-		//test_item();
-	}
 
+	@Test
+	public void test_world() throws Exception{
+		
+		String filepath = Constants.XMLTESTS + "world.xml";
+		World world = WorldLoader.load(filepath);
+		WorldLoader.save(filepath, world);
+		File file = new File(filepath);
+		
+	}
+	
+	@Test
+	public void test_party() throws Exception{
+		
+		String filepath = Constants.XMLTESTS + "party.xml";
+		File file = new File(filepath);
+
+		XStream stream = new XStream();
+		stream.alias("icon", WorldIcon.class);
+		stream.registerConverter(new IconConverter());
+		
+		Party party = (Party) stream.fromXML(file);		
+		
+	}
+	
 }

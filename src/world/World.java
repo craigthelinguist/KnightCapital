@@ -386,4 +386,9 @@ public class World {
 
 		return visited;
 	}
+
+
+	public Player[] getPlayers() {
+		return this.players;
+	}
 }

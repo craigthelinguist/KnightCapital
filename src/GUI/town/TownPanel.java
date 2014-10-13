@@ -49,7 +49,7 @@ public class TownPanel extends JPanel{
 
 		panel_buttons.setOpaque(false);
 		//this.add(panel_exchange);
-		this.add(panel_buttons,BorderLayout.EAST);
+		this.add(panel_buttons,BorderLayout.WEST);
 
 		System.out.println(panel_exchange.getPreferredSize());
 		System.out.println(panel_exchange.getSize());

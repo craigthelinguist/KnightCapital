@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import player.Player;
 
@@ -22,38 +23,6 @@ import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 
 public class WorldConverter implements Converter{
 
-	
-
-	// keeps track of all players in the world that you are loading.
-	private Map<Integer,Player> players = new HashMap<Integer,Player>();
-	
-	// keeps track of city-names and the tiles that have been associatied
-	// with that city while reading.
-	private Map<String,List<CityTile>> cities = new HashMap<>();
-	
-	// keeps track of cities before they have been properly instantiated
-	// with their cityTiles.
-	private Map<String,City> incompleteCities = new HashMap<>();
-	
-	private Tile[][] tiles;
-	
-	private void reset(){
-		players = new HashMap<>();
-		cities = new HashMap<>();
-		incompleteCities = new HashMap<>();
-		tiles = null;
-	}
-	
-	protected boolean doesCityExist(String name){
-		return cities.containsKey(name);
-	}
-	
-
-	protected void addCityTile(String cityName, CityTile ct) {
-		this.cities.get(cityName).add(ct);
-	}
-	
-	
 	@Override
 	public boolean canConvert(Class clazz) {
 		return clazz == World.class;
@@ -62,15 +31,66 @@ public class WorldConverter implements Converter{
 	@Override
 	public void marshal(Object object, HierarchicalStreamWriter writer, MarshallingContext context) {
 		
+		// get data for writing
+		World world = (World)object;
+		Set<? extends City> cities = world.getCities();
+		Tile[][] tiles = world.getTiles();
+		Player[] players = world.getPlayers();
 		
-		// TODO Auto-generated method stub
+		// write players to file
+		writer.startNode("players");
+			for (Player player : players){
+				writer.startNode("player");
+					writer.startNode("slot");
+						writer.setValue("" + player.slot);
+					writer.endNode();
+					writer.startNode("name");
+						writer.setValue("" + player.name);
+					writer.endNode();
+				writer.endNode();
+			}
+		writer.endNode();
 		
+		// write cities
+		writer.startNode("cities");
+			for (City city : cities){
+				writer.startNode("city");
+					writer.startNode("name");
+						writer.setValue(city.getName());
+					writer.endNode();
+					writer.startNode("imageName");
+						writer.setValue(city.getName());
+					writer.endNode();
+					writer.startNode("player");
+						writer.setValue(""+city.getOwner().slot);
+					writer.endNode();
+				writer.endNode();	
+			}
+		writer.endNode();
+		
+		// write tiles
+		writer.startNode("tiles");
+			writer.startNode("width");
+				writer.setValue("" + world.NUM_TILES_ACROSS);
+			writer.endNode();
+			writer.startNode("height");
+				writer.setValue("" + world.NUM_TILES_DOWN);
+			writer.endNode();
+
+			TileConverter tc = new TileConverter();
+			for (int x = 0; x < world.NUM_TILES_ACROSS; x++){
+				for (int y = 0; y < world.NUM_TILES_DOWN; y++){
+					writer.startNode("tile");
+						tc.marshal(tiles[x][y], writer, context);
+					writer.endNode();
+				}
+			}
+		writer.endNode();
+			
 	}
 
 	@Override
 	public Object unmarshal(HierarchicalStreamReader reader, UnmarshallingContext context) {
-		
-		this.reset();
 		
 		// load players
 		PlayerConverter pc = new PlayerConverter();
@@ -83,11 +103,11 @@ public class WorldConverter implements Converter{
 				reader.moveUp();
 
 				// record player in data loader
-				DataLoader.insertPlayer(player.slot, player);
+				WorldLoader.insertPlayer(player.slot, player);
 				
 			}
 		reader.moveUp();
-		if (DataLoader.numberOfPlayers() == 0){
+		if (WorldLoader.numberOfPlayers() == 0){
 			throw new RuntimeException("Creating a world with zero players!");
 		}
 		
@@ -118,30 +138,28 @@ public class WorldConverter implements Converter{
 		
 		// load tile dimensions
 		reader.moveDown();
-			int width = Integer.parseInt(reader.getValue());
-		reader.moveUp();
-		reader.moveDown();
-			int height = Integer.parseInt(reader.getValue());
-		reader.moveUp();
-		this.tiles = new Tile[width][height];
 		
-		// load tiles
-		TileConverter tc = new TileConverter(this);
-		reader.moveDown();
-			while (reader.hasMoreChildren()){
+			reader.moveDown();
+				int width = Integer.parseInt(reader.getValue());
+			reader.moveUp();
+			reader.moveDown();
+				int height = Integer.parseInt(reader.getValue());
+			reader.moveUp();
+			WorldLoader.newTileArray(width,height);
+		
+			// load tiles
+			TileConverter tc = new TileConverter();
+				while (reader.hasMoreChildren()){
+					reader.moveDown();
+						Tile tile = (Tile)tc.unmarshal(reader, context);
+						WorldLoader.addTile(tile);
+						reader.moveUp();
+				}
+	
+		reader.moveUp();
 				
-				// load each tile
-				Tile tile = (Tile)tc.unmarshal(reader, context);
-				tiles[tile.X][tile.Y] = tile;
-				
-			}
-		reader.moveUp();
-		
-		
-		
 		// reconstruct the world
-		
-		return null;
+		return WorldLoader.constructWorld();
 		
 	}
 

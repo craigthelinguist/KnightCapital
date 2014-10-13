@@ -80,9 +80,6 @@ public class TemporaryLoader {
 				}
 			}
 
-			// add a Player
-			Player pl = new Player("Whiley Master",1);
-
 			// add a city
 			CityTile[][] cityTiles = new CityTile[City.WIDTH][City.WIDTH];
 
@@ -94,7 +91,7 @@ public class TemporaryLoader {
 				}
 			}
 
-			City city = new City("Porirua","basic", pl, cityTiles);
+			City city = new City("Porirua","basic", p, cityTiles);
 
 			// world data
 			Player[] players = new Player[]{ p };
