@@ -28,13 +28,89 @@ public class IconConverter implements Converter{
 	@Override
 	public void marshal(Object object, HierarchicalStreamWriter writer, MarshallingContext context) {
 		
-		writer.startNode("owner");
-			
+			if (object == null){
+				writer.setValue("null");
+				return;
+			}
 		
-		// TODO Auto-generated method stub
+			writer.startNode("type");
+				if (object instanceof Party) writer.setValue("Party");
+				else if (object instanceof ItemIcon) writer.setValue("ItemIcon");
+			writer.endNode();
+			if (object instanceof Party) marshalParty(object,writer,context);
+			else if (object instanceof ItemIcon) marshalItemIcon(object,writer,context);
+			else throw new RuntimeException("I'm martialling some icon that I do'nt recognise");
 		
 	}
-
+	
+	private void marshalItemIcon(Object object, HierarchicalStreamWriter writer, MarshallingContext context) {
+		
+		ItemIcon ii = (ItemIcon)object;
+		Item item = ii.item;
+		
+		writer.startNode("item");
+			new ItemConverter().marshal(item, writer, context);
+		writer.endNode();
+		
+	}
+	
+	public void marshalParty(Object object, HierarchicalStreamWriter writer, MarshallingContext context) {
+		
+		Party party = (Party)object;
+		Player owner = party.getOwner();
+		
+		writer.startNode("owner");
+			new PlayerConverter().marshal(owner, writer, context);
+		writer.endNode();
+		
+		Creature[][] creatures = party.getMembers();
+		
+		for (int row = 0; row < creatures.length; row++){
+			for (int col = 0; col < creatures[row].length; col++){
+				if (creatures[col][row] == null) continue;
+				
+				writer.startNode("member");
+					writer.startNode("row");
+						writer.setValue(""+row);
+					writer.endNode();
+					writer.startNode("col");
+						writer.setValue(""+col);
+					writer.endNode();
+				
+					Creature creature = creatures[col][row];
+					if (creature instanceof Unit){
+						writer.startNode("unit");
+						new UnitConverter().marshal(creature,writer, context);
+						writer.endNode();
+					}
+					else if (creature instanceof Hero){
+						writer.startNode("hero");
+						new HeroConverter().marshal(creature,writer, context);
+						writer.endNode();
+					}
+					else{
+						throw new RuntimeException("IconConverter trying to marshal something in a party that isn't hero or unit");
+					}
+				writer.endNode();
+			}
+		}
+		
+		Item[][] items = party.getInventory();
+		for (int row = 0; row < items.length; row++){
+			for (int col = 0; col < items[row].length; col++){
+				
+				if (items[col][row] == null) continue;
+				Item item = items[col][row];
+				
+				writer.startNode("item");
+					new ItemConverter().marshal(item,writer,context);
+				writer.endNode();
+				
+			}
+		}
+		
+	}
+		
 	@Override
 	public Object unmarshal(HierarchicalStreamReader reader, UnmarshallingContext context) {
 		
@@ -57,7 +133,7 @@ public class IconConverter implements Converter{
 		return new ItemIcon(item);
 	}
 	
-	private Party unmarshalParty(HierarchicalStreamReader reader, UnmarshallingContext context){
+	public Party unmarshalParty(HierarchicalStreamReader reader, UnmarshallingContext context){
 		
 		// read in owner of party
 		Player player = null;

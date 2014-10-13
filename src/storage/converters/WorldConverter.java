@@ -85,7 +85,6 @@ public class WorldConverter implements Converter{
 					writer.endNode();
 				}
 			}
-			
 		writer.endNode();
 			
 	}
