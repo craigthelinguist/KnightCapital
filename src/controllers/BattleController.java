@@ -26,7 +26,7 @@ import world.World;
 import world.icons.Party;
 import world.icons.WorldIcon;
 import world.tiles.Tile;
-import GUI.MainFrame;
+import GUI.world.MainFrame;
 
 /**
  * Battle

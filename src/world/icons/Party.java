@@ -344,5 +344,35 @@ public class Party extends WorldIcon implements Iterable<Creature>{
 		return members;
 	}
 
+	/**
+	 * Return true if this party has space.
+	 * @return: true if this party has space left, false if full.
+	 */
+	public boolean hasSpace() {
+		for (int i = 0; i < members.length; i++){
+			for (int j = 0; j < members[i].length; j++){
+				if (members[i][j] == null) return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Attempt to add the unit to the first empty slot in the party.
+	 * @param unit: unit to add
+	 * @return: true if successfully added, false otherwise.
+	 */
+	public boolean addUnit(Unit unit) {
+		for (int i = 0; i < members.length; i++){
+			for (int j = 0; j < members[i].length; j++){
+				if (members[i][j] == null){
+					members[i][j] = unit;
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	
 }

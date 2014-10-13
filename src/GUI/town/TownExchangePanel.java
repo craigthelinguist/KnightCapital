@@ -25,7 +25,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import GUI.CustomButton;
+import GUI.world.CustomButton;
 import tools.Constants;
 import tools.ImageLoader;
 import world.icons.Party;
@@ -50,6 +50,7 @@ public class TownExchangePanel extends JPanel implements MouseListener, MouseMot
 
 	// controller
 	private TownController controller;
+	private TownGui gui;
 
 	// static components
 	private JPanel visitorPanel;
@@ -69,8 +70,9 @@ public class TownExchangePanel extends JPanel implements MouseListener, MouseMot
 	private Point draggedPoint;
 	private JPanel draggedPanel;
 
-	protected TownExchangePanel(TownController controller){
+	protected TownExchangePanel(final TownController controller, final TownGui gui){
 		this.controller = controller;
+		this.gui = gui;
 
 		JPanel wrapperPanel = new JPanel(){
 
@@ -122,6 +124,16 @@ public class TownExchangePanel extends JPanel implements MouseListener, MouseMot
 		garrisonButtons.add(buttonTrain, BorderLayout.SOUTH);
 		garrisonButtons.add(trainUnits, BorderLayout.CENTER);
 
+		// set up button listeners
+		buttonTrain.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new TrainingDialog(controller,gui);
+			}
+		
+		});
+		
 		// parties
 		JPanel parties = new JPanel();
 		parties.setOpaque(false);

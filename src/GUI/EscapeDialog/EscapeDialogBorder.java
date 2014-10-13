@@ -7,8 +7,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 import tools.Constants;
-import GUI.Border;
-import GUI.GameDialog;
+import GUI.world.Border;
+import GUI.world.GameDialog;
 
 public class EscapeDialogBorder extends JPanel{
 

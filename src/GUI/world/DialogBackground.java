@@ -1,4 +1,4 @@
-package GUI;
+package GUI.world;
 
 import java.awt.AlphaComposite;
 import java.awt.BorderLayout;

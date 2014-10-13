@@ -50,9 +50,9 @@ import world.tiles.ImpassableTile;
 import world.tiles.PassableTile;
 import world.tiles.Tile;
 import world.towns.City;
-import GUI.GameDialog;
-import GUI.MainFrame;
 import GUI.party.PartyDialog;
+import GUI.world.GameDialog;
+import GUI.world.MainFrame;
 
 /**
  * A WorldController. This is the glue between the model (World) and the view (gui, renderer).

@@ -23,7 +23,7 @@ public class TownGui extends JFrame {
 		
 		
 		
-		panel = new TownPanel(townController);
+		panel = new TownPanel(townController,this);
 		
 		BoxLayout layout = new BoxLayout(this,BoxLayout.PAGE_AXIS);//this.add(panel);
 		this.add(panel);

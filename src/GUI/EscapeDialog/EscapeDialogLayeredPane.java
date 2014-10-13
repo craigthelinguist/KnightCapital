@@ -2,9 +2,9 @@ package GUI.EscapeDialog;
 
 import javax.swing.JLayeredPane;
 
-import GUI.DialogBackground;
-import GUI.DialogPanel;
-import GUI.GameDialog;
+import GUI.world.DialogBackground;
+import GUI.world.DialogPanel;
+import GUI.world.GameDialog;
 
 public class EscapeDialogLayeredPane extends JLayeredPane{
 

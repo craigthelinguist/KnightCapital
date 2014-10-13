@@ -6,8 +6,8 @@ import java.awt.event.KeyListener;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 
-import GUI.DialogLayeredPane;
-import GUI.MainFrame;
+import GUI.world.DialogLayeredPane;
+import GUI.world.MainFrame;
 
 public class EscapeDialog extends JDialog  {
 

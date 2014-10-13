@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 
 import tools.Constants;
 import tools.ImageLoader;
-import GUI.CustomButton;
+import GUI.world.CustomButton;
 import controllers.TownController;
 
 public class TownButtonPanel extends JPanel{

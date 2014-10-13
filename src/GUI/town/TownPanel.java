@@ -25,20 +25,22 @@ public class TownPanel extends JPanel{
 	// controller and top-level view
 	private TownController controller;
 	private BufferedImage splash;
-
+	private TownGui gui;
+	
 	// components
 
 
 	private TownExchangePanel panel_exchange;
 	private TownButtonPanel panel_buttons;
 
-	protected TownPanel(TownController townController) {
+	protected TownPanel(TownController townController, TownGui gui) {
 		this.controller = townController;
+		this.gui = gui;
 		this.splash = ImageLoader.load(FILEPATH + BACKDROP, ".jpg");
 		this.setPreferredSize(new Dimension(splash.getWidth(),splash.getHeight()));
 
 		Dimension childDimensions = new Dimension(getWidth()/3,getHeight()/3);
-		panel_exchange = new TownExchangePanel(townController);
+		panel_exchange = new TownExchangePanel(townController, gui);
 		panel_buttons = new TownButtonPanel(new Dimension(10,10),townController);
 
 		BorderLayout bl = new BorderLayout();

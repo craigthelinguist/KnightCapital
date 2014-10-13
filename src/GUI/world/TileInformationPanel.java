@@ -1,4 +1,4 @@
-package GUI;
+package GUI.world;
 
 import game.units.Stat;
 

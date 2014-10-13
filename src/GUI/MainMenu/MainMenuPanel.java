@@ -25,7 +25,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import player.Player;
-import GUI.CustomButton;
+import GUI.world.CustomButton;
 import storage.LoadXML;
 import storage.SaveXML;
 import storage.States;

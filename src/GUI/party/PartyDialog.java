@@ -25,8 +25,8 @@ import tools.Log;
 import world.icons.Party;
 import world.tiles.PassableTile;
 import world.tiles.Tile;
-import GUI.MainFrame;
 import GUI.reusable.PartyPanel;
+import GUI.world.MainFrame;
 
 /**
  * Party Dialog

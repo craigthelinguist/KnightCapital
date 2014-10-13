@@ -16,8 +16,8 @@ import javax.swing.JPanel;
 
 import tools.Constants;
 import tools.ImageLoader;
-import GUI.CustomButton;
-import GUI.GameDialog;
+import GUI.world.CustomButton;
+import GUI.world.GameDialog;
 
 public class EscapeDialogBackground extends JPanel implements ActionListener{
 	/* Initialize buttons */
