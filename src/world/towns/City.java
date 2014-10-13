@@ -54,10 +54,10 @@ public class City {
 
 	// image representing this city
 	private AnimationMap animations;
-	
+
 	private String name;
 	private String imageName;
-	
+
 
 	public City(String name, String imageName, Player player, CityTile[][] overworldTiles){
 
@@ -191,16 +191,16 @@ public class City {
 	public String getName() {
 		return this.name;
 	}
-	
+
 	public String getImageName(){
 		return this.imageName;
 	}
-		
+
 	/**
 	 * Gets the entrance tile for the city
-	 * @return CityTile 
+	 * @return CityTile
 	 */
-	public CityTile getEntryTile() {
+	public CityTile getEntryTile(){
 		return tiles[1][2];
 	}
 
@@ -208,7 +208,7 @@ public class City {
 	 * Test method to print out the items of the visitors.
 	 */
 	public void printVisitorsItems() {
-		for(int i = 0; i < visitors.getInventory().length; i++) {	
+		for(int i = 0; i < visitors.getInventory().length; i++) {
 			for(int j = 0; j < visitors.getInventory()[i].length; j++) {
 				if(visitors.getItem(i,j) != null) {
 					System.out.println(visitors.getItem(i,j).getName());
@@ -234,5 +234,5 @@ public class City {
 		boolean visitors = (this.visitors == null || this.visitors.isEmpty());
 		return garrison || visitors;
 	}
-	
+
 }

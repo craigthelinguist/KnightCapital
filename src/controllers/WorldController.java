@@ -78,7 +78,7 @@ public class WorldController{
 
 	// player this controller belongs to
 	private Player player;
-	
+
 	// current tile the player has clicked
 	private Point selected;
 	private Point hover; // point your mouse is over
@@ -198,30 +198,30 @@ public class WorldController{
 					this.lastMouse = System.currentTimeMillis();
 
 				}
-			
+
 			//selected party and right clicked a city
 			if (SwingUtilities.isRightMouseButton(me) && selectedTile.occupant() instanceof Party && clickedTile instanceof CityTile) {
-				
+
 				// get the city
 				CityTile c1 = (CityTile)clickedTile;
 				City city = c1.getCity();
-				
+
 				// check you clicked on entry tile
 				if (clickedTile == city.getEntryTile()){
 					Party party = (Party)selectedTile.occupant();
-					
+
 					// if city is empty, it's yours
 					if (city.isEmpty() && city.getOwner() != party.getOwner()){
 						city.setOwner(party.getOwner());
 					}
-					
+
 					// check you are allowed to move into the city
 					if (city.getOwner() == party.getOwner()){
-						
+
 						// add to city; remove from world map
 						city.setVisitors(party);
 						world.setIcon(null, selectedTile.X, selectedTile.Y);
-						
+
 					}
 					deselect();
 					gui.updateInfo(null);
@@ -229,8 +229,8 @@ public class WorldController{
 					this.lastMouse = System.currentTimeMillis();
 				}
 			}
-				
-			
+
+
 			// deselected the tile
 			else if (selected != null && SwingUtilities.isLeftMouseButton(me) && selectedTile == clickedTile){
 				System.out.println("deselect");
@@ -414,7 +414,7 @@ public class WorldController{
 		PassiveItem arrows = new PassiveItem("poisonarrow", "poisonarrow", "Poisonous arrows whose feathers were made from the hairs of Mizza. All archers in party gain +1 damage",buffsArrows, Target.PARTY);
 
 
-		
+
 		ItemIcon itemIcon = new ItemIcon(amulet);
 
 		ItemIcon itemIcon2 = new ItemIcon(weapon);
@@ -434,7 +434,7 @@ public class WorldController{
 		members[0][0] = hero;
 		Party party = new Party(hero, p, members);
 		party.refresh();*/
-		
+
 		/*load a party*/
 		//Hero h2 = new Hero("dark_knight","knight",p,new HeroStats(140,35,55,5,8,6,AttackType.MELEE));
 		Unit u3 = new Unit("knight","knight",p,new UnitStats(100,25,40,1,AttackType.MELEE));
@@ -484,7 +484,7 @@ public class WorldController{
 		w.getTile(0,0).setIcon(party);
 		new WorldController(w,p);
 	}
-	
+
 	public static void ewan_main(String[] args){
 		/*Loading items*/
 		Buff[] buffsAmulet = new Buff[]{ Buff.newTempBuff(Stat.DAMAGE,5) };
@@ -496,21 +496,21 @@ public class WorldController{
 		Buff[] buffsArrows= new Buff[]{ Buff.newTempBuff(Stat.DAMAGE,1) };
 		PassiveItem arrows = new PassiveItem("poisonarrow", "poisonarrow", "Poisonous arrows whose feathers were made from the hairs of Mizza. All archers in party gain +1 damage",buffsArrows, Target.PARTY);
 
-		
+
 		ItemIcon amuletChest = new ItemIcon(amulet);
 
 		ItemIcon weaponChest = new ItemIcon(weapon);
 
 		ItemIcon arrowsChest = new ItemIcon(arrows);
-		
-		
+
+
 		/*Loading the playey*/
 		Player p = new Player("John The Baptist",4);
 		World w = ewan_world();
 		HeroStats stats_hero = new HeroStats(60,10,80,0,6,8,AttackType.MELEE);
 		Hero hero = new Hero("ovelia","ovelia",p,stats_hero);
 		hero.setMovePts(10);
-		
+
 		/*load the units into the party*/
 		Unit u3 = new Unit("knight","knight",p,new UnitStats(100,25,40,1,AttackType.MELEE));
 		Unit u4 = new Unit("archer","archer",p,new UnitStats(60,15,70,0,AttackType.RANGED));
@@ -525,13 +525,13 @@ public class WorldController{
 		Party party = new Party(hero,p,members2);
 		party.refresh();
 		party.addItem(arrows);
-		
-		
-		
+
+
+
 		Tile[][] tiles = w.getTiles();
 		for (int y = 1; y < 10; y++){
 			for (int x = 1; x < 10; x++){
-				double rand = Math.floor((Math.random() * 20) + 1); 
+				double rand = Math.floor((Math.random() * 20) + 1);
 				if(rand > 18 && (!(w.getTile(x,y) instanceof ImpassableTile))) {
 					w.getTile(x,y).setIcon(weaponChest);
 				}
@@ -542,12 +542,12 @@ public class WorldController{
 					w.getTile(x,y).setIcon(arrowsChest);
 				}
 				else {
-					
+
 				}
 			}
 		}
-		
-		
+
+
 		/*Lay the items down on the tiles*/
 		w.getTile(0,0).setIcon(party);
 		/**w.getTile(1,1).setIcon(itemIcon); //place a floor item on this tile
@@ -556,7 +556,7 @@ public class WorldController{
 		w.getTile(1,4).setIcon(itemIcon);
 		w.getTile(1,6).setIcon(itemIcon2);
 		w.getTile(8,8).setIcon(itemIcon3);*/
-		
+
 		new WorldController(w,p);
 	}
 
@@ -599,22 +599,22 @@ public class WorldController{
 	public Player getPlayer() {
 		return this.player;
 	}
-	
-	
+
+
 	/**
 	 * This is a test for creating a world with custom tiles.
 	 * @return World
 	 */
 	public static World ewan_world() {
 		Player p = new Player("John The Baptist",4);
-			
-		
-		
+
+
+
 		// create tiles
 		Tile[][] tiles = new Tile[10][10];
 		for (int y = 0; y < 10; y++){
 			for (int x = 0; x < 10; x++){
-				double rand = Math.floor((Math.random() * 50) + 1); 
+				double rand = Math.floor((Math.random() * 50) + 1);
 				if(rand > 48) {
 					tiles[x][y] = new ImpassableTile("tree",8,9);
 				}
@@ -629,7 +629,7 @@ public class WorldController{
 				}
 			}
 		}
-		
+
 		// add a city
 		CityTile[][] cityTiles = new CityTile[City.WIDTH][City.WIDTH];
 
@@ -640,7 +640,7 @@ public class WorldController{
 				cityTiles[a][b] = ct;
 			}
 		}
-		
+
 		City city = new City("Porirua","basic", p, cityTiles);
 		Player[] players = new Player[]{ p };
 		Set<City> cities = new HashSet<>();

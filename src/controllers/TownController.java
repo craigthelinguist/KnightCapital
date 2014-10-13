@@ -37,7 +37,7 @@ public class TownController{
 	// state stuff
 	protected final City city;
 	protected Item[][] items;
-	
+
 	// gui stuff
 	private TownGui gui;
 	private boolean active = true;
@@ -52,8 +52,8 @@ public class TownController{
 	 */
 	public TownController(City city, WorldController controller){
 		this.city = city;
-		
-		
+
+
 		if (city.getGarrison() == null){
 			Party g = new Party(null,city.getOwner(),Party.newEmptyParty());
 			city.setGarrison(g);
@@ -88,31 +88,33 @@ public class TownController{
 			active = false;
 		}
 		else if(text.equals("exit city")) {
-			
+
 			// check there's a party to kick out
 			Party visitors = city.getVisitors();
 			if (visitors == null || visitors.isEmpty()) return;
-			
+
 			// find tile to put them on
 			Camera camera = worldController.getCamera();
 			World world = worldController.getWorld();
 			Tile tile = city.getEntryTile();
 			System.out.println("CITY ENTRY: ("+tile.X+","+tile.Y+")");
+
+			// get exit point
 			Point pt = tile.asPoint();
 			pt = new Point(pt.x,pt.y+1);
-			pt = Geometry.rotateByCamera(pt, camera, worldController.getVisualDimensions());
-			
+			pt = Geometry.rotateByCamera(pt, camera, world.dimensions);
+			System.out.println("CITY EXIT: ("+pt.x+","+pt.y+")");
+
 			// check tile exists, kick them onto world map
 			if (pt.x >= 0 && pt.y >= 0 && pt.x < world.NUM_TILES_ACROSS && pt.y < world.NUM_TILES_DOWN){
 				tile = world.getTile(pt);
 				if (!tile.passable(visitors)) return;
-				System.out.println("CITY EXIT: ("+tile.X+","+tile.Y+")");
 				tile.setIcon(visitors);
 				city.setVisitors(this.newEmptyParty());
 				visitors = city.getVisitors();
 				this.gui.repaint();
 			}
-			
+
 		}
 
 	}
@@ -120,7 +122,7 @@ public class TownController{
 	private Party newEmptyParty(){
 		return new Party(null, city.getOwner(), Party.newEmptyParty());
 	}
-	
+
 	protected void mouseMoved(Point from, Point to){
 
 	}
