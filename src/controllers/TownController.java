@@ -51,8 +51,6 @@ public class TownController{
 	 */
 	public TownController(City city, WorldController controller){
 		this.city = city;
-		Party visitors = new Party(controller.getParty().getHero(), city.getOwner(), controller.getParty().getMembers());
-		city.setVisitors(visitors);
 		
 		city.printVisitorsItems(); //test method
 
