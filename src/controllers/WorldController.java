@@ -46,6 +46,7 @@ import world.icons.ItemIcon;
 import world.icons.Party;
 import world.icons.WorldIcon;
 import world.tiles.CityTile;
+import world.tiles.ImpassableTile;
 import world.tiles.PassableTile;
 import world.tiles.Tile;
 import world.towns.City;
@@ -366,7 +367,7 @@ public class WorldController{
 
 
 	public static void main(String[] args) throws FileNotFoundException{
-		aaron_main(args);
+		ewan_main(args);
 	}
 
 	public static void aaron_main(String[] args){
@@ -381,6 +382,7 @@ public class WorldController{
 		PassiveItem arrows = new PassiveItem("poisonarrow", "poisonarrow", "Poisonous arrows whose feathers were made from the hairs of Mizza. All archers in party gain +1 damage",buffsArrows, Target.PARTY);
 
 
+		
 		ItemIcon itemIcon = new ItemIcon(amulet);
 
 		ItemIcon itemIcon2 = new ItemIcon(weapon);
@@ -415,11 +417,9 @@ public class WorldController{
 		members2[2][1] = u5;
 		Party party = new Party(hero,p,members2);
 		party.refresh();
-		
 
 		party.addItem(arrows);
 		w.getTile(0,0).setIcon(party);
-
 		w.getTile(1,1).setIcon(itemIcon); //place a floor item on this tile
 		w.getTile(1,2).setIcon(itemIcon2);
 		w.getTile(1,3).setIcon(itemIcon2);
@@ -452,6 +452,60 @@ public class WorldController{
 		w.getTile(0,0).setIcon(party);
 		new WorldController(w,p);
 	}
+	
+	public static void ewan_main(String[] args){
+		/*Loading items*/
+		Buff[] buffsAmulet = new Buff[]{ Buff.newTempBuff(Stat.DAMAGE,5) };
+		PassiveItem amulet = new PassiveItem("amulet", "amulet", "An amulet that grants sickening gains.\n +5 Damage",buffsAmulet,Target.HERO);
+
+		Buff[] buffsWeapon = new Buff[]{ Buff.newPermaBuff(Stat.DAMAGE,5), Buff.newTempBuff(Stat.ARMOUR, 10) };
+		PassiveItem weapon = new PassiveItem("weapon", "weapon", "A powerful weapon crafted by the mighty Mizza +5 Damage",buffsWeapon,Target.HERO);
+
+		Buff[] buffsArrows= new Buff[]{ Buff.newTempBuff(Stat.DAMAGE,1) };
+		PassiveItem arrows = new PassiveItem("poisonarrow", "poisonarrow", "Poisonous arrows whose feathers were made from the hairs of Mizza. All archers in party gain +1 damage",buffsArrows, Target.PARTY);
+
+		
+		ItemIcon itemIcon = new ItemIcon(amulet);
+
+		ItemIcon itemIcon2 = new ItemIcon(weapon);
+
+		ItemIcon itemIcon3 = new ItemIcon(arrows);
+		
+		
+		/*Loading the playey*/
+		Player p = new Player("John The Baptist",4);
+		World w = ewan_world();
+		HeroStats stats_hero = new HeroStats(60,10,80,0,6,8,AttackType.MELEE);
+		Hero hero = new Hero("ovelia","ovelia",p,stats_hero);
+		hero.setMovePts(10);
+		
+		/*load the units into the party*/
+		Unit u3 = new Unit("knight","knight",p,new UnitStats(100,25,40,1,AttackType.MELEE));
+		Unit u4 = new Unit("archer","archer",p,new UnitStats(60,15,70,0,AttackType.RANGED));
+		Unit u5 = new Unit("archer","archer",p,new UnitStats(60,15,70,0,AttackType.RANGED));
+		Unit u6 = new Unit("knight","knight",p,new UnitStats(100,25,40,1,AttackType.MELEE));
+		Creature[][] members2 = Party.newEmptyParty();
+		members2[0][0] = u3;
+		members2[1][0] = u6;
+		members2[2][0] = hero;
+		members2[0][1] = u4;
+		members2[2][1] = u5;
+		Party party = new Party(hero,p,members2);
+		party.refresh();
+		party.addItem(arrows);
+		
+		/*Lay the items down on the tiles*/
+		w.getTile(0,0).setIcon(party);
+		w.getTile(1,1).setIcon(itemIcon); //place a floor item on this tile
+		w.getTile(1,2).setIcon(itemIcon2);
+		w.getTile(1,3).setIcon(itemIcon2);
+		w.getTile(1,4).setIcon(itemIcon);
+		w.getTile(1,6).setIcon(itemIcon2);
+		w.getTile(8,8).setIcon(itemIcon3);
+		
+		new WorldController(w,p);
+	}
+
 
 
 
@@ -490,6 +544,53 @@ public class WorldController{
 	 */
 	public Player getPlayer() {
 		return this.player;
+	}
+	
+	
+	/**
+	 * This is a test for creating a world with custom tiles.
+	 * @return World
+	 */
+	public static World ewan_world() {
+		Player p = new Player("John The Baptist",4);
+
+		
+		// create tiles
+		Tile[][] tiles = new Tile[10][10];
+		for (int y = 0; y < 10; y++){
+			for (int x = 0; x < 10; x++){
+				double rand = Math.floor((Math.random() * 10) + 1); 
+				if(rand > 9) {
+					tiles[x][y] = new ImpassableTile("tree",8,9);
+				}
+				else if(rand > 8) {
+					tiles[x][y] = new ImpassableTile("bigTree",8,9);
+				}
+				else if(rand >7 ) {
+					tiles[x][y] = PassableTile.newDirtTile(x,y);
+				}
+				else {
+					tiles[x][y] = PassableTile.newGrassTile(x,y);
+				}
+			}
+		}
+		
+		// add a city
+		CityTile[][] cityTiles = new CityTile[City.WIDTH][City.WIDTH];
+
+		for (int i=4, a=0; i <= 6; i++, a++){
+			for (int j=4, b=0; j <= 6; j++, b++){
+				CityTile ct = new CityTile(i,j);
+				tiles[i][j] = ct;
+				cityTiles[a][b] = ct;
+			}
+		}
+		
+		City city = new City("Porirua","basic", p, cityTiles);
+		Player[] players = new Player[]{ p };
+		Set<City> cities = new HashSet<>();
+		cities.add(city);
+		return new World(tiles,players,cities);
 	}
 
 }
