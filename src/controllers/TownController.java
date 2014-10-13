@@ -51,7 +51,7 @@ public class TownController{
 	 */
 	public TownController(City city, WorldController controller){
 		this.city = city;
-
+		
 		if (city.getGarrison() == null){
 			Party g = new Party(null,city.getOwner(),Party.newEmptyParty());
 			city.setGarrison(g);
