@@ -198,7 +198,17 @@ public class WorldController{
 					this.lastMouse = System.currentTimeMillis();
 
 				}
-
+			
+			//selected party and right clicked a city
+			if (SwingUtilities.isRightMouseButton(me) && selectedTile.occupant() instanceof Party && clickedTile instanceof CityTile) {
+				//System.out.println("User selected a party and is trying to move the party into the city"); test
+				CityTile c1 = (CityTile)clickedTile; //cast the selected tile to CityTile
+				City city = c1.getCity(); //get the city from CityTile
+				if(!(selectedTile.occupant() instanceof Party)) return;
+				Party p =(Party)selectedTile.occupant();
+				city.setVisitors(p);
+			}
+			
 			// deselected the tile
 			else if (selected != null && SwingUtilities.isLeftMouseButton(me) && selectedTile == clickedTile){
 				System.out.println("deselect");
