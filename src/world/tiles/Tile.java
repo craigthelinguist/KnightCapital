@@ -2,6 +2,7 @@ package world.tiles;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.awt.image.DataBufferByte;
@@ -110,6 +111,14 @@ public abstract class Tile {
 
 	public String getImageName(){
 		return this.imageName;
+	}
+
+	/**
+	 * Return this tile as a cartesian point.
+	 * @return: a point
+	 */
+	public Point asPoint() {
+		return new Point(X,Y);
 	}
 	
 }

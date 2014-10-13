@@ -20,11 +20,14 @@ import javax.swing.JButton;
 
 import GUI.town.TownGui;
 import player.Player;
+import renderer.Camera;
 import storage.TemporaryLoader;
+import tools.Geometry;
 import tools.Log;
 import world.World;
 import world.icons.Party;
 import world.tiles.CityTile;
+import world.tiles.Tile;
 import world.towns.City;
 
 
@@ -89,10 +92,25 @@ public class TownController{
 			active = false;
 		}
 		else if(text.equals("exit city")) {
-			city.setVisitors(null);
-			gui.dispose();
-			worldController.endTownView();
-			active = false;
+			
+			// check for space
+			Camera camera = worldController.getCamera();
+			World world = worldController.getWorld();
+			Tile tile = city.getEntryTile();
+			System.out.println("CITY ENTRY: ("+tile.X+","+tile.Y+")");
+			Point pt = tile.asPoint();
+			pt = new Point(pt.x,pt.y+1);
+			pt = Geometry.rotateByCamera(pt, camera, worldController.getVisualDimensions());
+			if (pt.x >= 0 && pt.y >= 0 && pt.x < world.NUM_TILES_ACROSS && pt.y < world.NUM_TILES_DOWN){
+				tile = world.getTile(pt);
+				System.out.println("CITY EXIT: ("+tile.X+","+tile.Y+")");
+				tile.setIcon(visitors);
+				city.setVisitors(null);
+				gui.dispose();
+				worldController.endTownView();
+				active = false;
+			}
+			
 		}
 
 	}

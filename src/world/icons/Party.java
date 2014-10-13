@@ -198,6 +198,7 @@ public class Party extends WorldIcon implements Iterable<Creature>{
 	 */
 	@Override
 	public BufferedImage getImage() {
+		if (hero == null) return null;
 		return hero.getImage();
 	}
 
@@ -372,6 +373,14 @@ public class Party extends WorldIcon implements Iterable<Creature>{
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * Return true if this party is empty.
+	 * @return
+	 */
+	public boolean isEmpty() {
+		return !hasSpace();
 	}
 
 	

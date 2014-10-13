@@ -224,5 +224,15 @@ public class City {
 	public void setOwner(Player owner) {
 		this.owner = owner;
 	}
+
+	/**
+	 * Return true if there's nobody in this city.
+	 * @return: true if no-one in city, false if there are visitors or garrison in city.
+	 */
+	public boolean isEmpty() {
+		boolean garrison = (this.garrison == null || this.garrison.isEmpty());
+		boolean visitors = (this.visitors == null || this.visitors.isEmpty());
+		return garrison || visitors;
+	}
 	
 }

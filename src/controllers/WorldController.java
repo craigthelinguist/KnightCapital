@@ -202,30 +202,34 @@ public class WorldController{
 			//selected party and right clicked a city
 			if (SwingUtilities.isRightMouseButton(me) && selectedTile.occupant() instanceof Party && clickedTile instanceof CityTile) {
 				
-				System.out.println("User selected a party and is trying to move the party into the city");
-				CityTile c1 = (CityTile)clickedTile; //cast the selected tile to CityTile
-				City city = c1.getCity(); //get the city from CityTile
+				// get the city
+				CityTile c1 = (CityTile)clickedTile;
+				City city = c1.getCity();
 				
-				/*Check the clicked tile to make sure it's the entrance tile before moving party inside*/
-				if(clickedTile == city.getEntryTile()) {
-					/*This if statement seems useless. Need to verify this code/delete later (maybe use whiley later on?)
-					Cast selectedTile to party*/
-					if(!(selectedTile.occupant() instanceof Party)) return;
-					Party p =(Party)selectedTile.occupant();
+				// check you clicked on entry tile
+				if (clickedTile == city.getEntryTile()){
+					Party party = (Party)selectedTile.occupant();
 					
-					/*If city is empty/no owner, the party moving there now owns the city*/
-					if(city.getOwner() == null) {
-						city.setOwner(p.getOwner());
+					// if city is empty, it's yours
+					if (city.isEmpty() && city.getOwner() != party.getOwner()){
+						city.setOwner(party.getOwner());
 					}
-
-					//checks that the owner of city is the same as the owner of the party being moved there
-					if(city.getOwner() == p.getOwner()) {
-						new GameDialog(gui, "Your party have entered the    city!");
-						city.setVisitors(p);
-						System.out.println("yep");
+					
+					// check you are allowed to move into the city
+					if (city.getOwner() == party.getOwner()){
+						
+						// add to city; remove from world map
+						city.setVisitors(party);
+						world.setIcon(null, selectedTile.X, selectedTile.Y);
+						
 					}
+					deselect();
+					gui.updateInfo(null);
+					gui.redraw();
+					this.lastMouse = System.currentTimeMillis();
 				}
 			}
+				
 			
 			// deselected the tile
 			else if (selected != null && SwingUtilities.isLeftMouseButton(me) && selectedTile == clickedTile){
