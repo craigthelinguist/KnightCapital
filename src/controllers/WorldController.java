@@ -258,7 +258,7 @@ public class WorldController{
 				}
 				else if (clickedTile != null) {
 					if(clickedTile.occupant() instanceof ItemIcon) {
-						new GameDialog(gui,"Inventory full! You cannot pick   up more items!");
+						new GameDialog(gui,"Inventory full! You cannot pick up more items!");
 					}
 				}
 			}
