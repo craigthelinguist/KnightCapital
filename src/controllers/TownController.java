@@ -52,7 +52,6 @@ public class TownController{
 	public TownController(City city, WorldController controller){
 		this.city = city;
 		
-		city.printVisitorsItems(); //test method
 
 		if (city.getGarrison() == null){
 			Party g = new Party(null,city.getOwner(),Party.newEmptyParty());
