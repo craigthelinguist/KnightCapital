@@ -7,7 +7,11 @@ import org.junit.Test;
 import player.Player;
 import game.units.Stat;
 import game.units.Unit;
-
+/**
+ *
+ * @author Neal Hartley
+ *
+ */
 public class CreatureTests {
 
 	Unit unit;
