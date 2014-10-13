@@ -1,5 +1,6 @@
 package GUI;
 
+import game.units.Creature;
 import game.units.Stat;
 
 import java.awt.Color;
@@ -232,7 +233,22 @@ public class TileInformationPanel extends JPanel{
 				c.gridy = 5;
 				this.add(partyButton,c);
 
-				partySize = new JLabel("Party Health:");
+				/*Get the members of the party and check their health. Get average and dispaly in label*/
+				Creature[][] members = party.getMembers();
+				double sum = 0;
+				int count = 0;
+				for(int i = 0; i < members.length; i++) {
+					for(int j= 0; j < members[i].length; j++) {
+						if(members[i][j] != null) {
+							sum += party.getMember(i,j).healthiness();
+							count++;
+						}
+					}
+				}
+				int average = (int) ((sum/count) * 100);
+				
+				
+				partySize = new JLabel("<html>Party Health: <font color = 'green'>"+average+"%</font></html>");
 				partySize.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 15));
 				partySize.setForeground(new Color(225,179,55));
 				c.insets = new Insets(1,1,8,0);
