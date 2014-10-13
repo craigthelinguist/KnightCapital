@@ -9,7 +9,17 @@
       <name>Spawn of Gaben</name>
     </player>
   </players>
-  <cities/>
+
+	<cities>
+	
+		<city>
+			<name>Porirua</name>
+			<imageName>basic</imageName>
+			<owner>1</owner>
+		</city>
+
+	</cities>
+
   <tiles>
     <width>1</width>
     <height>1</height>

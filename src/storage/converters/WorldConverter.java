@@ -163,15 +163,4 @@ public class WorldConverter implements Converter{
 		
 	}
 
-	public static void main(String[] args){
-		
-		String filepath = Constants.DATA_WORLDS + "world.xml";
-		File file = new File(filepath);
-		XStream stream = new XStream();
-		stream.alias("world", World.class);
-		stream.registerConverter(new WorldConverter());
-		stream.fromXML(file);
-		
-	}
-
 }
