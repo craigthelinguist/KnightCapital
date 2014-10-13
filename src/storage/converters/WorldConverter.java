@@ -139,25 +139,26 @@ public class WorldConverter implements Converter{
 		
 		// load tile dimensions
 		reader.moveDown();
-			int width = Integer.parseInt(reader.getValue());
-		reader.moveUp();
-		reader.moveDown();
-			int height = Integer.parseInt(reader.getValue());
-		reader.moveUp();
-		WorldLoader.newTileArray(width,height);
 		
-		// load tiles
-		TileConverter tc = new TileConverter();
-		reader.moveDown();
-			while (reader.hasMoreChildren()){
-				
-				// load each tile
-				Tile tile = (Tile)tc.unmarshal(reader, context);
-				WorldLoader.addTile(tile);
-				
-			}
-		reader.moveUp();
+			reader.moveDown();
+				int width = Integer.parseInt(reader.getValue());
+			reader.moveUp();
+			reader.moveDown();
+				int height = Integer.parseInt(reader.getValue());
+			reader.moveUp();
+			WorldLoader.newTileArray(width,height);
 		
+			// load tiles
+			TileConverter tc = new TileConverter();
+				while (reader.hasMoreChildren()){
+					reader.moveDown();
+						Tile tile = (Tile)tc.unmarshal(reader, context);
+						WorldLoader.addTile(tile);
+						reader.moveUp();
+				}
+	
+		reader.moveUp();
+				
 		// reconstruct the world
 		return WorldLoader.constructWorld();
 		

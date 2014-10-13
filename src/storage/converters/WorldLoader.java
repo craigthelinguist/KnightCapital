@@ -16,6 +16,7 @@ import java.util.Set;
 import com.thoughtworks.xstream.XStream;
 
 import player.Player;
+import tools.Constants;
 import world.World;
 import world.tiles.CityTile;
 import world.tiles.Tile;
@@ -31,6 +32,11 @@ public class WorldLoader {
 	private static Tile[][] tiles;
 	
 
+	public static void main(String[] args) throws IOException{
+		String filepath = Constants.DATA_WORLDS + "world.xml";
+		World world = load(filepath);
+	}
+	
 	/**
 	 * Load the world described in the specified file.
 	 * @param filepath: location of the file containing the world you want to read.
@@ -83,7 +89,7 @@ public class WorldLoader {
 		for (Map.Entry<Integer,Player> pair : players.entrySet()){
 			int slot = pair.getKey();
 			Player player = pair.getValue();
-			playerArray[slot] = player;
+			playerArray[slot-1] = player;
 		}
 		
 		// create and return the world

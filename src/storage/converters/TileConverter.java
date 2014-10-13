@@ -51,13 +51,16 @@ public class TileConverter implements Converter {
 		PassableTile pt = (PassableTile)object;
 		
 		writer.startNode("type");
-		writer.setValue(pt.asString());
+			writer.setValue(pt.asString());
 		writer.endNode();
 		writer.startNode("x");
-		writer.setValue(""+pt.X);
+			writer.setValue(""+pt.X);
 		writer.endNode();
 		writer.startNode("y");
-		writer.setValue(""+pt.Y);
+			writer.setValue(""+pt.Y);
+		writer.endNode();
+		writer.startNode("imageName");
+			writer.setValue(""+pt.getImageName());
 		writer.endNode();
 		writer.startNode("icon");
 		new IconConverter().marshal(pt.occupant(), writer, context);
@@ -67,15 +70,19 @@ public class TileConverter implements Converter {
 
 	private Object unmarshal_passable(HierarchicalStreamReader reader, UnmarshallingContext context) {
 		reader.moveDown();
-			String imageName = reader.getValue();
-		reader.moveUp();
-		reader.moveDown();
 			int x = Integer.parseInt(reader.getValue());
 		reader.moveUp();
 		reader.moveDown();
 			int y = Integer.parseInt(reader.getValue());
 		reader.moveUp();
-		WorldIcon icon = (WorldIcon)new IconConverter().unmarshal(reader, context);
+		reader.moveDown();
+			String imageName = reader.getValue();
+		reader.moveUp();
+		
+		reader.moveDown();
+			WorldIcon icon = (WorldIcon)new IconConverter().unmarshal(reader, context);
+		reader.moveUp();
+			
 		PassableTile tile = new PassableTile(imageName,x,y);
 		tile.setIcon(icon);
 		return tile;
@@ -96,15 +103,16 @@ public class TileConverter implements Converter {
 	
 	private Object unmarshal_impassable(HierarchicalStreamReader reader, UnmarshallingContext context) {
 		reader.moveDown();
-			String imageName = reader.getValue();
-		reader.moveUp();
-		reader.moveDown();
-		int x = Integer.parseInt(reader.getValue());
+			int x = Integer.parseInt(reader.getValue());
 		reader.moveUp();
 		reader.moveDown();
 			int y = Integer.parseInt(reader.getValue());
 		reader.moveUp();
-		return new ImpassableTile(imageName,x,y);
+		reader.moveDown();
+			String imageName = reader.getValue();
+		reader.moveUp();
+		if (imageName == null) return ImpassableTile.newVoidTile(x, y);
+		else return new ImpassableTile(imageName, x, y);
 	}
 	
 	private void marshal_city(Object object, HierarchicalStreamWriter writer, MarshallingContext context) {

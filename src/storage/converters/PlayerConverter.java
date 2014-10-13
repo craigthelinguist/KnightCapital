@@ -50,15 +50,18 @@ public class PlayerConverter implements Converter {
 		Player player;
 		reader.moveDown();
 			int slot = Integer.parseInt(reader.getValue());
-			if (!reader.hasMoreChildren()){
-				player = WorldLoader.getPlayer(slot);
-				if (player == null) throw new RuntimeException("PLayer hasn't been defined! Player: " + slot);
-			}
-			else{
+		reader.moveUp();
+		if (!reader.hasMoreChildren()){
+			player = WorldLoader.getPlayer(slot);
+			if (player == null) throw new RuntimeException("PLayer hasn't been defined! Player: " + slot);
+		}
+		else{
+			reader.moveDown();
 				String name = reader.getValue();
 				player = new Player(name,slot);
-			}
-		reader.moveUp();
+			reader.moveUp();
+			WorldLoader.insertPlayer(player.slot, player);
+		}
 		return player;
 	}
 
