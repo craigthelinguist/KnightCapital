@@ -367,7 +367,7 @@ public class WorldController{
 
 
 	public static void main(String[] args) throws FileNotFoundException{
-		ewan_main(args);
+		aaron_main(args);
 	}
 
 	public static void aaron_main(String[] args){
