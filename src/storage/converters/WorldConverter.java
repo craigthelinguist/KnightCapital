@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import player.Player;
 
@@ -30,9 +31,63 @@ public class WorldConverter implements Converter{
 	@Override
 	public void marshal(Object object, HierarchicalStreamWriter writer, MarshallingContext context) {
 		
+		// get data for writing
+		World world = (World)object;
+		Set<? extends City> cities = world.getCities();
+		Tile[][] tiles = world.getTiles();
+		Player[] players = world.getPlayers();
 		
-		// TODO Auto-generated method stub
+		// write players to file
+		writer.startNode("players");
+			for (Player player : players){
+				writer.startNode("player");
+					writer.startNode("slot");
+						writer.setValue("" + player.slot);
+					writer.endNode();
+					writer.startNode("name");
+						writer.setValue("" + player.name);
+					writer.endNode();
+				writer.endNode();
+			}
+		writer.endNode();
 		
+		// write cities
+		writer.startNode("cities");
+			for (City city : cities){
+				writer.startNode("city");
+					writer.startNode("name");
+						writer.setValue(city.getName());
+					writer.endNode();
+					writer.startNode("imageName");
+						writer.setValue(city.getName());
+					writer.endNode();
+					writer.startNode("player");
+						writer.setValue(""+city.getOwner().slot);
+					writer.endNode();
+				writer.endNode();	
+			}
+		writer.endNode();
+		
+		// write tiles
+		writer.startNode("tiles");
+			writer.startNode("width");
+				writer.setValue("" + world.NUM_TILES_ACROSS);
+			writer.endNode();
+			writer.startNode("height");
+				writer.setValue("" + world.NUM_TILES_DOWN);
+			writer.endNode();
+
+			TileConverter tc = new TileConverter();
+			for (int x = 0; x < world.NUM_TILES_ACROSS; x++){
+				for (int y = 0; y < world.NUM_TILES_DOWN; y++){
+					writer.startNode("tile");
+						tc.marshal(tiles[x][y], writer, context);
+					writer.endNode();
+				}
+			}
+			
+		writer.endNode();
+			
 	}
 
 	@Override
