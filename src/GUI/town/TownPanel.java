@@ -39,7 +39,7 @@ public class TownPanel extends JPanel{
 
 		Dimension childDimensions = new Dimension(getWidth()/3,getHeight()/3);
 		panel_exchange = new TownExchangePanel(townController);
-		//panel_buttons = new TownButtonPanel(childDimensions,townController);
+		panel_buttons = new TownButtonPanel(new Dimension(10,10),townController);
 
 		BorderLayout bl = new BorderLayout();
 		this.setLayout(bl);
@@ -47,8 +47,9 @@ public class TownPanel extends JPanel{
 
 		//this.setLayout(new FlowLayout(FlowLayout.LEFT));
 
+		panel_buttons.setOpaque(false);
 		//this.add(panel_exchange);
-		//this.add(panel_buttons);
+		this.add(panel_buttons,BorderLayout.EAST);
 
 		System.out.println(panel_exchange.getPreferredSize());
 		System.out.println(panel_exchange.getSize());

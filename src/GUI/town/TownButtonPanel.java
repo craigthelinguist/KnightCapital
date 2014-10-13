@@ -1,5 +1,6 @@
 package GUI.town;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,7 +18,6 @@ public class TownButtonPanel extends JPanel{
 	protected TownButtonPanel(Dimension dimensions, TownController townController) {
 		this.controller = townController;
 		this.setPreferredSize(dimensions);
-		
 		button_leave = new JButton("Leave");
 		button_leave.setPreferredSize(new Dimension(80,50));
 		button_leave.addActionListener(new ActionListener(){
@@ -29,7 +29,7 @@ public class TownButtonPanel extends JPanel{
 		
 		});
 		this.add(button_leave);
-		this.setPreferredSize(new Dimension(400,200));
+		this.setPreferredSize(new Dimension(100,100));
 		
 	}
 
