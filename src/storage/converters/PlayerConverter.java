@@ -51,7 +51,7 @@ public class PlayerConverter implements Converter {
 		reader.moveDown();
 			int slot = Integer.parseInt(reader.getValue());
 			if (!reader.hasMoreChildren()){
-				player = DataLoader.getPlayer(slot);
+				player = WorldLoader.getPlayer(slot);
 				if (player == null) throw new RuntimeException("PLayer hasn't been defined! Player: " + slot);
 			}
 			else{

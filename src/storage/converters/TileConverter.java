@@ -17,14 +17,6 @@ import com.thoughtworks.xstream.io.HierarchicalStreamReader;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 
 public class TileConverter implements Converter {
-
-	private WorldConverter worldLoader;
-	
-	public TileConverter(){}
-	
-	public TileConverter(WorldConverter wc){
-		worldLoader = wc;
-	}
 	
 	@Override
 	public boolean canConvert(Class clazz) {
@@ -143,12 +135,11 @@ public class TileConverter implements Converter {
 		CityTile ct = new CityTile(x,y);
 		
 		// if you're loading a world then check the specified city name exists.
-		if (this.worldLoader != null){
-			if (!worldLoader.doesCityExist(cityName)){
-				throw new RuntimeException("couldn't find the city belonging to a city tile, city name was " + cityName);
-			}
-			this.worldLoader.addCityTile(cityName,ct);
+		if (!WorldLoader.doesCityExist(cityName)){
+			throw new RuntimeException("couldn't find the city belonging to a city tile, city name was " + cityName);
 		}
+		
+		WorldLoader.addCityTile(ct, cityName);
 		return ct;
 		
 	}

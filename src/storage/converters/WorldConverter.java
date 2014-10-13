@@ -22,38 +22,6 @@ import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 
 public class WorldConverter implements Converter{
 
-	
-
-	// keeps track of all players in the world that you are loading.
-	private Map<Integer,Player> players = new HashMap<Integer,Player>();
-	
-	// keeps track of city-names and the tiles that have been associatied
-	// with that city while reading.
-	private Map<String,List<CityTile>> cities = new HashMap<>();
-	
-	// keeps track of cities before they have been properly instantiated
-	// with their cityTiles.
-	private Map<String,City> incompleteCities = new HashMap<>();
-	
-	private Tile[][] tiles;
-	
-	private void reset(){
-		players = new HashMap<>();
-		cities = new HashMap<>();
-		incompleteCities = new HashMap<>();
-		tiles = null;
-	}
-	
-	protected boolean doesCityExist(String name){
-		return cities.containsKey(name);
-	}
-	
-
-	protected void addCityTile(String cityName, CityTile ct) {
-		this.cities.get(cityName).add(ct);
-	}
-	
-	
 	@Override
 	public boolean canConvert(Class clazz) {
 		return clazz == World.class;
@@ -70,8 +38,6 @@ public class WorldConverter implements Converter{
 	@Override
 	public Object unmarshal(HierarchicalStreamReader reader, UnmarshallingContext context) {
 		
-		this.reset();
-		
 		// load players
 		PlayerConverter pc = new PlayerConverter();
 		reader.moveDown();
@@ -83,11 +49,11 @@ public class WorldConverter implements Converter{
 				reader.moveUp();
 
 				// record player in data loader
-				DataLoader.insertPlayer(player.slot, player);
+				WorldLoader.insertPlayer(player.slot, player);
 				
 			}
 		reader.moveUp();
-		if (DataLoader.numberOfPlayers() == 0){
+		if (WorldLoader.numberOfPlayers() == 0){
 			throw new RuntimeException("Creating a world with zero players!");
 		}
 		
@@ -123,23 +89,23 @@ public class WorldConverter implements Converter{
 		reader.moveDown();
 			int height = Integer.parseInt(reader.getValue());
 		reader.moveUp();
-		this.tiles = new Tile[width][height];
+		WorldLoader.newTileArray(width,height);
 		
 		// load tiles
-		TileConverter tc = new TileConverter(this);
+		TileConverter tc = new TileConverter();
 		reader.moveDown();
 			while (reader.hasMoreChildren()){
 				
 				// load each tile
 				Tile tile = (Tile)tc.unmarshal(reader, context);
-				tiles[tile.X][tile.Y] = tile;
+				WorldLoader.addTile(tile);
 				
 			}
 		reader.moveUp();
 		
-		
-		
 		// reconstruct the world
+		
+		
 		
 		return null;
 		
