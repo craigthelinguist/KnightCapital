@@ -46,8 +46,10 @@ import world.icons.ItemIcon;
 import world.icons.Party;
 import world.icons.WorldIcon;
 import world.tiles.CityTile;
+import world.tiles.PassableTile;
 import world.tiles.Tile;
 import world.towns.City;
+import GUI.GameDialog;
 import GUI.MainFrame;
 import GUI.party.PartyDialog;
 
@@ -224,6 +226,11 @@ public class WorldController{
 					gui.updateInfo(clickedTile);
 					gui.redraw();
 					this.lastMouse = System.currentTimeMillis();
+				}
+				else if (clickedTile != null) {
+					if(clickedTile.occupant() instanceof ItemIcon) {
+						new GameDialog(gui,"Inventory full! You cannot pick   up more items!");
+					}
 				}
 			}
 

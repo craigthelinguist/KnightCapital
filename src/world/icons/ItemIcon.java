@@ -21,7 +21,7 @@ public class ItemIcon extends WorldIcon {
 		this.item = item;
 		this.image = ImageLoader.load(Constants.ITEMS+"itemChest");
 	}
-
+	
 	public boolean pickup(Party p){
 		return p.addItem(item);
 	}
