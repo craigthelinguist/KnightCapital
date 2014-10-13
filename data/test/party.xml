@@ -1,0 +1,18 @@
+<icon>
+		<type>Party</type>
+		<owner>
+			<slot>1</slot>
+			<name>Whatever</name>		
+		</owner>
+		<member>
+			<row>1</row>
+			<col>0</col>
+			<unit>archer.xml</unit>
+		</member>
+		<member>
+			<row>0</row>
+			<col>1</col>
+			<hero>gaben.xml</hero>
+		</member>
+		<item>liontalisman.xml</item>
+</icon>
