@@ -201,7 +201,7 @@ public class WorldController{
 			
 			//selected party and right clicked a city
 			if (SwingUtilities.isRightMouseButton(me) && selectedTile.occupant() instanceof Party && clickedTile instanceof CityTile) {
-				//System.out.println("User selected a party and is trying to move the party into the city"); test
+				System.out.println("User selected a party and is trying to move the party into the city");
 				CityTile c1 = (CityTile)clickedTile; //cast the selected tile to CityTile
 				City city = c1.getCity(); //get the city from CityTile
 				
@@ -218,6 +218,7 @@ public class WorldController{
 				//checks that the owner of city is the same as the owner of the party being moved there
 				if(city.getOwner() == p.getOwner()) {
 					city.setVisitors(p);
+					System.out.println("yep");
 				}
 			}
 			
