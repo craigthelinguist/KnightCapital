@@ -297,7 +297,7 @@ public class Party extends WorldIcon implements Iterable<Creature>{
 
 		int row = 0;
 		int col = 0;
-		
+
 		@Override
 		public boolean hasNext() {
 			for (int y = row ; y < Party.PARTY_ROWS; y++){
@@ -333,7 +333,7 @@ public class Party extends WorldIcon implements Iterable<Creature>{
 		public void remove() {
 			throw new UnsupportedOperationException();
 		}
-		
+
 	}
 
 	/**
@@ -385,5 +385,22 @@ public class Party extends WorldIcon implements Iterable<Creature>{
 		return true;
 	}
 
-	
+	/**
+	 * Return the healthiness of this party as a %.
+	 * @return an int
+	 */
+	public int healthiness() {
+
+		double sum = 0;
+		int count = 0;
+
+		for (Creature c : this){
+			sum += c.healthiness();
+			count++;
+		}
+
+		return (int) ((sum/count)*100);
+	}
+
+
 }
