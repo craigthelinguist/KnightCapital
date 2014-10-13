@@ -40,11 +40,13 @@ import storage.converters.KCImageConverter;
 import storage.converters.PlayerConverter;
 import storage.converters.UnitConverter;
 import storage.converters.UnitStatsConverter;
+import storage.converters.WorldConverter;
 import tools.Constants;
 import tools.ImageLoader;
 import tools.KCImage;
+import world.World;
 
-public class TestStorage {
+public class StorageTests {
 
 	public void test() throws Exception{
 
@@ -266,9 +268,25 @@ public class TestStorage {
 		assertTrue(talisman.getImageName().equals("amulet"));
 		assertTrue(talisman.getTarget().equals(Target.HERO));	
 	}
-	
-	public static void main(String[] args) throws Exception{
-		//test_item();
-	}
 
+	@Test
+	public void test_world() throws Exception{
+		
+		String filepath = Constants.XMLTESTS + "world.xml";
+		File file = new File(filepath);
+		
+		XStream stream = new XStream();
+		stream.alias("world", World.class);
+		stream.registerConverter(new WorldConverter());
+		
+		World world = (World) stream.fromXML(file);
+		PrintStream ps = new PrintStream(file);
+		String xml = stream.toXML(world);
+		ps.print(xml);
+		ps.close();
+		
+		
+		
+	}
+	
 }

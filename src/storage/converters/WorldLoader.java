@@ -31,12 +31,6 @@ public class WorldLoader {
 	private static Map<Integer,Player> players = new HashMap<>();
 	private static Tile[][] tiles;
 	
-
-	public static void main(String[] args) throws IOException{
-		String filepath = Constants.DATA_WORLDS + "world.xml";
-		World world = load(filepath);
-	}
-	
 	/**
 	 * Load the world described in the specified file.
 	 * @param filepath: location of the file containing the world you want to read.
