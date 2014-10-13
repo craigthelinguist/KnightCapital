@@ -87,6 +87,12 @@ public class TownController{
 			worldController.endTownView();
 			active = false;
 		}
+		else if(text.equals("exit city")) {
+			city.setVisitors(null);
+			gui.dispose();
+			worldController.endTownView();
+			active = false;
+		}
 
 	}
 

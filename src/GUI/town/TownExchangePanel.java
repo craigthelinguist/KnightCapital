@@ -340,7 +340,7 @@ public class TownExchangePanel extends JPanel implements MouseListener, MouseMot
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == buttonLeave) {
-			controller.buttonPressed("leave");
+			controller.buttonPressed("exit city");
 		}
 	}
 
