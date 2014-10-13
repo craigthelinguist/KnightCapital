@@ -83,6 +83,9 @@ public class World {
 				if (wi instanceof Party){
 					Party party = (Party)wi;
 					if (party.ownedBy(players[currentPlayer])){
+						if (party.getHero() == null){
+							System.out.println("break");
+						}
 						party.refresh();
 					}
 				}

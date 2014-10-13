@@ -34,21 +34,20 @@ public class TownPartyPanel extends JPanel {
 	private static final int CELL_HT = PORTRAIT_HT + HEALTH_BAR_HT;
 	private static final Color HEALTH_COLOR = new Color(50,160,70);
 
-	// party
-	private Party party;
-
 	// top-level component
 	private TownExchangePanel master;
 
-	protected TownPartyPanel(TownExchangePanel master, Party party, City city){
+	protected TownPartyPanel(TownExchangePanel master, City city){
 		this.master = master;
-		this.party = party;
 		this.setPreferredSize(new Dimension(CELL_WD*PARTY_COLS+1,CELL_HT*PARTY_ROWS+1));
 	}
-
+	
 	@Override
 	protected void paintComponent(Graphics g){
 		g.setColor(Color.BLACK);
+		
+		Party party = master.getParty(this);
+		
 		for (int x = 0; x < PARTY_COLS; x++){
 			for (int y = 0; y < PARTY_ROWS; y++){
 				int xDraw = x * CELL_WD;
@@ -99,10 +98,6 @@ public class TownPartyPanel extends JPanel {
 		int y = withinPanel.y/CELL_HEIGHT;
 		if (x >= 0 && x < PARTY_COLS && y >= 0 && y < PARTY_ROWS) return new Point(x,y);
 		else return null;
-	}
-
-	public Party getParty() {
-		return this.party;
 	}
 
 }

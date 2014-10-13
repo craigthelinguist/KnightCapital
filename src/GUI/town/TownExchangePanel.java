@@ -86,8 +86,8 @@ public class TownExchangePanel extends JPanel implements MouseListener, MouseMot
 		};
 
 		City city = controller.getCity();
-		partyVisitors = new TownPartyPanel(this,controller.getVisitors(),city);
-		partyGarrison = new TownPartyPanel(this,controller.getGarrison(),city);
+		partyVisitors = new TownPartyPanel(this,city);
+		partyGarrison = new TownPartyPanel(this,city);
 		itemsVisitors = new TownItemPanel(this,controller.getVisitors(),city);
 		itemsGarrison = new TownItemPanel(this,controller.getGarrison(),city);
 
@@ -196,7 +196,7 @@ public class TownExchangePanel extends JPanel implements MouseListener, MouseMot
 		if (draggedPanel == null || draggedPoint == null) return;
 		if (draggedPanel instanceof TownPartyPanel){
 			TownPartyPanel tpp = (TownPartyPanel)draggedPanel;
-			Creature member = tpp.getParty().getMember(draggedPoint.x, draggedPoint.y);
+			Creature member = getParty(tpp).getMember(draggedPoint.x, draggedPoint.y);
 			if (member == null) return;
 			Point mousePoint = MouseInfo.getPointerInfo().getLocation();
 			BufferedImage portrait = member.getPortrait();
@@ -327,14 +327,21 @@ public class TownExchangePanel extends JPanel implements MouseListener, MouseMot
 	 */
 	private void reorderUnits(TownPartyPanel panel1, Point point1, TownPartyPanel panel2, Point point2){
 
-		Party p1 = panel1.getParty();
+		Party p1 = this.getParty(panel1);
 		Creature c1 = p1.getMember(point1.x, point1.y);
-		Party p2 = panel2.getParty();
+		Party p2 = this.getParty(panel2);
 		Creature c2 = p2.getMember(point2.x, point2.y);
 
 		// heroes aren't allowed to leave their party
 		if ((c1 instanceof Hero || c2 instanceof Hero) && (panel1 != panel2)){
 			return;
+		}
+		
+		// not allowed to drag units from garrison to visitors if visitors doesn't have a hero
+		if (panel1 == this.partyGarrison && panel2 == this.partyVisitors){
+			if (p2.getHero() == null){
+				return;
+			}
 		}
 
 		p1.setMember(c2, point1.x, point1.y);
@@ -354,6 +361,11 @@ public class TownExchangePanel extends JPanel implements MouseListener, MouseMot
 		if(e.getSource() == buttonLeave) {
 			controller.buttonPressed("exit city");
 		}
+	}
+
+	public Party getParty(TownPartyPanel panel) {
+		if (panel == this.partyVisitors) return controller.getVisitors();
+		else return controller.getGarrison();
 	}
 
 }
