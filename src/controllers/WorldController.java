@@ -206,7 +206,10 @@ public class WorldController{
 				City city = c1.getCity(); //get the city from CityTile
 				if(!(selectedTile.occupant() instanceof Party)) return;
 				Party p =(Party)selectedTile.occupant();
-				city.setVisitors(p);
+				//checks that the owner of city is the same as the owner of the party being moved there
+				if(city.getOwner() == p.getOwner()) {
+					city.setVisitors(p);
+				}
 			}
 			
 			// deselected the tile
