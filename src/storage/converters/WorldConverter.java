@@ -104,10 +104,7 @@ public class WorldConverter implements Converter{
 		reader.moveUp();
 		
 		// reconstruct the world
-		
-		
-		
-		return null;
+		return WorldLoader.constructWorld();
 		
 	}
 
