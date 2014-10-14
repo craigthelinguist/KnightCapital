@@ -32,6 +32,7 @@ public class ClientM extends Thread implements MouseListener{
 	 * */
 	public ClientM(Socket socket){
 		this.socket = socket;
+
 	}
 
 
@@ -42,28 +43,46 @@ public class ClientM extends Thread implements MouseListener{
 	 * */
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
 
 		System.out.println("Connection found");
 		try{
 
+             System.out.println("inside try[CLIENT]");
+             Message message;
+
+			in = new ObjectInputStream(socket.getInputStream());
+
+			System.out.println("past in [client]");
+			//Retrieve the message sent from the server
+			//Message message = (Message) in.readObject();
+			//ID = message.getID();
+			System.out.println("message recieved CLIENT");
 			out = new ObjectOutputStream(socket.getOutputStream());
 			out.flush();
-			DataInputStream input = new DataInputStream(socket.getInputStream());
-
-			System.out.println("Message from "+input.readUTF());
-			in = new ObjectInputStream(socket.getInputStream());
-			//Retrieve the message sent from the server
-			Message message = (Message) in.readObject();
-			ID = message.getID();
-			System.out.println("Client ID : "+ID);
-
 			//update the gui
 			//
 			//
 			boolean exit = false;
+
+			world.getGui().getCanvas().addMouseListener(this);
 			while(!exit){
+
+				System.out.println("looping[CLIENT]");
+
+				message = (Message) in.readObject();
+
 				world = message.getWorld();
+				if(world.getGui().getCanvas().getClicked()){
+					try {
+						System.out.println("a changed has happened client side");
+						world.getGui().getCanvas().setClicked(false);
+						out.writeObject(new Message(null, world, ID));
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+				System.out.println("should have worldController.");
 				//here we up date the gui with world
 				//and display it
 
@@ -95,12 +114,7 @@ public class ClientM extends Thread implements MouseListener{
 	@Override
 	public void mouseClicked(java.awt.event.MouseEvent e) {
 		// TODO Auto-generated method stub
-		try {
-			out.writeObject(new Message(e, world, ID));
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+
 
 	}
 

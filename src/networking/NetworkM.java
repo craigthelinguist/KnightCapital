@@ -17,7 +17,10 @@ import controllers.WorldController;
 public class NetworkM {
 
 	public static final int port = 8080;
-
+	public static DataInputStream in;
+	public static DataOutputStream out;
+	public static ServerSocket socket;
+private static int numConnects = 0;
 
 	/**
 	 * Create a server and accept clients connections.
@@ -34,49 +37,73 @@ public class NetworkM {
 		ServerM swerv;
 		try{
 
-			DataInputStream in;
+
 			//array of clients connecting to the server
-			ClientM[] connections = new ClientM[clients];
-			ServerSocket socket = new ServerSocket(port);
+//			ClientM[] connections = new ClientM[clients];
+
+			Socket[] connectors = new Socket[clients];
+
+
+			socket = new ServerSocket(port);
+			
 
 			//make the state of the game waiting
 
 			System.out.println("waiting for "+clients+" to join");
-			DataOutputStream out;
+
 			//			world.setState = waiting
 			//loop till game over
-			while(true){
+			while(clients!=0){
 				Socket sock = socket.accept();
+				//add client socket to clients.
+				connectors[numConnects] = sock;
+
+				//update counters.
+				clients--;
+				numConnects++;
+
+                //make input output streams
 				out = new DataOutputStream(sock.getOutputStream());
+				out.flush();
+				in = new DataInputStream(sock.getInputStream());
+
+
+				//send out greetings from server to client.
 				out.writeUTF("hello from server");
 				out.flush();
 
+				System.out.println(in.readUTF());
 				System.out.println("accepted connection from : "+sock.getInetAddress());
-				in = new DataInputStream(sock.getInputStream());
+
 //				int id = world;
 
 				//loop around adding a client till client equals 0
-				connections[--clients] = new ClientM(sock);
+
 				System.out.println("waiting for "+clients+" to join");
-				if(clients==0){
-					System.out.println("All clients are now connected");
-					//make the state of the game to playing
-					//example: game.setState(WorldController.playing);
 
-					 swerv = new ServerM(sock, world);
-					swerv.start();
 
-					//start the threads
-					for(ClientM s:connections){
-						s.start();
-					}
-					startGame(world, connections, sock);
-					socket.close();
-					//connection step completed
-					return;
-				}
+              
+
+				//can now start implementing world and game connections with clients.
+//				if(clients==0){
+//					System.out.println("All clients are now connected");
+//					//make the state of the game to playing
+//					//example: game.setState(WorldController.playing);
+//
+////					 swerv = new ServerM(sock, world);
+////					swerv.start();
+//
+//					//start the threads
+//
+//					startGame(world, connectors, sock);
+//					socket.close();
+//					//connection step completed
+//					return;
+//				}
 			}
-
+           
+			 swerv = new ServerM(connectors, world);
+             swerv.start();
 
 
 		}catch(IOException e){e.printStackTrace();}
@@ -91,8 +118,14 @@ public class NetworkM {
 		DataOutputStream out = new DataOutputStream(s.getOutputStream());
 		out.writeUTF(name);
 		out.flush();
+		DataInputStream input = new DataInputStream(s.getInputStream());
+		System.out.println(input.readUTF());
+		
+		
 		ClientM sv = new ClientM(s);
 		sv.run();
+		
+		
 	}
 
 
@@ -103,13 +136,13 @@ public class NetworkM {
 	 * @param connections the array of clients connected to the server
 	 * @param socket
 	 * */
-	private static void startGame(WorldController world, ClientM[] connections, Socket socket) {
+	private static void startGame(WorldController world, Socket[] connections, Socket socket) {
 
 		boolean clients = false;
 		while(true){
 			//check to see there is at least one client connected
-			for(ClientM s: connections){
-				if(s.isAlive()){
+			for(Socket s: connections){
+				if(s.isConnected()){
 					clients = true;
 
 				}

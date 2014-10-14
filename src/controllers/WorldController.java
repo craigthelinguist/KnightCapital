@@ -68,7 +68,7 @@ import GUI.world.MainFrame;
 public class WorldController{
 
 	//boolean server or client, true if server, false if client.
-	private boolean serverOrClient = true;
+	private boolean serverOrClient = false;
 
 	//server and client.
 	private Server server;
@@ -143,6 +143,11 @@ public class WorldController{
 		}
 
 	}
+
+	public MainFrame getGui(){
+		return gui;
+	}
+
 
 	/**
 	 * Player has pushed a key
@@ -314,6 +319,7 @@ public class WorldController{
 	 * @param tile: tile that a party of the player's is standing on.
 	 */
 	private void highlightTiles(Tile tile){
+		if (this.player != world.getCurrentPlayer()) return;
 		if (tile != null){
 			WorldIcon wi = tile.occupant();
 			if (wi != null && wi instanceof Party){
@@ -459,7 +465,7 @@ public class WorldController{
 
 
 		/*Loading the playey*/
-		Player p = new Player("John The Baptist",4);
+		Player p = new Player("John The Baptist",1);
 		World w = TemporaryLoader.loadWorld("world_temporary.txt",p);
 		HeroStats stats_hero = new HeroStats(60,10,80,0,6,8,AttackType.MELEE);
 		Hero hero = new Hero("ovelia","ovelia",p,stats_hero);
@@ -541,7 +547,7 @@ public class WorldController{
 
 
 		/*Loading the playey*/
-		Player p = new Player("John The Baptist",4);
+		Player p = new Player("John The Baptist",1);
 		World w = ewan_world();
 		HeroStats stats_hero = new HeroStats(60,10,80,0,6,8,AttackType.MELEE);
 		Hero hero = new Hero("ovelia","ovelia",p,stats_hero);
