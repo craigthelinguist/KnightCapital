@@ -140,13 +140,11 @@ public class MainFrame extends JFrame  {
 				return false;
 			}
 
-			if (e.getID() == KeyEvent.KEY_RELEASED)
-			{
-				controller.keyPressed(e);
-			}
+
+
 			else if(e.getKeyCode() == KeyEvent.VK_ESCAPE)
 		    {
-				EscapeDialog dialog = new EscapeDialog(MainFrame.this);
+				EscapeDialog dialog = new EscapeDialog(MainFrame.this,controller);
 		    }
 
 			return false;

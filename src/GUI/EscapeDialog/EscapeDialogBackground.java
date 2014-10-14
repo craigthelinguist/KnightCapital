@@ -42,12 +42,14 @@ public class EscapeDialogBackground extends JPanel implements ActionListener{
 
 	private EscapeDialog escapeDialog;
 	private MainFrame frame;
+	private WorldController control;
 
 
 	private String message;
 	private BufferedImage backgroundImage;
 
-	public EscapeDialogBackground(EscapeDialog ed, MainFrame frame) {
+	public EscapeDialogBackground(EscapeDialog ed, MainFrame frame, WorldController control) {
+		this.control = control;
 		this.frame = frame;
 		this.escapeDialog = ed;
 		//this.setPreferredSize(new Dimension(200,200));
@@ -123,19 +125,18 @@ public class EscapeDialogBackground extends JPanel implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 
 		if(e.getSource() == saveGame) {
-			String path = Constants.DATA_SCENARIOS;
+			String path = Constants.DATA_SAVES;
 			File f = new File(path);
 			JFileChooser chooser = new JFileChooser(f);
-			Filter filter = new Filter(".level");
+			Filter filter = new Filter(".save");
 			chooser.setFileFilter(filter);
 			int value = chooser.showOpenDialog(null);
 			String filepath = null;
 			if (value == JFileChooser.APPROVE_OPTION){
 				filepath = chooser.getSelectedFile().getPath();
 				try {
-					World world = WorldLoader.load(filepath);
-					escapeDialog.dispose();
-					new WorldController(world,world.getPlayers()[0]);
+					World world = control.getWorld();
+					WorldLoader.save(filepath, world);
 				} catch (IOException e1) {
 					JOptionPane.showMessageDialog(escapeDialog, "Error loading " + filepath);
 				}
@@ -160,6 +161,7 @@ public class EscapeDialogBackground extends JPanel implements ActionListener{
 				try {
 					world = WorldLoader.load(filepath);
 					escapeDialog.dispose();
+					frame.dispose();
 					new WorldController(world,world.getPlayers()[0]);
 				} catch (IOException e1) {
 					JOptionPane.showMessageDialog(escapeDialog, "Error loading " + filepath);
