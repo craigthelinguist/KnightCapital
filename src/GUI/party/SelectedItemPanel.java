@@ -152,6 +152,9 @@ public class SelectedItemPanel extends JPanel{
 			int buffH = this.unit.getBuffed(Stat.HEALTH);
 			int buffA = this.unit.getBuffed(Stat.ARMOUR);
 
+			StringBuilder html = new StringBuilder("<html>");
+
+
 			this.descriptionLabel = new JLabel("<html>Health: "+health+"<font color='green'> +"+buffH+"</font> <br>Damage: "+damage+"<font color='green'> +"+buffD+"</font> <br>Armour: "+armour+"<font color='green'> +"+buffA+"</font><br>Moves Left:</html>");
 
 
