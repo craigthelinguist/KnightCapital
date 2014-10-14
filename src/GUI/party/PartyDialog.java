@@ -2,6 +2,7 @@ package GUI.party;
 
 import game.effects.Buff;
 import game.items.EquippedItem;
+import game.items.Item;
 import game.items.PassiveItem;
 import game.items.Target;
 import game.units.AttackType;
@@ -76,7 +77,7 @@ public class PartyDialog extends JDialog  {
 	private HeroItemsPanel heroItemsPanel;
 
 	//Constants for sub components
-	public static final int PADDING = 20; // concrete value to minimise swing fuckery
+	public static final int PADDING = 20; // concrete value to minimise swing playing up
 	public static final int DESCRIPTION_HEIGHT = 80;
 	public static final int COMPONENT_HEIGHT = (int)((Constants.PARTY_PANEL_HEIGHT- DESCRIPTION_HEIGHT));
 	public static final int COMPONENT_WIDTH = (int)((Constants.PARTY_PANEL_WIDTH)/ 3); // this is a third of the dialog width - margins
@@ -145,11 +146,11 @@ public class PartyDialog extends JDialog  {
         gc.gridheight = 5;
 
         this.add(selectedItemPanel, gc);
-        updateSelected();
+        // Set selected to hero of party
+        updateSelectedWithUnit(party.getHero());
 
         // Units Panel
         this.unitsPanel = new UnitsPanel(this, panelDimension);
-        unitsPanel.add(new PartyPanel(party));
         this.unitsPanel.setBackground(Color.RED);
         gc.gridx = 2;
         gc.gridy = 1;
@@ -210,10 +211,17 @@ public class PartyDialog extends JDialog  {
 	}
 
 	/**
-	 * Updates the selectedPanel with selected item/unit
+	 * Updates the selectedPanel with selected item
 	 */
-	private void updateSelected() {
-		this.selectedItemPanel.setSelected(tile.occupant());
+	private void updateSelectedWithItem(Item item) {
+		this.selectedItemPanel.setSelectedItem(item);
+	}
+
+	/**
+	 * Updates the selectedPanel with selected unit
+	 */
+	private void updateSelectedWithUnit(Creature unit) {
+		this.selectedItemPanel.setSelectedUnit(unit);
 	}
 
 
@@ -240,6 +248,10 @@ public class PartyDialog extends JDialog  {
 		return this.isOwner;
 	}
 
+	/** @return the current party of dialog **/
+	public Party getParty() {
+		return this.party;
+	}
 
 	public static void main(String[] batman) {
 		// Create PLayer and a hero
@@ -263,14 +275,19 @@ public class PartyDialog extends JDialog  {
 		Unit u6 = new Unit("knight","knight",p,new UnitStats(100,25,40,1,AttackType.MELEE));
 		Creature[][] members = Party.newEmptyParty();
 		members[0][0] = u3;
-		members[1][0] = u6;
-		members[2][0] = hero;
-		members[0][1] = u4;
-		members[2][1] = u5;
+		members[0][1] = u6;
+		members[0][2] = hero;
+		members[1][0] = u4;
+		members[1][1] = u5;
 		Party party = new Party(hero, p, members);
 		party.refresh();
 
 		// add items to hero and party
+		party.addItem(arrows);
+		party.addItem(arrows);
+		party.addItem(arrows);
+		party.addItem(arrows);
+		party.addItem(arrows);
 		party.addItem(arrows);
 		amulet.equipTo(hero);
 		weapon.equipTo(hero);

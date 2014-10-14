@@ -73,6 +73,13 @@ public class World {
 	 */
 	public void endTurn(){
 
+		/*Iterate over the cities in the world, if the city belongs to the player that's ending his turn. Increase his gold by 10. Do this for every city the player owns.*/
+		for(City c : this.getCities()) {
+			if(c.getOwner() == players[currentPlayer]) {
+				players[currentPlayer].increaseGold(100);
+			}
+		}
+
 		// if you have cycled through all players, it is a new day.
 		// cycle through all parties owned by that player and remove buffs and stuff
 		for (int i = 0; i < tiles.length; i++){

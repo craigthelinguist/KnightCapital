@@ -33,6 +33,8 @@ public class PartyPanel extends JPanel {
 	// data this townPartyPanel displays
 	private Party party;
 	private Point dragging;
+	
+	public Creature selected;
 
 	private final int PORTRAIT_WIDTH = Constants.PORTRAIT_DIMENSIONS.width;
 	private final int PORTRAIT_HEIGHT = Constants.PORTRAIT_DIMENSIONS.height;
@@ -159,6 +161,7 @@ public class PartyPanel extends JPanel {
 		public void mousePressed(MouseEvent e) {
 			Point pt = asArrayIndices(e.getX(),e.getY());
 			if (party != null && party.getMember(pt.x, pt.y) != null){
+				selected = party.getMember(pt.x, pt.y);
 				dragging = asArrayIndices(e.getX(),e.getY());
 			}
 		}

@@ -1,5 +1,8 @@
 package GUI.party;
 
+import game.items.Item;
+import game.units.Creature;
+
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -11,7 +14,6 @@ import javax.swing.JPanel;
 import tools.Constants;
 import world.icons.ItemIcon;
 import world.icons.Party;
-import world.icons.WorldIcon;
 
 /**
  * Responsible for displaying the selected item or unit that user has clicked on.
@@ -36,7 +38,10 @@ import world.icons.WorldIcon;
 public class SelectedItemPanel extends JPanel{
 
 	private PartyDialog master;
-	private WorldIcon icon;
+
+	// This panel can display both units and items.
+	private Creature unit;
+	private Item item;
 
 	// JLabels
 	private JLabel imageLabel;
@@ -80,13 +85,22 @@ public class SelectedItemPanel extends JPanel{
 	}
 
 	/**
-	 * Set selected object
+	 * Set selected item
 	 */
-	public void setSelected(WorldIcon icon) {
-		this.icon = icon;
+	public void setSelectedItem(Item item) {
+		this.unit = null;
+		this.item = item;
 		updateInfo();
 	}
 
+	/**
+	 * Set selected creature
+	 */
+	public void setSelectedUnit(Creature unit) {
+		this.unit = unit;
+		this.item = null;
+		updateInfo();
+	}
 
 	/**
 	 * Draw the current shit to panel
@@ -96,21 +110,40 @@ public class SelectedItemPanel extends JPanel{
 	}
 
 	private void updateInfo() {
-		// set image
-		this.imageLabel.setIcon(new ImageIcon(this.icon.getPortrait()));
+		// if selected is an ITEM
+		if(item != null) {
+			// set image
+			this.imageLabel.setIcon(new ImageIcon(this.item.getPortrait()));
 
-		// set name
-		this.nameLabel.setText(this.icon.getAnimationName());
+			// set name
+			this.nameLabel.setText(this.item.getAnimationName());
 
-		// set description
-		this.descriptionLabel.setText(this.icon.getAnimationName());
+			// set description
+			this.descriptionLabel.setText(this.item.getAnimationName());
 
-		if(this.icon instanceof ItemIcon) {
-			// nothing? Would we need any other information from an item?
+			if(master.isOwner()) {
+				// display stats
+				System.out.println("[SelectedItemPanel] Accessor is owner of item");
+			}
+
+			//else nothing
+			else {
+				System.out.println("[SelectedItemPanel] Accessor is not owner of item");
+			}
 		}
 
-		else if(this.icon instanceof Party) {
-			//if player is owner of party
+
+		// If selected is a UNIT
+		if(unit != null) {
+			// set image
+			this.imageLabel.setIcon(new ImageIcon(this.unit.getPortrait()));
+
+			// set name
+			this.nameLabel.setText(this.unit.getAnimationName());
+
+			// set description
+			this.descriptionLabel.setText(this.unit.getAnimationName());
+
 			if(master.isOwner()) {
 				// display stats
 				System.out.println("[SelectedItemPanel] Accessor is owner of party");
@@ -121,8 +154,6 @@ public class SelectedItemPanel extends JPanel{
 				System.out.println("[SelectedItemPanel] Accessor is not owner of party");
 			}
 		}
-
-
 	}
 
 }
