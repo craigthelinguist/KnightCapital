@@ -20,13 +20,13 @@ import GUI.reusable.PartyPanel;
  * @author myles
  *
  */
-public class UnitsPanel extends JPanel{
+public class UnitsPanel extends PartyPanel{
 
 	// the parent of this panel
 	private PartyDialog master;
 
 	public UnitsPanel(PartyDialog master, Dimension d) {
-		super();
+		super(master.getParty());
 		this.setPreferredSize(d); // give it the d here
 		this.master = master;
 	}

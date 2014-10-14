@@ -33,6 +33,8 @@ public class ItemPanel extends JPanel {
 	// data that this Ordering Panel Displays
 	private Party party;
 	private Point dragging;
+	
+	private Item selected;
 
 	private final int PORTRAIT_WIDTH = Constants.INVENTORY_DIMENSIONS.width;
 	private final int PORTRAIT_HEIGHT = Constants.INVENTORY_DIMENSIONS.height;
@@ -155,6 +157,7 @@ public class ItemPanel extends JPanel {
 		public void mousePressed(MouseEvent e) {
 			Point pt = asArrayIndices(e.getX(),e.getY());
 			if (party != null && party.getMember(pt.x, pt.y) != null){
+				
 				dragging = asArrayIndices(e.getX(),e.getY());
 			}
 		}
