@@ -25,6 +25,8 @@ public class Player {
 		this.slot = slot;
 	}
 
+	public int getSlot(){return this.slot;}
+
 	public String getColour(){
 		if (slot == 1) return "red";
 		else if (slot == 2) return "blue";

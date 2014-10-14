@@ -13,23 +13,35 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 import javax.imageio.ImageIO;
+import javax.print.DocFlavor.URL;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
+
+import controllers.WorldController;
 import player.Player;
 import GUI.world.CustomButton;
 import storage.LoadXML;
 import storage.SaveXML;
 import storage.States;
 import storage.XMLReader;
+import storage.converters.WorldLoader;
 import tools.Constants;
 import tools.ImageLoader;
 import tools.Log;
@@ -122,74 +134,85 @@ public class MainMenuPanel extends JPanel implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-//not completed yet guys #Selemon
+		// if possible start the file chooser in this directory
+		//String fp = new File("").getAbsolutePath() + File.separatorChar + Constants.DATA_LEVELS;
+
 		if(e.getSource() == newGame) {
-			//what to do if button pressed is new game
-			Object[] options = {"Level one",
-			"Level two"};
-			int n = JOptionPane.showOptionDialog(frame,
-					"What level would "
-							+ "you like to play in?",
-							"Pick Level",
-							JOptionPane.YES_NO_CANCEL_OPTION,
-							JOptionPane.QUESTION_MESSAGE,
-							null,
-							options,
-							options[0]);
-			String level = null;
-			//will change this code once we integrate this page with worldcontroller
-			XMLReader reader = null;			
-			if(n==0){
-				level = "LevelOne";
-				reader = new XMLReader(Constants.ASSETS+"Levels.xml", level, new Hero("knight", new Player("ggg", 3), new HeroStats(0, 0, 0, 0, 0, 0)));
-				
-				
+			JFileChooser chooser = new JFileChooser();
+			chooser.setCurrentDirectory(new File(Constants.DATA_LEVELS));
+			Filter filter = new Filter(".level");
+			chooser.setFileFilter(filter);
+			int value = chooser.showOpenDialog(null);
+			String filepath = null;
+			if (value == JFileChooser.APPROVE_OPTION){
+				filepath = chooser.getSelectedFile().getPath();
+				try {
+					World world = WorldLoader.load(filepath);
+					frame.dispose();
+					new WorldController(world,world.getPlayers()[0]);
+				} catch (IOException e1) {
+					System.out.println("fucked up");
+					JOptionPane.showMessageDialog(frame, "Error loading " + filepath);
+				}
 			}
-			else if(n==1){
-				level = "LevelTwo";
-				reader = new XMLReader(Constants.ASSETS+"Levels.xml", level, new Hero("ovelia", new Player("gcgg", 3), new HeroStats(0, 0, 0, 0, 0, 0)));
-
-
-			}
-			reader.readLevel();
 		}
+
+		// if possible start the file chooser in this directory
+		//String fp = new File("").getAbsolutePath() + File.separatorChar + Constants.DATA_SAVES;
+
 		else if(e.getSource() == loadGame) {
-			//what do if button pressed is load game
-			LoadXML load = new LoadXML();
-			States s = load.read();
-			//the world and the player info
-			World w = s.getWorld();
-			Player p = s.getPlayer();
+			String path = Constants.DATA_SCENARIOS;
+			File f = new File(path);
+			JFileChooser chooser = new JFileChooser(f);
+			Filter filter = new Filter(".save");
+			chooser.setFileFilter(filter);
+			int value = chooser.showOpenDialog(null);
+			String filepath = null;
+			if (value == JFileChooser.APPROVE_OPTION){
+				filepath = chooser.getSelectedFile().getPath();
+				try {
+					World world = WorldLoader.load(filepath);
+					frame.dispose();
+					new WorldController(world,world.getPlayers()[0]);
+				} catch (IOException e1) {
+					JOptionPane.showMessageDialog(frame, "Error loading " + filepath);
+				}
+			}
+
+
 		}
 		else if(e.getSource() == joinGame) {
 			//what to do if button pressed is join game
 		}
 		else if(e.getSource() == quitGame) {
-			//what to do if button pressed is quit
-			//Custom button text
-			Object[] options = {"Yes, please",
-			"No, thanks"};
-			int n = JOptionPane.showOptionDialog(frame,
-					"Would you like to save "
-							+ "the game?",
-							"Save Game",
-							JOptionPane.YES_NO_CANCEL_OPTION,
-							JOptionPane.QUESTION_MESSAGE,
-							null,
-							options,
-							options[0]);
-
-			if(n==0){
-				//this will change as soon as i talk to aaron and ewan
-				States s = new States(new Player("selemon", 1), null);				
-				SaveXML save = new SaveXML(s);
-				save.write();
-				System.exit(-1);
-			}
-			else{
-				System.exit(-1);
-			}
-
+			System.exit(0);
 		}
 	}
+
+
+
+
+	private class Filter extends FileFilter{
+
+		private String extension;
+
+		public Filter(String str){
+			extension = str;
+		}
+
+		@Override
+		public boolean accept(File f) {
+			return f.getAbsolutePath().endsWith(extension) || f.isDirectory();
+
+		}
+
+		@Override
+		public String getDescription() {
+			return extension;
+		}
+
+	}
+
+
+
 }

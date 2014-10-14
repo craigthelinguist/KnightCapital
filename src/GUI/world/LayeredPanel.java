@@ -16,39 +16,39 @@ import world.tiles.Tile;
 
 
 /**
- * This class extends teh JLayeredPane which allows components to be layered on top 
- * of each other. The two components on this layered panel is the MainPanelMaster (responsible for 
+ * This class extends teh JLayeredPane which allows components to be layered on top
+ * of each other. The two components on this layered panel is the MainPanelMaster (responsible for
  * holding all the other panels) and the MainPanelBorder which is on top of the MainPanelMaster to create
  * the effect of having a border around the MainPanelMaster
- * 
+ *
  * @author Ewan Moshi
  *
  */
 public class LayeredPanel extends JLayeredPane{
-	
+
 	private MainFrame mainFrame;
-	
+
 	/* Declare all the panels on this panel */
 	private MainPanelMaster masterPanel;
 	private MainPanelBorder panelBorder;
-	
+
 	private CustomButton inventoryButton;
-	
+
 	public LayeredPanel(MainFrame frame) {
-		this.setPreferredSize(new Dimension(frame.getWidth(),200));  
+		this.setPreferredSize(new Dimension(frame.getWidth(),200));
 		mainFrame = frame;
-				
+
 		panelBorder = new MainPanelBorder(frame);
 		panelBorder.setBounds(0,0,frame.getWidth(),200);
 		this.add(panelBorder, new Integer(1),0);
-		
+
 		/*Initialize the inventory panel and place it bottom right*/
 		masterPanel = new MainPanelMaster(frame);
 		masterPanel.setBounds(0,0,frame.getWidth(),200);
 		this.add(masterPanel,new Integer(0), 0);
 
 	}
-	
+
     @Override
     public void doLayout() {
     	/*Resize all the components on this layeredPane*/
