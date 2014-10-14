@@ -204,7 +204,7 @@ public class WorldController{
 			// double clicked a city
 			if (leftClicked(me) && selectedTile != null
 				&& clickedTile instanceof CityTile && selectedTile instanceof CityTile
-				 && doubleClicked() )
+				 && doubleClicked() && ((CityTile)(clickedTile)).getCity().ownedBy(player) )
 				{
 					CityTile c1 = (CityTile)clickedTile;
 					CityTile c2 = (CityTile)selectedTile;
@@ -214,7 +214,7 @@ public class WorldController{
 					this.lastMouse = System.currentTimeMillis();
 
 				}
-			
+
 
 			// deselected the tile
 			else if (selected != null && leftClicked(me) && selectedTile == clickedTile){
@@ -340,10 +340,7 @@ public class WorldController{
 	 * @return
 	 */
 	public boolean doubleClicked(){
-		long lastClick = System.currentTimeMillis();
-		boolean ans = System.currentTimeMillis() - this.lastMouse < 700;
-		lastMouse = lastClick;
-		return ans;
+		return System.currentTimeMillis() - this.lastMouse < 700;
 	}
 
 	public boolean leftClicked(MouseEvent me){
