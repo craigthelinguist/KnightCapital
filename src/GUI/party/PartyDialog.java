@@ -1,9 +1,15 @@
 package GUI.party;
 
+import game.effects.Buff;
+import game.items.PassiveItem;
+import game.items.Target;
+import game.units.AttackType;
 import game.units.Creature;
 import game.units.Hero;
 import game.units.HeroStats;
 import game.units.Stat;
+import game.units.Unit;
+import game.units.UnitStats;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -230,17 +236,45 @@ public class PartyDialog extends JDialog  {
 	}
 
 	public static void main(String[] batman) {
+		// Create PLayer and a hero
 		Player p = new Player("John The Baptist",4);
-		Hero hero = new Hero("ovelia",p, new HeroStats(45,10,80,0,8,8));
+		Hero hero = new Hero("Gaben", "ovelia", p, new HeroStats(100, 100, 100, 100, 100, 100,  AttackType.MELEE));
 
+		// Give party an item
+		Buff[] buffsArrows= new Buff[]{ Buff.newTempBuff(Stat.DAMAGE,1) };
+		PassiveItem arrows = new PassiveItem("poisonarrow", "poisonarrow", "Poisonous arrows whose feathers were made from the hairs of Mizza. All archers in party gain +1 damage",buffsArrows, Target.PARTY);
+		//party.addItem(arrows);
+		
+		// give hero two items
+		Buff[] buffsAmulet = new Buff[]{ Buff.newTempBuff(Stat.DAMAGE,5) };
+		PassiveItem amulet = new PassiveItem("amulet", "amulet", "An amulet that grants sickening gains.\n +5 Damage",buffsAmulet,Target.HERO);
+
+		Buff[] buffsWeapon = new Buff[]{ Buff.newPermaBuff(Stat.DAMAGE,5), Buff.newTempBuff(Stat.ARMOUR, 10) };
+		PassiveItem weapon = new PassiveItem("weapon", "weapon", "A powerful weapon crafted by the mighty Mizza +5 Damage",buffsWeapon,Target.HERO);
+
+		Unit u3 = new Unit("knight","knight",p,new UnitStats(100,25,40,1,AttackType.MELEE));
+		Unit u4 = new Unit("archer","knight",p,new UnitStats(60,15,70,0,AttackType.RANGED));
+		Unit u5 = new Unit("archer","knight",p,new UnitStats(60,15,70,0,AttackType.RANGED));
+		Unit u6 = new Unit("knight","knight",p,new UnitStats(100,25,40,1,AttackType.MELEE));
 		Creature[][] members = Party.newEmptyParty();
-		members[0][0] = hero;
+		members[0][0] = u3;
+		members[1][0] = u6;
+		members[2][0] = hero;
+		members[0][1] = u4;
+		members[2][1] = u5;
 		Party party = new Party(hero, p, members);
 
-		Tile t = PassableTile.newDirtTile(0, 0);
+		party.refresh();
 
+		party.addItem(arrows);
+		
+		
+		// Create new tile to place party on,
+		// party must be on a tile
+		Tile t = PassableTile.newDirtTile(0, 0);
 		t.setIcon(party);
 
+		// make magic
 		new PartyDialog(new MainFrame(), t, false);
 	}
 }

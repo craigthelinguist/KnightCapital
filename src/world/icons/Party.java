@@ -1,17 +1,17 @@
 package world.icons;
 
+import game.items.Item;
+import game.items.PassiveItem;
+import game.units.AttackType;
+import game.units.Creature;
+import game.units.Hero;
+import game.units.Unit;
+import game.units.UnitStats;
+
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.util.Iterator;
-import java.util.LinkedList;
 
-import game.effects.Buff;
-import game.items.Item;
-import game.items.PassiveItem;
-import game.units.Creature;
-import game.units.Hero;
-import game.units.Stat;
-import game.units.Unit;
 import player.Player;
 
 /**
@@ -243,7 +243,8 @@ public class Party extends WorldIcon implements Iterable<Creature>{
 
 	/**
 	 * Check to see if this party has any memebers still living in it.
-	 * @return
+	 * -myles
+	 * @return true if all members are deceased
 	 */
 	public boolean isDead() {
 
@@ -378,6 +379,7 @@ public class Party extends WorldIcon implements Iterable<Creature>{
 	 * Return true if this party is empty.
 	 * @return
 	 */
+	@SuppressWarnings("unused")
 	public boolean isEmpty() {
 		for (Creature creature : this){
 			return false;
@@ -402,5 +404,21 @@ public class Party extends WorldIcon implements Iterable<Creature>{
 		return (int) ((sum/count)*100);
 	}
 
+	/** 
+	 * Create a quick creature array for quick testing os partys 
+	 * - myles
+	 **/
+	public static Creature[][] quickKnightParty(Player p) {
+		Creature[][] creatures = new Creature[Party.PARTY_ROWS][Party.PARTY_COLS];
+		System.out.println("[Party] Creating a full knight array. This is a test feature, if you see this is final code, lord help us");
+		for( int x = 0; x < Party.PARTY_ROWS; x++) {
+			for( int y = 0; y < Party.PARTY_COLS; y++) {
+				System.out.println("[Party](quickKnightParty) Adding knight in position "+x+", "+y);
+				creatures[x][y] = new Unit("Knight", "knight", p, new UnitStats(10, 10, 1, 10, AttackType.MELEE));
+			}
+		}
+
+		return creatures;
+	}
 
 }
