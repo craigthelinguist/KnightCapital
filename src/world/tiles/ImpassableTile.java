@@ -26,6 +26,11 @@ public class ImpassableTile extends Tile{
 		return new ImpassableTile("bush_"+random, x, y);
 	}
 
+	public static ImpassableTile newRockTile(int x, int y){
+		int random = 1 + (int)(Math.random() * 2);
+		return new ImpassableTile("rock_"+random, x, y);
+	}
+
 	@Override
 	public boolean passable() {
 		return false; //fuck your passability
