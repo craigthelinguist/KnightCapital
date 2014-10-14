@@ -1,6 +1,7 @@
 package GUI.party;
 
 import game.effects.Buff;
+import game.items.EquippedItem;
 import game.items.PassiveItem;
 import game.items.Target;
 import game.units.AttackType;
@@ -15,7 +16,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -31,6 +31,7 @@ import tools.Log;
 import world.icons.Party;
 import world.tiles.PassableTile;
 import world.tiles.Tile;
+import GUI.reusable.ItemPanel;
 import GUI.reusable.PartyPanel;
 import GUI.world.MainFrame;
 
@@ -159,12 +160,13 @@ public class PartyDialog extends JDialog  {
         // Party Items Panel
         this.partyItemsPanel = new PartyItemsPanel(this, new Dimension(COMPONENT_WIDTH, COMPONENT_HEIGHT / 2));
         partyItemsPanel.setBackground(Color.BLUE);
-        partyItemsPanel.add(new PartyPanel(party));
+        partyItemsPanel.add(new ItemPanel(party));
         gc.gridx = 4;
         gc.gridy = 1;
         gc.gridwidth = 2;
         gc.gridheight = 3;
         this.add(partyItemsPanel, gc);
+        // god i hate swing
 
         // Hero Items Panel
         heroItemsPanel = new HeroItemsPanel(this, party, new Dimension(COMPONENT_WIDTH, COMPONENT_HEIGHT / 2));
@@ -216,14 +218,17 @@ public class PartyDialog extends JDialog  {
 
 
 	/**
-	 * Close that shit
+	 * Close Dialog
+	 * I'm pretty sure I'm supposed to use dispose().
 	 */
 	private void closeDialog() {
 		Log.print("[PartyDialog] Closing party dialog");
 		this.dispose();
 	}
 
-	/** Set that shit, not sure if this would be needed **/
+	/** 
+	 * Set that shit, not sure if this would be needed 
+	 **/
 	public void setTile(Tile tile) {
 		this.tile = tile;
 	}
@@ -235,6 +240,7 @@ public class PartyDialog extends JDialog  {
 		return this.isOwner;
 	}
 
+	
 	public static void main(String[] batman) {
 		// Create PLayer and a hero
 		Player p = new Player("John The Baptist",4);
@@ -243,14 +249,13 @@ public class PartyDialog extends JDialog  {
 		// Give party an item
 		Buff[] buffsArrows= new Buff[]{ Buff.newTempBuff(Stat.DAMAGE,1) };
 		PassiveItem arrows = new PassiveItem("poisonarrow", "poisonarrow", "Poisonous arrows whose feathers were made from the hairs of Mizza. All archers in party gain +1 damage",buffsArrows, Target.PARTY);
-		//party.addItem(arrows);
 		
 		// give hero two items
 		Buff[] buffsAmulet = new Buff[]{ Buff.newTempBuff(Stat.DAMAGE,5) };
-		PassiveItem amulet = new PassiveItem("amulet", "amulet", "An amulet that grants sickening gains.\n +5 Damage",buffsAmulet,Target.HERO);
+		EquippedItem amulet = new EquippedItem("amulet", "amulet", "An amulet that grants sickening gains.\n +5 Damage",buffsAmulet,Target.HERO);
 
 		Buff[] buffsWeapon = new Buff[]{ Buff.newPermaBuff(Stat.DAMAGE,5), Buff.newTempBuff(Stat.ARMOUR, 10) };
-		PassiveItem weapon = new PassiveItem("weapon", "weapon", "A powerful weapon crafted by the mighty Mizza +5 Damage",buffsWeapon,Target.HERO);
+		EquippedItem weapon = new EquippedItem("weapon", "weapon", "Sword",buffsWeapon,Target.HERO);
 
 		Unit u3 = new Unit("knight","knight",p,new UnitStats(100,25,40,1,AttackType.MELEE));
 		Unit u4 = new Unit("archer","knight",p,new UnitStats(60,15,70,0,AttackType.RANGED));
@@ -263,10 +268,12 @@ public class PartyDialog extends JDialog  {
 		members[0][1] = u4;
 		members[2][1] = u5;
 		Party party = new Party(hero, p, members);
-
 		party.refresh();
 
+		// add items to hero and party
 		party.addItem(arrows);
+		amulet.equipTo(hero);
+		weapon.equipTo(hero);
 		
 		
 		// Create new tile to place party on,

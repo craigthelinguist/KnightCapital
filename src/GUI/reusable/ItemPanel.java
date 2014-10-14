@@ -34,12 +34,12 @@ public class ItemPanel extends JPanel {
 	private Party party;
 	private Point dragging;
 
-	private final int PORTRAIT_WIDTH = Constants.PORTRAIT_DIMENSIONS.width;
-	private final int PORTRAIT_HEIGHT = Constants.PORTRAIT_DIMENSIONS.height;
+	private final int PORTRAIT_WIDTH = Constants.INVENTORY_DIMENSIONS.width;
+	private final int PORTRAIT_HEIGHT = Constants.INVENTORY_DIMENSIONS.height;
 	private final int INVENTORY_ROWS = Party.INVENTORY_ROWS;
 	private final int INVENTORY_COLS = Party.INVENTORY_COLS;
-	private final int WIDTH = Constants.PORTRAIT_DIMENSIONS.width*Party.PARTY_COLS+1;
-	private final int HEIGHT = Constants.PORTRAIT_DIMENSIONS.height*Party.PARTY_ROWS+1;
+	private final int WIDTH = Constants.INVENTORY_DIMENSIONS.width*Party.PARTY_COLS+1;
+	private final int HEIGHT = Constants.INVENTORY_DIMENSIONS.height*Party.PARTY_ROWS+1;
 
 	public ItemPanel(Party party) {
 		this.setPreferredSize(new Dimension(WIDTH,HEIGHT));
