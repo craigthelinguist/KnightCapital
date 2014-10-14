@@ -16,10 +16,20 @@
       <imageName>basic</imageName>
       <player>2</player>
     </city>
+    <city>
+      <name>Rongotai</name>
+      <imageName>basic</imageName>
+      <player>3</player>
+    </city>
+    <city>
+      <name>Tawa</name>
+      <imageName>basic</imageName>
+      <player>4</player>
+    </city>
   </cities>
   <tiles>
-    <width>20</width>
-    <height>20</height>
+    <width>30</width>
+    <height>30</height>
     <tile>
       <type>passable</type>
       <x>0</x>
@@ -162,6 +172,76 @@
     </tile>
     <tile>
       <type>passable</type>
+      <x>0</x>
+      <y>20</y>
+      <imageName>grass_1</imageName>
+      <icon>null</icon>
+    </tile>
+    <tile>
+      <type>passable</type>
+      <x>0</x>
+      <y>21</y>
+      <imageName>grass_1</imageName>
+      <icon>null</icon>
+    </tile>
+    <tile>
+      <type>passable</type>
+      <x>0</x>
+      <y>22</y>
+      <imageName>grass_1</imageName>
+      <icon>null</icon>
+    </tile>
+    <tile>
+      <type>passable</type>
+      <x>0</x>
+      <y>23</y>
+      <imageName>grass_1</imageName>
+      <icon>null</icon>
+    </tile>
+    <tile>
+      <type>passable</type>
+      <x>0</x>
+      <y>24</y>
+      <imageName>grass_1</imageName>
+      <icon>null</icon>
+    </tile>
+    <tile>
+      <type>passable</type>
+      <x>0</x>
+      <y>25</y>
+      <imageName>grass_1</imageName>
+      <icon>null</icon>
+    </tile>
+    <tile>
+      <type>passable</type>
+      <x>0</x>
+      <y>26</y>
+      <imageName>grass_1</imageName>
+      <icon>null</icon>
+    </tile>
+    <tile>
+      <type>passable</type>
+      <x>0</x>
+      <y>27</y>
+      <imageName>grass_1</imageName>
+      <icon>null</icon>
+    </tile>
+    <tile>
+      <type>passable</type>
+      <x>0</x>
+      <y>28</y>
+      <imageName>grass_1</imageName>
+      <icon>null</icon>
+    </tile>
+    <tile>
+      <type>passable</type>
+      <x>0</x>
+      <y>29</y>
+      <imageName>grass_1</imageName>
+      <icon>null</icon>
+    </tile>
+    <tile>
+      <type>passable</type>
       <x>1</x>
       <y>0</y>
       <imageName>grass_1</imageName>
@@ -302,6 +382,76 @@
     </tile>
     <tile>
       <type>passable</type>
+      <x>1</x>
+      <y>20</y>
+      <imageName>grass_1</imageName>
+      <icon>null</icon>
+    </tile>
+    <tile>
+      <type>passable</type>
+      <x>1</x>
+      <y>21</y>
+      <imageName>grass_1</imageName>
+      <icon>null</icon>
+    </tile>
+    <tile>
+      <type>passable</type>
+      <x>1</x>
+      <y>22</y>
+      <imageName>grass_1</imageName>
+      <icon>null</icon>
+    </tile>
+    <tile>
+      <type>passable</type>
+      <x>1</x>
+      <y>23</y>
+      <imageName>grass_1</imageName>
+      <icon>null</icon>
+    </tile>
+    <tile>
+      <type>passable</type>
+      <x>1</x>
+      <y>24</y>
+      <imageName>grass_1</imageName>
+      <icon>null</icon>
+    </tile>
+    <tile>
+      <type>passable</type>
+      <x>1</x>
+      <y>25</y>
+      <imageName>grass_1</imageName>
+      <icon>null</icon>
+    </tile>
+    <tile>
+      <type>passable</type>
+      <x>1</x>
+      <y>26</y>
+      <imageName>grass_1</imageName>
+      <icon>null</icon>
+    </tile>
+    <tile>
+      <type>passable</type>
+      <x>1</x>
+      <y>27</y>
+      <imageName>grass_1</imageName>
+      <icon>null</icon>
+    </tile>
+    <tile>
+      <type>passable</type>
+      <x>1</x>
+      <y>28</y>
+      <imageName>grass_1</imageName>
+      <icon>null</icon>
+    </tile>
+    <tile>
+      <type>passable</type>
+      <x>1</x>
+      <y>29</y>
+      <imageName>grass_1</imageName>
+      <icon>null</icon>
+    </tile>
+    <tile>
+      <type>passable</type>
       <x>2</x>
       <y>0</y>
       <imageName>grass_1</imageName>
@@ -437,6 +587,13 @@
       <type>passable</type>
       <x>2</x>
       <y>19</y>
+      <imageName>grass_1</imageName>
+      <icon>null</icon>
+    </tile>
+    <tile>
+      <type>passable</type>
+      <x>2</x>
+      <y>20</y>
       <imageName>grass_1</imageName>
       <icon>null</icon>
     </tile>
