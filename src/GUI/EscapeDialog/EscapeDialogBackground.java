@@ -1,23 +1,27 @@
 package GUI.EscapeDialog;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.filechooser.FileFilter;
 
+import storage.converters.WorldLoader;
 import tools.Constants;
 import tools.ImageLoader;
+import world.World;
+import GUI.MainMenu.MainMenuPanel;
 import GUI.world.CustomButton;
-import GUI.world.GameDialog;
+import controllers.WorldController;
 
 public class EscapeDialogBackground extends JPanel implements ActionListener{
 	/* Initialize buttons */
@@ -95,6 +99,10 @@ public class EscapeDialogBackground extends JPanel implements ActionListener{
 
 		/*Set up the action listener for the buttons */
 		quitGame.addActionListener(this);
+		saveGame.addActionListener(this);
+		loadGame.addActionListener(this);
+		resumeGame.addActionListener(this);
+
 	}
 
 
@@ -107,9 +115,83 @@ public class EscapeDialogBackground extends JPanel implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-			this.escapeDialog.frame.disableCloseDialog();
-			escapeDialog.dispose();
+		if(e.getSource() == saveGame) {
+			String path = Constants.DATA_SCENARIOS;
+			File f = new File(path);
+			JFileChooser chooser = new JFileChooser(f);
+			Filter filter = new Filter(".level");
+			chooser.setFileFilter(filter);
+			int value = chooser.showOpenDialog(null);
+			String filepath = null;
+			if (value == JFileChooser.APPROVE_OPTION){
+				filepath = chooser.getSelectedFile().getPath();
+				try {
+					World world = WorldLoader.load(filepath);
+					escapeDialog.dispose();
+					new WorldController(world,world.getPlayers()[0]);
+				} catch (IOException e1) {
+					JOptionPane.showMessageDialog(escapeDialog, "Error loading " + filepath);
+				}
+			}
+		}
 
+		// if possible start the file chooser in this directory
+		//String fp = new File("").getAbsolutePath() + File.separatorChar + Constants.DATA_SAVES;
+
+		else if(e.getSource() == loadGame) {
+
+			String path = Constants.DATA_SAVES;
+			File f = new File(path);
+			JFileChooser chooser = new JFileChooser(f);
+			Filter filter = new Filter(".save");
+			chooser.setFileFilter(filter);
+			int value = chooser.showOpenDialog(null);
+			String filepath = null;
+			if (value == JFileChooser.APPROVE_OPTION){
+				filepath = chooser.getSelectedFile().getPath();
+				World world;
+				try {
+					world = WorldLoader.load(filepath);
+					escapeDialog.dispose();
+					new WorldController(world,world.getPlayers()[0]);
+				} catch (IOException e1) {
+					JOptionPane.showMessageDialog(escapeDialog, "Error loading " + filepath);
+				}
+			}
+
+
+		}
+		else if(e.getSource() == quitGame) {
+			new MainMenuPanel();
+			this.escapeDialog.frame.dispose();
+			escapeDialog.dispose();
+		}
+
+		else if(e.getSource() == resumeGame) {
+			escapeDialog.dispose();
+		}
+
+	}
+
+
+	private class Filter extends FileFilter{
+
+		private String extension;
+
+		public Filter(String str){
+			extension = str;
+		}
+
+		@Override
+		public boolean accept(File f) {
+			return f.getAbsolutePath().endsWith(extension) || f.isDirectory();
+
+		}
+
+		@Override
+		public String getDescription() {
+			return extension;
+		}
 	}
 
 }
