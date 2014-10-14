@@ -15,10 +15,12 @@ import game.units.UnitStats;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -28,12 +30,15 @@ import javax.swing.JPanel;
 
 import player.Player;
 import tools.Constants;
+import tools.ImageLoader;
 import tools.Log;
 import world.icons.Party;
 import world.tiles.PassableTile;
 import world.tiles.Tile;
+import GUI.Equipment.HeroEquipLayeredPane;
 import GUI.reusable.ItemPanel;
 import GUI.reusable.PartyPanel;
+import GUI.world.CustomButton;
 import GUI.world.MainFrame;
 
 /**
@@ -86,6 +91,7 @@ public class PartyDialog extends JDialog  {
 
 	private Tile tile; //Tile currently selected on world screen
 	private Party party; // Party on above tile.
+
 	/**
 	 * Constructs an extended JDialog, PartyDialog.
 	 *
@@ -99,6 +105,17 @@ public class PartyDialog extends JDialog  {
 		this.tile = tile;
 		this.party = (Party) tile.occupant();
 		this.isOwner = isOwner;
+        /*Create a new wrapper JPanel and set this dialog's content pane to this JPanel*/
+        JPanel wrapperPanel = new JPanel() {
+        	BufferedImage backgroundImage = ImageLoader.load(Constants.GUI_FILEPATH + "dialogBackground.png");
+
+      	  @Override
+    	  protected void paintComponent(Graphics g) {
+    	    super.paintComponent(g);
+    	    g.drawImage(backgroundImage, 0, 0, this.getWidth(), this.getHeight(), this);
+    	  }
+        };
+        this.setContentPane(wrapperPanel);
 
 		// Set Layout Manager
 		this.setLayout(new GridBagLayout());
@@ -114,6 +131,7 @@ public class PartyDialog extends JDialog  {
 
         // Description Label
         descriptionPanel = new JPanel();
+        descriptionPanel.setOpaque(false);
         initDescriptionPanel();
         descriptionPanel.setPreferredSize(new Dimension(100, PartyDialog.DESCRIPTION_HEIGHT));
         gc.gridx = 0;
@@ -123,8 +141,12 @@ public class PartyDialog extends JDialog  {
         this.add(descriptionPanel, gc);
 
         // Close Button
-        JButton closeButton = new JButton("X");
-        closeButton.addActionListener(new ActionListener(){
+		/*Declare and initialize the images for the buttons */
+		BufferedImage closeTownDefault = ImageLoader.load(Constants.GUI_TOWN_BUTTONS + "closeButton.png");
+		BufferedImage closeTownPressed = ImageLoader.load(Constants.GUI_TOWN_BUTTONS + "closeButtonClicked.png");
+		BufferedImage closeTownHover = ImageLoader.load(Constants.GUI_TOWN_BUTTONS + "closeButtonHover.png");
+		CustomButton button_leave = new CustomButton(closeTownDefault, closeTownPressed, closeTownHover);
+		button_leave.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				closeDialog();
@@ -134,11 +156,12 @@ public class PartyDialog extends JDialog  {
         gc.gridy = 0;
         gc.gridwidth = 1;
         gc.gridheight = 1;
-        this.add(closeButton, gc);
+        this.add(button_leave, gc);
 
         //Selected Panel
 
         selectedItemPanel = new SelectedItemPanel(this, panelDimension);
+        selectedItemPanel.setOpaque(false);
         selectedItemPanel.setBackground(Color.LIGHT_GRAY);
         gc.gridx = 0;
         gc.gridy = 1;
@@ -169,13 +192,22 @@ public class PartyDialog extends JDialog  {
         // god i hate swing
 
         // Hero Items Panel
+		HeroEquipLayeredPane heroLayer = new HeroEquipLayeredPane();
+        gc.gridx = 4;
+        gc.gridy = 4;
+        gc.gridwidth = 2;
+        gc.gridheight = 2;
+        this.add(heroLayer, gc);
+
+
+        /**
         heroItemsPanel = new HeroItemsPanel(this, party, new Dimension(COMPONENT_WIDTH, COMPONENT_HEIGHT / 2));
         heroItemsPanel.setBackground(Color.GREEN);
         gc.gridx = 4;
         gc.gridy = 4;
         gc.gridwidth = 2;
         gc.gridheight = 2;
-        this.add(heroItemsPanel, gc);
+        this.add(heroItemsPanel, gc);*/
 
 
 
@@ -195,14 +227,17 @@ public class PartyDialog extends JDialog  {
 
 		// set and add add title type
 		JLabel title = new JLabel(Constants.PartyPanelTitle);
+
 		title.setHorizontalAlignment(JLabel.LEFT);
 		title.setFont(Constants.HeaderFont);
+		title.setForeground(new Color(225,200,55));
 		this.descriptionPanel.add(title);
 
 		// set and add instruction type
 		JLabel description = new JLabel(Constants.PartyPanelDescription);
 		description.setHorizontalAlignment(JLabel.LEFT);
 		description.setFont(Constants.ParagraphFont);
+		description.setForeground(new Color(225,179,55));
 		this.descriptionPanel.add(description);
 
 
@@ -301,4 +336,7 @@ public class PartyDialog extends JDialog  {
 		// make magic
 		new PartyDialog(new MainFrame(), t, false);
 	}
+
+
+
 }
