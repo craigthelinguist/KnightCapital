@@ -28,13 +28,7 @@ public class ButtonsPanel extends JPanel  {
 	// the top-level view
 	private MainFrame gui;
 
-	private CustomButton inventoryButton;
-	private CustomButton newGame;
-
-	/*Place holder buttons*/
-	private JButton b1;
-	private JButton b2;
-	private JButton b3;
+	private CustomButton endTurnButton;
 
 	JLabel goldLabel = new JLabel();
 	JLabel gold = new JLabel();
@@ -57,31 +51,15 @@ public class ButtonsPanel extends JPanel  {
 		c.gridy = 0;
 		this.add(inventoryButton,c);*/
 
-
-		/*Declare and initialize the images for the button */
-		BufferedImage inventoryDefaultIcon = ImageLoader.load(Constants.GUI_FILEPATH + "inventoryDefaultTemp.png");
-		BufferedImage inventoryPressedIcon = ImageLoader.load(Constants.GUI_FILEPATH + "inventoryHoverTemp.png");
-		inventoryButton = new CustomButton(inventoryDefaultIcon, inventoryPressedIcon,null);
-		/*Place these buttons on a different panel and add that panel on this layeredPane(PanelMaster)*/
-		c.gridx = 1;
+		/*Declare and initialize the images for the buttons */
+		BufferedImage endTurn = ImageLoader.load(Constants.GUI_BUTTONS + "endTurn.png");
+		BufferedImage endTurnPressed = ImageLoader.load(Constants.GUI_BUTTONS + "endTurnClicked.png");
+		BufferedImage endTurnHover = ImageLoader.load(Constants.GUI_BUTTONS + "endTurnHover.png");
+		endTurnButton = new CustomButton(endTurn, endTurnPressed, endTurnHover);
+		c.gridx = 0;
 		c.gridy = 0;
-		this.add(inventoryButton,c);
+		this.add(endTurnButton,c);
 
-
-
-		/*Create the gold coin icon*/
-		BufferedImage goldImage = ImageLoader.load(Constants.GUI_FILEPATH + "goldIcon.png");
-		ImageIcon goldIcon = new ImageIcon (goldImage);
-		goldLabel = new JLabel(goldIcon);
-		c.insets = new Insets(1,0,8,0);
-		c.gridx = 0;
-		c.gridy = 1;
-		this.add(goldLabel,c);
-
-		b2 = new JButton("End Turn Placeholder");
-		c.gridx = 0;
-		c.gridy = 2;
-		this.add(b2,c);
 
 		setupActionListeners();
 
@@ -89,11 +67,11 @@ public class ButtonsPanel extends JPanel  {
 
 	private void setupActionListeners(){
 
-		b2.addActionListener(new ActionListener(){
+		endTurnButton.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				gui.buttonPressed(b2);
+				gui.buttonPressed("EndTurn");
 			}
 
 

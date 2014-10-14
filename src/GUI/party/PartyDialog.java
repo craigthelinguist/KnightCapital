@@ -161,7 +161,6 @@ public class PartyDialog extends JDialog  {
         // Party Items Panel
         this.partyItemsPanel = new PartyItemsPanel(this, new Dimension(COMPONENT_WIDTH, COMPONENT_HEIGHT / 2));
         partyItemsPanel.setBackground(Color.BLUE);
-        partyItemsPanel.add(new ItemPanel(party));
         gc.gridx = 4;
         gc.gridy = 1;
         gc.gridwidth = 2;
@@ -185,8 +184,7 @@ public class PartyDialog extends JDialog  {
 	}
 
 	/**
-	 * Construct elements for a new JPanel that will instruct the user on what the
-	 * fuck this dialog does.
+	 * Construct elements for a new JPanel that will instruct the user on what the dialog does.
 	 */
 	private void initDescriptionPanel() {
 
@@ -213,14 +211,16 @@ public class PartyDialog extends JDialog  {
 	/**
 	 * Updates the selectedPanel with selected item
 	 */
-	private void updateSelectedWithItem(Item item) {
+	protected void updateSelectedWithItem(Item item) {
+		System.out.println("[Party Dialog]Updating Selected Item");
 		this.selectedItemPanel.setSelectedItem(item);
 	}
-	
+
 	/**
 	 * Updates the selectedPanel with selected unit
 	 */
-	private void updateSelectedWithUnit(Creature unit) {
+	protected void updateSelectedWithUnit(Creature unit) {
+		System.out.println("[Party Dialog]Updating Selected Unit");
 		this.selectedItemPanel.setSelectedUnit(unit);
 	}
 
@@ -234,8 +234,8 @@ public class PartyDialog extends JDialog  {
 		this.dispose();
 	}
 
-	/** 
-	 * Set that shit, not sure if this would be needed 
+	/**
+	 * Set that shit, not sure if this would be needed
 	 **/
 	public void setTile(Tile tile) {
 		this.tile = tile;
@@ -252,7 +252,7 @@ public class PartyDialog extends JDialog  {
 	public Party getParty() {
 		return this.party;
 	}
-	
+
 	public static void main(String[] batman) {
 		// Create PLayer and a hero
 		Player p = new Player("John The Baptist",4);
@@ -260,14 +260,14 @@ public class PartyDialog extends JDialog  {
 
 		// Give party an item
 		Buff[] buffsArrows= new Buff[]{ Buff.newTempBuff(Stat.DAMAGE,1) };
-		PassiveItem arrows = new PassiveItem("poisonarrow", "poisonarrow", "Poisonous arrows whose feathers were made from the hairs of Mizza. All archers in party gain +1 damage",buffsArrows, Target.PARTY);
-		
+		PassiveItem arrows = new PassiveItem("poisonarrow", "poisonarrow", "Poisonous arrows whose feathers were made from the hairs of Mizza. All archers in party gain +1 damage",buffsArrows, Target.PARTY, null);
+
 		// give hero two items
 		Buff[] buffsAmulet = new Buff[]{ Buff.newTempBuff(Stat.DAMAGE,5) };
-		EquippedItem amulet = new EquippedItem("amulet", "amulet", "An amulet that grants sickening gains.\n +5 Damage",buffsAmulet,Target.HERO);
+		EquippedItem amulet = new EquippedItem("amulet", "amulet", "An amulet that grants sickening gains.\n +5 Damage",buffsAmulet,Target.HERO, "liontalisman.xml");
 
 		Buff[] buffsWeapon = new Buff[]{ Buff.newPermaBuff(Stat.DAMAGE,5), Buff.newTempBuff(Stat.ARMOUR, 10) };
-		EquippedItem weapon = new EquippedItem("weapon", "weapon", "Sword",buffsWeapon,Target.HERO);
+		EquippedItem weapon = new EquippedItem("weapon", "weapon", "Sword",buffsWeapon,Target.HERO, null);
 
 		Unit u3 = new Unit("knight","knight",p,new UnitStats(100,25,40,1,AttackType.MELEE));
 		Unit u4 = new Unit("archer","knight",p,new UnitStats(60,15,70,0,AttackType.RANGED));
@@ -275,10 +275,10 @@ public class PartyDialog extends JDialog  {
 		Unit u6 = new Unit("knight","knight",p,new UnitStats(100,25,40,1,AttackType.MELEE));
 		Creature[][] members = Party.newEmptyParty();
 		members[0][0] = u3;
-		members[1][0] = u6;
-		members[2][0] = hero;
-		members[0][1] = u4;
-		members[2][1] = u5;
+		members[0][1] = u6;
+		members[0][2] = hero;
+		members[1][0] = u4;
+		members[1][1] = u5;
 		Party party = new Party(hero, p, members);
 		party.refresh();
 
@@ -291,8 +291,8 @@ public class PartyDialog extends JDialog  {
 		party.addItem(arrows);
 		amulet.equipTo(hero);
 		weapon.equipTo(hero);
-		
-		
+
+
 		// Create new tile to place party on,
 		// party must be on a tile
 		Tile t = PassableTile.newDirtTile(0, 0);

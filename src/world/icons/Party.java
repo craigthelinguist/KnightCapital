@@ -49,9 +49,9 @@ public class Party extends WorldIcon implements Iterable<Creature>{
 	 * @param p2: position of second party member.
 	 */
 	public void swap(Point p1, Point p2){
-		Creature c1 = members[p1.x][p1.y];
-		members[p1.x][p1.y] = members[p2.x][p2.y];
-		members[p2.x][p2.y] = c1;
+		Creature c1 = members[p1.y][p1.x];
+		members[p1.y][p1.x] = members[p2.y][p2.x];
+		members[p2.y][p2.x] = c1;
 	}
 
 	/**
@@ -60,7 +60,7 @@ public class Party extends WorldIcon implements Iterable<Creature>{
 	 * @param y: row
 	 */
 	public Creature getMember(int x, int y){
-		return members[x][y];
+		return members[y][x];
 	}
 
 	/**
@@ -183,8 +183,8 @@ public class Party extends WorldIcon implements Iterable<Creature>{
 	 * @param y: row
 	 */
 	public Item getItem(int x, int y){
-		if(inventory[x][y] != null) {
-			return inventory[x][y];
+		if(inventory[y][x] != null) {
+			return inventory[y][x];
 		}
 		else return null;
 	}
@@ -404,8 +404,8 @@ public class Party extends WorldIcon implements Iterable<Creature>{
 		return (int) ((sum/count)*100);
 	}
 
-	/** 
-	 * Create a quick creature array for quick testing os partys 
+	/**
+	 * Create a quick creature array for quick testing os partys
 	 * - myles
 	 **/
 	public static Creature[][] quickKnightParty(Player p) {

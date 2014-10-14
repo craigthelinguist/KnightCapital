@@ -81,7 +81,9 @@ public class WorldRenderer {
 		graphics.drawString("Current Origin: ("+camera.getOriginX()+","+camera.getOriginY()+")", 30, 70);
 		graphics.drawString("Arrow keys to move camera", 30, 110);
 		graphics.drawString("Press r & e to rotate cw & ccw", 30, 130);
-
+		graphics.setColor(Color.RED);
+		String gold = ""+controller.getPlayer().getGold();
+		graphics.drawString("Gold: "+ gold, 30, 150);
 
 	}
 
@@ -117,17 +119,19 @@ public class WorldRenderer {
 				Point ptCart = new Point(x,y);
 				if (!isPointOnScreen(ptCart,world.dimensions)) continue;
 
-				// add tile to buffer
+				// add tile to buffer)
 				Tile tile = world.getTile(x,y);
+				if (tile instanceof CityTile) continue;
 				Point ptRotated = Geometry.rotateByCamera(ptCart, camera, world.dimensions);
-				
+
+
 				int intensity = 0;
 				if (tile == controller.getSelectedTile()) intensity = 55;
 				else if (controller.isHighlighted(ptCart)) intensity = 25;
-				
+
 				CartesianMapping<Tile> tileToDraw = new CartesianMapping<>(-2,tile,ptRotated,intensity);
 				drawBuffer.add(tileToDraw);
-				
+
 				// add occupant to buffer
 				if (tile.occupant() != null){
 					WorldIcon occupant = tile.occupant();
@@ -135,7 +139,7 @@ public class WorldRenderer {
 					CartesianMapping<WorldIcon> iconToDraw = new CartesianMapping<>(1,occupant,ptRotatedIcon,0);
 					drawBuffer.add(iconToDraw);
 				}
-				
+
 			}
 		}
 	}
@@ -151,7 +155,7 @@ public class WorldRenderer {
 		final World world = controller.getWorld();
 		final Camera camera = controller.getCamera();
 		Set<? extends City> citySet = world.getCities();
-		
+
 		// get mappings and store the tiles to draw them from in a list
 		for (City city : citySet){
 			CityTile ct = null;
@@ -188,7 +192,7 @@ public class WorldRenderer {
 
 		int imageHeight = city.getImageHeight();
 		int necessaryHeight = TILE_HT*City.WIDTH;
-		int offsetY = imageHeight-necessaryHeight;
+		int offsetY = imageHeight - necessaryHeight;
 		if (offsetY > 0) ptIso.y = ptIso.y - offsetY;
 		int OFFSET = HALF_TILE_HT*City.WIDTH;
 		ptIso.y = ptIso.y - OFFSET;
@@ -228,10 +232,13 @@ public class WorldRenderer {
 
 	private static void drawTile(Graphics graphics, CartesianMapping<Tile> mapping, Camera camera) {
 		Point ptIso = mapping.point;
+		int ht = mapping.thing.getTileHeight();
+		int dy = ht - Constants.TILE_HT;
+		ptIso.y = ptIso.y - dy;
 		if (mapping.intensity != 0) mapping.thing.drawHighlighted(graphics, ptIso.x, ptIso.y, mapping.intensity);
 		else mapping.thing.draw(graphics, ptIso.x, ptIso.y);
 	}
-	
+
 	/**
 	 * Return a camera view of the centre of the given world that is north-oriented.
 	 * @param world: the world you're viewing.

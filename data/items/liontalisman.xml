@@ -1,9 +1,10 @@
 <item>
-	<name>Lion's Talisman</name>
+	<name>Talisman of the Lion</name>
 	<image>amulet</image>
-	<description>grants sickening gains</description>
+	<description>ur a lion bro</description>
 	<type>passive</type>
 	<target>HERO</target>
+   <filename>liontalisman.xml</filename>
 	<buff>
 		<stat>DAMAGE</stat>
 		<amount>5</amount>

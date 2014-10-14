@@ -1,4 +1,5 @@
 
+
 package controllers;
 
 import game.effects.Buff;
@@ -20,6 +21,7 @@ import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -43,6 +45,7 @@ import renderer.Camera;
 import renderer.WorldRenderer;
 import storage.TemporaryLoader;
 import storage.XMLReader;
+import storage.converters.WorldLoader;
 import tools.Geometry;
 import tools.Constants;
 import world.World;
@@ -132,6 +135,7 @@ public class WorldController{
 				e.printStackTrace();
 			}
 //			client = new Client("130.195.6.98", 45612);
+
 
 		}
 
@@ -231,6 +235,7 @@ public class WorldController{
 
 						// add to city; remove from world map
 						city.setVisitors(party);
+						
 						world.setIcon(null, selectedTile.X, selectedTile.Y);
 
 					}
@@ -308,9 +313,9 @@ public class WorldController{
 	 * Player has clicked a button.
 	 * @param button: the button they clicked.
 	 */
-	public void buttonPressed(JButton button){
+	public void buttonPressed(String button){
 
-		if (button.getText().equals("End Turn Placeholder")){
+		if (button.equals("EndTurn")){
 			world.endTurn();
 			deselect();
 			gui.updateInfo(null);
@@ -410,20 +415,25 @@ public class WorldController{
 	}
 
 
-	public static void main(String[] args) throws FileNotFoundException{
-		aaron_main(args);
+	public static void main(String[] args) throws IOException{
+		aaron_main_2(args);
+	}
+
+	public static void aaron_main_2(String[] args) throws IOException{
+		World world = WorldLoader.load(Constants.DATA_WORLDS + "test_save.xml");
+		new WorldController(world,world.getPlayers()[0]);
 	}
 
 	public static void aaron_main(String[] args){
 		/*Loading items*/
 		Buff[] buffsAmulet = new Buff[]{ Buff.newTempBuff(Stat.DAMAGE,5) };
-		PassiveItem amulet = new PassiveItem("amulet", "amulet", "An amulet that grants sickening gains.\n +5 Damage",buffsAmulet,Target.HERO);
+		PassiveItem amulet = new PassiveItem("amulet", "amulet", "An amulet that grants sickening gains.\n +5 Damage",buffsAmulet,Target.HERO, "liontalisman.xml");
 
 		Buff[] buffsWeapon = new Buff[]{ Buff.newPermaBuff(Stat.DAMAGE,5), Buff.newTempBuff(Stat.ARMOUR, 10) };
-		PassiveItem weapon = new PassiveItem("weapon", "weapon", "A powerful weapon crafted by the mighty Mizza +5 Damage",buffsWeapon,Target.HERO);
+		PassiveItem weapon = new PassiveItem("weapon", "weapon", "A powerful weapon crafted by the mighty Mizza +5 Damage",buffsWeapon,Target.HERO,null);
 
 		Buff[] buffsArrows= new Buff[]{ Buff.newTempBuff(Stat.DAMAGE,1) };
-		PassiveItem arrows = new PassiveItem("poisonarrow", "poisonarrow", "Poisonous arrows whose feathers were made from the hairs of Mizza. All archers in party gain +1 damage",buffsArrows, Target.PARTY);
+		PassiveItem arrows = new PassiveItem("poisonarrow", "poisonarrow", "Poisonous arrows whose feathers were made from the hairs of Mizza. All archers in party gain +1 damage",buffsArrows, Target.PARTY,null);
 
 
 
@@ -500,13 +510,13 @@ public class WorldController{
 	public static void ewan_main(String[] args){
 		/*Loading items*/
 		Buff[] buffsAmulet = new Buff[]{ Buff.newTempBuff(Stat.DAMAGE,5) };
-		PassiveItem amulet = new PassiveItem("amulet", "amulet", "An amulet that grants sickening gains.\n +5 Damage",buffsAmulet,Target.HERO);
+		PassiveItem amulet = new PassiveItem("amulet", "amulet", "An amulet that grants sickening gains.\n +5 Damage",buffsAmulet,Target.HERO, "liontalisman.xml");
 
 		Buff[] buffsWeapon = new Buff[]{ Buff.newPermaBuff(Stat.DAMAGE,5), Buff.newTempBuff(Stat.ARMOUR, 10) };
-		PassiveItem weapon = new PassiveItem("weapon", "weapon", "A powerful weapon crafted by the mighty Mizza +5 Damage",buffsWeapon,Target.HERO);
+		PassiveItem weapon = new PassiveItem("weapon", "weapon", "A powerful weapon crafted by the mighty Mizza +5 Damage",buffsWeapon,Target.HERO, null);
 
 		Buff[] buffsArrows= new Buff[]{ Buff.newTempBuff(Stat.DAMAGE,1) };
-		PassiveItem arrows = new PassiveItem("poisonarrow", "poisonarrow", "Poisonous arrows whose feathers were made from the hairs of Mizza. All archers in party gain +1 damage",buffsArrows, Target.PARTY);
+		PassiveItem arrows = new PassiveItem("poisonarrow", "poisonarrow", "Poisonous arrows whose feathers were made from the hairs of Mizza. All archers in party gain +1 damage",buffsArrows, Target.PARTY, null);
 
 
 		ItemIcon amuletChest = new ItemIcon(amulet);

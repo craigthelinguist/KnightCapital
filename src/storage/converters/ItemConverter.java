@@ -35,11 +35,11 @@ public class ItemConverter implements Converter{
 
 	@Override
 	public void marshal(Object source, HierarchicalStreamWriter writer, MarshallingContext context) {
-		
+
 		Item item = (Item)source;
-		
-		
-		
+
+		//writer.setValue(item.getFilename());
+
 		// write attributes
 		writer.startNode("name");
 			writer.setValue(item.getName());
@@ -56,7 +56,7 @@ public class ItemConverter implements Converter{
 		writer.startNode("target");
 			writer.setValue(item.getTarget().toString());
 		writer.endNode();
-		
+
 		// write effects
 		Effect[] effects = item.getEffects();
 		HealConverter healConverter = new HealConverter();
@@ -70,16 +70,16 @@ public class ItemConverter implements Converter{
 			}
 			else if (effect instanceof Heal){
 				writer.startNode("heal");
-				healConverter.marshal(effect, writer, context);				
+				healConverter.marshal(effect, writer, context);
 				writer.endNode();
 			}
 		}
-		
+
 	}
 
 	@Override
 	public Object unmarshal(HierarchicalStreamReader reader, UnmarshallingContext context) {
-		
+
 		if (!reader.hasMoreChildren()){
 			XStream stream = new XStream();
 			stream.alias("item", Item.class);
@@ -88,7 +88,8 @@ public class ItemConverter implements Converter{
 			File file = new File(Constants.DATA_ITEMS + filename);
 			return (Item)(stream.fromXML(file));
 		}
-		
+
+
 		reader.moveDown();
 			String name = reader.getValue();
 		reader.moveUp();
@@ -104,11 +105,14 @@ public class ItemConverter implements Converter{
 		reader.moveDown();
 			Target target = Target.valueOf(reader.getValue());
 		reader.moveUp();
-		
+		reader.moveDown();
+			String filename = reader.getValue();
+		reader.moveUp();
+
 		HealConverter healConverter = new HealConverter();
 		BuffConverter buffConverter = new BuffConverter();
 		LinkedList<Effect> effects = new LinkedList<>();
-		
+
 		while (reader.hasMoreChildren()){
 			reader.moveDown();
 				String nodeName = reader.getNodeName();
@@ -119,33 +123,33 @@ public class ItemConverter implements Converter{
 				else if (nodeName.equals("heal")){
 					Heal heal = (Heal) healConverter.unmarshal(reader, context);
 					effects.add(heal);
-					
+
 					if (type.equals("equipped")){
 						throw new RuntimeException("Equipped items can't have healing effects");
 					}
-					
+
 				}
 				else throw new RuntimeException("Unknown effect while loading item from xml");
-			reader.moveUp();		
+			reader.moveUp();
 		}
-		
+
 		Effect[] effectsArray = new Effect[effects.size()];
 		for (int i = 0; i < effects.size(); i++){
 			effectsArray[i] = effects.get(i);
 		}
-		
+
 		Item item;
 		if (type.equals("passive")){
-			item = new PassiveItem(name,imageName,description,effectsArray,target);
+			item = new PassiveItem(name,imageName,description,effectsArray,target,filename);
 		}
 		else if (type.equals("charged")){
-			item = new ChargedItem(name,imageName,description,effectsArray,target);
+			item = new ChargedItem(name,imageName,description,effectsArray,target,filename);
 		}
 		else if (type.equals("equipped")){
-			item = new EquippedItem(name,imageName,description,(Buff[])effectsArray,target);
+			item = new EquippedItem(name,imageName,description,(Buff[])effectsArray,target,filename);
 		}
 		else throw new RuntimeException("Unknown kind of item: " + type);
 		return item;
-		
+
 	}
 }

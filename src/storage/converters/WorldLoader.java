@@ -259,9 +259,9 @@ public class WorldLoader {
 		Hero h1 = HeroLoader.load("ovelia.xml",player1);
 		Creature[][] members = Party.newEmptyParty();
 		members[0][0] = u1;
-		members[2][0] = u2;
+		members[0][2] = u2;
 		members[1][1] = u3;
-		members[2][1] = h1;
+		members[1][2] = h1;
 		Party p1 = new Party(h1, player1, members);
 		tiles[3][5].setIcon(p1);
 
@@ -271,15 +271,21 @@ public class WorldLoader {
 		Unit u6 = UnitLoader.load("archer.xml",player1);
 		Hero h2 = HeroLoader.load("gaben.xml",player1);
 		Creature[][] members2 = Party.newEmptyParty();
-		members[0][0] = u1;
-		members[2][0] = u2;
-		members[1][1] = u3;
-		members[2][1] = h1;
+		members2[0][0] = u1;
+		members2[0][2] = u2;
+		members2[1][1] = u3;
+		members2[1][2] = h2;
 		Party p2 = new Party(h2, player2, members2);
 		tiles[10][10].setIcon(p2);
 
+		World world = new World(tiles,players,cities);
 		return new World(tiles, players, cities);
 
+	}
+
+	public static void main(String[] args) throws IOException{
+		World world = WorldLoader.load(Constants.DATA_WORLDS + "test_save.xml");
+		new WorldController(world,world.getPlayers()[0]);
 	}
 
 }
