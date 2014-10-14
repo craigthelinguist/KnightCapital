@@ -192,9 +192,6 @@ public class World {
 			}
 		}
 
-		//check to see if item has been added
-		party.printInventory();
-
 		// do it in this order or you disappear if you move to tile you're already
 		// standing on :^)
 		tileLocation.setIcon(null);

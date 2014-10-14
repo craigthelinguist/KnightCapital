@@ -33,11 +33,9 @@ public class TownItemPanel extends JPanel{
 	private final int INVENTORY_COLS = Party.INVENTORY_COLS;
 
 	private TownExchangePanel master;
-	private Party party;
 
 	protected TownItemPanel(TownExchangePanel master, Party party, City city){
 		this.master = master;
-		this.party = party;
 		this.setPreferredSize(new Dimension(INVENTORY_COLS*ITEM_WD+1,INVENTORY_ROWS*ITEM_HT+1));
 	}
 
@@ -50,7 +48,7 @@ public class TownItemPanel extends JPanel{
 			for (int x = 0; x < INVENTORY_COLS; x++){
 
 				// don't draw if these cases are true
-				Item item = party.getItem(x, y);
+				Item item = master.getParty(this).getItem(x, y);
 				boolean weShouldDraw = true;
 				if (item == null) weShouldDraw = false;
 				if (master.getDraggedPanel() != null && master.getDraggedPanel() == this){
@@ -84,10 +82,6 @@ public class TownItemPanel extends JPanel{
 		int y = withinPanel.y/CELL_HEIGHT;
 		if (x >= 0 && x < INVENTORY_COLS && y >= 0 && y < INVENTORY_ROWS) return new Point(x,y);
 		else return null;
-	}
-
-	public Party getParty(){
-		return this.party;
 	}
 
 }
