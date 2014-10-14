@@ -73,7 +73,8 @@ public abstract class Creature {
 	}
 
 	/**
-	 * Damage this creature by the amount specified.
+	 * Damage this creature by the amount specified. A creature cannot have its
+	 * health reduced below zero.
 	 * @param damageDealt: amount of damage this creature has suffered.
 	 */
 	public void damage(int damageDealt){
@@ -81,7 +82,7 @@ public abstract class Creature {
 		int hp = stats.getCurrent(Stat.HEALTH);
 		damageDealt = damageDealt - totalArmour;
 		if (damageDealt <= 0) return;
-		hp -= damageDealt;
+		hp = Math.max(0, hp-damageDealt);
 		stats.setCurrent(Stat.HEALTH, hp);
 	}
 
@@ -95,6 +96,7 @@ public abstract class Creature {
 		int hp = stats.getCurrent(Stat.HEALTH);
 		if (amount <= 0 || hp <= 0) return;
 		hp = Math.min(hpTotal, hp+amount);
+		stats.setCurrent(Stat.HEALTH, hp);
 	}
 
 	/**

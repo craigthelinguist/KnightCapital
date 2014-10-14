@@ -25,7 +25,7 @@ public class CreatureTests {
 		int totalHP = unit.get(Stat.HEALTH);
 		int dmg = 20;
 		unit.damage(dmg);
-		assert(unit.getHealth() == totalHP-dmg);
+		assertTrue(unit.getHealth() == totalHP-dmg);
 	}
 
 	@Test
@@ -34,31 +34,34 @@ public class CreatureTests {
 		int totalHP = unit.get(Stat.HEALTH);
 		int dmg = totalHP*2;
 		unit.damage(dmg);
-		assert(unit.getHealth() == 0);
+		assertTrue("should be 0 but was " + unit.getHealth(),unit.getHealth() == 0);
 	}
 
 	@Test
 	public void testHeal(){
 		generateUnit();
 		int totalHP = unit.get(Stat.HEALTH);
-		int heal = 40;
-		int dmg = 20;
+		int heal = 100;
+		int dmg = 20 - unit.get(Stat.ARMOUR);
 		unit.damage(dmg);
-		assert(unit.getHealth() == totalHP - dmg);
+		assertTrue(unit.getHealth() == totalHP - dmg);
 		unit.heal(heal);
-		assert(unit.getHealth() == totalHP);
+		assertTrue("should have " + totalHP + " health but has " +unit.getHealth(),unit.getHealth() == totalHP);
 	}
 
 	@Test
 	public void testHealWhenDead(){
 		generateUnit();
 		int totalHP = unit.get(Stat.HEALTH);
-		unit.damage(totalHP);
-		assert(unit.getHealth() == 0);
-		unit.heal(totalHP);
-		assert(unit.getHealth() == 0);
+		int damage = totalHP + unit.get(Stat.ARMOUR);
+		unit.damage(damage);
+		assertTrue(unit.getHealth() == 0);
+		unit.heal(damage);
+		assertTrue(unit.getHealth() == 0);
 		unit.fullHeal();
-		assert(unit.getHealth() == 0);
+		assertTrue(unit.getHealth() == 0);
+		unit.revive(30);
+		assertTrue(unit.getHealth() == 30);
 	}
 
 	@Test
@@ -66,7 +69,7 @@ public class CreatureTests {
 		generateUnit();
 		int totalHP = unit.get(Stat.HEALTH);
 		unit.damage(totalHP);
-		
+
 	}
 
 	@Test
@@ -74,7 +77,7 @@ public class CreatureTests {
 		generateUnit();
 		unit.fullHeal();
 		int percent = (int) unit.healthiness();
-		assert(percent == 100);
+		assertTrue(percent == 100);
 	}
 
 	@Test
@@ -83,7 +86,7 @@ public class CreatureTests {
 		int half = unit.get(Stat.HEALTH)/2;
 		unit.setCurrent(Stat.HEALTH, half);
 		int percent = (int) unit.healthiness();
-		assert(percent == 50);
+		assertTrue(percent == 50);
 	}
 
 	@Test
@@ -91,12 +94,12 @@ public class CreatureTests {
 		generateUnit();
 		unit.damage(100);
 		int percent = (int) unit.healthiness();
-		assert(percent == 0);
+		assertTrue(percent == 0);
 	}
 
 	public void generateUnit(){
 		player = new Player("tupac",1);
-		UnitStats stats = new UnitStats(100,25,15,10,AttackType.MELEE);
+		UnitStats stats = new UnitStats(100,25,15,0,AttackType.MELEE);
 		unit = new Unit("Knight","knight",player,stats);
 	}
 

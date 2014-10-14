@@ -618,34 +618,7 @@ public class WorldController{
 
 
 
-	/**
-	 * When u don't want a gui use this for testing purposes only
-	 */
-	@Deprecated
-	private WorldController(World w, Player p, boolean af){
-		world = w;
-		player = p;
-		camera = WorldRenderer.getCentreOfWorld(w);
-		selected = null;
-		highlightedTiles = new HashSet<>();
-	}
 
-	/**
-	 * To test other classes, if they need a WorldController.
-	 * @return
-	 */
-	public static WorldController getTestWorldControllerNoGui(){
-		Player p = new Player("John The Baptist",4);
-		World w = TemporaryLoader.loadWorld("world_temporary.txt",p);
-		HeroStats stats_hero = new HeroStats(60,10,80,0,6,8);
-		Hero hero = new Hero("ovelia",p,stats_hero);
-		Creature[][] members = Party.newEmptyParty();
-		members[0][0] = hero;
-		Party party = new Party(hero, p, members);
-		hero.setMovePts(10);
-		return new WorldController(w,p,true);
-
-	}
 	/**
 	 * This is a test for creating a world with custom tiles.
 	 * @return World
