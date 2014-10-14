@@ -212,7 +212,7 @@ public class WorldLoader {
 
 	}
 
-	public static void main(String[] args){
+	public static World exampleWorld(){
 
 		Player player1 = new Player("Defenders of Light", 1);
 		Player player2 = new Player("Spawn of Gaben", 2);
@@ -257,9 +257,9 @@ public class WorldLoader {
 		Unit u2 = UnitLoader.load("knight.xml",player1);
 		Unit u3 = UnitLoader.load("archer.xml",player1);
 		Hero h1 = HeroLoader.load("ovelia.xml",player1);
-		Creature[][] members = new Creature[3][3];
+		Creature[][] members = Party.newEmptyParty();
 		members[0][0] = u1;
-		members[0][2] = u2;
+		members[2][0] = u2;
 		members[1][1] = u3;
 		members[2][1] = h1;
 		Party p1 = new Party(h1, player1, members);
@@ -270,16 +270,15 @@ public class WorldLoader {
 		Unit u5 = UnitLoader.load("knight.xml",player1);
 		Unit u6 = UnitLoader.load("archer.xml",player1);
 		Hero h2 = HeroLoader.load("gaben.xml",player1);
-		Creature[][] members2 = new Creature[3][3];
-		members2[0][0] = u4;
-		members2[1][0] = h2;
-		members2[2][0] = u5;
-		members2[1][1] = u6;
+		Creature[][] members2 = Party.newEmptyParty();
+		members[0][0] = u1;
+		members[2][0] = u2;
+		members[1][1] = u3;
+		members[2][1] = h1;
 		Party p2 = new Party(h2, player2, members2);
 		tiles[10][10].setIcon(p2);
 
-		World world = new World(tiles, players, cities);
-		WorldController wc = new WorldController(world, player1);
+		return new World(tiles, players, cities);
 
 	}
 

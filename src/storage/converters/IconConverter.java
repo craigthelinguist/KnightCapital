@@ -27,12 +27,12 @@ public class IconConverter implements Converter{
 
 	@Override
 	public void marshal(Object object, HierarchicalStreamWriter writer, MarshallingContext context) {
-		
+
 			if (object == null){
 				writer.setValue("null");
 				return;
 			}
-		
+
 			writer.startNode("type");
 				if (object instanceof Party) writer.setValue("Party");
 				else if (object instanceof ItemIcon) writer.setValue("ItemIcon");
@@ -40,43 +40,45 @@ public class IconConverter implements Converter{
 			if (object instanceof Party) marshalParty(object,writer,context);
 			else if (object instanceof ItemIcon) marshalItemIcon(object,writer,context);
 			else throw new RuntimeException("I'm martialling some icon that I do'nt recognise");
-		
+
 	}
-	
+
 	private void marshalItemIcon(Object object, HierarchicalStreamWriter writer, MarshallingContext context) {
-		
+
 		ItemIcon ii = (ItemIcon)object;
 		Item item = ii.item;
-		
+
 		writer.startNode("item");
 			new ItemConverter().marshal(item, writer, context);
 		writer.endNode();
-		
+
 	}
-	
+
 	public void marshalParty(Object object, HierarchicalStreamWriter writer, MarshallingContext context) {
-		
+
 		Party party = (Party)object;
 		Player owner = party.getOwner();
-		
+
 		writer.startNode("owner");
 			new PlayerConverter().marshal(owner, writer, context);
 		writer.endNode();
-		
+
 		Creature[][] creatures = party.getMembers();
-		
-		for (int row = 0; row < creatures.length; row++){
-			for (int col = 0; col < creatures[row].length; col++){
+
+		for (int col = 0; col < creatures.length; col++){
+			for (int row = 0; row < creatures[col].length; row++){
 				if (creatures[col][row] == null) continue;
-				
+
+				System.out.printf("(%d,%d)\n", col,row);
+
 				writer.startNode("member");
-					writer.startNode("row");
-						writer.setValue(""+row);
-					writer.endNode();
 					writer.startNode("col");
 						writer.setValue(""+col);
 					writer.endNode();
-				
+					writer.startNode("row");
+						writer.setValue(""+row);
+					writer.endNode();
+
 					Creature creature = creatures[col][row];
 					if (creature instanceof Unit){
 						writer.startNode("unit");
@@ -94,77 +96,85 @@ public class IconConverter implements Converter{
 				writer.endNode();
 			}
 		}
-		
+
 		Item[][] items = party.getInventory();
-		for (int row = 0; row < items.length; row++){
-			for (int col = 0; col < items[row].length; col++){
-				
+		if (items == null){
+			System.out.println("stop");
+		}
+
+		int count = 0;
+		for (int i = 0; i < items.length; i++){
+			for (int j = 0; j < items[i].length; j++){
+				count++;
+			}
+		}
+		System.out.println(count);
+
+		for (int col = 0; col < items.length; col++){
+			for (int row = 0; row < items[col].length; row++){
 				if (items[col][row] == null) continue;
 				Item item = items[col][row];
-				
 				writer.startNode("item");
 					new ItemConverter().marshal(item,writer,context);
 				writer.endNode();
-				
 			}
 		}
-		
 	}
-		
+
 	@Override
 	public Object unmarshal(HierarchicalStreamReader reader, UnmarshallingContext context) {
-		
+
 		if (!reader.hasMoreChildren()){
 			return null;
 		}
-		
+
 		reader.moveDown();
 			String type = reader.getValue();
 		reader.moveUp();
-		
+
 		if (type.equals("Party")) return unmarshalParty(reader,context);
 		else if (type.equals("ItemIcon")) return unmarshalItemIcon(reader,context);
 		else throw new RuntimeException("we have a world icon that isn't party or itemIcon");
 	}
-	
+
 	private ItemIcon unmarshalItemIcon(HierarchicalStreamReader reader, UnmarshallingContext context){
 		ItemConverter ic = new ItemConverter();
 		Item item = (Item)ic.unmarshal(reader, context);
 		return new ItemIcon(item);
 	}
-	
+
 	public Party unmarshalParty(HierarchicalStreamReader reader, UnmarshallingContext context){
-		
+
 		// read in owner of party
 		Player player = null;
 		reader.moveDown();
 			Object obj = new PlayerConverter().unmarshal(reader, context);
 			if (obj != null) player = (Player)obj;
 		reader.moveUp();
-		
+
 		// read the members and items
 		Creature[][] members = Party.newEmptyParty();
 		List<Item> items = new ArrayList<>();
 		while (reader.hasMoreChildren()){
 			reader.moveDown();
-		
+
 				String node = reader.getNodeName();
 				if (node.equals("member")){
-					unmarshalMember(reader,context,members,player);		
+					unmarshalMember(reader,context,members,player);
 				}
 				else if (node.equals("item")){
 					Item item = (Item) new ItemConverter().unmarshal(reader, context);
 					items.add(item);
 				}
-			
-			reader.moveUp();	
+
+			reader.moveUp();
 		}
-		
+
 		// validate items
 		if (items.size() >= Party.INVENTORY_SIZE){
 			throw new RuntimeException("error loading party! too many items.");
 		}
-		
+
 		// get the hero
 		Hero hero = null;
 		for (int i = 0; i < members.length; i++){
@@ -179,33 +189,33 @@ public class IconConverter implements Converter{
 				}
 			}
 		}
-		
+
 		// create party
 		Party party = new Party(hero,player,members);
-		
+
 		// add items to party
 		for (Item item : items){
 			party.addItem(item);
 		}
-		
+
 		// finished
 		return party;
 	}
-	
+
 	private void unmarshalMember(HierarchicalStreamReader reader, UnmarshallingContext context, Creature[][] members, Player player){
-		
+
 		// read the position
-		reader.moveDown();
-			int row = Integer.parseInt(reader.getValue());
-		reader.moveUp();
 		reader.moveDown();
 			int col = Integer.parseInt(reader.getValue());
 		reader.moveUp();
-		
+		reader.moveDown();
+			int row = Integer.parseInt(reader.getValue());
+		reader.moveUp();
+
 		if (members[col][row] != null){
 			throw new RuntimeException("loading 2 creatures into the same spot in the party");
 		}
-		
+
 		// read the creature
 		reader.moveDown();
 		String node = reader.getNodeName();
@@ -221,7 +231,7 @@ public class IconConverter implements Converter{
 		}
 		else throw new RuntimeException("party member specified that isn't a hero or a unit: " + node);
 		reader.moveUp();
-		
+
 	}
-	
+
 }

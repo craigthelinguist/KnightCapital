@@ -5,8 +5,8 @@ import java.lang.reflect.Field;
 
 import player.Player;
 import tools.Constants;
-
 import game.items.Item;
+import game.units.Creature;
 import game.units.Hero;
 import game.units.HeroStats;
 import game.units.Stats;
@@ -21,7 +21,7 @@ import com.thoughtworks.xstream.io.HierarchicalStreamReader;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 
 public class HeroConverter implements Converter {
-	
+
 	@Override
 	public boolean canConvert(Class clazz) {
 		return clazz == Hero.class;
@@ -29,7 +29,7 @@ public class HeroConverter implements Converter {
 
 	@Override
 	public void marshal(Object object, HierarchicalStreamWriter writer, MarshallingContext context) {
-		
+
 		Hero hero = (Hero)object;
 		writer.startNode("name");
 			writer.setValue(hero.getName());
@@ -40,12 +40,12 @@ public class HeroConverter implements Converter {
 		writer.startNode("player");
 			new PlayerConverter().marshal(hero.getOwner(), writer, context);
 		writer.endNode();
-		
+
 		// write stats
 		HeroStats stats;
 		writer.startNode("herostats");
 		try{
-			Field f = hero.getClass().getDeclaredField("stats");
+			Field f = Creature.class.getDeclaredField("stats");
 			f.setAccessible(true);
 			stats = (HeroStats) f.get(hero);
 			new HeroStatsConverter().marshal(stats,writer,context);
@@ -54,7 +54,7 @@ public class HeroConverter implements Converter {
 			System.err.println("Error writing unit stats to file");
 		}
 		writer.endNode();
-		
+
 	}
 
 	@Override
@@ -68,7 +68,7 @@ public class HeroConverter implements Converter {
 			File file = new File(Constants.DATA_HEROES + filename);
 			return (Hero)(stream.fromXML(file));
 		}
-		
+
 		// load name
 		reader.moveDown();
 			String name = reader.getValue();
@@ -78,7 +78,7 @@ public class HeroConverter implements Converter {
 		reader.moveDown();
 			String imgName = reader.getValue();
 		reader.moveUp();
-		
+
 		// player
 		reader.moveDown();
 			Object obj = new PlayerConverter().unmarshal(reader,context);
@@ -86,12 +86,12 @@ public class HeroConverter implements Converter {
 			if (obj == null) player = null;
 			else player = (Player)obj;
 		reader.moveUp();
-		
+
 		// load stats
 		reader.moveDown();
 			HeroStats stats = (HeroStats) new HeroStatsConverter().unmarshal(reader, context);
 		reader.moveUp();
-		
+
 		return new Hero(name,imgName,player,stats);
 
 	}

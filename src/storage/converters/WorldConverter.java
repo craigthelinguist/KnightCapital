@@ -7,9 +7,9 @@ import java.util.Map;
 import java.util.Set;
 
 import player.Player;
-
 import tools.Constants;
 import world.World;
+import world.icons.Party;
 import world.tiles.CityTile;
 import world.tiles.Tile;
 import world.towns.City;
@@ -30,13 +30,13 @@ public class WorldConverter implements Converter{
 
 	@Override
 	public void marshal(Object object, HierarchicalStreamWriter writer, MarshallingContext context) {
-		
+
 		// get data for writing
 		World world = (World)object;
 		Set<? extends City> cities = world.getCities();
 		Tile[][] tiles = world.getTiles();
 		Player[] players = world.getPlayers();
-		
+
 		// write players to file
 		writer.startNode("players");
 			for (Player player : players){
@@ -50,7 +50,7 @@ public class WorldConverter implements Converter{
 				writer.endNode();
 			}
 		writer.endNode();
-		
+
 		// write cities
 		writer.startNode("cities");
 			for (City city : cities){
@@ -64,10 +64,10 @@ public class WorldConverter implements Converter{
 					writer.startNode("player");
 						writer.setValue(""+city.getOwner().slot);
 					writer.endNode();
-				writer.endNode();	
+				writer.endNode();
 			}
 		writer.endNode();
-		
+
 		// write tiles
 		writer.startNode("tiles");
 			writer.startNode("width");
@@ -81,22 +81,25 @@ public class WorldConverter implements Converter{
 			for (int x = 0; x < world.NUM_TILES_ACROSS; x++){
 				for (int y = 0; y < world.NUM_TILES_DOWN; y++){
 					writer.startNode("tile");
+						if (tiles[x][y].occupant() != null && tiles[x][y].occupant() instanceof Party){
+							System.out.println("stop");
+						}
 						tc.marshal(tiles[x][y], writer, context);
 					writer.endNode();
 				}
 			}
 		writer.endNode();
-			
+
 	}
 
 	@Override
 	public Object unmarshal(HierarchicalStreamReader reader, UnmarshallingContext context) {
-		
+
 		// load players
 		PlayerConverter pc = new PlayerConverter();
 		reader.moveDown();
 			while (reader.hasMoreChildren()){
-				
+
 				// load player
 				reader.moveDown();
 					Player player = (Player) pc.unmarshal(reader, context);
@@ -104,19 +107,19 @@ public class WorldConverter implements Converter{
 
 				// record player in data loader
 				WorldLoader.insertPlayer(player.slot, player);
-				
+
 			}
 		reader.moveUp();
 		if (WorldLoader.numberOfPlayers() == 0){
 			throw new RuntimeException("Creating a world with zero players!");
 		}
-		
-		
-		
+
+
+
 		// load cities
 		reader.moveDown();
 			while (reader.hasMoreChildren()){
-			
+
 				// load each city
 				reader.moveDown();
 					reader.moveDown();
@@ -129,16 +132,16 @@ public class WorldConverter implements Converter{
 						Player player = (Player) pc.unmarshal(reader, context);
 					reader.moveUp();
 				reader.moveUp();
-				
+
 			}
 		reader.moveUp();
-		
-		
-		
-		
+
+
+
+
 		// load tile dimensions
 		reader.moveDown();
-		
+
 			reader.moveDown();
 				int width = Integer.parseInt(reader.getValue());
 			reader.moveUp();
@@ -146,7 +149,7 @@ public class WorldConverter implements Converter{
 				int height = Integer.parseInt(reader.getValue());
 			reader.moveUp();
 			WorldLoader.newTileArray(width,height);
-		
+
 			// load tiles
 			TileConverter tc = new TileConverter();
 				while (reader.hasMoreChildren()){
@@ -155,12 +158,12 @@ public class WorldConverter implements Converter{
 						WorldLoader.addTile(tile);
 						reader.moveUp();
 				}
-	
+
 		reader.moveUp();
-				
+
 		// reconstruct the world
 		return WorldLoader.constructWorld();
-		
+
 	}
 
 }

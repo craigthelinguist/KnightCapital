@@ -66,7 +66,7 @@ public class InventoryPanel extends JPanel implements MouseListener {
 	public InventoryPanel(MainFrame f) {
 		this.frame = f;
 
-		slots = new ItemSlotPanel[INVENTORY_COLS][INVENTORY_ROWS];
+		slots = new ItemSlotPanel[INVENTORY_ROWS][INVENTORY_COLS];
 
 
 		/*set the size of this panel to be size of the image*/
@@ -85,7 +85,7 @@ public class InventoryPanel extends JPanel implements MouseListener {
 		c.weightx = 1.0;
 		c.weighty = 1.0;
 
-		
+
 		/*The top row panels */
 
 		/*Declare and initialize slot1 (panel) */
@@ -161,19 +161,19 @@ public class InventoryPanel extends JPanel implements MouseListener {
 			dSlot1.setLocation(frame.getWidth()-500,frame.getHeight()-400);
 			dSlot1.setVisible(true);
 	    }
-		if(e.getSource() == slots[1][0]) {
+		if(e.getSource() == slots[0][1]) {
 			slots[1][0].changeBackground(ImageManipulation.lighten(slots[1][0].getBackgroundImage(),55));
 			dSlot2 = new ItemSlotInformation(frame,items[1][0].getItem().getDescription());
 			dSlot2.setLocation(frame.getWidth()-425,frame.getHeight()-400);
 			dSlot2.setVisible(true);
 	    }
-		if(e.getSource() == slots[2][0]) {
+		if(e.getSource() == slots[0][2]) {
 			slots[2][0].changeBackground(ImageManipulation.lighten(slots[2][0].getBackgroundImage(),55));
 			dSlot3 = new ItemSlotInformation(frame,items[2][0].getItem().getDescription());
 			dSlot3.setLocation(frame.getWidth()-375,frame.getHeight()-400);
 			dSlot3.setVisible(true);
 	    }
-		if(e.getSource() == slots[0][1]) {
+		if(e.getSource() == slots[1][0]) {
 			slots[0][1].changeBackground(ImageManipulation.lighten(slots[0][1].getBackgroundImage(),55));
 			dSlot4 = new ItemSlotInformation(frame,items[0][1].getItem().getDescription());
 			dSlot4.setLocation(frame.getWidth()-500,frame.getHeight()-400);
@@ -183,7 +183,7 @@ public class InventoryPanel extends JPanel implements MouseListener {
 			dSlot5 = new ItemSlotInformation(frame,items[0][1].getItem().getDescription());
 			dSlot5.setLocation(frame.getWidth()-500,frame.getHeight()-400);
 	    }
-		if(e.getSource() == slots[2][1]) {
+		if(e.getSource() == slots[1][2]) {
 			slots[2][1].changeBackground(ImageManipulation.lighten(slots[2][1].getBackgroundImage(),55));
 			dSlot6 = new ItemSlotInformation(frame,items[2][1].getItem().getDescription());
 			dSlot6.setLocation(frame.getWidth()-500,frame.getHeight()-400);
@@ -197,24 +197,24 @@ public class InventoryPanel extends JPanel implements MouseListener {
 			slots[0][0].changeBackground(ImageLoader.load(Constants.ITEMS + slots[0][0].getImageName()));
 			dSlot1.dispose();
 	    }
-		if(e.getSource() == slots[1][0]) {
+		if(e.getSource() == slots[0][1]) {
 			slots[1][0].changeBackground(ImageLoader.load(Constants.ITEMS + slots[1][0].getImageName()));
 			dSlot2.dispose();
 		}
-		if(e.getSource() == slots[2][0]) {
+		if(e.getSource() == slots[0][2]) {
 			slots[2][0].changeBackground(ImageLoader.load(Constants.ITEMS + slots[2][0].getImageName()));
 			dSlot3.dispose();
 	    }
-		if(e.getSource() == slots[0][1]) {
+		if(e.getSource() == slots[1][0]) {
 			slots[0][1].changeBackground(ImageLoader.load(Constants.ITEMS + slots[0][1].getImageName()));
 			dSlot4.dispose();
 		}
 		if(e.getSource() == slots[1][1]) {
 			slots[1][1].changeBackground(ImageLoader.load(Constants.ITEMS + slots[1][1].getImageName()));
 			dSlot5.dispose();	    }
-		if(e.getSource() == slots[2][1]) {
+		if(e.getSource() == slots[1][2]) {
 			slots[2][1].changeBackground(ImageLoader.load(Constants.ITEMS + slots[2][1].getImageName()));
-			dSlot6.dispose();		
+			dSlot6.dispose();
 		}
 	}
 
@@ -232,15 +232,17 @@ public class InventoryPanel extends JPanel implements MouseListener {
 
 		Party p =(Party)tile.occupant();
 		items = p.getInventory();
+		System.out.println("stop");
 
 		for(int i = 0; i < items.length; i++) {
 			for(int j = 0; j < items[i].length; j++) {
 
 				if(items[i][j] != null) {
+
 					if(slots[i][j] == null) {
 						/*Declare and initialize slot1 (panel) */
-						
-						/*This changes insets depending on which slot it's up to. This is a poverty solution but they are not aligned properly 
+
+						/*This changes insets depending on which slot it's up to. This is a poverty solution but they are not aligned properly
 						 * if you don't use different inset. This is because the inventory slots aren't divided equally.
 						 */
 						if(i == 2 && j == 1) {
@@ -249,7 +251,7 @@ public class InventoryPanel extends JPanel implements MouseListener {
 						else if(i == 2 && j == 0) {
 							c.insets = new Insets(15,10,10,16);
 						}
-						else if(i == 0  && j == 1) { 
+						else if(i == 0  && j == 1) {
 							c.insets = new Insets(10,15,15,10);
 						}
 						else if(i == 1 && j == 1) {
