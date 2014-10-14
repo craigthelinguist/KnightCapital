@@ -1,0 +1,23 @@
+<item>
+	<name>Berserker's Potion</name>
+	<image>potion</image>
+	<description>Sends your hero into a rage for a turn. Gives +20 damage but -20 speed and -10 armour.</description>
+	<type>charged</type>
+	<target>HERO</target>
+    <filename>berserkerpotion.xml</filename>
+	<buff>
+		<stat>DAMAGE</stat>
+		<amount>20</amount>
+		<permanent>false</permanent>
+	</buff>
+	<buff>
+		<stat>SPEED</stat>
+		<amount>-20</amount>
+		<permanent>false</permanent>
+	</buff>
+	<buff>
+		<stat>ARMOUR</stat>
+		<amount>-10</amount>
+		<permanent>false</permanent>
+	</buff>
+</item>

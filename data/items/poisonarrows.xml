@@ -1,0 +1,14 @@
+<item>
+	<name>Poison Arrows</name>
+	<image>poisonarrow</image>
+	<description>Arrows fletched from the hairs of the legendary Mizza. Grants +5 damage to all archers in the party.</description>
+	<type>passive</type>
+	<target>HERO</target>
+    <filename>poisonarrows.xml</filename>
+   	<buff>
+		<stat>HEALTH</stat>
+		<amount>10</amount>
+		<permanent>true</permanent>
+		<filter>archer</filter>
+	</buff>
+</item>

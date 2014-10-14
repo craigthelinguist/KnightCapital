@@ -1,0 +1,12 @@
+<item>
+	<name>Health Potion</name>
+	<image>potion</image>
+	<description>Restores 20 hit points to everyone in the party.</description>
+	<type>charged</type>
+	<target>PARTY</target>
+   <filename>healthpot.xml</filename>
+	<heal>
+	    <stat>HEALTH</stat>
+		<amount>20</amount>
+	</heal>
+</item>
