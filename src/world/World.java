@@ -76,8 +76,9 @@ public class World {
 
 		/*Iterate over the cities in the world, if the city belongs to the player that's ending his turn. Increase his gold by 10. Do this for every city the player owns.*/
 		for(City c : this.getCities()) {
-			if(c.getOwner() == players[currentPlayer]) {
-				players[currentPlayer].increaseGold(100);
+			if (c.ownedBy(players[currentPlayer])){
+				int income = c.getIncome();
+				players[currentPlayer].increaseGold(income);
 			}
 		}
 

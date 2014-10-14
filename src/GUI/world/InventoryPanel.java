@@ -3,6 +3,7 @@ package GUI.world;
 import game.items.Item;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -15,6 +16,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -232,17 +235,6 @@ public class InventoryPanel extends JPanel implements MouseListener {
 
 		Party p =(Party)tile.occupant();
 		items = p.getInventory();
-		System.out.println("stop");
-
-		System.out.println(items.length);
-		System.out.println(items[0].length);
-		for(int i = 0; i < items.length; i++) {
-			for(int j = 0; j < items[0].length; j++) {
-				if(items[i][j] != null) {
-					System.out.println(items[i][j].getName());
-				}
-			}
-		}
 
 		for(int i = 0; i < items.length; i++) {
 			for(int j = 0; j < items[0].length; j++) {
@@ -274,12 +266,111 @@ public class InventoryPanel extends JPanel implements MouseListener {
 						slots[i][j].addMouseListener(this);
 						this.add(slots[i][j],c);
 					}
-					else {
-						slots[i][j] = null;
-					}
 				}
 			}
 		}
 	}
 
+
+
+   // Iterate through the array at store all non-0 items (e.g. with a queue, can simulate with a LinkedList).
+
+   // Iterate through again and simply  pull the stored items one by one into the array
+
+
+	public void updateSlots(Item[][] items) {
+		System.out.println("sfdsdfsdfsdf");
+		this.items = items;
+		ArrayList<Item> slotsTemp = new ArrayList<>();
+		ItemSlotPanel[][] slotPanelTemp = new ItemSlotPanel[INVENTORY_ROWS][INVENTORY_COLS];
+
+		for(int i = 0; i < items.length; i++) {
+			for(int j = 0; j < items[0].length; j++) {
+				if(items[i][j] != null) {
+					slotPanelTemp[i][j] = new ItemSlotPanel(items[i][j].getImageName()+"Slot");
+					slotsTemp.add(items[i][j]);
+				}
+			}
+		}
+
+		int row = 0;
+		int col = 0;
+		for(int i = 0; i < slotsTemp.size(); i++) {
+			Item itm = slotsTemp.get(i);
+			this.items[row][col] = itm;
+			col++;
+			if(col == INVENTORY_COLS) {
+				row++;
+				col = 0;
+			}
+		}
+		//this.slots = slotPanelTemp;
+		this.slots =  new ItemSlotPanel[INVENTORY_ROWS][INVENTORY_COLS];
+		//this.validate();
+		//this.revalidate();
+		//this.repaint();
+		int count = 0;
+		//this.removeAll(); this is the secret boys
+		this.repaint();
+		this.updateUI();
+			for(int i = 0; i < items.length; i++) {
+				for(int j = 0; j < items[0].length; j++) {
+					if(this.items[i][j] != null) {
+						if(slots[i][j] == null) {
+							if(i == 1 && j == 2) {
+								c.insets = new Insets(10,10,15,16);
+							}
+							else if(i == 0 && j == 2) {
+								c.insets = new Insets(15,10,10,16);
+							}
+							else if(i == 1  && j == 0) {
+								c.insets = new Insets(10,15,15,10);
+							}
+							else if(i == 1 && j == 1) {
+								c.insets = new Insets(10,15,15,10);
+							}
+							else {
+								c.insets = new Insets(15,15,10,10);
+							}
+							slots[i][j] = new ItemSlotPanel(items[i][j].getImageName()+"Slot");
+							c.gridx = j;
+							c.gridy = i;
+							slots[i][j].addMouseListener(this);
+							this.add(slots[i][j],c);
+							count++;
+						}
+					}
+
+				}
+			}
+
+		/**for(int i = 0; i < slots.length; i++) {
+			for(int j = 0; j < slots[0].length; j++) {
+				if(slotsTemp.get(count) != null) {
+					if(i == 1 && j == 2) {
+						c.insets = new Insets(10,10,15,16);
+					}
+					else if(i == 0 && j == 2) {
+						c.insets = new Insets(15,10,10,16);
+					}
+					else if(i == 1  && j == 0) {
+						c.insets = new Insets(10,15,15,10);
+					}
+					else if(i == 1 && j == 1) {
+						c.insets = new Insets(10,15,15,10);
+					}
+					else {
+						c.insets = new Insets(15,15,10,10);
+					}
+					slots[i][j] = new ItemSlotPanel(slotsTemp.get(count).getImageName());
+					c.gridx = j;
+					c.gridy = i;
+					slots[i][j].addMouseListener(this);
+					this.add(slots[i][j],c);
+					count++;
+				}
+			}
+		}
+	}*/
+	}
 }
