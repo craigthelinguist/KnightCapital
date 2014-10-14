@@ -23,6 +23,8 @@ import java.awt.event.MouseEvent;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -33,6 +35,8 @@ import javax.swing.SwingUtilities;
 import com.thoughtworks.xstream.XStream;
 
 import networking.Client;
+import networking.ClientM;
+import networking.NetworkM;
 import networking.Server;
 import player.Player;
 import renderer.Camera;
@@ -93,6 +97,11 @@ public class WorldController{
 	private boolean active = true;
 	private long lastMouse = 0;
 
+
+	private ServerSocket serverSocket;
+	private Socket socket;
+
+
 	// key bindings
 	private static final int ROTATE_CW = KeyEvent.VK_R;
 	private static final int ROTATE_CCW = KeyEvent.VK_E;
@@ -111,17 +120,18 @@ public class WorldController{
 		highlightedTiles = new HashSet<>();
 
 		if(serverOrClient){
-			try {
-				server = new Server();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			NetworkM.createServer(this, 2020, 2);
 		}
 
 		else {
 
-			//client = new Client("130.195.6.98", 45612);
+			try {
+				NetworkM.createClient("localhost", 2020, "selemonClient");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+//			client = new Client("130.195.6.98", 45612);
 
 		}
 

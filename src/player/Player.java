@@ -12,7 +12,7 @@ public class Player {
 	public static final int BLUE = 2;
 	public static final int GREEN = 3;
 	public static final int VIOLET = 4;
-	
+
 	/**
 	 * Constructs a new player.
 	 * @param name : string of player name
@@ -22,6 +22,8 @@ public class Player {
 		this.name = name;
 		this.slot = slot;
 	}
+
+	public int getSlot(){return this.slot;}
 
 	public String getColour(){
 		if (slot == 1) return "red";
