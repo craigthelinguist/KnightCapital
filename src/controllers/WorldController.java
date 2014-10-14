@@ -64,7 +64,7 @@ import GUI.world.MainFrame;
 public class WorldController{
 
 	//boolean server or client, true if server, false if client.
-	private boolean serverOrClient = true;
+	private boolean serverOrClient = false;
 
 	//server and client.
 	private Server server;
@@ -124,7 +124,7 @@ public class WorldController{
 
 		else {
 
-			//client = new Client("130.195.6.98", 45612);
+			client = new Client("130.195.6.170", 45812, 45612);
 
 
 		}
