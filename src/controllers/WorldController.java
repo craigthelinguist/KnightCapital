@@ -416,6 +416,28 @@ public class WorldController{
 		new WorldController(world,world.getPlayers()[0]);
 	}
 
+	public static void myles_main(String[] dun_goofed) {
+		/**
+		 * S I N G L E P L A Y E R
+		 * I
+		 * N
+		 * G
+		 * L
+		 * E
+		 * P
+		 * L
+		 * A
+		 * Y
+		 * E
+		 * R
+		 */
+
+		// Create Items
+		Buff[] buffsAmulet = new Buff[]{ Buff.newTempBuff(Stat.DAMAGE,5) };
+		PassiveItem amulet = new PassiveItem("Amulet of Gains", "amulet", "An amulet that grants sickening gains to Hero.\n +5 Damage",buffsAmulet,Target.HERO, "liontalisman.xml");
+
+	}
+
 	public static void aaron_main(String[] args){
 		/*Loading items*/
 		Buff[] buffsAmulet = new Buff[]{ Buff.newTempBuff(Stat.DAMAGE,5) };
