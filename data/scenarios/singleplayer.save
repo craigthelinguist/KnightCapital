@@ -2455,7 +2455,6 @@
       <y>24</y>
       <imageName>grass_2</imageName>
       <icon>
-		<icon>
         <type>ItemIcon</type>
         <item>
           <name>Amulet of Swole</name>
@@ -2469,7 +2468,6 @@
             <permanent>true</permanent>
           </buff>
         </item>
-      </icon>
 	  </icon>
     </tile>
     <tile>
