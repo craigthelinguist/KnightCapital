@@ -10,15 +10,15 @@ import controllers.WorldController;
  * */
 public class Message implements Serializable{
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 	private MouseEvent event;
 	private WorldController world;
 	private int ID;
 	private int score;
-	
-	
+
+
 	/**
 	 * Constructor to send to server
 	 * @param event holds the mouseevent value
@@ -30,7 +30,11 @@ public class Message implements Serializable{
 		this.world = world;
 		this.ID = ID;
 	}
-	
+
+	public Message(WorldController world){
+		this.world = world;
+	}
+
 	/**
 	 * Constructor to send to client
 	 * @param ID holds the player ID
@@ -40,12 +44,12 @@ public class Message implements Serializable{
 		this.ID = ID;
 		this.world = game;
 	}
-	
+
 	public MouseEvent getMouseEvent(){return event;}
 	public WorldController getWorld(){return world;}
 	public int getID(){return ID;}
-	
-	
-	
-	
+
+
+
+
 }

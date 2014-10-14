@@ -106,7 +106,7 @@ public class TownController{
 			// check tile exists, kick them onto world map
 			if (pt.x >= 0 && pt.y >= 0 && pt.x < world.NUM_TILES_ACROSS && pt.y < world.NUM_TILES_DOWN){
 				tile = world.getTile(pt);
-				if (!tile.passable(visitors)) return;
+				if (!tile.passable()) return;
 				tile.setIcon(visitors);
 				city.setVisitors(this.newEmptyParty());
 				visitors = city.getVisitors();
@@ -126,60 +126,6 @@ public class TownController{
 	}
 
 	protected void mouseEvent(){
-
-	}
-
-
-	public static void main(String[] args){
-
-		// party
-		Player player = new Player("Pondy",1);
-		Unit u1 = new Unit("knight",player, new UnitStats(100,25,40,0));
-		Unit u2 = new Unit("knight",player, new UnitStats(100,25,40,0));
-		Hero h1 = new Hero("ovelia",player, new HeroStats(80,10,80,0,8,8));
-		Creature[][] members = Party.newEmptyParty();
-		members[0][0] = u1;
-		members[1][0] = h1;
-		members[2][0] = u2;
-		Party party = new Party(h1,player,members);
-
-		//party
-
-		Hero h2 = new Hero("dark_knight",player,new HeroStats(140,35,55,5,8,6));
-		Unit u3 = new Unit("knight",player,new UnitStats(100,25,40,1));
-		Unit u4 = new Unit("archer",player,new UnitStats(60,15,70,0));
-		Unit u5 = new Unit("archer",player,new UnitStats(60,15,70,0));
-		Unit u6 = new Unit("knight",player,new UnitStats(100,25,40,1));
-		Creature[][] members2 = Party.newEmptyParty();
-		members2[0][0] = u3;
-		members2[1][0] = u6;
-		members2[2][0] = h2;
-		members2[0][1] = u4;
-		members2[2][1] = u5;
-		Party party2 = new Party(h2,player,members2);
-
-		// items
-		Buff[] buffsWeapon = new Buff[]{ Buff.newTempBuff(Stat.DAMAGE,5), Buff.newTempBuff(Stat.ARMOUR, 10) };
-		PassiveItem weapon = new PassiveItem("Weapon", "weapon", "A powerful weapon crafted by the mighty Mizza +5 Damage",buffsWeapon, Target.HERO,null);
-		Buff[] buffsArrows= new Buff[]{ Buff.newTempBuff(Stat.DAMAGE,1) };
-		PassiveItem arrows = new PassiveItem("Poison Arrows", "poisonarrow", "Poisonous arrows whose feathers were made from the hairs of Mizza. All archers in party gain +1 damage",buffsArrows, Target.PARTY, null);
-		party.addItem(weapon);
-		party.addItem(arrows);
-
-		// city
-		CityTile[][] tiles = new CityTile[3][3];
-		for (int i = 0; i < 3; i++){
-			for (int j = 0; j < 3; j++){
-				tiles[i][j] = new CityTile(i,j);
-			}
-		}
-		City city = new City("Porirua","basic",player,tiles);
-		city.setGarrison(party);
-		city.setVisitors(party2);
-
-		// player + controller
-		Player p = new Player("John",1);
-		TownController tc = new TownController(city,WorldController.getTestWorldControllerNoGui());
 
 	}
 

@@ -17,7 +17,7 @@ public class Buff implements Effect{
 	public final boolean permanent;
 
 	/**
-	 * 
+	 *
 	 * @param stat: stat this buff affects
 	 * @param amount: how much to increase or decrease that stat
 	 * @param permanence: if this buff isn't permanent, it will expire after 1 turn
@@ -67,7 +67,7 @@ public class Buff implements Effect{
 	 * SHOULD ONLY BE CALLED FROM CREATURE.
 	 * @param c: creature to remove buff from.
 	 */
-	public void removeFrom(Creature c){ 
+	public void removeFrom(Creature c){
 		int buffedValue = c.getBuffed(this.stat);
 		int newValue = buffedValue - this.amount;
 		c.setBuffed(stat,newValue);

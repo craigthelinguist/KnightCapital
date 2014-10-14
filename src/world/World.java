@@ -77,7 +77,8 @@ public class World {
 		/*Iterate over the cities in the world, if the city belongs to the player that's ending his turn. Increase his gold by 10. Do this for every city the player owns.*/
 		for(City c : this.getCities()) {
 			if(c.getOwner() == players[currentPlayer]) {
-				players[currentPlayer].increaseGold(100);
+				int income = c.getIncome();
+				players[currentPlayer].increaseGold(income);
 			}
 		}
 
@@ -240,6 +241,8 @@ public class World {
 			if (party.hasFullInventory()) return false;
 		}
 
+		if(!goalTile.passable()) return false;
+
 		// a wrapper class for the nodes in the fringe
 		class Node implements Comparable<Node>{
 			final Point point;
@@ -279,7 +282,7 @@ public class World {
 			point = node.point;
 			if (visited.contains(point)) continue;
 			tile = getTile(point);
-			if (tile != goalTile && !tile.passable(party) && point != start) continue;
+			if (tile != goalTile && !tile.passable() && point != start) continue;
 
 			// mark as visited
 			visited.add(point);

@@ -1,7 +1,5 @@
 package GUI.Equipment;
 
-import game.units.EquipmentBorder;
-
 import java.awt.Color;
 import java.awt.Dimension;
 

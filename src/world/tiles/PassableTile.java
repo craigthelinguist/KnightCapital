@@ -34,7 +34,7 @@ public class PassableTile extends Tile{
 
 
 	@Override
-	public boolean passable(Party party) {
+	public boolean passable() {
 		return !occupied() || this.occupant() instanceof ItemIcon;
 	}
 

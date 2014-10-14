@@ -1,0 +1,12 @@
+<item>
+	<name>Speed Potion</name>
+	<image>potion</image>
+	<description>Gives +4 movement points to the party.</description>
+	<type>charged</type>
+	<target>PARTY</target>
+   <filename>speed.xml</filename>
+	<heal>
+	    <stat>MOVEMENT</stat>
+		<amount>4</amount>
+	</heal>
+</item>

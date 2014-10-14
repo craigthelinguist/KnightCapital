@@ -35,6 +35,7 @@ public class City {
 
 	// on the overworld, a city is a collection of 3x3 CityTiles.
 	public static final int WIDTH = 3;
+	public static final int CITY_INCOME = 100;
 	private final CityTile[][] tiles;
 
 	// who owns this city
@@ -238,6 +239,14 @@ public class City {
 	 */
 	public boolean hasVisitors() {
 		return this.visitors != null && !this.visitors.isEmpty();
+	}
+
+	/**
+	 * Return the amount of gold this city provides each turn.
+	 * @return
+	 */
+	public int getIncome() {
+		return CITY_INCOME;
 	}
 
 }

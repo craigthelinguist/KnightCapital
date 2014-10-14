@@ -29,6 +29,9 @@ import world.tiles.PassableTile;
 import world.tiles.Tile;
 import world.towns.City;
 
+/**
+@author Ewan Moshi
+**/
 public class IncomeTest {
 
 	private WorldController controller;
@@ -37,23 +40,15 @@ public class IncomeTest {
 	private Set<City> cities;
 
 	/**
-	 * Check that the starting gold is set correctly
-	 */
-	@Test
-	public void CheckGold(){
-		setupWorld();
-		assertTrue(p.getGold() == 10);
-	}
-
-	/**
 	 * Create a player with standard gold and then change his gold. Check if
 	 * it changed correctly.
 	 */
 	@Test
 	public void Test_ChangingGold() {
 		setupWorld();
+		int goldb4 = p.getGold();
 		p.increaseGold(500); //increase gold by 500
-		assertTrue(p.getGold() == 510); //check that the gold is increased amount + his starting gold
+		assertTrue(p.getGold() == goldb4 + 500); //check that the gold is increased amount + his starting gold
 	}
 
 	/**
@@ -64,16 +59,16 @@ public class IncomeTest {
 	@Test
 	public void Test_No_Gold_Increase() {
 		setupWorld();
-		/*Iterate over all the cities in the world and set their owenr to null*/
+		int goldb4 = p.getGold();
+		/*Iterate over all the cities in the world and set their owner to null*/
 		for(City city : w.getCities()) {
 			if(city.getOwner() != null) {
-				city.setOwner(null);
+				city.changeOwner(null);
 			}
 		}
 		w.endTurn();
 		//check that the gold has not increased
-		assertFalse(p.getGold() != 10);
-		assertTrue(p.getGold() == 10);
+		assertTrue(p.getGold() == goldb4);
 	}
 
 	/**
@@ -152,9 +147,9 @@ public class IncomeTest {
 		Creature[][] members2 = Party.newEmptyParty();
 		members2[0][0] = u3;
 		members2[1][0] = u6;
-		members2[2][0] = hero;
+		members2[0][2] = hero;
 		members2[0][1] = u4;
-		members2[2][1] = u5;
+		members2[1][2] = u5;
 		Party party = new Party(hero,p,members2);
 		party.refresh();
 
