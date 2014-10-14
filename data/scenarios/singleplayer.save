@@ -2454,7 +2454,23 @@
       <x>11</x>
       <y>24</y>
       <imageName>grass_2</imageName>
-      <icon>null</icon>
+      <icon>
+		<icon>
+        <type>ItemIcon</type>
+        <item>
+          <name>Amulet of Swole</name>
+          <imageName>amulet</imageName>
+          <description>Provided the wearer with increased stength./n+10 Damage</description>
+          <type>passive</type>
+          <target>HERO</target>
+          <buff>
+            <stat>DAMAGE</stat>
+            <amount>10</amount>
+            <permanent>true</permanent>
+          </buff>
+        </item>
+      </icon>
+	  </icon>
     </tile>
     <tile>
       <type>passable</type>
