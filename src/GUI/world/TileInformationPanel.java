@@ -211,6 +211,8 @@ public class TileInformationPanel extends JPanel{
 				c.gridy = 4;
 				this.add(movesLeft,c);
 
+
+
 				/*Declare and initialize the images for the party button */
 				BufferedImage partyButtonDefault = ImageLoader.load(Constants.GUI_BUTTONS + "partyButton.png");
 				BufferedImage partyButtonPressed = ImageLoader.load(Constants.GUI_BUTTONS + "partyButtonClicked.png");
