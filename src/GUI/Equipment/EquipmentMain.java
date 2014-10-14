@@ -70,16 +70,6 @@ public class EquipmentMain extends JDialog implements ActionListener{
 
 
 
-
-
-
-
-
-
-
-
-
-
 	/*for testing the equipment panel*/
 	public static void main(String[] args) {
 

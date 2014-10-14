@@ -33,6 +33,7 @@ public class Constants {
 	public static final String GUI_TOWN = Constants.ASSETS + "gui_town" + File.separatorChar;
 	public static final String GUI_TOWN_BUTTONS = Constants.ASSETS + "gui_town" + File.separatorChar + "buttons" + File.separatorChar;
 	public static final String GUI_OG = Constants.GUI_FILEPATH +"ogGUIAssets" + File.separatorChar;
+	public static final String GUI_INVENTORY = Constants.GUI_FILEPATH +"InventoryPanel" + File.separatorChar;
 
 
 	// these are temporary values for WorldRenderer prototype - Aaron
