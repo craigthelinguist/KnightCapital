@@ -298,9 +298,9 @@ public class WorldController{
 	 * Player has clicked a button.
 	 * @param button: the button they clicked.
 	 */
-	public void buttonPressed(JButton button){
+	public void buttonPressed(String button){
 
-		if (button.getText().equals("End Turn Placeholder")){
+		if (button.equals("EndTurn")){
 			world.endTurn();
 			deselect();
 			gui.updateInfo(null);
