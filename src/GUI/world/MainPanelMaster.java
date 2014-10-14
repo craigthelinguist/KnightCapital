@@ -23,6 +23,7 @@ import javax.swing.OverlayLayout;
 
 import tools.Constants;
 import tools.ImageLoader;
+import world.icons.Party;
 import world.tiles.Tile;
 
 
@@ -105,14 +106,16 @@ public class MainPanelMaster extends JPanel {
 	   */
 	public void updateInfo(Tile tile) {
 		tileInfoPanel.updateInfo(tile);
+		if (tile == null) return;
+		if(!(tile.occupant() instanceof Party)) return;
+		Party p =(Party)tile.occupant();
+		//inventoryPanel.updateSlots(p.getInventory());
 		try {
+			System.out.println("update");
 			inventoryPanel.updateInventoryPanel(tile);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-
-
-
 
 }
