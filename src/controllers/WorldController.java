@@ -20,6 +20,7 @@ import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -39,6 +40,7 @@ import renderer.Camera;
 import renderer.WorldRenderer;
 import storage.TemporaryLoader;
 import storage.XMLReader;
+import storage.converters.WorldLoader;
 import tools.Geometry;
 import tools.Constants;
 import world.World;
@@ -122,6 +124,7 @@ public class WorldController{
 		else {
 
 			//client = new Client("130.195.6.98", 45612);
+
 
 		}
 
@@ -400,8 +403,13 @@ public class WorldController{
 	}
 
 
-	public static void main(String[] args) throws FileNotFoundException{
-		aaron_main(args);
+	public static void main(String[] args) throws IOException{
+		aaron_main_2(args);
+	}
+
+	public static void aaron_main_2(String[] args) throws IOException{
+		World world = WorldLoader.load(Constants.DATA_WORLDS + "test_save.xml");
+		new WorldController(world,world.getPlayers()[0]);
 	}
 
 	public static void aaron_main(String[] args){

@@ -210,6 +210,9 @@ public class WorldRenderer {
 	private static void drawIcon(Graphics graphics, CartesianMapping<WorldIcon> mapping, Camera camera){
 		int isoY = mapping.point.y;
 		int isoX = mapping.point.x;
+		if (mapping.thing == null){
+			System.out.println("fuck");
+		}
 		if (mapping.thing.getImage() == null) return;
 		final int ICON_WD = mapping.thing.getImage().getWidth();
 		final int ICON_HT = mapping.thing.getImage().getHeight();

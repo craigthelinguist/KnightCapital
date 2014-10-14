@@ -9,6 +9,7 @@ import java.io.PrintWriter;
 
 import com.thoughtworks.xstream.XStream;
 
+import controllers.WorldController;
 import tools.Constants;
 import world.World;
 import world.icons.WorldIcon;
@@ -22,6 +23,8 @@ public class TestSave {
 
 		// save
 		World world = WorldLoader.exampleWorld();
+
+		//new WorldController(world,world.getPlayers()[0]);
 		XStream stream = new XStream();
 		setup(stream);
 		String xml = stream.toXML(world);
@@ -32,8 +35,8 @@ public class TestSave {
 
 
 		// load
-		world = null;
-		world = (World) stream.fromXML(new File(filepath));
+		//world = null;
+		//world = (World) stream.fromXML(new File(filepath));
 	}
 
 	private static void setup(XStream stream){
