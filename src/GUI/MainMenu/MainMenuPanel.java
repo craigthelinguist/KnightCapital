@@ -138,8 +138,9 @@ public class MainMenuPanel extends JPanel implements ActionListener{
 		//String fp = new File("").getAbsolutePath() + File.separatorChar + Constants.DATA_LEVELS;
 
 		if(e.getSource() == newGame) {
-			JFileChooser chooser = new JFileChooser();
-			chooser.setCurrentDirectory(new File(Constants.DATA_LEVELS));
+			String path = Constants.DATA_SCENARIOS;
+			File f = new File(path);
+			JFileChooser chooser = new JFileChooser(f);
 			Filter filter = new Filter(".level");
 			chooser.setFileFilter(filter);
 			int value = chooser.showOpenDialog(null);
@@ -161,7 +162,7 @@ public class MainMenuPanel extends JPanel implements ActionListener{
 		//String fp = new File("").getAbsolutePath() + File.separatorChar + Constants.DATA_SAVES;
 
 		else if(e.getSource() == loadGame) {
-			String path = Constants.DATA_SCENARIOS;
+			String path = Constants.DATA_SAVES;
 			File f = new File(path);
 			JFileChooser chooser = new JFileChooser(f);
 			Filter filter = new Filter(".save");
