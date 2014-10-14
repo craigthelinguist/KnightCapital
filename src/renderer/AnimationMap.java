@@ -52,23 +52,42 @@ public class AnimationMap{
 	public void addDirectedImages(String directory, String base, String color){
 		String baseFilepath = directory + base;
 		String filepath;
-
-		filepath = baseFilepath + "_" + color + "_north.png";
+		if(color != null) {
+			filepath = baseFilepath + "_" + color + "_north.png";
+		}
+		else {
+			filepath = baseFilepath + "_north.png";
+		}
 		BufferedImage imgNorth = ImageLoader.load(filepath);
 		KCImage kcNorth = new KCImage(imgNorth, "north", filepath);
 		animations.put("north", kcNorth);
 
-		filepath = baseFilepath + "_" + color + "_south.png";
+		if(color != null) {
+			filepath = baseFilepath + "_" + color + "_south.png";
+		}
+		else {
+			filepath = baseFilepath + "_south.png";
+		}
 		BufferedImage imgsouth = ImageLoader.load(filepath);
 		KCImage kcsouth = new KCImage(imgsouth, "south", filepath);
 		animations.put("south", kcsouth);
 
-		filepath = baseFilepath + "_" + color + "_east.png";
+		if(color != null) {
+			filepath = baseFilepath + "_" + color + "_east.png";
+		}
+		else {
+			filepath = baseFilepath + "_east.png";
+		}
 		BufferedImage imgeast = ImageLoader.load(filepath);
 		KCImage kceast = new KCImage(imgeast, "east", filepath);
 		animations.put("east", kceast);
 
-		filepath = baseFilepath + "_" + color + "_west.png";
+		if(color != null) {
+			filepath = baseFilepath + "_" + color + "_west.png";
+		}
+		else {
+			filepath = baseFilepath + "_west.png";
+		}
 		BufferedImage imgwest = ImageLoader.load(filepath);
 		KCImage kcwest = new KCImage(imgwest, "west", filepath);
 		animations.put("west", kcwest);
