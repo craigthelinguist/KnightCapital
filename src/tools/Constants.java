@@ -14,6 +14,12 @@ public class Constants {
 	// GlobalConstants cannot be instantiated
 	private Constants(){}
 
+
+
+	// test flags
+	public static final boolean CANT_END_TURN_WHEN_IT_ISNT_YOUR_TURN = true;
+
+
 	// Window Resolution
 	public static final int WINDOW_WD = 1300;
 	public static final int WINDOW_HT = 800;
