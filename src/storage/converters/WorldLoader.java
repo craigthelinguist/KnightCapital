@@ -246,21 +246,17 @@ public class WorldLoader {
 				tiles[i][j] = ct2[a][b];
 			}
 		}
-		City city2 = new City("Tamaki", "basic", player1, ct2);
+		City city2 = new City("Tamaki", "basic", player2, ct2);
 		cities.add(city2);
 
 		Item item1 = ItemLoader.load("liontalisman.xml");
 		ItemIcon icon1 = new ItemIcon(item1);
 		tiles[12][2].setIcon(icon1);
 
-		Unit u1 = UnitLoader.load("knight.xml");
-		u1.changeOwner(player1);
-		Unit u2 = UnitLoader.load("knight.xml");
-		u2.changeOwner(player1);
-		Unit u3 = UnitLoader.load("archer.xml");
-		u3.changeOwner(player1);
-		Hero h1 = HeroLoader.load("ovelia.xml");
-		h1.changeOwner(player1);
+		Unit u1 = UnitLoader.load("knight.xml",player1);
+		Unit u2 = UnitLoader.load("knight.xml",player1);
+		Unit u3 = UnitLoader.load("archer.xml",player1);
+		Hero h1 = HeroLoader.load("ovelia.xml",player1);
 		Creature[][] members = new Creature[3][3];
 		members[0][0] = u1;
 		members[0][2] = u2;
@@ -270,14 +266,10 @@ public class WorldLoader {
 		tiles[3][5].setIcon(p1);
 
 
-		Unit u4 = UnitLoader.load("knight.xml");
-		u4.changeOwner(player2);
-		Unit u5 = UnitLoader.load("knight.xml");
-		u5.changeOwner(player2);
-		Unit u6 = UnitLoader.load("archer.xml");
-		u6.changeOwner(player2);
-		Hero h2 = HeroLoader.load("gaben.xml");
-		h2.changeOwner(player2);
+		Unit u4 = UnitLoader.load("knight.xml",player1);
+		Unit u5 = UnitLoader.load("knight.xml",player1);
+		Unit u6 = UnitLoader.load("archer.xml",player1);
+		Hero h2 = HeroLoader.load("gaben.xml",player1);
 		Creature[][] members2 = new Creature[3][3];
 		members2[0][0] = u4;
 		members2[1][0] = h2;

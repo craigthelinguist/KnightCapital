@@ -84,7 +84,7 @@ public class City {
 
 		// set up images for this city
 		animations = new AnimationMap();
-		this.animations.addDirectedImages(Constants.CITIES, "basic", "red");
+		this.animations.addDirectedImages(Constants.CITIES, "basic", player.getColour());
 		animations.setImage("north");
 		String portrait_filepath = Constants.PORTRAITS + "city_" + imageName;
 		animations.addImage("portrait", portrait_filepath, ImageLoader.load(portrait_filepath));
