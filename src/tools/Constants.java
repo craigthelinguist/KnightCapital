@@ -14,6 +14,12 @@ public class Constants {
 	// GlobalConstants cannot be instantiated
 	private Constants(){}
 
+
+
+	// test flags
+	public static final boolean CANT_END_TURN_WHEN_IT_ISNT_YOUR_TURN = true;
+
+
 	// Window Resolution
 	public static final int WINDOW_WD = 1300;
 	public static final int WINDOW_HT = 800;
@@ -68,5 +74,8 @@ public class Constants {
 	public static final String DATA_ITEMS = "data" + File.separatorChar + "items" + File.separatorChar;
 	public static final String DATA_HEROES = "data" + File.separatorChar + "heroes" + File.separatorChar;
 	public static final String DATA_WORLDS = "data" + File.separatorChar + "worlds" + File.separatorChar;
+	public static final String DATA_LEVELS = "data" + File.separatorChar + "levels" + File.separatorChar;
+	public static final String DATA_SAVES = "data" + File.separatorChar + "saves" + File.separatorChar;
+	public static final String DATA_SCENARIOS = "data" + File.separatorChar + "scenarios" + File.separatorChar;
 
 }

@@ -20,20 +20,24 @@ import tools.ImageLoader;
 public class ItemInfoPanel extends JPanel   {
 
 	private String message;
-	
+
 	private BufferedImage backgroundImage;
 
 	Font F= new Font("Franklin Gothic Medium", Font.BOLD, 16);
 	FontMetrics FM=getFontMetrics(F);
-	
-	
+
+	/**
+	 *
+	 * @param frame The mainframe this panel belongs to
+	 * @param msg The message to draw onto this panel
+	 */
 	public ItemInfoPanel(MainFrame frame, String msg) {
 		this.message = msg;
 		this.setLayout(new BorderLayout());
 		/*Initialize the image for the inventory panel*/
 		backgroundImage = ImageLoader.load(Constants.GUI_FILEPATH + "itemInfoBackground.png");
 		//this.setBackground(new Color(56,56,56,10));
-		
+
 		/*This adds an image to the label but maybe add later, it looks kinda stupid with current icons*/
 	    //ImageIcon itemImage = new ImageIcon(GlobalConstants.GUI_FILEPATH + "epipen.png");
 	    //JLabel label = new JLabel(itemImage);
@@ -42,7 +46,11 @@ public class ItemInfoPanel extends JPanel   {
 		//this.add(itemIcon,BorderLayout.SOUTH);
 	}
 
-	
+
+	/**
+	 * Sets the font and draws the background image and calls the drawOntoPanel method which enables text wrapping
+	 * for the panel.
+	 */
 	  @Override
 	  protected void paintComponent(Graphics g) {
 	    super.paintComponent(g);
@@ -52,8 +60,15 @@ public class ItemInfoPanel extends JPanel   {
 	    drawOntoPanel(message,new Rectangle(10,10,175,180), g);
 	  }
 
-	  
-	  // haha what the fuck is this method?
+
+	  /**
+	   * Wraps the text around a panel. Ensures that the message is not drawn
+	   * out of the panel.
+	   *
+	   * @param str The message to print on the panel
+	   * @param rc Size of the rectangle to draw the string on
+	   * @param g Graphics
+	   */
 	  public void drawOntoPanel(String str, Rectangle rc, Graphics g)
 	  {
 	     g.setFont(F);
@@ -63,7 +78,7 @@ public class ItemInfoPanel extends JPanel   {
 	     int strHeight=FM.getHeight();
 	     int strLength=str.length();
 	     int charPerLine=(int)(strLength*rc.width/(double)strWidth);
-	     	 
+
 	     if(charPerLine>=strLength) {
 	        g.drawString(str,rc.x,rc.y+strHeight);
 	     }
@@ -81,5 +96,5 @@ public class ItemInfoPanel extends JPanel   {
 	        g.drawString(str.substring(skip,strLength).trim(),rc.x,rc.y+(lines+1)*strHeight+(lines)*lineSep);
 	     }
 	  }
-	
+
 }

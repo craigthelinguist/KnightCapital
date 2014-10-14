@@ -17,14 +17,20 @@ import tools.Constants;
 import tools.ImageLoader;
 
 public class ItemSlotInformation extends JDialog  {
-	
+
+	/**
+	 *
+	 * @param frame The MainFrame this Dialog is attached to
+	 * @param msg The message to draw in this dialog
+	 */
+
 	public ItemSlotInformation(MainFrame frame, String msg) {
 		super(frame,true);
 		this.setModal(false);
 		this.setSize(200,200); //height, width
 		//this.setSize(400,374); //height, width
-		this.setUndecorated(true); //removes the border 
-        
+		this.setUndecorated(true); //removes the border
+
 		ItemInfoPanel panel = new ItemInfoPanel(frame,msg);
 		this.add(panel);
 		this.setResizable(false);
@@ -32,4 +38,3 @@ public class ItemSlotInformation extends JDialog  {
 
 
 }
-	

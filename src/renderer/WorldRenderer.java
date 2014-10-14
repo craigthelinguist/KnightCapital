@@ -51,7 +51,7 @@ public class WorldRenderer {
 
 		// draw tiles and construct buffer
 		List<CartesianMapping<?>> drawBuffer = new ArrayList<>();
-		drawTilesAndAddIconsToBuffer(graphics,controller,drawBuffer);
+		drawTilesAndAddIconsToBuffer(graphics,controller,drawBuffer,resolution);
 		addCitiesToBuffer(controller,drawBuffer);
 
 		// sort buffer's contents by the perspective
@@ -93,14 +93,15 @@ public class WorldRenderer {
 	 * @param resolution: screen bounds
 	 * @return: boolean
 	 */
-	public static boolean isPointOnScreen(Point pt, Dimension resolution){
+	public static boolean isPointOnScreen(Point pt, Camera camera, Dimension dimensions){
 		final int TILE_WD = Constants.TILE_WD;
 		final int TILE_HT = Constants.TILE_HT;
-
-		return	pt.x >= 0-TILE_WD
-			&&	pt.x < resolution.width + TILE_WD
-			&&	pt.y >= 0-TILE_HT
-			&&	pt.y < resolution.height + TILE_HT;
+		pt = Geometry.cartesianToIsometric(pt, camera);
+		int x = pt.x; int y = pt.y;
+		return x > 0 - TILE_WD
+			&& x < dimensions.width + TILE_WD
+			&& y > 0 - TILE_HT
+			&& y < dimensions.height + TILE_HT;
 	}
 
 	/**
@@ -109,7 +110,7 @@ public class WorldRenderer {
 	 * @param controller: contains info about world to be drawn
 	 * @param drawBuffer: list of things to be drawn later
 	 */
-	public static void drawTilesAndAddIconsToBuffer(Graphics graphics, WorldController controller, List<CartesianMapping<?>> drawBuffer){
+	public static void drawTilesAndAddIconsToBuffer(Graphics graphics, WorldController controller, List<CartesianMapping<?>> drawBuffer, Dimension dimensions){
 		final World world = controller.getWorld();
 		final Camera camera = controller.getCamera();
 
@@ -117,7 +118,7 @@ public class WorldRenderer {
 		for (int y = 0; y < tiles.length; y++){
 			for (int x = 0; x < tiles[y].length; x++){
 				Point ptCart = new Point(x,y);
-				if (!isPointOnScreen(ptCart,world.dimensions)) continue;
+				if (!isPointOnScreen(ptCart,controller.getCamera(),dimensions)) continue;
 
 				// add tile to buffer)
 				Tile tile = world.getTile(x,y);
@@ -192,7 +193,7 @@ public class WorldRenderer {
 
 		int imageHeight = city.getImageHeight();
 		int necessaryHeight = TILE_HT*City.WIDTH;
-		int offsetY = imageHeight-necessaryHeight;
+		int offsetY = imageHeight - necessaryHeight;
 		if (offsetY > 0) ptIso.y = ptIso.y - offsetY;
 		int OFFSET = HALF_TILE_HT*City.WIDTH;
 		ptIso.y = ptIso.y - OFFSET;

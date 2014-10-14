@@ -1,13 +1,16 @@
 	package GUI.town;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.image.BufferedImage;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import GUI.reusable.PartyPanel;
@@ -26,7 +29,7 @@ public class TownPanel extends JPanel{
 	private TownController controller;
 	private BufferedImage splash;
 	private TownGui gui;
-	
+
 	// components
 
 
@@ -50,8 +53,8 @@ public class TownPanel extends JPanel{
 		//this.setLayout(new FlowLayout(FlowLayout.LEFT));
 
 		panel_buttons.setOpaque(false);
-		//this.add(panel_exchange);
 		this.add(panel_buttons,BorderLayout.WEST);
+
 
 		System.out.println(panel_exchange.getPreferredSize());
 		System.out.println(panel_exchange.getSize());

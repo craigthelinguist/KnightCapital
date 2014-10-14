@@ -25,6 +25,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -35,6 +37,8 @@ import javax.swing.SwingUtilities;
 import com.thoughtworks.xstream.XStream;
 
 import networking.Client;
+import networking.ClientM;
+import networking.NetworkM;
 import networking.Server;
 import player.Player;
 import renderer.Camera;
@@ -96,6 +100,11 @@ public class WorldController{
 	private boolean active = true;
 	private long lastMouse = 0;
 
+
+	private ServerSocket serverSocket;
+	private Socket socket;
+
+
 	// key bindings
 	private static final int ROTATE_CW = KeyEvent.VK_R;
 	private static final int ROTATE_CCW = KeyEvent.VK_E;
@@ -113,22 +122,34 @@ public class WorldController{
 		selected = null;
 		highlightedTiles = new HashSet<>();
 
+		/**
+		 * comment this out to get controller to load from main menu
+		 */
+
 		if(serverOrClient){
+			NetworkM.createServer(this, 2020, 2);
+		}
+
+		else {
+
 			try {
-				server = new Server();
+				NetworkM.createClient("localhost", 2020, "selemonClient");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+<<<<<<< HEAD
 		}
 
 		else {
 
 			client = new Client("130.195.6.170", 45812, 45612);
 
+=======
+//			client = new Client("130.195.6.98", 45612);
+>>>>>>> af77a2f567689042440eba211d48f127f553afd8
 
 		}
-
 
 	}
 
@@ -190,9 +211,9 @@ public class WorldController{
 			Tile selectedTile = world.getTile(selected);
 
 			// double clicked a city
-			if (SwingUtilities.isLeftMouseButton(me) && selectedTile != null
+			if (leftClicked(me) && selectedTile != null
 				&& clickedTile instanceof CityTile && selectedTile instanceof CityTile
-				 && System.currentTimeMillis() - this.lastMouse < 700)
+				 && doubleClicked() )
 				{
 					CityTile c1 = (CityTile)clickedTile;
 					CityTile c2 = (CityTile)selectedTile;
@@ -204,8 +225,8 @@ public class WorldController{
 				}
 
 			//selected party and right clicked a city
-			else if (SwingUtilities.isRightMouseButton(me) && selectedTile != null &&
-					selectedTile.occupant() instanceof Party && clickedTile instanceof CityTile) {
+			else if (rightClicked(me) && selectedTile != null &&
+					selectedTile.occupant() instanceof Party && clickedTile instanceof CityTile && isMyTurn()) {
 
 				// get the city
 				CityTile c1 = (CityTile)clickedTile;
@@ -225,7 +246,7 @@ public class WorldController{
 
 						// add to city; remove from world map
 						city.setVisitors(party);
-						
+
 						world.setIcon(null, selectedTile.X, selectedTile.Y);
 
 					}
@@ -236,10 +257,8 @@ public class WorldController{
 				}
 			}
 
-
-
 			// deselected the tile
-			else if (selected != null && SwingUtilities.isLeftMouseButton(me) && selectedTile == clickedTile){
+			else if (selected != null && leftClicked(me) && selectedTile == clickedTile){
 				System.out.println("deselect");
 				deselect();
 				gui.updateInfo(null);
@@ -248,7 +267,7 @@ public class WorldController{
 			}
 
 			// selected the tile
-			else if (selectedTile != clickedTile && SwingUtilities.isLeftMouseButton(me)){
+			else if (selectedTile != clickedTile && leftClicked(me)){
 				selected = ptCartesian;
 				highlightTiles(clickedTile);
 				gui.updateInfo(clickedTile);
@@ -257,7 +276,7 @@ public class WorldController{
 			}
 
 			// moved
-			else if (selected != null && SwingUtilities.isRightMouseButton(me)){
+			else if (selected != null && rightClicked(me) && isMyTurn()){
 
 				boolean moved = world.moveParty(player, selected, ptCartesian);
 				if (moved){
@@ -347,6 +366,33 @@ public class WorldController{
 			}
 		}
 		resetHighlightedTiles();
+	}
+
+	/**
+	 * Return true if it is currently the turn of the player attached to this WorldController.
+	 * @return
+	 */
+	public boolean isMyTurn(){
+		return world.getCurrentPlayer() == this.player;
+	}
+
+	/**
+	 * Return true if the mouse event fired at this time is a double click.
+	 * @return
+	 */
+	public boolean doubleClicked(){
+		long lastClick = System.currentTimeMillis();
+		boolean ans = System.currentTimeMillis() - this.lastMouse < 700;
+		lastMouse = lastClick;
+		return ans;
+	}
+
+	public boolean leftClicked(MouseEvent me){
+		return SwingUtilities.isLeftMouseButton(me);
+	}
+
+	public boolean rightClicked(MouseEvent me){
+		return SwingUtilities.isRightMouseButton(me);
 	}
 
 	/**

@@ -44,7 +44,7 @@ public class BattleRenderer {
 		Camera cam = control.getCamera();
 
 		List<CartesianMapping<?>> drawBuffer = new ArrayList<>();
-		drawTilesAndAddIconsToBuffer(g, control, drawBuffer);
+		drawTilesAndAddIconsToBuffer(g, control, drawBuffer, res);
 
 		// sort buffer's contents by the perspective
 		Sorter.sortTopToBottom(drawBuffer);
@@ -74,15 +74,17 @@ public class BattleRenderer {
 	 * @param resolution: screen bounds
 	 * @return: boolean
 	 */
-	public static boolean isPointOnScreen(Point pt, Dimension resolution){
+	public static boolean isPointOnScreen(Point pt, Camera camera, Dimension dimensions){
 		final int TILE_WD = Constants.TILE_WD;
 		final int TILE_HT = Constants.TILE_HT;
-
-		return	pt.x >= 0-TILE_WD
-			&&	pt.x < resolution.width + TILE_WD
-			&&	pt.y >= 0-TILE_HT
-			&&	pt.y < resolution.height + TILE_HT;
+		pt = Geometry.cartesianToIsometric(pt, camera);
+		int x = pt.x; int y = pt.y;
+		return x > 0 - TILE_WD
+			&& x < dimensions.width + TILE_WD
+			&& y > 0 - TILE_HT
+			&& y < dimensions.height + TILE_HT;
 	}
+
 
 	/**
 	 * Iterate over all tiles in the controller's world. Draws the tiles and adds any icons on them to the buffer.
@@ -90,7 +92,7 @@ public class BattleRenderer {
 	 * @param controller: contains info about world to be drawn
 	 * @param drawBuffer: list of things to be drawn later
 	 */
-	public static void drawTilesAndAddIconsToBuffer(Graphics graphics, BattleController controller, List<CartesianMapping<?>> drawBuffer){
+	public static void drawTilesAndAddIconsToBuffer(Graphics graphics, BattleController controller, List<CartesianMapping<?>> drawBuffer, Dimension resolution){
 		final World world = controller.getWorld();
 		final Camera camera = controller.getCamera();
 
@@ -98,7 +100,7 @@ public class BattleRenderer {
 		for (int y = 0; y < tiles.length; y++){
 			for (int x = 0; x < tiles[y].length; x++){
 				Point ptCart = new Point(x,y);
-				if (!isPointOnScreen(ptCart,world.dimensions)) continue;
+				if (!isPointOnScreen(ptCart,controller.getCamera(),resolution)) continue;
 
 				// add tile to buffer
 				Tile tile = world.getTile(x,y);
@@ -144,6 +146,9 @@ public class BattleRenderer {
 
 	private static void drawTile(Graphics graphics, CartesianMapping<Tile> mapping, Camera camera) {
 		Point ptIso = mapping.point;
+		int ht = mapping.thing.getTileHeight();
+		int dy = ht - Constants.TILE_HT;
+		ptIso.y = ptIso.y - dy;
 		if (mapping.intensity != 0) mapping.thing.drawHighlighted(graphics, ptIso.x, ptIso.y, mapping.intensity);
 		else mapping.thing.draw(graphics, ptIso.x, ptIso.y);
 	}

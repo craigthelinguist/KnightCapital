@@ -41,10 +41,15 @@ public abstract class Tile {
 		X = x; Y = y;
 		imageName = imgName;
 		animations = new AnimationMap();
-		String tile_filepath = Constants.ASSETS_TILES + imgName;
-		animations.addImage("world",tile_filepath,ImageLoader.load(tile_filepath));
-		String portrait_filepath = Constants.PORTRAITS + imgName;
-		animations.addImage("portrait",portrait_filepath,ImageLoader.load(portrait_filepath));
+
+		animations.addImage("portrait", Constants.PORTRAITS, ImageLoader.load(Constants.PORTRAITS + imgName));
+
+		//String tile_filepath = Constants.ASSETS_TILES + imgName;
+		//animations.addImage("world",tile_filepath,ImageLoader.load(tile_filepath));
+		//String portrait_filepath = Constants.PORTRAITS + imgName;
+
+		animations.addDirectedImages(Constants.ASSETS_TILES, imageName, null);
+		animations.setImage("north");
 	}
 
 	/**
@@ -52,7 +57,7 @@ public abstract class Tile {
 	 * @return a buffered image
 	 */
 	public BufferedImage getImage(){
-		return animations.getImage("world");
+		return animations.getImage();
 	}
 
 	/**
@@ -60,7 +65,7 @@ public abstract class Tile {
 	 * @return a buffered image
 	 */
 	public BufferedImage getPortrait(){
-		return animations.getImage("portrait");
+		return animations.getPortrait();
 	}
 
 	/**
@@ -78,20 +83,14 @@ public abstract class Tile {
 	}
 
 	public void draw(Graphics g, int x, int y){
-		g.drawImage(animations.getImage("world"), x, y, null);
+		g.drawImage(animations.getImage(), x, y, null);
 	}
 
 	public void setIcon(WorldIcon i){
 		occupant = i;
 	}
 
-	public void addPortrait(String filepath, BufferedImage bi){
-		this.animations.addImage("portrait", filepath, bi);
-	}
 
-	public void addImage(String filepath, BufferedImage bi){
-		this.animations.addImage("world", filepath, bi);
-	}
 
 	/**
 	 * For data loading/saving. Return this class as a string representation.
@@ -106,7 +105,7 @@ public abstract class Tile {
 	 * @param y
 	 */
 	public void drawHighlighted(Graphics graphics, int x, int y, int intensity) {
-		BufferedImage lighterImage = ImageManipulation.lighten(animations.getImage("world"), intensity);
+		BufferedImage lighterImage = ImageManipulation.lighten(animations.getImage(), intensity);
 		graphics.drawImage(lighterImage,x,y,null);
 	}
 
@@ -126,10 +125,18 @@ public abstract class Tile {
 
 
 		if (animations == null) System.out.println("animations are null");
-		else if (animations.getImage("world") == null) System.out.println("image is null");
-		else return animations.getImage("world").getHeight();
+		else if (animations.getImage() == null) System.out.println("image is null");
+		else return animations.getImage().getHeight();
 
 		return Constants.TILE_HT;
+	}
+
+	public void setAnimation(String name){
+		animations.setImage(name);
+	}
+
+	public String getAnimationName(){
+		return animations.getName();
 	}
 
 }
