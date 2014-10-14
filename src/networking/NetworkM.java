@@ -63,7 +63,7 @@ public class NetworkM {
 					//make the state of the game to playing
 					//example: game.setState(WorldController.playing);
 
-					 swerv = new ServerM(sock, world);
+					swerv = new ServerM(sock, world);
 					swerv.start();
 
 					//start the threads

@@ -68,7 +68,7 @@ public class ServerM extends Thread{
 			out.reset();
 			while(true){//this should change to see if the current player is playing
 				//check if there is bytes to read
-				if(in.available()!=0){
+				
 
 //					int input = in.readInt();//event from client
 					//player movement
@@ -84,7 +84,7 @@ public class ServerM extends Thread{
 					out.flush();
 					out.reset();
 
-				}
+				
 
 
 			}
