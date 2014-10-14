@@ -27,7 +27,7 @@ public abstract class Creature {
 	protected LinkedList<Buff> buffs;
 	protected Stats stats;
 	protected Player owner;
-	
+
 	/*
 	protected Map<String,Animation> animations;
 	protected String animationName;
@@ -43,12 +43,12 @@ public abstract class Creature {
 		buffs = new LinkedList<>();
 		changeOwner(player);
 	}
-	
+
 	public Creature(String name, String imgName, Player player, UnitStats stats) {
 		this.name = name;
 		this.stats = stats;
 		this.name = name;
-		
+
 		this.imgName = imgName;
 		this.owner = player;
 		buffs = new LinkedList<>();
@@ -68,7 +68,7 @@ public abstract class Creature {
 		animations.addDirectedImages(Constants.ICONS, imgName, playerColor);
 		animations.setImage("north");
 	}
-	
+
 	/**
 	 * Damage this creature by the amount specified.
 	 * @param damageDealt: amount of damage this creature has suffered.
@@ -109,7 +109,7 @@ public abstract class Creature {
 	 * Heal this creature back up to max HP. If they're dead, they don't get healed.
 	 * @param amount: amount of hit points to heal.
 	 */
-	public void fullHeal(int amount){
+	public void fullHeal(){
 		int hp = stats.getCurrent(Stat.HEALTH);
 		if (hp <= 0) return;
 		int totalhp = stats.getTotal(Stat.HEALTH);
@@ -124,7 +124,7 @@ public abstract class Creature {
 		int hpToRegen = (int)(totalHP/20);
 		heal(hpToRegen);
 	}
-	
+
 	/**
 	 * Add the specified buff to this creature.
 	 * @param buff: buff to apply.
@@ -133,7 +133,7 @@ public abstract class Creature {
 		buff.applyTo(this);
 		buffs.add(buff);
 	}
-	
+
 	public void removeBuff(Buff buffToRemove){
 		for (int i = 0; i < buffs.size(); i++){
 			Buff buff = buffs.get(i);
@@ -199,14 +199,22 @@ public abstract class Creature {
 		return stats.getTotal(stat);
 	}
 
+	/**
+	 * Return the current health of this creature.
+	 * @return
+	 */
+	public int getHealth(){
+		return stats.getCurrent(Stat.HEALTH);
+	}
+
 	public void setCurrent(Stat stat, int amount){
 		stats.setCurrent(stat, amount);
 	}
-	
+
 	public void setBuffed(Stat stat, int amount){
 		stats.setBuff(stat, amount);
 	}
-	
+
 	/**
 	 * Returns true if this creature is dead. Dead as a doorknob.
 	 * @return boolean whether dead or not.
@@ -214,7 +222,7 @@ public abstract class Creature {
 	public boolean isDead() {
 		return stats.getTotal(Stat.HEALTH) <= 0;
 	}
-	
+
 	public AttackType getAttackType(){
 		return stats.getAttackType();
 	}
@@ -234,17 +242,17 @@ public abstract class Creature {
 	public void setAnimation(String name){
 		animations.setImage(name);
 	}
-	
+
 	public Player getOwner(){
 		return this.owner;
 	}
-	
+
 	public String getName(){
 		return name;
 	}
-	
+
 	public String getImageName(){
 		return this.imgName;
 	}
-	
+
 }

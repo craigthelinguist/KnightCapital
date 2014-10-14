@@ -62,7 +62,9 @@ import GUI.world.GameDialog;
 import GUI.world.MainFrame;
 
 /**
- * A WorldController. This is the glue between the model (World) and the view (gui, renderer).
+ * A WorldController. This is the glue between the model (World) and the view (gui, renderer). It responds to mouse, key, and button presses
+ * and informs the World to update its game state. It then tells the gui to redraw itself to show any changes in game state. It also handles
+ * interactions between different GUIs - for example, passing over control to TownController when the player opens up a town.
  * @author Aaron
  */
 public class WorldController{
@@ -77,7 +79,7 @@ public class WorldController{
 	// gui and renderer: the view
 	private MainFrame gui;
 
-	// town controller when you have town view up
+	// current session in town, if there is one
 	private TownController townController;
 
 	// world this controller is for: the model
@@ -144,19 +146,17 @@ public class WorldController{
 
 	}
 
+
 	public MainFrame getGui(){
 		return gui;
 	}
 
 
 	/**
-	 * Player has pushed a key
+	 * Player has pushed a key. Perform any actions and update/redraw game-state if necessary.
 	 * @param ke: details about the key event
 	 */
 	public void keyPressed(KeyEvent ke){
-
-
-
 
 		int code = ke.getKeyCode();
 		if (code == ROTATE_CW){
@@ -195,7 +195,8 @@ public class WorldController{
 	}
 
 	/**
-	 * Player has clicked on something.
+	 * Player has clicked on something. Perform any actions depending on the nature of their
+	 * click and update + redraw game-state if necessary.
 	 * @param me: details about the click.
 	 * @param panel: what they clicked on (inventory, world, etc.)
 	 */
@@ -259,9 +260,8 @@ public class WorldController{
 
 	}
 
-
 	/**
-	 * The mouse has moved from lastDrag -> point.
+	 * The mouse has moved from lastDrag -> point. Pan the camera and redraw game-state.
 	 * @param lastDrag: point mouse started at
 	 * @param point: point mouse moved to.
 	 */
@@ -272,18 +272,20 @@ public class WorldController{
 		gui.redraw();
 	}
 
+	/**
+	 * The mouse has been moved. Perform any actions and redraw game state.
+	 * @param me: mouse event that moved.
+	 */
 	public void mouseMoved(MouseEvent me){
-
 		Point ptIso = new Point(me.getX(),me.getY());
 		Point ptCartesian = Geometry.isometricToCartesian(ptIso, camera, world.dimensions);
 		Tile tileHover = world.getTile(ptCartesian);
 		if (tileHover == null) this.hover = ptCartesian;
 		else this.hover = null;
-
 	}
 
 	/**
-	 * Player has clicked a button.
+	 * Player has clicked a button. Perform any actions and redraw game state.
 	 * @param button: the button they clicked.
 	 */
 	public void buttonPressed(String button){
@@ -299,7 +301,7 @@ public class WorldController{
 	}
 
 	/**
-	 * Deselect the current tile. Un-highlight everything.
+	 * Deselect the currently selected tile. Un-highlight everything.
 	 */
 	private void deselect(){
 		selected = null;
@@ -307,7 +309,7 @@ public class WorldController{
 	}
 
 	/**
-	 * Resets the set of highlighted tiles.
+	 * Resets the set of tiles highlighted by this World Controller.
 	 */
 	private void resetHighlightedTiles(){
 		this.highlightedTiles = new HashSet<>();
@@ -335,24 +337,35 @@ public class WorldController{
 
 	/**
 	 * Return true if it is currently the turn of the player attached to this WorldController.
-	 * @return
+	 * @return: true if it is this controller's owner's turn.
 	 */
 	public boolean isMyTurn(){
 		return world.getCurrentPlayer() == this.player;
 	}
 
 	/**
-	 * Return true if the mouse event fired at this time is a double click.
-	 * @return
+	 * Return true if the time between now and the last mouse event was enough to be
+	 * considered a "double click".
+	 * @return: true if it was a double click.
 	 */
 	public boolean doubleClicked(){
 		return System.currentTimeMillis() - this.lastMouse < 700;
 	}
 
+	/**
+	 * Return true if the given mouse event was a left-click.
+	 * @param me: mouse event
+	 * @return: true if me was a left-click.
+	 */
 	public boolean leftClicked(MouseEvent me){
 		return SwingUtilities.isLeftMouseButton(me);
 	}
 
+	/**
+	 * Return true if the given mouse event was a right-click.
+	 * @param me: mouse event
+	 * @return: true if me was a right-click.
+	 */
 	public boolean rightClicked(MouseEvent me){
 		return SwingUtilities.isRightMouseButton(me);
 	}
@@ -366,6 +379,10 @@ public class WorldController{
 		return highlightedTiles.contains(p);
 	}
 
+	/**
+	 * Ends the current town session. Also awakens this WorldController and its attached
+	 * gui so they now respond to events.
+	 */
 	public void endTownView(){
 		awake();
 		this.townController = null;
@@ -374,29 +391,63 @@ public class WorldController{
 		gui.redraw();
 	}
 
+	/**
+	 * Opens a new town session with the specified city. Suspends this WorldController
+	 * and its attached gui and the program's control flow passes to the
+	 * TownController that this method makes.
+	 * @param city: the city that you will be viewing through the TownController.
+	 */
 	public void startTownView(City city){
 		suspend();
 		this.townController = new TownController(city,this);
 	}
 
+	/**
+	 * Awaken this controller. Its attached gui will now draw information and respond
+	 * to events.
+	 */
 	public void awake(){
 		gui.awake();
 		this.active = true;
 	}
 
+	/**
+	 * Make this controller inactive until awakened. Its attached gui will also become
+	 * unresponsive.
+	 */
 	public void suspend(){
 		this.active = false;
 		gui.suspend();
 	}
 
+	/**
+	 * Return the world being controlled by this controller.
+	 * @return: world
+	 */
 	public World getWorld(){
 		return world;
 	}
 
+	/**
+	 * Return the viewing camera of this controller.
+	 * @return: camera
+	 */
 	public Camera getCamera(){
 		return camera;
 	}
 
+	/**
+	 * Returns the player this controller belongs to.
+	 * @return: player
+	 */
+	public Player getPlayer() {
+		return this.player;
+	}
+
+	/**
+	 * Return the tile that is currently selected by the player attached to this controller.
+	 * @return: a tile, or null if there is no tile selected.
+	 */
 	public Tile getSelectedTile(){
 		return world.getTile(selected);
 	}
@@ -406,12 +457,6 @@ public class WorldController{
 		if(client!=null)client.notifyThread();
 		if(client == null)System.out.println("still not initiated");
 	}
-
-	public Dimension getVisualDimensions() {
-		if (gui == null) return Toolkit.getDefaultToolkit().getScreenSize();
-		return gui.getSize();
-	}
-
 
 	public static void main(String[] args) throws IOException{
 		aaron_main(args);
@@ -611,16 +656,6 @@ public class WorldController{
 		return new WorldController(w,p,true);
 
 	}
-
-	/**
-	 * Returns the player this controller belongs to.
-	 * @return
-	 */
-	public Player getPlayer() {
-		return this.player;
-	}
-
-
 	/**
 	 * This is a test for creating a world with custom tiles.
 	 * @return World
