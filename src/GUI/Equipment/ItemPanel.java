@@ -14,7 +14,7 @@ public class ItemPanel extends JPanel {
 	private BufferedImage backgroundSlot;
 
 	public ItemPanel(String slotType) {
-		this.setPreferredSize(new Dimension(100,100));
+		this.setPreferredSize(new Dimension(80,80));
 		backgroundSlot = ImageLoader.load(Constants.GUI_INVENTORY + slotType+".png");
 	}
 

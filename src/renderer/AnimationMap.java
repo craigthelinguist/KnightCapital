@@ -106,18 +106,24 @@ public class AnimationMap{
 			String key = image.getKey();
 			KCImage oldImage = image.getValue();
 			String oldFilepath = oldImage.filepath;
-			if (colours.contains(oldFilepath)){
-				String newFilepath = substringExchange(oldFilepath,key,newColor);
-				BufferedImage bi = ImageLoader.load(newFilepath);
-				KCImage kcimage = new KCImage(bi, key, newFilepath);
-				newKeys.add(kcimage);
+
+			for (String col : colours){
+				if (oldFilepath.contains(col)){
+					String newFilepath = substringExchange(oldFilepath,col,newColor);
+					BufferedImage bi = ImageLoader.load(newFilepath);
+					KCImage kcimage = new KCImage(bi, key, newFilepath);
+					newKeys.add(kcimage);
+				}
 			}
+
 		}
 
 		// store KCIMages in the map
 		for (KCImage img : newKeys){
 			this.animations.put(img.name, img);
 		}
+
+		this.animation = this.animations.get(this.animationName);
 
 	}
 

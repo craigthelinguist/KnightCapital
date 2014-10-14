@@ -14,6 +14,12 @@ public class Constants {
 	// GlobalConstants cannot be instantiated
 	private Constants(){}
 
+
+
+	// test flags
+	public static final boolean CANT_END_TURN_WHEN_IT_ISNT_YOUR_TURN = true;
+
+
 	// Window Resolution
 	public static final int WINDOW_WD = 1300;
 	public static final int WINDOW_HT = 800;
@@ -60,7 +66,7 @@ public class Constants {
 	public static final int PARTY_PANEL_HEIGHT = (int) (WINDOW_HT * 0.8);
 
 	public static final String PartyPanelTitle = "Party Panel";
-	public static final String PartyPanelDescription = "Select a unit or item to get a more detailed description about it. Drag units to change battle formation.";
+	public static final String PartyPanelDescription = "Select a unit/item to get a more detailed description about it. Drag units to change battle formation.";
 
 	// shit for data loading.
 	public static final String XMLTESTS = "data" + File.separatorChar + "test" + File.separatorChar;

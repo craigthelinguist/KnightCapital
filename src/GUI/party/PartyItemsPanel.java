@@ -39,18 +39,19 @@ public class PartyItemsPanel extends JPanel{
 	private final int HEIGHT = Constants.INVENTORY_DIMENSIONS.height*Party.PARTY_ROWS+1;
 
 	public PartyItemsPanel(PartyDialog master, Dimension d) {
+		this.setOpaque(false);
 		this.master = master;
 		this.party = master.getParty();
 		this.setPreferredSize(new Dimension(WIDTH,HEIGHT));
 		dragging = null;
 
+
 		// listeners
 		this.addMouseListener(new SlotListener());
 		this.addMouseMotionListener(new SlotListener());
-
 	}
 
-	private void redraw(){
+	private void redraw() {
 		this.repaint();
 	}
 
@@ -88,8 +89,8 @@ public class PartyItemsPanel extends JPanel{
 
 	@Override
 	protected void paintComponent(Graphics g){
-		g.setColor(Color.WHITE);
-		g.fillRect(0,0,getWidth(),getHeight());
+		//g.setColor(Color.WHITE);
+		//g.fillRect(0,0,getWidth(),getHeight());
 		g.setColor(Color.BLACK);
 		for (int x = 0; x < INVENTORY_COLS; x++){
 			for (int y = 0; y < INVENTORY_ROWS; y++){

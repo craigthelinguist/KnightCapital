@@ -27,7 +27,7 @@ public class EquipmentPanelLayered extends JLayeredPane{
 			equipBorder.setBounds(0,0,1180,750);
 			this.add(equipBorder,new Integer(0),0);
 
-			HeroEquipLayeredPane heroLayer = new HeroEquipLayeredPane(equipMainDialog);
+			HeroEquipLayeredPane heroLayer = new HeroEquipLayeredPane();
 			heroLayer.setBounds(50,50,800,700);
 			this.add(heroLayer,new Integer(2),0);
 		}
