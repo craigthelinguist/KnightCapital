@@ -9,10 +9,10 @@ import game.items.Target;
 
 public class PassiveItem extends Item{
 
-	public PassiveItem(String name, String imgName, String description, Effect[] effectsArray, Target target) {
-		super(name,imgName,description,effectsArray,target);
-		
-		
+	public PassiveItem(String name, String imgName, String description, Effect[] effectsArray, Target target, String filename) {
+		super(name,imgName,description,effectsArray,target,filename);
+
+
 		/*
 		for (int i = 0; i < buffs.length; i++){
 			Buff b = buffs[i];
@@ -22,7 +22,7 @@ public class PassiveItem extends Item{
 		}
 		*/
 	}
-	
+
 	/**
 	 * Apply all of the buffs on this passive item to their target.
 	 * @param party: party to whom the buffs will be applied.
@@ -30,7 +30,7 @@ public class PassiveItem extends Item{
 	public void applyEffectsTo(Party party){
 		apply(party,true);
 	}
-	
+
 	/**
 	 * Remove all of the buffs on this passive item from their target.
 	 * @param party: party whose buffs you will remove.
@@ -38,9 +38,9 @@ public class PassiveItem extends Item{
 	public void removeEffectsFrom(Party party){
 		apply(party,false);
 	}
-	
+
 	/**
-	 * Helper method. Either applies or unapplies all buffs to the 
+	 * Helper method. Either applies or unapplies all buffs to the
 	 * given party.
 	 * @param party: party whose buffs you'll apply/unapply
 	 * @param applying: are you applying the buffs or removing them

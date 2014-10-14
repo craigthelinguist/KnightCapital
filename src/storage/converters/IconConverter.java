@@ -65,21 +65,21 @@ public class IconConverter implements Converter{
 
 		Creature[][] creatures = party.getMembers();
 
-		for (int col = 0; col < creatures.length; col++){
-			for (int row = 0; row < creatures[col].length; row++){
-				if (creatures[col][row] == null) continue;
+		for (int row = 0; row < creatures.length; row++){
+			for (int col = 0; col < creatures[row].length; col++){
+				if (creatures[row][col] == null) continue;
 
 				System.out.printf("(%d,%d)\n", col,row);
 
 				writer.startNode("member");
-					writer.startNode("col");
-						writer.setValue(""+col);
-					writer.endNode();
 					writer.startNode("row");
 						writer.setValue(""+row);
 					writer.endNode();
+					writer.startNode("col");
+						writer.setValue(""+col);
+					writer.endNode();
 
-					Creature creature = creatures[col][row];
+					Creature creature = creatures[row][col];
 					if (creature instanceof Unit){
 						writer.startNode("unit");
 						new UnitConverter().marshal(creature,writer, context);
@@ -139,7 +139,10 @@ public class IconConverter implements Converter{
 
 	private ItemIcon unmarshalItemIcon(HierarchicalStreamReader reader, UnmarshallingContext context){
 		ItemConverter ic = new ItemConverter();
-		Item item = (Item)ic.unmarshal(reader, context);
+		reader.moveDown();
+		Object obj = ic.unmarshal(reader, context);
+		reader.moveUp();
+		Item item = (Item)obj;
 		return new ItemIcon(item);
 	}
 
@@ -206,13 +209,13 @@ public class IconConverter implements Converter{
 
 		// read the position
 		reader.moveDown();
-			int col = Integer.parseInt(reader.getValue());
-		reader.moveUp();
-		reader.moveDown();
 			int row = Integer.parseInt(reader.getValue());
 		reader.moveUp();
+		reader.moveDown();
+			int col = Integer.parseInt(reader.getValue());
+		reader.moveUp();
 
-		if (members[col][row] != null){
+		if (members[row][col] != null){
 			throw new RuntimeException("loading 2 creatures into the same spot in the party");
 		}
 
@@ -222,12 +225,12 @@ public class IconConverter implements Converter{
 		if (node.equals("hero")){
 			Hero hero =  (Hero) new HeroConverter().unmarshal(reader, context);
 			hero.changeOwner(player);
-			members[col][row] = hero;
+			members[row][col] = hero;
 		}
 		else if (node.equals("unit")){
 			Unit unit = (Unit) new UnitConverter().unmarshal(reader,context);
 			unit.changeOwner(player);
-			members[col][row] = unit;
+			members[row][col] = unit;
 		}
 		else throw new RuntimeException("party member specified that isn't a hero or a unit: " + node);
 		reader.moveUp();

@@ -32,8 +32,12 @@ public class TileConverter implements Converter {
 		else throw new RuntimeException("trying to marshal some unknown kind of tile");
 	}
 
+	static int count = 0;
+
 	@Override
 	public Object unmarshal(HierarchicalStreamReader reader, UnmarshallingContext context) {
+
+		count++;
 
 		reader.moveDown();
 			String type = reader.getValue();
@@ -43,6 +47,7 @@ public class TileConverter implements Converter {
 		else if (type.equals("impassable")) return unmarshal_impassable(reader,context);
 		else if (type.equals("city")) return unmarshal_city(reader,context);
 		else{
+			System.out.println("Failed on tile " + count);
 			throw new RuntimeException("idk how to parse this type of tile: " + type);
 		}
 
@@ -118,6 +123,9 @@ public class TileConverter implements Converter {
 
 	private void marshal_city(Object object, HierarchicalStreamWriter writer, MarshallingContext context) {
 		CityTile ct = (CityTile)object;
+		writer.startNode("type");
+		writer.setValue(ct.asString());
+		writer.endNode();
 		writer.startNode("x");
 		writer.setValue(""+ct.X);
 		writer.endNode();

@@ -59,7 +59,7 @@ public class WorldConverter implements Converter{
 						writer.setValue(city.getName());
 					writer.endNode();
 					writer.startNode("imageName");
-						writer.setValue(city.getName());
+						writer.setValue(city.getImageName());
 					writer.endNode();
 					writer.startNode("player");
 						writer.setValue(""+city.getOwner().slot);
@@ -133,9 +133,10 @@ public class WorldConverter implements Converter{
 					reader.moveUp();
 				reader.moveUp();
 
+				WorldLoader.insertCity(cityname, new City(cityname,imgName,player,null));
+
 			}
 		reader.moveUp();
-
 
 
 

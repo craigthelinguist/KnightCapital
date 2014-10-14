@@ -184,7 +184,7 @@ public class ItemPanel extends JPanel {
 		members[0][0] = hero;
 		Party party = new Party(hero, player, members);
 		Buff[] buffsAmulet = new Buff[]{ Buff.newTempBuff(Stat.DAMAGE, 5) };
-		party.addItem(new PassiveItem("Amulet", "amulet", "An amulet that grants sickening gains.\n +5 Damage",buffsAmulet,Target.HERO));
+		party.addItem(new PassiveItem("Amulet", "amulet", "An amulet that grants sickening gains.\n +5 Damage",buffsAmulet,Target.HERO,"liontalisman.xml"));
 		ItemPanel tpp = new ItemPanel(party);
 
 		panel.add(tpp);

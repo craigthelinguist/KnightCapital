@@ -43,7 +43,7 @@ public class World {
 	public final int NUM_TILES_DOWN;
 	public final int WORLD_WD;
 	public final int WORLD_HT;
-	
+
 	// set of cities in this world
 	private final Set<City> cities;
 	private final Player[] players;
@@ -51,7 +51,7 @@ public class World {
 
 	private Tile[][] tiles;
 	private int currentDay;
-	
+
 	public World(Tile[][] tiles_, Player[] playersArray, Set<City> citySet){
 		tiles = tiles_;
 		NUM_TILES_ACROSS = tiles.length;
@@ -390,6 +390,9 @@ public class World {
 		return visited;
 	}
 
+	public Player getCurrentPlayer(){
+		return players[currentPlayer];
+	}
 
 	public Player[] getPlayers() {
 		return this.players;

@@ -10,10 +10,10 @@ import game.units.Hero;
  */
 public class EquippedItem extends Item{
 
-	public EquippedItem(String name, String imgName, String description, Buff[] buffs, Target target) {
-		super(name,imgName,description,buffs,target);
+	public EquippedItem(String name, String imgName, String description, Buff[] buffs, Target target, String filename) {
+		super(name,imgName,description,buffs,target,filename);
 	}
-	
+
 	/**
 	 * Equip this item and apply it's effect to a hero
 	 * @param hero to get going
@@ -21,7 +21,7 @@ public class EquippedItem extends Item{
 	public void equipTo(Hero hero) {
 		apply(hero, true);
 	}
-	
+
 	/**
 	 * Remove this item and it's effects from a hero
 	 * @param hero to remove item from
@@ -29,7 +29,7 @@ public class EquippedItem extends Item{
 	public void removeFrom(Hero hero) {
 		apply(hero, false);
 	}
-	
+
 	/**
 	 * Applies or Removes an equipped item to a hero.
 	 * Get's buffs from the item
@@ -44,5 +44,5 @@ public class EquippedItem extends Item{
 			else hero.removeBuff(buff);
 		}
 	}
-	
+
 }
