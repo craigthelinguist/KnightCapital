@@ -27,6 +27,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -130,17 +131,24 @@ public class WorldController{
 
 		if(serverOrClient){
 			NetworkM.createServer(this, 2020, 2);
+			try {
+				server = new Server();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 		else {
 
 			try {
 				NetworkM.createClient("localhost", 2020, "selemonClient");
+				client = new Client("130.195.6.170", 45612, 45812);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 			}
-//			client = new Client("130.195.6.98", 45612);
+			//			client = new Client("130.195.6.98", 45612);
 
 		}
 
@@ -202,61 +210,61 @@ public class WorldController{
 	 */
 	public void mousePressed(MouseEvent me){
 
-			Point ptIso = new Point(me.getX(),me.getY());
-			Point ptCartesian = Geometry.isometricToCartesian(ptIso, camera, world.dimensions);
-			Tile clickedTile = world.getTile(ptCartesian);
-			Tile selectedTile = world.getTile(selected);
+		Point ptIso = new Point(me.getX(),me.getY());
+		Point ptCartesian = Geometry.isometricToCartesian(ptIso, camera, world.dimensions);
+		Tile clickedTile = world.getTile(ptCartesian);
+		Tile selectedTile = world.getTile(selected);
 
-			// double clicked a city
-			if (leftClicked(me) && selectedTile != null
+		// double clicked a city
+		if (leftClicked(me) && selectedTile != null
 				&& clickedTile instanceof CityTile && selectedTile instanceof CityTile
-				 && doubleClicked() && ((CityTile)(clickedTile)).getCity().ownedBy(player) )
-				{
-					CityTile c1 = (CityTile)clickedTile;
-					CityTile c2 = (CityTile)selectedTile;
-					if (c1.getCity() == c2.getCity()){
-						startTownView(c1.getCity());
-					}
-					this.lastMouse = System.currentTimeMillis();
-
-				}
-
-
-			// deselected the tile
-			else if (selected != null && leftClicked(me) && selectedTile == clickedTile){
-				System.out.println("deselect");
-				deselect();
-				gui.updateInfo(null);
-				gui.redraw();
-				this.lastMouse = System.currentTimeMillis();
+				&& doubleClicked() && ((CityTile)(clickedTile)).getCity().ownedBy(player) )
+		{
+			CityTile c1 = (CityTile)clickedTile;
+			CityTile c2 = (CityTile)selectedTile;
+			if (c1.getCity() == c2.getCity()){
+				startTownView(c1.getCity());
 			}
+			this.lastMouse = System.currentTimeMillis();
 
-			// selected the tile
-			else if (selectedTile != clickedTile && leftClicked(me)){
+		}
+
+
+		// deselected the tile
+		else if (selected != null && leftClicked(me) && selectedTile == clickedTile){
+			System.out.println("deselect");
+			deselect();
+			gui.updateInfo(null);
+			gui.redraw();
+			this.lastMouse = System.currentTimeMillis();
+		}
+
+		// selected the tile
+		else if (selectedTile != clickedTile && leftClicked(me)){
+			selected = ptCartesian;
+			highlightTiles(clickedTile);
+			gui.updateInfo(clickedTile);
+			gui.redraw();
+			this.lastMouse = System.currentTimeMillis();
+		}
+
+		// moved
+		else if (selected != null && rightClicked(me) && isMyTurn()){
+
+			boolean moved = world.moveParty(player, selected, ptCartesian);
+			if (moved){
 				selected = ptCartesian;
 				highlightTiles(clickedTile);
 				gui.updateInfo(clickedTile);
 				gui.redraw();
 				this.lastMouse = System.currentTimeMillis();
 			}
-
-			// moved
-			else if (selected != null && rightClicked(me) && isMyTurn()){
-
-				boolean moved = world.moveParty(player, selected, ptCartesian);
-				if (moved){
-					selected = ptCartesian;
-					highlightTiles(clickedTile);
-					gui.updateInfo(clickedTile);
-					gui.redraw();
-					this.lastMouse = System.currentTimeMillis();
-				}
-				else if (clickedTile != null) {
-					if(clickedTile.occupant() instanceof ItemIcon) {
-						new GameDialog(gui,"Inventory full! You cannot pick up more items!");
-					}
+			else if (clickedTile != null) {
+				if(clickedTile.occupant() instanceof ItemIcon) {
+					new GameDialog(gui,"Inventory full! You cannot pick up more items!");
 				}
 			}
+		}
 
 	}
 
@@ -465,6 +473,11 @@ public class WorldController{
 	public static void aaron_main_2(String[] args) throws IOException{
 		World world = WorldLoader.load(Constants.DATA_WORLDS + "test_save.xml");
 		new WorldController(world,world.getPlayers()[0]);
+	}
+
+	public static void myles_main(String[] dun_goofed) {
+
+
 	}
 
 	public static void aaron_main(String[] args){
