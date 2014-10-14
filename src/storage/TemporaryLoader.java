@@ -30,6 +30,7 @@ public class TemporaryLoader {
 	private static final char GRASS_TILE = 'G';
 	private static final char DIRT_TILE = 'D';
 	private static final char TREE_TILE = 'T';
+	private static final char BUSH_TILE = 'B';
 
 	/**
 	 * Loads, creates, and returns the specified World.
@@ -76,6 +77,9 @@ public class TemporaryLoader {
 							break;
 						case TREE_TILE:
 							tiles[x][y] = ImpassableTile.newTreeTile(x,y);
+							break;
+						case BUSH_TILE:
+							tiles[x][y] = ImpassableTile.newBushTile(x,y);
 							break;
 						default:
 							throw new IOException("Unknown symbol " + line[x] + " at ("+"x"+","+y+")");
