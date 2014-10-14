@@ -43,7 +43,7 @@ public class World {
 	public final int NUM_TILES_DOWN;
 	public final int WORLD_WD;
 	public final int WORLD_HT;
-	
+
 	// set of cities in this world
 	private final Set<City> cities;
 	private final Player[] players;
@@ -51,7 +51,7 @@ public class World {
 
 	private Tile[][] tiles;
 	private int currentDay;
-	
+
 	public World(Tile[][] tiles_, Player[] playersArray, Set<City> citySet){
 		tiles = tiles_;
 		NUM_TILES_ACROSS = tiles.length;
@@ -72,6 +72,13 @@ public class World {
 	 * @return: true if the day ended (all players had their turn), false otherwise.
 	 */
 	public void endTurn(){
+
+		/*Iterate over the cities in the world, if the city belongs to the player that's ending his turn. Increase his gold by 10. Do this for every city the player owns.*/
+		for(City c : this.getCities()) {
+			if(c.getOwner() == players[currentPlayer]) {
+				players[currentPlayer].increaseGold(100);
+			}
+		}
 
 		// if you have cycled through all players, it is a new day.
 		// cycle through all parties owned by that player and remove buffs and stuff
@@ -390,6 +397,9 @@ public class World {
 		return visited;
 	}
 
+	public Player getCurrentPlayer(){
+		return players[currentPlayer];
+	}
 
 	public Player[] getPlayers() {
 		return this.players;

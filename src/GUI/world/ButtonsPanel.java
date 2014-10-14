@@ -68,16 +68,6 @@ public class ButtonsPanel extends JPanel  {
 		this.add(inventoryButton,c);
 
 
-
-		/*Create the gold coin icon*/
-		BufferedImage goldImage = ImageLoader.load(Constants.GUI_FILEPATH + "goldIcon.png");
-		ImageIcon goldIcon = new ImageIcon (goldImage);
-		goldLabel = new JLabel(goldIcon);
-		c.insets = new Insets(1,0,8,0);
-		c.gridx = 0;
-		c.gridy = 1;
-		this.add(goldLabel,c);
-
 		b2 = new JButton("End Turn Placeholder");
 		c.gridx = 0;
 		c.gridy = 2;

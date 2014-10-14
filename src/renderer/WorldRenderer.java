@@ -81,7 +81,9 @@ public class WorldRenderer {
 		graphics.drawString("Current Origin: ("+camera.getOriginX()+","+camera.getOriginY()+")", 30, 70);
 		graphics.drawString("Arrow keys to move camera", 30, 110);
 		graphics.drawString("Press r & e to rotate cw & ccw", 30, 130);
-
+		graphics.setColor(Color.RED);
+		String gold = ""+controller.getPlayer().getGold();
+		graphics.drawString("Gold: "+ gold, 30, 150);
 
 	}
 
@@ -120,14 +122,14 @@ public class WorldRenderer {
 				// add tile to buffer
 				Tile tile = world.getTile(x,y);
 				Point ptRotated = Geometry.rotateByCamera(ptCart, camera, world.dimensions);
-				
+
 				int intensity = 0;
 				if (tile == controller.getSelectedTile()) intensity = 55;
 				else if (controller.isHighlighted(ptCart)) intensity = 25;
-				
+
 				CartesianMapping<Tile> tileToDraw = new CartesianMapping<>(-2,tile,ptRotated,intensity);
 				drawBuffer.add(tileToDraw);
-				
+
 				// add occupant to buffer
 				if (tile.occupant() != null){
 					WorldIcon occupant = tile.occupant();
@@ -135,7 +137,7 @@ public class WorldRenderer {
 					CartesianMapping<WorldIcon> iconToDraw = new CartesianMapping<>(1,occupant,ptRotatedIcon,0);
 					drawBuffer.add(iconToDraw);
 				}
-				
+
 			}
 		}
 	}
@@ -151,7 +153,7 @@ public class WorldRenderer {
 		final World world = controller.getWorld();
 		final Camera camera = controller.getCamera();
 		Set<? extends City> citySet = world.getCities();
-		
+
 		// get mappings and store the tiles to draw them from in a list
 		for (City city : citySet){
 			CityTile ct = null;
@@ -231,7 +233,7 @@ public class WorldRenderer {
 		if (mapping.intensity != 0) mapping.thing.drawHighlighted(graphics, ptIso.x, ptIso.y, mapping.intensity);
 		else mapping.thing.draw(graphics, ptIso.x, ptIso.y);
 	}
-	
+
 	/**
 	 * Return a camera view of the centre of the given world that is north-oriented.
 	 * @param world: the world you're viewing.
