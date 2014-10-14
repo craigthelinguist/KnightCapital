@@ -121,9 +121,9 @@ public class MainFrame extends JFrame  {
 	 * @author Aaron
 	 * @param b2: the button that fired an event.
 	 */
-	protected void buttonPressed(JButton b2) {
+	protected void buttonPressed(String button) {
 		if (closeDialogEnabled) return;
-		controller.buttonPressed(b2);
+		controller.buttonPressed(button);
 	}
 
 	/**

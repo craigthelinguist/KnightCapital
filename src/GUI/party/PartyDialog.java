@@ -161,7 +161,6 @@ public class PartyDialog extends JDialog  {
         // Party Items Panel
         this.partyItemsPanel = new PartyItemsPanel(this, new Dimension(COMPONENT_WIDTH, COMPONENT_HEIGHT / 2));
         partyItemsPanel.setBackground(Color.BLUE);
-        partyItemsPanel.add(new ItemPanel(party));
         gc.gridx = 4;
         gc.gridy = 1;
         gc.gridwidth = 2;
@@ -213,14 +212,16 @@ public class PartyDialog extends JDialog  {
 	/**
 	 * Updates the selectedPanel with selected item
 	 */
-	private void updateSelectedWithItem(Item item) {
+	protected void updateSelectedWithItem(Item item) {
+		System.out.println("[Party Dialog]Updating Selected Item");
 		this.selectedItemPanel.setSelectedItem(item);
 	}
 
 	/**
 	 * Updates the selectedPanel with selected unit
 	 */
-	private void updateSelectedWithUnit(Creature unit) {
+	protected void updateSelectedWithUnit(Creature unit) {
+		System.out.println("[Party Dialog]Updating Selected Unit");
 		this.selectedItemPanel.setSelectedUnit(unit);
 	}
 
