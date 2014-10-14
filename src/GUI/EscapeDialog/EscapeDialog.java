@@ -22,8 +22,9 @@ public class EscapeDialog extends JDialog  {
 		this.setUndecorated(true); //removes the border
         this.setLocationRelativeTo(frame); //set location of dialog relative to frame
 
-	    EscapeDialogLayeredPane dLayeredPane = new EscapeDialogLayeredPane(this);
-		this.add(dLayeredPane);
+	    EscapeDialogLayeredPane dLayeredPane = new EscapeDialogLayeredPane(this,frame);
+		this.setFocusable(true);
+	    this.add(dLayeredPane);
 		this.setResizable(false);
 		this.setVisible(true);
 	}

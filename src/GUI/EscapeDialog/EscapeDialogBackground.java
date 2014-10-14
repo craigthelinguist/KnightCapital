@@ -4,8 +4,12 @@ import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.KeyEventDispatcher;
+import java.awt.KeyboardFocusManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -21,6 +25,7 @@ import tools.ImageLoader;
 import world.World;
 import GUI.MainMenu.MainMenuPanel;
 import GUI.world.CustomButton;
+import GUI.world.MainFrame;
 import controllers.WorldController;
 
 public class EscapeDialogBackground extends JPanel implements ActionListener{
@@ -35,13 +40,15 @@ public class EscapeDialogBackground extends JPanel implements ActionListener{
     private CustomButton quitGame;
 
 
-	EscapeDialog escapeDialog;
+	private EscapeDialog escapeDialog;
+	private MainFrame frame;
 
 
 	private String message;
 	private BufferedImage backgroundImage;
 
-	public EscapeDialogBackground(EscapeDialog ed) {
+	public EscapeDialogBackground(EscapeDialog ed, MainFrame frame) {
+		this.frame = frame;
 		this.escapeDialog = ed;
 		//this.setPreferredSize(new Dimension(200,200));
 		this.setLayout(new GridBagLayout());
@@ -169,10 +176,10 @@ public class EscapeDialogBackground extends JPanel implements ActionListener{
 
 		else if(e.getSource() == resumeGame) {
 			escapeDialog.dispose();
+			frame.awake();
 		}
 
 	}
-
 
 	private class Filter extends FileFilter{
 

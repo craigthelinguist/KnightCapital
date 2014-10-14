@@ -314,6 +314,7 @@ public class WorldController{
 	 * @param tile: tile that a party of the player's is standing on.
 	 */
 	private void highlightTiles(Tile tile){
+		if (this.player != world.getCurrentPlayer()) return;
 		if (tile != null){
 			WorldIcon wi = tile.occupant();
 			if (wi != null && wi instanceof Party){
