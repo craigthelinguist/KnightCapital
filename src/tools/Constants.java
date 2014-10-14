@@ -70,5 +70,6 @@ public class Constants {
 	public static final String DATA_WORLDS = "data" + File.separatorChar + "worlds" + File.separatorChar;
 	public static final String DATA_LEVELS = "data" + File.separatorChar + "levels" + File.separatorChar;
 	public static final String DATA_SAVES = "data" + File.separatorChar + "saves" + File.separatorChar;
+	public static final String DATA_SCENARIOS = "data" + File.separatorChar + "scenarios" + File.separatorChar;
 
 }

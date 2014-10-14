@@ -161,7 +161,9 @@ public class MainMenuPanel extends JPanel implements ActionListener{
 		//String fp = new File("").getAbsolutePath() + File.separatorChar + Constants.DATA_SAVES;
 
 		else if(e.getSource() == loadGame) {
-			JFileChooser chooser = new JFileChooser("Select a level to load");
+			String path = Constants.DATA_SCENARIOS;
+			File f = new File(path);
+			JFileChooser chooser = new JFileChooser(f);
 			Filter filter = new Filter(".save");
 			chooser.setFileFilter(filter);
 			int value = chooser.showOpenDialog(null);
