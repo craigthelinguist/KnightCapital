@@ -51,7 +51,7 @@ public class WorldRenderer {
 
 		// draw tiles and construct buffer
 		List<CartesianMapping<?>> drawBuffer = new ArrayList<>();
-		drawTilesAndAddIconsToBuffer(graphics,controller,drawBuffer,resolution);
+		addIconsAndTilesToBuffer(graphics,controller,drawBuffer,resolution);
 		addCitiesToBuffer(controller,drawBuffer);
 
 		// sort buffer's contents by the perspective
@@ -110,7 +110,7 @@ public class WorldRenderer {
 	 * @param controller: contains info about world to be drawn
 	 * @param drawBuffer: list of things to be drawn later
 	 */
-	public static void drawTilesAndAddIconsToBuffer(Graphics graphics, WorldController controller, List<CartesianMapping<?>> drawBuffer, Dimension dimensions){
+	public static void addIconsAndTilesToBuffer(Graphics graphics, WorldController controller, List<CartesianMapping<?>> drawBuffer, Dimension dimensions){
 		final World world = controller.getWorld();
 		final Camera camera = controller.getCamera();
 
