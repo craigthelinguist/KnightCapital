@@ -52,7 +52,7 @@ public class AnimationMap{
 	public void addDirectedImages(String directory, String base, String color){
 		String baseFilepath = directory + base;
 		String filepath;
-		
+
 		filepath = baseFilepath + "_" + color + "_north.png";
 		BufferedImage imgNorth = ImageLoader.load(filepath);
 		KCImage kcNorth = new KCImage(imgNorth, "north", filepath);
@@ -73,14 +73,14 @@ public class AnimationMap{
 		KCImage kcwest = new KCImage(imgwest, "west", filepath);
 		animations.put("west", kcwest);
 	}
-	
+
 	public void updateColours(String newColor){
-		
+
 		// we're looking for these colours
 		List<String> colours = new ArrayList<>();
 		colours.add("red"); colours.add("violet"); colours.add("blue"); colours.add("green");
 		colours.remove(newColor);
-		
+
 		// load new KCImages
 		List<KCImage> newKeys = new ArrayList<>();
 		for (Map.Entry<String,KCImage> image : animations.entrySet()){
@@ -94,12 +94,12 @@ public class AnimationMap{
 				newKeys.add(kcimage);
 			}
 		}
-		
+
 		// store KCIMages in the map
 		for (KCImage img : newKeys){
 			this.animations.put(img.name, img);
 		}
-		
+
 	}
 
 	/**
@@ -124,7 +124,7 @@ public class AnimationMap{
 		}
 		return sb.toString();
 	}
-	
+
 	public BufferedImage getPortrait(){
 		return animations.get("portrait").image;
 	}
@@ -134,6 +134,11 @@ public class AnimationMap{
 	}
 
 	public BufferedImage getImage(String name){
+
+		if (animations.get(name) == null){
+			System.out.println("stop");
+		}
+
 		return animations.get(name).image;
 	}
 

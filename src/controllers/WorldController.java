@@ -1,4 +1,5 @@
 
+
 package controllers;
 
 import game.effects.Buff;
@@ -224,6 +225,7 @@ public class WorldController{
 
 						// add to city; remove from world map
 						city.setVisitors(party);
+						
 						world.setIcon(null, selectedTile.X, selectedTile.Y);
 
 					}
