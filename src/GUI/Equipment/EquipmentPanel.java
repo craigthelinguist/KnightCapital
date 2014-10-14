@@ -10,6 +10,7 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
+import GUI.party.PartyDialog;
 import tools.Constants;
 import tools.ImageLoader;
 
@@ -17,7 +18,7 @@ public class EquipmentPanel extends JPanel {
 
 	private BufferedImage backgroundImage;
 
-	public EquipmentPanel(EquipmentMain eq) {
+	public EquipmentPanel() {
 
 		this.setLayout(new GridBagLayout());
 		/*set the background of this panel to an image from assets folder*/

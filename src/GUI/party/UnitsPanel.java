@@ -61,6 +61,7 @@ public class UnitsPanel extends JPanel{
 	 * @param dimensions for panel
 	 */
 	public UnitsPanel(PartyDialog master, Dimension d) {;
+		this.setOpaque(false);
 		this.setPreferredSize(d); // give it the d here
 		this.master = master;
 		this.party = master.getParty();
@@ -114,8 +115,8 @@ public class UnitsPanel extends JPanel{
 
 	@Override
 	protected void paintComponent(Graphics g){
-		g.setColor(Color.WHITE);
-		g.fillRect(0,0,getWidth(),getHeight());
+		//g.setColor(Color.WHITE);
+		//g.fillRect(0,0,getWidth(),getHeight());
 		g.setColor(Color.BLACK);
 		for (int x = 0; x < PARTY_COLS; x++){
 			for (int y = 0; y < PARTY_ROWS; y++){
