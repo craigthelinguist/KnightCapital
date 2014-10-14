@@ -2,21 +2,24 @@ package GUI.EscapeDialog;
 
 import javax.swing.JLayeredPane;
 
+import controllers.WorldController;
 import GUI.world.DialogBackground;
 import GUI.world.DialogPanel;
 import GUI.world.GameDialog;
+import GUI.world.MainFrame;
 
 public class EscapeDialogLayeredPane extends JLayeredPane{
 
 	int width;
 	int height;
 
-	public EscapeDialogLayeredPane(EscapeDialog ed) {
+	public EscapeDialogLayeredPane(EscapeDialog ed, MainFrame frame, WorldController control) {
+
 		width = ed.getWidth();
 		height = ed.getHeight();
 
 		/*Declare and initialise a new DialogPanel and set the layering position underneath */
-		EscapeDialogBackground escapeDialogBackground = new EscapeDialogBackground(ed);
+		EscapeDialogBackground escapeDialogBackground = new EscapeDialogBackground(ed,frame,control);
 		escapeDialogBackground.setBounds(12,12,376, 477);
 		this.add(escapeDialogBackground,new Integer(1),0);
 

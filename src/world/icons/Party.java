@@ -286,7 +286,7 @@ public class Party extends WorldIcon implements Iterable<Creature>{
 	 * @param y
 	 */
 	public void setItem(Item i1, int x, int y) {
-		inventory[x][y] = i1;
+		inventory[y][x] = i1;
 	}
 
 	@Override
@@ -419,6 +419,19 @@ public class Party extends WorldIcon implements Iterable<Creature>{
 		}
 
 		return creatures;
+	}
+
+	/**
+	 * Return true if there is no more space in this party's inventory.
+	 * @return
+	 */
+	public boolean hasFullInventory() {
+		for (int i = 0; i < inventory.length; i++){
+			for (int j = 0; j < inventory[i].length; j++){
+				if (inventory[i][j] == null) return false;
+			}
+		}
+		return true;
 	}
 
 }

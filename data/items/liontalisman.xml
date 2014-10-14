@@ -1,7 +1,7 @@
 <item>
 	<name>Talisman of the Lion</name>
 	<image>amulet</image>
-	<description>ur a lion bro</description>
+	<description>The talisman of a mighty hero. Grants +5 damage and +10 health to hero.</description>
 	<type>passive</type>
 	<target>HERO</target>
    <filename>liontalisman.xml</filename>

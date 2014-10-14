@@ -217,22 +217,27 @@ public class City {
 		}
 	}
 
-	/**
-	 * Set the owner of this city to the Player from parameter.
-	 * @param owner
-	 */
-	public void setOwner(Player owner) {
+	public void changeOwner(Player owner){
 		this.owner = owner;
+		this.animations.updateColours(owner.getColour());
 	}
 
 	/**
-	 * Return true if there's nobody in this city.
+	 * Return true if there's nobody in this city (visitors or garrison).
 	 * @return: true if no-one in city, false if there are visitors or garrison in city.
 	 */
 	public boolean isEmpty() {
 		boolean garrison = (this.garrison == null || this.garrison.isEmpty());
 		boolean visitors = (this.visitors == null || this.visitors.isEmpty());
 		return garrison || visitors;
+	}
+
+	/**
+	 * Return true if there are visitors in this city.
+	 * @return
+	 */
+	public boolean hasVisitors() {
+		return this.visitors != null && !this.visitors.isEmpty();
 	}
 
 }

@@ -36,14 +36,20 @@
       <x>0</x>
       <y>1</y>
       <imageName>grass</imageName>
-      <icon>null</icon>
+      <icon>
+		<type>ItemIcon</type>
+        <item>liontalisman.xml</item>
+	  </icon>
     </tile>
     <tile>
       <type>passable</type>
       <x>0</x>
       <y>2</y>
       <imageName>grass</imageName>
-      <icon>null</icon>
+      <icon>
+		<type>ItemIcon</type>
+        <item>liontalisman.xml</item>
+	  </icon>
     </tile>
     <tile>
       <type>passable</type>

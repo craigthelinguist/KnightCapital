@@ -73,13 +73,15 @@ public class MainFrame extends JFrame  {
 		KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
 		manager.addKeyEventDispatcher(new WorldKeyDispatcher());
 
-
 		//setupSlots();
 		this.setResizable(true);
 		this.pack();
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
 	}
+
+	public Canvas getCanvas(){return canvas;}
+
 
 	public void setController(WorldController wc){
 		controller = wc;
@@ -137,15 +139,15 @@ public class MainFrame extends JFrame  {
 	private class WorldKeyDispatcher implements KeyEventDispatcher {
 		@Override
 		public boolean dispatchKeyEvent(KeyEvent e) {
-			if (closeDialogEnabled || !active) return false;
-
-			if (e.getID() == KeyEvent.KEY_RELEASED)
-			{
-				controller.keyPressed(e);
+			if (closeDialogEnabled || !active){
+				return false;
 			}
-		    if(e.getKeyCode() == KeyEvent.VK_ESCAPE)
+
+
+
+			else if(e.getKeyCode() == KeyEvent.VK_ESCAPE)
 		    {
-				EscapeDialog dialog = new EscapeDialog(MainFrame.this);
+				EscapeDialog dialog = new EscapeDialog(MainFrame.this,controller);
 		    }
 
 			return false;
@@ -177,6 +179,7 @@ public class MainFrame extends JFrame  {
 	public void awake(){
 		this.setExtendedState(this.MAXIMIZED_BOTH);
 		this.active = true;
+		this.closeDialogEnabled = false;
 		this.setVisible(true);
 	}
 

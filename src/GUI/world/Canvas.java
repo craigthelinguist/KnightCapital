@@ -25,6 +25,7 @@ public class Canvas extends JPanel implements MouseListener, MouseMotionListener
 	private BattleController battleController;
 	private boolean battle;
 	private boolean click = false;
+	private boolean mouseC = false;
 	private Point lastDrag = null;
 
 	public Canvas() {
@@ -51,6 +52,14 @@ public class Canvas extends JPanel implements MouseListener, MouseMotionListener
 
 	}
 
+	public boolean getClicked(){
+		return this.mouseC;
+	}
+	public void setClicked(boolean c){
+		this.mouseC = c;
+	}
+
+
 	public void setController(WorldController wc){
 		controller = wc;
 		battle = false;
@@ -63,6 +72,7 @@ public class Canvas extends JPanel implements MouseListener, MouseMotionListener
 
 	@Override
 	public void mouseClicked(MouseEvent event) {
+		mouseC = true;
 		controller.mousePressed(event);
 	}
 

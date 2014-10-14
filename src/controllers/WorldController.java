@@ -149,6 +149,11 @@ public class WorldController{
 
 	}
 
+	public MainFrame getGui(){
+		return gui;
+	}
+
+
 	/**
 	 * Player has pushed a key
 	 * @param ke: details about the key event
@@ -209,7 +214,7 @@ public class WorldController{
 			// double clicked a city
 			if (leftClicked(me) && selectedTile != null
 				&& clickedTile instanceof CityTile && selectedTile instanceof CityTile
-				 && doubleClicked() )
+				 && doubleClicked() && ((CityTile)(clickedTile)).getCity().ownedBy(player) )
 				{
 					CityTile c1 = (CityTile)clickedTile;
 					CityTile c2 = (CityTile)selectedTile;
@@ -220,38 +225,6 @@ public class WorldController{
 
 				}
 
-			//selected party and right clicked a city
-			else if (rightClicked(me) && selectedTile != null &&
-					selectedTile.occupant() instanceof Party && clickedTile instanceof CityTile && isMyTurn()) {
-
-				// get the city
-				CityTile c1 = (CityTile)clickedTile;
-				City city = c1.getCity();
-
-				// check you clicked on entry tile
-				if (clickedTile == city.getEntryTile()){
-					Party party = (Party)selectedTile.occupant();
-
-					// if city is empty, it's yours
-					if (city.isEmpty() && city.getOwner() != party.getOwner()){
-						city.setOwner(party.getOwner());
-					}
-
-					// check you are allowed to move into the city
-					if (city.getOwner() == party.getOwner()){
-
-						// add to city; remove from world map
-						city.setVisitors(party);
-
-						world.setIcon(null, selectedTile.X, selectedTile.Y);
-
-					}
-					deselect();
-					gui.updateInfo(null);
-					gui.redraw();
-					this.lastMouse = System.currentTimeMillis();
-				}
-			}
 
 			// deselected the tile
 			else if (selected != null && leftClicked(me) && selectedTile == clickedTile){
@@ -351,6 +324,7 @@ public class WorldController{
 	 * @param tile: tile that a party of the player's is standing on.
 	 */
 	private void highlightTiles(Tile tile){
+		if (this.player != world.getCurrentPlayer()) return;
 		if (tile != null){
 			WorldIcon wi = tile.occupant();
 			if (wi != null && wi instanceof Party){
@@ -377,10 +351,7 @@ public class WorldController{
 	 * @return
 	 */
 	public boolean doubleClicked(){
-		long lastClick = System.currentTimeMillis();
-		boolean ans = System.currentTimeMillis() - this.lastMouse < 700;
-		lastMouse = lastClick;
-		return ans;
+		return System.currentTimeMillis() - this.lastMouse < 700;
 	}
 
 	public boolean leftClicked(MouseEvent me){
@@ -448,7 +419,7 @@ public class WorldController{
 
 
 	public static void main(String[] args) throws IOException{
-		aaron_main_2(args);
+		aaron_main(args);
 	}
 
 	public static void aaron_main_2(String[] args) throws IOException{
@@ -477,7 +448,7 @@ public class WorldController{
 
 
 		/*Loading the playey*/
-		Player p = new Player("John The Baptist",4);
+		Player p = new Player("John The Baptist",1);
 		World w = TemporaryLoader.loadWorld("world_temporary.txt",p);
 		HeroStats stats_hero = new HeroStats(60,10,80,0,6,8,AttackType.MELEE);
 		Hero hero = new Hero("ovelia","ovelia",p,stats_hero);
@@ -559,7 +530,7 @@ public class WorldController{
 
 
 		/*Loading the playey*/
-		Player p = new Player("John The Baptist",4);
+		Player p = new Player("John The Baptist",1);
 		World w = ewan_world();
 		HeroStats stats_hero = new HeroStats(60,10,80,0,6,8,AttackType.MELEE);
 		Hero hero = new Hero("ovelia","ovelia",p,stats_hero);
