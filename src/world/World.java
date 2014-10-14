@@ -301,26 +301,52 @@ public class World {
 		for (int i = 0; i < tiles.length; i++){
 			for (int j = 0; j < tiles[i].length; j++){
 				Tile tile = tiles[i][j];
-				WorldIcon wi = tile.occupant();
-				if (!(wi instanceof Party)) continue;
-				if (wi != null){
-					String name = wi.getAnimationName();
-					int playerDir;
-					if (name.contains("north")) playerDir = Camera.NORTH;
-					else if (name.contains("east")) playerDir = Camera.EAST;
-					else if (name.contains("south")) playerDir = Camera.SOUTH;
-					else if (name.contains("west")) playerDir = Camera.WEST;
-					else throw new RuntimeException("Unknown animation name: " + name);
 
-					if (clockwise) playerDir = (playerDir+1)%4;
-					else if (playerDir == 0) playerDir = 3;
-					else playerDir = playerDir - 1;
+				String name = tiles[i][j].getAnimationName();
+				int playerDir;
+				if(name == null) continue;
 
-					if (playerDir == Camera.NORTH) wi.setAnimationName("north");
-					else if (playerDir == Camera.EAST) wi.setAnimationName("east");
-					else if (playerDir == Camera.SOUTH) wi.setAnimationName("south");
-					else if (playerDir == Camera.WEST) wi.setAnimationName("west");
+				if (name.contains("north")) playerDir = Camera.NORTH;
+				else if (name.contains("east")) playerDir = Camera.EAST;
+				else if (name.contains("south")) playerDir = Camera.SOUTH;
+				else if (name.contains("west")) playerDir = Camera.WEST;
+				else throw new RuntimeException("Unknown animation name: " + name);
+
+				if (clockwise) playerDir = (playerDir+1)%4;
+				else if (playerDir == 0) playerDir = 3;
+				else playerDir = playerDir - 1;
+
+				if (playerDir == Camera.NORTH) {
+					tiles[i][j].setAnimation("north");
 				}
+				else if (playerDir == Camera.EAST) {
+					tiles[i][j].setAnimation("east");
+				}
+				else if (playerDir == Camera.SOUTH) {
+					tiles[i][j].setAnimation("south");
+				}
+				else if (playerDir == Camera.WEST) {
+					tiles[i][j].setAnimation("west");
+				}
+
+
+				WorldIcon wi = tile.occupant();
+
+				if (wi != null){
+					if (playerDir == Camera.NORTH) {
+						wi.setAnimationName("north");
+					}
+					else if (playerDir == Camera.EAST) {
+						wi.setAnimationName("east");
+					}
+					else if (playerDir == Camera.SOUTH) {
+						wi.setAnimationName("south");
+					}
+					else if (playerDir == Camera.WEST) {
+						wi.setAnimationName("west");
+					}
+				}
+
 			}
 		}
 

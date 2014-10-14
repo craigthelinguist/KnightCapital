@@ -235,7 +235,7 @@ public class WorldController{
 
 						// add to city; remove from world map
 						city.setVisitors(party);
-						
+
 						world.setIcon(null, selectedTile.X, selectedTile.Y);
 
 					}
@@ -416,7 +416,7 @@ public class WorldController{
 
 
 	public static void main(String[] args) throws IOException{
-		aaron_main_2(args);
+		aaron_main(args);
 	}
 
 	public static void aaron_main_2(String[] args) throws IOException{
