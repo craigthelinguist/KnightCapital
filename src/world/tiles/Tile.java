@@ -72,7 +72,7 @@ public abstract class Tile {
 	 * Check if you can stand on this tile.
 	 * @return: true if the specified party is allowed to stand on this tile.
 	 */
-	public abstract boolean passable(Party party);
+	public abstract boolean passable();
 
 	public boolean occupied(){
 		return occupant != null;

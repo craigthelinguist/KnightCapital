@@ -1,8 +1,5 @@
 package GUI.MainMenu;
 
-import game.units.Hero;
-import game.units.HeroStats;
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -13,39 +10,20 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.URISyntaxException;
 
-import javax.imageio.ImageIO;
-import javax.print.DocFlavor.URL;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileFilter;
-import javax.swing.filechooser.FileNameExtensionFilter;
 
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.DomDriver;
-
-import controllers.WorldController;
-import player.Player;
-import GUI.world.CustomButton;
-import storage.LoadXML;
-import storage.SaveXML;
-import storage.States;
-import storage.XMLReader;
 import storage.converters.WorldLoader;
 import tools.Constants;
 import tools.ImageLoader;
-import tools.Log;
 import world.World;
+import GUI.world.CustomButton;
+import controllers.WorldController;
 
 public class MainMenuPanel extends JPanel implements ActionListener{
 
@@ -161,6 +139,7 @@ public class MainMenuPanel extends JPanel implements ActionListener{
 		//String fp = new File("").getAbsolutePath() + File.separatorChar + Constants.DATA_SAVES;
 
 		else if(e.getSource() == loadGame) {
+
 
 			String path = Constants.DATA_SCENARIOS; //load the
 

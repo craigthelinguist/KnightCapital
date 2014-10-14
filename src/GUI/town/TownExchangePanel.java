@@ -207,7 +207,7 @@ public class TownExchangePanel extends JPanel implements MouseListener, MouseMot
 		}
 		else if (draggedPanel instanceof TownItemPanel){
 			TownItemPanel tip = (TownItemPanel)draggedPanel;
-			Item item = tip.getParty().getItem(draggedPoint.x, draggedPoint.y);
+			Item item = this.getParty(tip).getItem(draggedPoint.x, draggedPoint.y);
 			if (item == null) return;
 			Point mousePoint = MouseInfo.getPointerInfo().getLocation();
 			BufferedImage image = item.getImage();
@@ -307,9 +307,9 @@ public class TownExchangePanel extends JPanel implements MouseListener, MouseMot
 	 */
 	private void reorderItems(TownItemPanel panel1, Point point1, TownItemPanel panel2, Point point2) {
 
-		Party p1 = panel1.getParty();
+		Party p1 = this.getParty(panel1);
 		Item i1 = p1.getItem(point1.x, point1.y);
-		Party p2 = panel2.getParty();
+		Party p2 = this.getParty(panel2);
 		Item i2 = p2.getItem(point2.x, point2.y);
 
 		p1.setItem(i2, point1.x, point1.y);
@@ -363,8 +363,8 @@ public class TownExchangePanel extends JPanel implements MouseListener, MouseMot
 		}
 	}
 
-	public Party getParty(TownPartyPanel panel) {
-		if (panel == this.partyVisitors) return controller.getVisitors();
+	public Party getParty(JPanel panel) {
+		if (panel == this.partyVisitors || panel == this.itemsVisitors) return controller.getVisitors();
 		else return controller.getGarrison();
 	}
 

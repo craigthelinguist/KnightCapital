@@ -236,7 +236,13 @@ public class InventoryPanel extends JPanel implements MouseListener {
 
 		System.out.println(items.length);
 		System.out.println(items[0].length);
-
+		for(int i = 0; i < items.length; i++) {
+			for(int j = 0; j < items[0].length; j++) {
+				if(items[i][j] != null) {
+					System.out.println(items[i][j].getName());
+				}
+			}
+		}
 
 		for(int i = 0; i < items.length; i++) {
 			for(int j = 0; j < items[0].length; j++) {
@@ -262,11 +268,14 @@ public class InventoryPanel extends JPanel implements MouseListener {
 						else {
 							c.insets = new Insets(15,15,10,10);
 						}
-						slots[i][j] = new ItemSlotPanel(items[i][j].getName()+"Slot");
+						slots[i][j] = new ItemSlotPanel(items[i][j].getImageName()+"Slot");
 						c.gridx = j;
 						c.gridy = i;
 						slots[i][j].addMouseListener(this);
 						this.add(slots[i][j],c);
+					}
+					else {
+						slots[i][j] = null;
 					}
 				}
 			}

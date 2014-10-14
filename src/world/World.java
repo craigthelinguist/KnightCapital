@@ -25,6 +25,7 @@ import tools.Log;
 import world.icons.ItemIcon;
 import world.icons.Party;
 import world.icons.WorldIcon;
+import world.tiles.CityTile;
 import world.tiles.Tile;
 import world.towns.City;
 
@@ -176,21 +177,23 @@ public class World {
 		// attempt to move party from location to destination
 		if (!pathExists(location,destination)) return false;
 
-		/*Check if an item is at destination, if so, pick up item and move player there*/
+		// Check if an item is at destination, if so, pick up item and move player there
 		if(tileDestination.occupant() instanceof ItemIcon) {
 			ItemIcon itemIcon = (ItemIcon)tileDestination.occupant();
-			/*Attempt to add item to inventory, if it returns false (inventory full) return false*/
-			if(party.addItem(itemIcon.item) == false) {
-				//TODO: display dialog "inventory full"
-				return false;
+			if(!party.addItem(itemIcon.item)) return false;
+		}
+
+		else if (tileDestination instanceof CityTile){
+			City city = ((CityTile)(tileDestination)).getCity();
+			city.setVisitors(party);
+			tileLocation.setIcon(null);
+			if (city.getOwner() != party.getOwner()){
+				city.changeOwner(party.getOwner());
 			}
 		}
 
-		//check to see if item has been added
-		party.printInventory();
-
 		// do it in this order or you disappear if you move to tile you're already
-		// standing on :)
+		// standing on :^)
 		tileLocation.setIcon(null);
 		tileDestination.setIcon(party);
 		int dist = Geometry.taxicab(location, destination);
@@ -220,6 +223,24 @@ public class World {
 		Party party = (Party)(getTile(start.x,start.y).occupant());
 		int movePts = party.getMovePoints();
 		if (movePts <= 0) return false;
+
+		Tile goalTile = tiles[goal.x][goal.y];
+
+		// if you're moving to a city check if it's valid
+		if (goalTile instanceof CityTile){
+			CityTile tile = (CityTile)tiles[goal.x][goal.y];
+			City city = tile.getCity();
+			if (!city.isEmpty() && !city.ownedBy(party.getOwner())) return false; // can't move into a city you don't own
+			if (city.getEntryTile() != tile) return false; // must move into city via the entrance
+			if (city.hasVisitors()) return false; // can't move into an occupied city
+		}
+
+		// if you're moving to an item and you have full inventory you can't move there
+		else if (goalTile.occupant() != null && goalTile.occupant() instanceof ItemIcon){
+			if (party.hasFullInventory()) return false;
+		}
+
+		if(!goalTile.passable()) return false;
 
 		// a wrapper class for the nodes in the fringe
 		class Node implements Comparable<Node>{
@@ -252,7 +273,6 @@ public class World {
 		fringe.offer(node);
 		Point point; Tile tile;
 
-
 		while (!fringe.isEmpty()){
 
 			// get next node, check its feasibility
@@ -261,7 +281,7 @@ public class World {
 			point = node.point;
 			if (visited.contains(point)) continue;
 			tile = getTile(point);
-			if (!tile.passable(party) && point != start) continue;
+			if (tile != goalTile && !tile.passable() && point != start) continue;
 
 			// mark as visited
 			visited.add(point);

@@ -44,7 +44,7 @@ public class BattleRenderer {
 		Camera cam = control.getCamera();
 
 		List<CartesianMapping<?>> drawBuffer = new ArrayList<>();
-		drawTilesAndAddIconsToBuffer(g, control, drawBuffer, res);
+		addTilesAndIconsToBuffer(g, control, drawBuffer, res);
 
 		// sort buffer's contents by the perspective
 		Sorter.sortTopToBottom(drawBuffer);
@@ -92,7 +92,7 @@ public class BattleRenderer {
 	 * @param controller: contains info about world to be drawn
 	 * @param drawBuffer: list of things to be drawn later
 	 */
-	public static void drawTilesAndAddIconsToBuffer(Graphics graphics, BattleController controller, List<CartesianMapping<?>> drawBuffer, Dimension resolution){
+	public static void addTilesAndIconsToBuffer(Graphics graphics, BattleController controller, List<CartesianMapping<?>> drawBuffer, Dimension resolution){
 		final World world = controller.getWorld();
 		final Camera camera = controller.getCamera();
 

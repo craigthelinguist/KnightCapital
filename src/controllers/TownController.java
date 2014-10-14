@@ -106,7 +106,7 @@ public class TownController{
 			// check tile exists, kick them onto world map
 			if (pt.x >= 0 && pt.y >= 0 && pt.x < world.NUM_TILES_ACROSS && pt.y < world.NUM_TILES_DOWN){
 				tile = world.getTile(pt);
-				if (!tile.passable(visitors)) return;
+				if (!tile.passable()) return;
 				tile.setIcon(visitors);
 				city.setVisitors(this.newEmptyParty());
 				visitors = city.getVisitors();
