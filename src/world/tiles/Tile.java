@@ -1,6 +1,7 @@
 package world.tiles;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
@@ -35,7 +36,7 @@ public abstract class Tile {
 		Y = y;
 		animations = new AnimationMap();
 	}
-	
+
 	protected Tile(String imgName, int x, int y){
 		X = x; Y = y;
 		imageName = imgName;
@@ -91,7 +92,7 @@ public abstract class Tile {
 	public void addImage(String filepath, BufferedImage bi){
 		this.animations.addImage("world", filepath, bi);
 	}
-	
+
 	/**
 	 * For data loading/saving. Return this class as a string representation.
 	 * @return: a string.
@@ -120,5 +121,15 @@ public abstract class Tile {
 	public Point asPoint() {
 		return new Point(X,Y);
 	}
-	
+
+	public int getTileHeight(){
+
+
+		if (animations == null) System.out.println("animations are null");
+		else if (animations.getImage("world") == null) System.out.println("image is null");
+		else return animations.getImage("world").getHeight();
+
+		return Constants.TILE_HT;
+	}
+
 }
