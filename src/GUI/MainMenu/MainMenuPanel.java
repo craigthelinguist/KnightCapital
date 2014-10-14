@@ -138,8 +138,9 @@ public class MainMenuPanel extends JPanel implements ActionListener{
 		//String fp = new File("").getAbsolutePath() + File.separatorChar + Constants.DATA_LEVELS;
 
 		if(e.getSource() == newGame) {
-			JFileChooser chooser = new JFileChooser();
-			chooser.setCurrentDirectory(new File(Constants.DATA_LEVELS));
+			String path = Constants.DATA_SCENARIOS;
+			File f = new File(path);
+			JFileChooser chooser = new JFileChooser(f);
 			Filter filter = new Filter(".level");
 			chooser.setFileFilter(filter);
 			int value = chooser.showOpenDialog(null);
@@ -151,7 +152,6 @@ public class MainMenuPanel extends JPanel implements ActionListener{
 					frame.dispose();
 					new WorldController(world,world.getPlayers()[0]);
 				} catch (IOException e1) {
-					System.out.println("fucked up");
 					JOptionPane.showMessageDialog(frame, "Error loading " + filepath);
 				}
 			}
@@ -161,7 +161,11 @@ public class MainMenuPanel extends JPanel implements ActionListener{
 		//String fp = new File("").getAbsolutePath() + File.separatorChar + Constants.DATA_SAVES;
 
 		else if(e.getSource() == loadGame) {
+<<<<<<< HEAD
 			String path = Constants.DATA_SCENARIOS; //load the
+=======
+			String path = Constants.DATA_SAVES;
+>>>>>>> af77a2f567689042440eba211d48f127f553afd8
 			File f = new File(path);
 			JFileChooser chooser = new JFileChooser(f);
 			Filter filter = new Filter(".save");
@@ -170,8 +174,9 @@ public class MainMenuPanel extends JPanel implements ActionListener{
 			String filepath = null;
 			if (value == JFileChooser.APPROVE_OPTION){
 				filepath = chooser.getSelectedFile().getPath();
+				World world;
 				try {
-					World world = WorldLoader.load(filepath);
+					world = WorldLoader.load(filepath);
 					frame.dispose();
 					new WorldController(world,world.getPlayers()[0]);
 				} catch (IOException e1) {

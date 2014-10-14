@@ -217,7 +217,7 @@ public class Party extends WorldIcon implements Iterable<Creature>{
 	}
 
 	public void setMember(Creature c, int x, int y){
-		this.members[x][y] = c;
+		this.members[y][x] = c;
 	}
 
 	public static Creature[][] newEmptyParty() {

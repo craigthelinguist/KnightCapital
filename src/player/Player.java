@@ -20,7 +20,7 @@ public class Player {
 	 * @param slot : int corresponding to playe num. ex 1 = player 1
 	 */
 	public Player(String name, int slot){
-		this.gold = 10;
+		this.gold = 500;
 		this.name = name;
 		this.slot = slot;
 	}
@@ -40,7 +40,13 @@ public class Player {
 	}
 
 	public void increaseGold(int amount) {
+		if (amount <= 0) return;
 		this.gold += amount;
+	}
+
+	public void decreaseGold(int amount){
+		if (amount <= 0) return;
+		this.gold -= amount;
 	}
 
 }
