@@ -240,6 +240,8 @@ public class World {
 			if (party.hasFullInventory()) return false;
 		}
 
+		if(!goalTile.passable()) return false;
+
 		// a wrapper class for the nodes in the fringe
 		class Node implements Comparable<Node>{
 			final Point point;
@@ -279,7 +281,7 @@ public class World {
 			point = node.point;
 			if (visited.contains(point)) continue;
 			tile = getTile(point);
-			if (tile != goalTile && !tile.passable(party) && point != start) continue;
+			if (tile != goalTile && !tile.passable() && point != start) continue;
 
 			// mark as visited
 			visited.add(point);

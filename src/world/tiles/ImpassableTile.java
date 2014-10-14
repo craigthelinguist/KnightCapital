@@ -27,7 +27,7 @@ public class ImpassableTile extends Tile{
 	}
 
 	@Override
-	public boolean passable(Party party) {
+	public boolean passable() {
 		return false; //fuck your passability
 	}
 
