@@ -192,7 +192,7 @@ public class WorldRenderer {
 
 		int imageHeight = city.getImageHeight();
 		int necessaryHeight = TILE_HT*City.WIDTH;
-		int offsetY = imageHeight-necessaryHeight;
+		int offsetY = imageHeight - necessaryHeight;
 		if (offsetY > 0) ptIso.y = ptIso.y - offsetY;
 		int OFFSET = HALF_TILE_HT*City.WIDTH;
 		ptIso.y = ptIso.y - OFFSET;
