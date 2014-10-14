@@ -122,6 +122,10 @@ public class WorldController{
 		selected = null;
 		highlightedTiles = new HashSet<>();
 
+		/**
+		 * comment this out to get controller to load from main menu
+		 */
+
 		if(serverOrClient){
 			NetworkM.createServer(this, 2020, 2);
 		}
@@ -136,9 +140,7 @@ public class WorldController{
 			}
 //			client = new Client("130.195.6.98", 45612);
 
-
 		}
-
 
 	}
 

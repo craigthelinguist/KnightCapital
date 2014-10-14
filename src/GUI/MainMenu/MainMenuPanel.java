@@ -152,7 +152,6 @@ public class MainMenuPanel extends JPanel implements ActionListener{
 					frame.dispose();
 					new WorldController(world,world.getPlayers()[0]);
 				} catch (IOException e1) {
-					System.out.println("fucked up");
 					JOptionPane.showMessageDialog(frame, "Error loading " + filepath);
 				}
 			}
@@ -171,8 +170,9 @@ public class MainMenuPanel extends JPanel implements ActionListener{
 			String filepath = null;
 			if (value == JFileChooser.APPROVE_OPTION){
 				filepath = chooser.getSelectedFile().getPath();
+				World world;
 				try {
-					World world = WorldLoader.load(filepath);
+					world = WorldLoader.load(filepath);
 					frame.dispose();
 					new WorldController(world,world.getPlayers()[0]);
 				} catch (IOException e1) {
