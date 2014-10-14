@@ -37,6 +37,7 @@ import storage.converters.BuffConverter;
 import storage.converters.HealConverter;
 import storage.converters.IconConverter;
 import storage.converters.ItemConverter;
+import storage.converters.ItemLoader;
 import storage.converters.KCImageConverter;
 import storage.converters.PlayerConverter;
 import storage.converters.UnitConverter;
@@ -65,22 +66,22 @@ public class StorageTests {
 		images.add(kc2);
 		**/
 
-		
-		
-		
-		
+
+
+
+
 		// Unit Stats
 		/**
-		 * 
+		 *
 
 		**/
-		
+
 	}
 
-	
+
 	/**
-	 * Read from a player.xml files the variables for name and slot and initialize a player 
-	 * with those values and check if it read the xml file properly. 
+	 * Read from a player.xml files the variables for name and slot and initialize a player
+	 * with those values and check if it read the xml file properly.
 	 */
 	@Test
 	public void test_player(){
@@ -89,13 +90,13 @@ public class StorageTests {
 		stream.alias("player", Player.class);
 		stream.registerConverter(new PlayerConverter());
 		Player player = (Player) stream.fromXML(new File(filepath));
-		
+
 		assertTrue(player.name.equals("john the baptist"));
 		assertFalse(player.name.equals("Mizza"));
 		assertTrue(player.slot == 0);
 		assertFalse(player.slot == 2);
 	}
-	
+
 	/**
 	 * Load the knight.xml file and instantiate a knight unit using the values inside knigth.xml.
 	 * Check whether the values read in are the values that the object has.
@@ -103,7 +104,7 @@ public class StorageTests {
 	@Test
 	public void test_unit_Knight(){
 		String filepath = Constants.DATA_UNITS + "knight.xml";
-		
+
 		XStream stream = new XStream();
 		stream.alias("unitstats", UnitStats.class);
 		stream.alias("player", Player.class);
@@ -111,27 +112,27 @@ public class StorageTests {
 		stream.alias("unit", Unit.class);
 		stream.registerConverter(new UnitStatsConverter());
 		stream.registerConverter(new UnitConverter());
-		
+
 		Unit unit = (Unit) stream.fromXML(new File(filepath));
-		
+
 		assertTrue(unit.getName().equals("Knight"));
-		assertTrue(unit.getImageName().equals("knight")); 
+		assertTrue(unit.getImageName().equals("knight"));
 		assertTrue(unit.getBase(Stat.ARMOUR) == 5);
 		assertTrue(unit.getBase(Stat.HEALTH) == 100);
 		assertTrue(unit.getBase(Stat.DAMAGE) == 25);
 		assertTrue(unit.getBase(Stat.SPEED) == 40);
 		assertTrue(unit.getAttackType() == AttackType.MELEE);
-		
+
 	}
-	
+
 	/**
 	 * Load the archer.xml file and instantiate an archer unit using the values inside archer.xml.
 	 * Check whether the values read in are the values that the object has.
-	 */	
+	 */
 	@Test
 	public void test_unit_archer(){
 		String filepath = Constants.DATA_UNITS + "archer.xml";
-		
+
 		XStream stream = new XStream();
 		stream.alias("unitstats", UnitStats.class);
 		stream.alias("player", Player.class);
@@ -139,46 +140,46 @@ public class StorageTests {
 		stream.alias("unit", Unit.class);
 		stream.registerConverter(new UnitStatsConverter());
 		stream.registerConverter(new UnitConverter());
-		
+
 		Unit unit = (Unit) stream.fromXML(new File(filepath));
-		
+
 		assertTrue(unit.getName().equals("Archer"));
-		assertTrue(unit.getImageName().equals("archer")); 
+		assertTrue(unit.getImageName().equals("archer"));
 		assertTrue(unit.getBase(Stat.ARMOUR) == 0);
 		assertTrue(unit.getBase(Stat.HEALTH) == 60);
 		assertTrue(unit.getBase(Stat.DAMAGE) == 15);
 		assertTrue(unit.getBase(Stat.SPEED) == 90);
 		assertTrue(unit.getAttackType() == AttackType.RANGED);
-		
+
 	}
-	
+
 	public static void test_unit_stats(){
 		String filepath = Constants.DATA_UNITS + "knight.xml";
-		
+
 		XStream stream = new XStream();
 		stream.alias("unitstats", UnitStats.class);
 		stream.alias("attack", AttackType.class);
-		
+
 		stream.registerConverter(new UnitStatsConverter());
-		
+
 		UnitStats stats = (UnitStats) stream.fromXML(new File(filepath));
-		
+
 	}
-	
+
 	@Test
 	public void test_external_stats() throws FileNotFoundException{
 		String filepath = Constants.XMLTESTS + "external_unit.xml";
 		XStream stream = new XStream();
-		stream.alias("unit", Unit.class); 
+		stream.alias("unit", Unit.class);
 		stream.registerConverter(new UnitConverter());
-		
+
 		Unit unit = (Unit) stream.fromXML(new File(filepath));
 	}
-	
-	
+
+
 	/**
-	 * Create a new xml file and write to it a new temporary buff object(with some values) then read 
-	 * it back in and initialize a new object with these values. Then it tests to see if the values 
+	 * Create a new xml file and write to it a new temporary buff object(with some values) then read
+	 * it back in and initialize a new object with these values. Then it tests to see if the values
 	 * saved (on the xml file) are the ones it read back into the temporary buff object.
 	 * @throws FileNotFoundException
 	 */
@@ -188,56 +189,56 @@ public class StorageTests {
 		XStream stream = new XStream();
 		stream.alias("buff", Buff.class);
 		stream.registerConverter(new BuffConverter());
-		
+
 		Buff buff = Buff.newTempBuff(Stat.ARMOUR, 5);
 		String xml = stream.toXML(buff);
 		PrintStream ps = new PrintStream(new File(filepath));
 		ps.print(xml);
 		System.out.println(xml);
-		
+
 		buff = (Buff) stream.fromXML(new File(filepath));
-		
+
 		assertTrue(buff.amount == 5);
 		assertFalse(buff.amount == 0);
 		assertTrue(buff.permanent == false);
 		assertTrue(buff.stat == Stat.ARMOUR);
-		
+
 	}
-	
+
 	/**
-	 * Tests the heal by writing to an xml file, reading back the same xml file and 
+	 * Tests the heal by writing to an xml file, reading back the same xml file and
 	 * instantiating an object
 	 * @throws IOException
 	 */
 	@Test
 	public void test_heal() throws IOException{
-		
+
 		String filepath = Constants.XMLTESTS + "heal.xml";
 		XStream stream = new XStream();
 		stream.alias("heal", Heal.class);
 		stream.registerConverter(new HealConverter());
-		
+
 		Heal heal = new Heal(Stat.HEALTH, 20);
 		String xml = stream.toXML(heal);
 		PrintStream ps = new PrintStream(new File(filepath));
 		ps.print(xml);
-		
+
 		heal = (Heal) stream.fromXML(new File(filepath));
 		assertTrue(heal.amount == 20);
 		assertFalse(heal.amount == 1);
 		assertTrue(heal.stat == Stat.HEALTH);
 		assertFalse(heal.stat == Stat.ARMOUR);
-		
+
 	}
 
 	/**
 	 * Create an new item and write to xml all the fields. Read back xml and
 	 * instantiate an object and check if the item that was written was the same which was read back.
-	 * @throws FileNotFoundException 
+	 * @throws FileNotFoundException
 	 */
 	@Test
 	public void test_item() throws FileNotFoundException{
-		
+
 		String filepath = Constants.XMLTESTS + "liontalisman.xml";
 		XStream stream = new XStream();
 		stream.alias("item", Item.class);
@@ -247,18 +248,18 @@ public class StorageTests {
 		stream.alias("buff", Buff.class);
 		stream.alias("heal", Heal.class);
 		stream.registerConverter(new ItemConverter());
-		
+
 		Buff[] buffs = new Buff[]{ Buff.newPermaBuff(Stat.DAMAGE, 10), Buff.newPermaBuff(Stat.HEALTH, 20) };
-		Item item = new PassiveItem("Talisman of the Lion", "amulet", "ur a lion bro", buffs, Target.HERO);
+		Item item = ItemLoader.load("liontalisman.xml");
 		String xml = stream.toXML(item);
 		PrintStream ps = new PrintStream(new File(filepath));
 		ps.print(xml);
-		
-		
+
+
 		System.out.println(stream.toXML(item));
-		
+
 		PassiveItem talisman = (PassiveItem)stream.fromXML(new File(filepath));
-		
+
 		/*Test the effects of the talisman*/
 		Effect[] e = talisman.getEffects();
 		assertTrue(e.length == talisman.getEffects().length); //check that the arrays of effects have same length
@@ -270,31 +271,31 @@ public class StorageTests {
 		assertTrue(talisman.getName().equals("Talisman of the Lion"));
 		assertTrue(talisman.getDescription().equals("ur a lion bro"));
 		assertTrue(talisman.getImageName().equals("amulet"));
-		assertTrue(talisman.getTarget().equals(Target.HERO));	
+		assertTrue(talisman.getTarget().equals(Target.HERO));
 	}
 
 	@Test
 	public void test_world() throws Exception{
-		
+
 		String filepath = Constants.XMLTESTS + "world.xml";
 		World world = WorldLoader.load(filepath);
 		WorldLoader.save(filepath, world);
 		File file = new File(filepath);
-		
+
 	}
-	
+
 	@Test
 	public void test_party() throws Exception{
-		
+
 		String filepath = Constants.XMLTESTS + "party.xml";
 		File file = new File(filepath);
 
 		XStream stream = new XStream();
 		stream.alias("icon", WorldIcon.class);
 		stream.registerConverter(new IconConverter());
-		
-		Party party = (Party) stream.fromXML(file);		
-		
+
+		Party party = (Party) stream.fromXML(file);
+
 	}
-	
+
 }

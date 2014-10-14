@@ -21,8 +21,9 @@ public abstract class Item {
 	private String imageName;
 	protected AnimationMap animations;
 	protected Target target;
+	private final String filename;
 
-	public Item(String name, String imgName ,String description, Effect[] effects, Target target){
+	public Item(String name, String imgName, String description, Effect[] effects, Target target, String filename){
 		this.name = name;
 		this.imageName = imgName;
 		this.description = description;
@@ -30,8 +31,13 @@ public abstract class Item {
 		this.animations.addImage("portrait", Constants.ITEMS + imgName, ImageLoader.load(Constants.ITEMS + imgName));
 		this.animations.addImage("regular", Constants.ITEMS + imgName, ImageLoader.load(Constants.ITEMS + imgName));
 		this.effects = effects;
+		this.filename = filename;
 		if (this.effects == null) this.effects = new Effect[0];
 		this.target = target;
+	}
+
+	public String getFilename(){
+		return this.filename;
 	}
 
 	public BufferedImage getImage(){
@@ -45,11 +51,11 @@ public abstract class Item {
 	public String getImageName(){
 		return this.imageName;
 	}
-	
+
 	public Target getTarget(){
 		return this.target;
 	}
-	
+
 	public String getAnimationName() {
 		return animations.getName();
 	}
@@ -77,7 +83,7 @@ public abstract class Item {
 	public Effect[] getEffects() {
 		return effects;
 	}
-	
+
 	public String getClassAsString(){
 		if (this instanceof PassiveItem) return "passive";
 		else if (this instanceof ChargedItem) return "charged";

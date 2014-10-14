@@ -160,9 +160,9 @@ public class TownController{
 
 		// items
 		Buff[] buffsWeapon = new Buff[]{ Buff.newTempBuff(Stat.DAMAGE,5), Buff.newTempBuff(Stat.ARMOUR, 10) };
-		PassiveItem weapon = new PassiveItem("Weapon", "weapon", "A powerful weapon crafted by the mighty Mizza +5 Damage",buffsWeapon, Target.HERO);
+		PassiveItem weapon = new PassiveItem("Weapon", "weapon", "A powerful weapon crafted by the mighty Mizza +5 Damage",buffsWeapon, Target.HERO,null);
 		Buff[] buffsArrows= new Buff[]{ Buff.newTempBuff(Stat.DAMAGE,1) };
-		PassiveItem arrows = new PassiveItem("Poison Arrows", "poisonarrow", "Poisonous arrows whose feathers were made from the hairs of Mizza. All archers in party gain +1 damage",buffsArrows, Target.PARTY);
+		PassiveItem arrows = new PassiveItem("Poison Arrows", "poisonarrow", "Poisonous arrows whose feathers were made from the hairs of Mizza. All archers in party gain +1 damage",buffsArrows, Target.PARTY, null);
 		party.addItem(weapon);
 		party.addItem(arrows);
 

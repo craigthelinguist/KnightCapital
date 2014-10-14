@@ -397,6 +397,9 @@ public class World {
 		return visited;
 	}
 
+	public Player getCurrentPlayer(){
+		return players[currentPlayer];
+	}
 
 	public Player[] getPlayers() {
 		return this.players;

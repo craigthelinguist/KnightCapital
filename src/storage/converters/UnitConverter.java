@@ -36,7 +36,7 @@ public class UnitConverter implements Converter{
 		writer.endNode();
 
 		writer.startNode("imageName");
-			writer.setValue(unit.getAnimationName());
+			writer.setValue(unit.getImageName());
 		writer.endNode();
 
 		new PlayerConverter().marshal(unit.getOwner(), writer, context);
