@@ -41,7 +41,7 @@ public class Hero extends Creature {
 	}
 
 	public void setMovePts(int newPts){
-		this.stats.setCurrent(Stat.MOVEMENT, newPts);
+		this.stats.setBase(Stat.MOVEMENT, newPts);
 	}
 
 }

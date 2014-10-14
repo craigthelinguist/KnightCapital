@@ -27,7 +27,7 @@ public class HeroStats extends UnitStats{
 		buffedMovement = 0;
 		buffedSight = 0;
 	}
-	
+
 	public void setBase(Stat stat, int value){
 		if (stat == Stat.SIGHT) baseSight = value;
 		else if (stat == Stat.MOVEMENT) baseMovement = value;
