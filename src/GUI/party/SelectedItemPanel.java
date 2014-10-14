@@ -2,6 +2,7 @@ package GUI.party;
 
 import game.items.Item;
 import game.units.Creature;
+import game.units.Hero;
 import game.units.Stat;
 
 import java.awt.Dimension;
@@ -140,27 +141,44 @@ public class SelectedItemPanel extends JPanel{
 			this.imageLabel.setIcon(new ImageIcon(this.unit.getPortrait()));
 
 			// set name
-			this.nameLabel.setText(this.unit.getAnimationName());
+			this.nameLabel.setText("<html><font color='yellow'>"+this.unit.getName()+"</font></html>");
 
 
 			/*set up the label that displays how many moves the player has left */
 			int damage = this.unit.getBase(Stat.DAMAGE);
 			int health = this.unit.getBase(Stat.HEALTH);
 			int armour = this.unit.getBase(Stat.ARMOUR);
+			int speed = this.unit.getBase(Stat.SPEED);
 
 			int buffD = this.unit.getBuffed(Stat.DAMAGE);
 			int buffH = this.unit.getBuffed(Stat.HEALTH);
 			int buffA = this.unit.getBuffed(Stat.ARMOUR);
+			int buff_speed = this.unit.getBuffed(Stat.SPEED);
+
+			int curr_health = this.unit.get(Stat.HEALTH);
 
 			StringBuilder html = new StringBuilder("<html>");
+			html.append(generateHTMLForHealth(curr_health,health,buffH));
+			html.append(generateHTML("Damage",damage,buffD));
+			html.append(generateHTML("Armour",armour,buffA));
+			html.append(generateHTML("Speed",speed,buff_speed));
+			if (unit instanceof Hero){
 
+				Hero hero = (Hero)unit;
+				int sight = hero.getBase(Stat.SIGHT);
+				int buff_sight = hero.getBuffed(Stat.SIGHT);
+				int move = hero.getBase(Stat.MOVEMENT);
+				int buff_move = hero.getBuffed(Stat.MOVEMENT);
 
-			this.descriptionLabel = new JLabel("<html>Health: "+health+"<font color='green'> +"+buffH+"</font> <br>Damage: "+damage+"<font color='green'> +"+buffD+"</font> <br>Armour: "+armour+"<font color='green'> +"+buffA+"</font><br>Moves Left:</html>");
+				html.append(generateHTML("Sight",sight,buff_sight));
+				html.append(generateHTML("Movement",move,buff_move));
 
+			}
+			html.append("</html>");
 
-			// set description
-			//this.descriptionLabel.setText(this.unit.getAnimationName());
-			//this.descriptionLabel.setText("<html>Health: "+health+"<font color='green'> +"+buffH+"</font> <br>Damage: "+damage+"<font color='green'> +"+buffD+"</font> <br>Armour: "+armour+"<font color='green'> +"+buffA+"</font><br>Moves Left: "+moves+"</html>");
+			//set description
+			this.descriptionLabel.setText("<html><font color='yellow'> " + this.unit.getName() + " </font></html>");
+			this.descriptionLabel.setText(html.toString());
 			if(master.isOwner()) {
 				// display stats
 				System.out.println("[SelectedItemPanel] Accessor is owner of party");
@@ -171,6 +189,40 @@ public class SelectedItemPanel extends JPanel{
 				System.out.println("[SelectedItemPanel] Accessor is not owner of party");
 			}
 		}
+	}
+
+	private String generateHTMLForHealth(int current, int base, int buff){
+		StringBuilder str = new StringBuilder();
+		str.append("<font color='yellow'>Health: </font> <font color='white'>"+current+"/</font>");
+		int total = base+buff;
+			if (buff > 0){
+				str.append("<font color='green'>" + total + "</font>");
+			}
+			else if (buff < 0){
+				str.append("<font color='red'>" + total + "</font>");
+			}
+			else{
+				str.append("<font color='white'>" + total + "</font>");
+			}
+		str.append("<br/>");
+		return str.toString();
+	}
+
+	private String generateHTML(String name, int base, int buff){
+		StringBuilder str = new StringBuilder();
+		str.append("<font color='yellow'>"+name+": </font>");
+
+		if (buff > 0){
+			str.append("<font color='green'>" + (base+buff) + "</font>");
+		}
+		else if (buff < 0){
+			str.append("<font color='red'>" + (base+buff) + "</font>");
+		}
+		else{
+			str.append("<font color='white'>" + base + "</font>");
+		}
+		str.append("<br/>");
+		return str.toString();
 	}
 
 }
