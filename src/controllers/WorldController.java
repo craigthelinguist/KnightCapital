@@ -68,7 +68,7 @@ import GUI.world.MainFrame;
 public class WorldController{
 
 	//boolean server or client, true if server, false if client.
-	private boolean serverOrClient = true;
+	private boolean serverOrClient = false;
 
 	//server and client.
 	private Server server;
@@ -143,6 +143,11 @@ public class WorldController{
 		}
 
 	}
+
+	public MainFrame getGui(){
+		return gui;
+	}
+
 
 	/**
 	 * Player has pushed a key

@@ -80,6 +80,9 @@ public class MainFrame extends JFrame  {
 		this.setVisible(true);
 	}
 
+	public Canvas getCanvas(){return canvas;}
+
+
 	public void setController(WorldController wc){
 		controller = wc;
 		canvas.setController(wc);
