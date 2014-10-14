@@ -286,7 +286,7 @@ public class Party extends WorldIcon implements Iterable<Creature>{
 	 * @param y
 	 */
 	public void setItem(Item i1, int x, int y) {
-		inventory[x][y] = i1;
+		inventory[y][x] = i1;
 	}
 
 	@Override
