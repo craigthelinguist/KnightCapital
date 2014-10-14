@@ -214,39 +214,7 @@ public class WorldController{
 					this.lastMouse = System.currentTimeMillis();
 
 				}
-
-			//selected party and right clicked a city
-			else if (rightClicked(me) && selectedTile != null &&
-					selectedTile.occupant() instanceof Party && clickedTile instanceof CityTile && isMyTurn()) {
-
-				// get the city
-				CityTile c1 = (CityTile)clickedTile;
-				City city = c1.getCity();
-
-				// check you clicked on entry tile
-				if (clickedTile == city.getEntryTile()){
-					Party party = (Party)selectedTile.occupant();
-
-					// if city is empty, it's yours
-					if (city.isEmpty() && city.getOwner() != party.getOwner()){
-						city.setOwner(party.getOwner());
-					}
-
-					// check you are allowed to move into the city
-					if (city.getOwner() == party.getOwner()){
-
-						// add to city; remove from world map
-						city.setVisitors(party);
-
-						world.setIcon(null, selectedTile.X, selectedTile.Y);
-
-					}
-					deselect();
-					gui.updateInfo(null);
-					gui.redraw();
-					this.lastMouse = System.currentTimeMillis();
-				}
-			}
+			
 
 			// deselected the tile
 			else if (selected != null && leftClicked(me) && selectedTile == clickedTile){
