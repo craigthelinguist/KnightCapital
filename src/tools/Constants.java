@@ -33,6 +33,7 @@ public class Constants {
 	public static final String GUI_TOWN = Constants.ASSETS + "gui_town" + File.separatorChar;
 	public static final String GUI_TOWN_BUTTONS = Constants.ASSETS + "gui_town" + File.separatorChar + "buttons" + File.separatorChar;
 	public static final String GUI_OG = Constants.GUI_FILEPATH +"ogGUIAssets" + File.separatorChar;
+	public static final String GUI_INVENTORY = Constants.GUI_FILEPATH +"InventoryPanel" + File.separatorChar;
 
 
 	// these are temporary values for WorldRenderer prototype - Aaron
@@ -59,7 +60,7 @@ public class Constants {
 	public static final int PARTY_PANEL_HEIGHT = (int) (WINDOW_HT * 0.8);
 
 	public static final String PartyPanelTitle = "Party Panel";
-	public static final String PartyPanelDescription = "This is a motherfucking description telling you what the fuck this is and what the fuck it does. Got it?";
+	public static final String PartyPanelDescription = "Select a unit or item to get a more detailed description about it. Drag units to change battle formation.";
 
 	// shit for data loading.
 	public static final String XMLTESTS = "data" + File.separatorChar + "test" + File.separatorChar;
