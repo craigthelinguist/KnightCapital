@@ -50,12 +50,14 @@ public class ServerM extends Thread{
 	}
 
 
-	@Override
+
+
 	public void run(){
 		//eternal loop.
 		while(true){
 
 			System.out.println("looping[SERVER]");
+
 
 			//loop through socket connections checking for updates.
 			for(int i = 0; i < socket.length; i++){

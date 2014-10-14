@@ -35,7 +35,7 @@ private static int numConnects = 0;
 		System.out.println("listening on port : "+port);
 
 		ServerM swerv;
-		try{
+
 
 
 			//array of clients connecting to the server
@@ -44,8 +44,13 @@ private static int numConnects = 0;
 			Socket[] connectors = new Socket[clients];
 
 
-			socket = new ServerSocket(port);
-			
+			try {
+				socket = new ServerSocket(port);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
 
 			//make the state of the game waiting
 
@@ -54,7 +59,10 @@ private static int numConnects = 0;
 			//			world.setState = waiting
 			//loop till game over
 			while(clients!=0){
-				Socket sock = socket.accept();
+				Socket sock;
+				try {
+					sock = socket.accept();
+
 				//add client socket to clients.
 				connectors[numConnects] = sock;
 
@@ -63,17 +71,31 @@ private static int numConnects = 0;
 				numConnects++;
 
                 //make input output streams
-				out = new DataOutputStream(sock.getOutputStream());
-				out.flush();
-				in = new DataInputStream(sock.getInputStream());
+
+					out = new DataOutputStream(sock.getOutputStream());
+
+
+					out.flush();
+
+					in = new DataInputStream(sock.getInputStream());
+
 
 
 				//send out greetings from server to client.
-				out.writeUTF("hello from server");
-				out.flush();
 
-				System.out.println(in.readUTF());
-				System.out.println("accepted connection from : "+sock.getInetAddress());
+					out.writeUTF("hello from server");
+
+
+					out.flush();
+
+
+
+					System.out.println(in.readUTF());
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
 
 //				int id = world;
 
@@ -82,7 +104,10 @@ private static int numConnects = 0;
 				System.out.println("waiting for "+clients+" to join");
 
 
-              
+
+
+
+
 
 				//can now start implementing world and game connections with clients.
 //				if(clients==0){
@@ -100,14 +125,14 @@ private static int numConnects = 0;
 //					//connection step completed
 //					return;
 //				}
-			}
-           
+
+
 			 swerv = new ServerM(connectors, world);
              swerv.start();
 
 
-		}catch(IOException e){e.printStackTrace();}
 
+			}
 
 	}
 
@@ -120,12 +145,12 @@ private static int numConnects = 0;
 		out.flush();
 		DataInputStream input = new DataInputStream(s.getInputStream());
 		System.out.println(input.readUTF());
-		
-		
+
+
 		ClientM sv = new ClientM(s);
 		sv.run();
-		
-		
+
+
 	}
 
 

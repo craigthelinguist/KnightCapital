@@ -129,14 +129,21 @@ public class WorldController{
 
 		if(serverOrClient){
 			NetworkM.createServer(this, 2020, 2);
+			try {
+				server = new Server();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 		else {
 
 			try {
 				NetworkM.createClient("localhost", 2020, "selemonClient");
+				client = new Client("130.195.6.170", 45612, 45812);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 			}
 			//			client = new Client("130.195.6.98", 45612);
