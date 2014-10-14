@@ -230,13 +230,15 @@ public class PartyDialog extends JDialog  {
 	}
 
 	public static void main(String[] batman) {
+		// Create PLayer and a hero
 		Player p = new Player("John The Baptist",4);
 		Hero hero = new Hero("ovelia",p, new HeroStats(45,10,80,0,8,8));
 
-		Creature[][] members = Party.newEmptyParty();
-		members[0][0] = hero;
+		// Fill party with members
+		Creature[][] members = Party.quickKnightParty(p);
 		Party party = new Party(hero, p, members);
 
+		
 		Tile t = PassableTile.newDirtTile(0, 0);
 
 		t.setIcon(party);

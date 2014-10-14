@@ -292,10 +292,10 @@ public class BattleController{
 
 		//make new partys
 		Hero h1 = new Hero("Mr Fruit Salad", "ovelia", p1, new HeroStats(100, 100, 100, 100, 100, 100, AttackType.MELEE));
-		Party party1 = new Party(h1, p1, quickParty(p1));
+		Party party1 = new Party(h1, p1, Party.quickKnightParty(p1));
 
 		Hero h2 = new Hero("Lord Vegetables", "ovelia", p2, new HeroStats(100, 100, 100, 100, 100, 100, AttackType.MELEE));
-		Party party2 = new Party(h2, p2, quickParty(p2));
+		Party party2 = new Party(h2, p2, Party.quickKnightParty(p2));
 
 
 		//create battle controller
@@ -303,15 +303,4 @@ public class BattleController{
 
 	}
 
-	private static Creature[][] quickParty(Player p) {
-		Creature[][] creatures = new Creature[Party.PARTY_ROWS][Party.PARTY_COLS];
-
-		for( int x = 0; x < Party.PARTY_ROWS; x++) {
-			for( int y = 0; y < Party.PARTY_COLS; y++) {
-				creatures[x][y] = new Unit("Knight", "knight", p, new UnitStats(10, 10, 1, 10, AttackType.MELEE));
-			}
-		}
-
-		return creatures;
-	}
 }

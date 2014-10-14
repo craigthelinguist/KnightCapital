@@ -8,10 +8,12 @@ import java.util.LinkedList;
 import game.effects.Buff;
 import game.items.Item;
 import game.items.PassiveItem;
+import game.units.AttackType;
 import game.units.Creature;
 import game.units.Hero;
 import game.units.Stat;
 import game.units.Unit;
+import game.units.UnitStats;
 import player.Player;
 
 /**
@@ -243,7 +245,8 @@ public class Party extends WorldIcon implements Iterable<Creature>{
 
 	/**
 	 * Check to see if this party has any memebers still living in it.
-	 * @return
+	 * -myles
+	 * @return true if all members are deceased
 	 */
 	public boolean isDead() {
 
@@ -402,5 +405,16 @@ public class Party extends WorldIcon implements Iterable<Creature>{
 		return (int) ((sum/count)*100);
 	}
 
+	public static Creature[][] quickKnightParty(Player p) {
+		Creature[][] creatures = new Creature[Party.PARTY_ROWS][Party.PARTY_COLS];
+
+		for( int x = 0; x < Party.PARTY_ROWS; x++) {
+			for( int y = 0; y < Party.PARTY_COLS; y++) {
+				creatures[x][y] = new Unit("Knight", "knight", p, new UnitStats(10, 10, 1, 10, AttackType.MELEE));
+			}
+		}
+
+		return creatures;
+	}
 
 }
