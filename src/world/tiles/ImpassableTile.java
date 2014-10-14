@@ -7,15 +7,20 @@ public class ImpassableTile extends Tile{
 	public ImpassableTile(String imgName, int x, int y){
 		super(imgName,x,y);
 	}
-	
+
 	private ImpassableTile(int x, int y){
 		super(x,y);
 	}
-	
+
 	public static ImpassableTile newVoidTile(int x, int y){
 		return new ImpassableTile(x,y);
 	}
-	
+
+	public static ImpassableTile newTreeTile(int x, int y){
+		int random = 1 + (int)(Math.random() * 2);
+		return new ImpassableTile("tree_"+random, x, y);
+	}
+
 	@Override
 	public boolean passable(Party party) {
 		return false; //fuck your passability
@@ -26,6 +31,6 @@ public class ImpassableTile extends Tile{
 		return "impassable";
 	}
 
-	
-	
+
+
 }

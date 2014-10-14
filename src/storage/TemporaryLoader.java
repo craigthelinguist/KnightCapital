@@ -8,10 +8,10 @@ import java.util.Set;
 import java.util.regex.Pattern;
 
 import player.Player;
-
 import tools.Constants;
 import world.World;
 import world.tiles.CityTile;
+import world.tiles.ImpassableTile;
 import world.tiles.PassableTile;
 import world.tiles.Tile;
 import world.towns.City;
@@ -29,6 +29,7 @@ public class TemporaryLoader {
 	// the different kinds of tiles
 	private static final char GRASS_TILE = 'G';
 	private static final char DIRT_TILE = 'D';
+	private static final char TREE_TILE = 'T';
 
 	/**
 	 * Loads, creates, and returns the specified World.
@@ -72,6 +73,9 @@ public class TemporaryLoader {
 							break;
 						case DIRT_TILE:
 							tiles[x][y] = PassableTile.newDirtTile(x,y);
+							break;
+						case TREE_TILE:
+							tiles[x][y] = ImpassableTile.newTreeTile(x,y);
 							break;
 						default:
 							throw new IOException("Unknown symbol " + line[x] + " at ("+"x"+","+y+")");
@@ -117,7 +121,7 @@ public class TemporaryLoader {
 		for(int x = 0; x < worldWidth; x++) {
 			int rand = 0 + (int)(Math.random()*worldWidth);
 			for(int y = 0; y < worldHeight; y++) {
-				if(x > rand)tiles[x][y] = PassableTile.newTreeTile(x, y);
+				if(x > rand)tiles[x][y] = ImpassableTile.newTreeTile(x, y);
 				else tiles[x][y] = PassableTile.newGrassTile(x, y);
 			}
 		}

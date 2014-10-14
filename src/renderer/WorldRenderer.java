@@ -21,6 +21,7 @@ import world.World;
 import world.icons.ItemIcon;
 import world.icons.WorldIcon;
 import world.tiles.CityTile;
+import world.tiles.ImpassableTile;
 import world.tiles.Tile;
 import world.towns.City;
 
@@ -131,6 +132,9 @@ public class WorldRenderer {
 				else if (controller.isHighlighted(ptCart)) intensity = 25;
 
 				CartesianMapping<Tile> tileToDraw = new CartesianMapping<>(-2,tile,ptRotated,intensity);
+				if(tile instanceof ImpassableTile) {
+					tileToDraw = new CartesianMapping<>(2, tile, ptRotated, intensity);
+				}
 				drawBuffer.add(tileToDraw);
 
 				// add occupant to buffer

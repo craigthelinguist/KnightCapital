@@ -1,5 +1,7 @@
 package world.tiles;
 
+import java.io.File;
+
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 import tools.Constants;
@@ -23,12 +25,13 @@ public class PassableTile extends Tile{
 	}
 
 	public static PassableTile newGrassTile(int x, int y){
-		return new PassableTile("grass",x,y);
+		// Generate a random number to get variation in the types of grass that are displayed, to minimise the 'tiling' effect seen when using the same texture;
+		int random = 1 + (int)(Math.random() * 3);
+		return new PassableTile("grass_"+random,x,y);
+		//return new PassableTile("grass_1", x, y);
 	}
 
-	public static PassableTile newTreeTile(int x, int y){
-		return new PassableTile("tree", x, y);
-	}
+
 
 	@Override
 	public boolean passable(Party party) {
