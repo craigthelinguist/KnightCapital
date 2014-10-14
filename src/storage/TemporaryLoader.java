@@ -127,10 +127,10 @@ public class TemporaryLoader {
 		Tile[][] tiles = new Tile[worldWidth][worldHeight];
 
 		for(int x = 0; x < worldWidth; x++) {
-			int rand = 0 + (int)(Math.random()*worldWidth);
+			//int rand = 0 + (int)(Math.random()*worldWidth);
 			for(int y = 0; y < worldHeight; y++) {
-				if(x > rand)tiles[x][y] = ImpassableTile.newTreeTile(x, y);
-				else tiles[x][y] = PassableTile.newGrassTile(x, y);
+				//if(x > rand)tiles[x][y] = ImpassableTile.newTreeTile(x, y);
+				tiles[x][y] = PassableTile.newGrassTile(x, y);
 			}
 		}
 
