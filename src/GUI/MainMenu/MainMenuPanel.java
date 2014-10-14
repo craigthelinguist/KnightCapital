@@ -139,7 +139,6 @@ public class MainMenuPanel extends JPanel implements ActionListener{
 		//String fp = new File("").getAbsolutePath() + File.separatorChar + Constants.DATA_SAVES;
 
 		else if(e.getSource() == loadGame) {
-
 			String path = Constants.DATA_SAVES;
 			File f = new File(path);
 			JFileChooser chooser = new JFileChooser(f);
