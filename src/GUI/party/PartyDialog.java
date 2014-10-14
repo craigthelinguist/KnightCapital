@@ -216,7 +216,7 @@ public class PartyDialog extends JDialog  {
 	private void updateSelectedWithItem(Item item) {
 		this.selectedItemPanel.setSelectedItem(item);
 	}
-	
+
 	/**
 	 * Updates the selectedPanel with selected unit
 	 */
@@ -234,8 +234,8 @@ public class PartyDialog extends JDialog  {
 		this.dispose();
 	}
 
-	/** 
-	 * Set that shit, not sure if this would be needed 
+	/**
+	 * Set that shit, not sure if this would be needed
 	 **/
 	public void setTile(Tile tile) {
 		this.tile = tile;
@@ -252,7 +252,7 @@ public class PartyDialog extends JDialog  {
 	public Party getParty() {
 		return this.party;
 	}
-	
+
 	public static void main(String[] batman) {
 		// Create PLayer and a hero
 		Player p = new Player("John The Baptist",4);
@@ -261,7 +261,7 @@ public class PartyDialog extends JDialog  {
 		// Give party an item
 		Buff[] buffsArrows= new Buff[]{ Buff.newTempBuff(Stat.DAMAGE,1) };
 		PassiveItem arrows = new PassiveItem("poisonarrow", "poisonarrow", "Poisonous arrows whose feathers were made from the hairs of Mizza. All archers in party gain +1 damage",buffsArrows, Target.PARTY);
-		
+
 		// give hero two items
 		Buff[] buffsAmulet = new Buff[]{ Buff.newTempBuff(Stat.DAMAGE,5) };
 		EquippedItem amulet = new EquippedItem("amulet", "amulet", "An amulet that grants sickening gains.\n +5 Damage",buffsAmulet,Target.HERO);
@@ -275,10 +275,10 @@ public class PartyDialog extends JDialog  {
 		Unit u6 = new Unit("knight","knight",p,new UnitStats(100,25,40,1,AttackType.MELEE));
 		Creature[][] members = Party.newEmptyParty();
 		members[0][0] = u3;
-		members[1][0] = u6;
-		members[2][0] = hero;
-		members[0][1] = u4;
-		members[2][1] = u5;
+		members[0][1] = u6;
+		members[0][2] = hero;
+		members[1][0] = u4;
+		members[1][1] = u5;
 		Party party = new Party(hero, p, members);
 		party.refresh();
 
@@ -291,8 +291,8 @@ public class PartyDialog extends JDialog  {
 		party.addItem(arrows);
 		amulet.equipTo(hero);
 		weapon.equipTo(hero);
-		
-		
+
+
 		// Create new tile to place party on,
 		// party must be on a tile
 		Tile t = PassableTile.newDirtTile(0, 0);
