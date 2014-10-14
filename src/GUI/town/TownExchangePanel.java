@@ -77,7 +77,7 @@ public class TownExchangePanel extends JPanel implements MouseListener, MouseMot
 		JPanel wrapperPanel = new JPanel(){
 
 			@Override
-			protected void paintComponent(Graphics g){
+			protected void paintComponent(Graphics g) {
 				super.paintComponent(g);
 			    g.drawImage(backgroundImage = ImageLoader.load(Constants.GUI_FILEPATH + "dialogBackground.png"), 0, 0, getWidth(), getHeight(), this);
 			    TownExchangePanel.this.redraw(g);
@@ -108,7 +108,7 @@ public class TownExchangePanel extends JPanel implements MouseListener, MouseMot
 		visitorButtons.setOpaque(false);
 		visitorButtons.add(buttonLeave, BorderLayout.SOUTH);
 		visitorButtons.add(exitLabel, BorderLayout.CENTER);
-		
+
 		/*Load the three images for train units button*/
 		BufferedImage trainUnitsDefault = ImageLoader.load(Constants.GUI_TOWN_BUTTONS + "trainUnits.png");
 		BufferedImage trainUnitsPressed = ImageLoader.load(Constants.GUI_TOWN_BUTTONS + "trainUnitsClicked.png");
@@ -131,9 +131,9 @@ public class TownExchangePanel extends JPanel implements MouseListener, MouseMot
 			public void actionPerformed(ActionEvent e) {
 				new TrainingDialog(controller,gui);
 			}
-		
+
 		});
-		
+
 		// parties
 		JPanel parties = new JPanel();
 		parties.setOpaque(false);
@@ -152,7 +152,7 @@ public class TownExchangePanel extends JPanel implements MouseListener, MouseMot
 
 		StoragePanel storagePanel = new StoragePanel();
 		//Add the storage panel
-		
+
 		wrapperPanel.setOpaque(false);
 		wrapperPanel.addMouseListener(this);
 		wrapperPanel.addMouseMotionListener(this);
@@ -336,7 +336,7 @@ public class TownExchangePanel extends JPanel implements MouseListener, MouseMot
 		if ((c1 instanceof Hero || c2 instanceof Hero) && (panel1 != panel2)){
 			return;
 		}
-		
+
 		// not allowed to drag units from garrison to visitors if visitors doesn't have a hero
 		if (panel1 == this.partyGarrison && panel2 == this.partyVisitors){
 			if (p2.getHero() == null){

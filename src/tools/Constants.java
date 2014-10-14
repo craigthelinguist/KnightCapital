@@ -18,7 +18,7 @@ public class Constants {
 	public static final int WINDOW_WD = 1300;
 	public static final int WINDOW_HT = 800;
 
-	
+
 	// all images are stored in this relative filepath
 	public static final String ASSETS = "assets" + File.separatorChar;
 	public static final String ICONS = ASSETS + "icons" + File.separatorChar;
@@ -32,6 +32,8 @@ public class Constants {
 	public static final String GUI_BUTTONS = Constants.ASSETS + "GUIAssets" + File.separatorChar +"buttons"+ File.separatorChar;
 	public static final String GUI_TOWN = Constants.ASSETS + "gui_town" + File.separatorChar;
 	public static final String GUI_TOWN_BUTTONS = Constants.ASSETS + "gui_town" + File.separatorChar + "buttons" + File.separatorChar;
+	public static final String GUI_OG = Constants.GUI_FILEPATH +"ogGUIAssets" + File.separatorChar;
+
 
 	// these are temporary values for WorldRenderer prototype - Aaron
 	public static final int TILE_WD = 131;
@@ -65,5 +67,5 @@ public class Constants {
 	public static final String DATA_ITEMS = "data" + File.separatorChar + "items" + File.separatorChar;
 	public static final String DATA_HEROES = "data" + File.separatorChar + "heroes" + File.separatorChar;
 	public static final String DATA_WORLDS = "data" + File.separatorChar + "worlds" + File.separatorChar;
-	
+
 }
