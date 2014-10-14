@@ -2,6 +2,7 @@ package GUI.party;
 
 import game.items.Item;
 import game.units.Creature;
+import game.units.Stat;
 
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -141,9 +142,22 @@ public class SelectedItemPanel extends JPanel{
 			// set name
 			this.nameLabel.setText(this.unit.getAnimationName());
 
-			// set description
-			this.descriptionLabel.setText(this.unit.getAnimationName());
 
+			/*set up the label that displays how many moves the player has left */
+			int damage = this.unit.getBase(Stat.DAMAGE);
+			int health = this.unit.getBase(Stat.HEALTH);
+			int armour = this.unit.getBase(Stat.ARMOUR);
+
+			int buffD = this.unit.getBuffed(Stat.DAMAGE);
+			int buffH = this.unit.getBuffed(Stat.HEALTH);
+			int buffA = this.unit.getBuffed(Stat.ARMOUR);
+
+			this.descriptionLabel = new JLabel("<html>Health: "+health+"<font color='green'> +"+buffH+"</font> <br>Damage: "+damage+"<font color='green'> +"+buffD+"</font> <br>Armour: "+armour+"<font color='green'> +"+buffA+"</font><br>Moves Left:</html>");
+
+
+			// set description
+			//this.descriptionLabel.setText(this.unit.getAnimationName());
+			//this.descriptionLabel.setText("<html>Health: "+health+"<font color='green'> +"+buffH+"</font> <br>Damage: "+damage+"<font color='green'> +"+buffD+"</font> <br>Armour: "+armour+"<font color='green'> +"+buffA+"</font><br>Moves Left: "+moves+"</html>");
 			if(master.isOwner()) {
 				// display stats
 				System.out.println("[SelectedItemPanel] Accessor is owner of party");
