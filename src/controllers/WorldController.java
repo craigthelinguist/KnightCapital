@@ -540,29 +540,6 @@ public class WorldController{
 		new WorldController(w,p);
 	}
 
-
-	public static void selemon_main(){
-		Player p = new Player("John The Baptist",4);
-		World w = TemporaryLoader.loadWorld("world_temporary.txt",p);
-		HeroStats stats_hero = new HeroStats(60,10,80,0,6,8);
-		Hero hero = new Hero("ovelia",p,stats_hero);
-
-		Creature[][] members = Party.newEmptyParty();
-		members[0][0] = hero;
-		Party party = new Party(hero, p, members);
-
-		//hero.setMovePts(10);
-		XMLReader read = new XMLReader(Constants.ASSETS+"Levels.xml", "levelTwo", hero);
-		read.readLevel();
-		System.out.println(hero.getMovePoints());
-
-		party.setLeader(hero);
-		party.refresh();
-		//hero.setMovePts(8); //we dont need this line since the move point is being set in XMLReader class
-		w.getTile(0,0).setIcon(party);
-		new WorldController(w,p);
-	}
-
 	public static void ewan_main(String[] args){
 		/*Loading items*/
 		Buff[] buffsAmulet = new Buff[]{ Buff.newTempBuff(Stat.DAMAGE,5) };

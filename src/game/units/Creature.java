@@ -16,23 +16,26 @@ import game.effects.Buff;
 
 /**
  * A creature represents anything on the world or in a battle that is controlled by a player and can be given
- * orders, such as units and heroes.
+ * orders, such as units and heroes. They have stats which represent how much damage they do, how much health
+ * they have, etc. They also have a record of all buffs being applied to them.
  * @author craigthelinguist
  */
 public abstract class Creature {
 
+	// the animations representing this creature
 	protected AnimationMap animations;
+
+	// the name/imageName of this creature
 	protected String name;
 	protected String imgName;
+
+	// all buffs being applied to this creature
 	protected LinkedList<Buff> buffs;
+
+	// who owns the creature + stats
 	protected Stats stats;
 	protected Player owner;
 
-	/*
-	protected Map<String,Animation> animations;
-	protected String animationName;
-	protected Animation animation;
-*/
 
 	@Deprecated
 	/** Use the other one **/
