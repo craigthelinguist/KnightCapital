@@ -1,4 +1,4 @@
-package game.units;
+package GUI.Equipment;
 
 import java.awt.Font;
 import java.awt.Graphics;
