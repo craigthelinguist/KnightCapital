@@ -184,8 +184,7 @@ public class PartyDialog extends JDialog  {
 	}
 
 	/**
-	 * Construct elements for a new JPanel that will instruct the user on what the
-	 * fuck this dialog does.
+	 * Construct elements for a new JPanel that will instruct the user on what the dialog does.
 	 */
 	private void initDescriptionPanel() {
 

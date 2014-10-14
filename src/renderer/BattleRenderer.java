@@ -144,6 +144,9 @@ public class BattleRenderer {
 
 	private static void drawTile(Graphics graphics, CartesianMapping<Tile> mapping, Camera camera) {
 		Point ptIso = mapping.point;
+		int ht = mapping.thing.getTileHeight();
+		int dy = ht - Constants.TILE_HT;
+		ptIso.y = ptIso.y - dy;
 		if (mapping.intensity != 0) mapping.thing.drawHighlighted(graphics, ptIso.x, ptIso.y, mapping.intensity);
 		else mapping.thing.draw(graphics, ptIso.x, ptIso.y);
 	}

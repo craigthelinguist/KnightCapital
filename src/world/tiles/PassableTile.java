@@ -17,13 +17,17 @@ public class PassableTile extends Tile{
 	public PassableTile(String imageName, int x, int y){
 		super(imageName,x,y);
 	}
-	
+
 	public static PassableTile newDirtTile(int x, int y){
 		return new PassableTile("dirt",x,y);
 	}
 
 	public static PassableTile newGrassTile(int x, int y){
 		return new PassableTile("grass",x,y);
+	}
+
+	public static PassableTile newTreeTile(int x, int y){
+		return new PassableTile("tree", x, y);
 	}
 
 	@Override

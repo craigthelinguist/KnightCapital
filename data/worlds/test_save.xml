@@ -1560,6 +1560,75 @@
         <owner>
           <slot>2</slot>
         </owner>
+        <member>
+          <row>0</row>
+          <col>0</col>
+          <unit>
+            <name>Knight</name>
+            <imageName>knight</imageName>
+            <slot>1</slot>
+            <stats>
+              <baseHealth>100</baseHealth>
+              <baseDamage>25</baseDamage>
+              <baseSpeed>40</baseSpeed>
+              <baseArmour>5</baseArmour>
+              <attack>melee</attack>
+            </stats>
+          </unit>
+        </member>
+        <member>
+          <row>0</row>
+          <col>2</col>
+          <unit>
+            <name>Knight</name>
+            <imageName>knight</imageName>
+            <slot>1</slot>
+            <stats>
+              <baseHealth>100</baseHealth>
+              <baseDamage>25</baseDamage>
+              <baseSpeed>40</baseSpeed>
+              <baseArmour>5</baseArmour>
+              <attack>melee</attack>
+            </stats>
+          </unit>
+        </member>
+        <member>
+          <row>1</row>
+          <col>1</col>
+          <unit>
+            <name>Archer</name>
+            <imageName>archer</imageName>
+            <slot>1</slot>
+            <stats>
+              <baseHealth>60</baseHealth>
+              <baseDamage>15</baseDamage>
+              <baseSpeed>90</baseSpeed>
+              <baseArmour>0</baseArmour>
+              <attack>ranged</attack>
+            </stats>
+          </unit>
+        </member>
+        <member>
+          <row>1</row>
+          <col>2</col>
+          <hero>
+            <name>Gaben</name>
+            <imageName>dark_knight</imageName>
+            <player>
+              <slot>1</slot>
+            </player>
+            <herostats>
+              <baseHealth>120</baseHealth>
+              <baseDamage>55</baseDamage>
+              <baseSpeed>10</baseSpeed>
+              <baseArmour>10</baseArmour>
+              <baseSight>6</baseSight>
+              <baseMovement>6</baseMovement>
+              <attack>melee</attack>
+              <currentHealth>120</currentHealth>
+            </herostats>
+          </hero>
+        </member>
       </icon>
     </tile>
     <tile>
