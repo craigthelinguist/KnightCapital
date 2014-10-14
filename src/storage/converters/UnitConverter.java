@@ -7,6 +7,7 @@ import player.Player;
 import tools.Constants;
 import game.items.Item;
 import game.units.AttackType;
+import game.units.Creature;
 import game.units.Stats;
 import game.units.Unit;
 import game.units.UnitStats;
@@ -27,24 +28,25 @@ public class UnitConverter implements Converter{
 
 	@Override
 	public void marshal(Object obj, HierarchicalStreamWriter writer, MarshallingContext context) {
-		
+
 		Unit unit = (Unit)obj;
-		
+
 		writer.startNode("name");
 			writer.setValue(unit.getName());
 		writer.endNode();
-		
+
 		writer.startNode("imageName");
 			writer.setValue(unit.getAnimationName());
 		writer.endNode();
-		
+
 		new PlayerConverter().marshal(unit.getOwner(), writer, context);
-		
+
 		writer.startNode("stats");
 			UnitStatsConverter statsConverter = new UnitStatsConverter();
 			Stats stats;
 			try{
-				Field f = unit.getClass().getDeclaredField("stats");
+				//TODO
+				Field f = Creature.class.getDeclaredField("stats");
 				f.setAccessible(true);
 				stats = (Stats) f.get(unit);
 				statsConverter.marshal(stats,writer,context);
@@ -53,12 +55,12 @@ public class UnitConverter implements Converter{
 				System.err.println("Error writing unit stats to file");
 			}
 		writer.endNode();
-			
+
 	}
 
 	@Override
 	public Object unmarshal(HierarchicalStreamReader reader, UnmarshallingContext context) {
-		
+
 		if (!reader.hasMoreChildren()){
 			XStream stream = new XStream();
 			stream.alias("unit", Unit.class);
@@ -67,7 +69,7 @@ public class UnitConverter implements Converter{
 			File file = new File(Constants.DATA_UNITS + filename);
 			return (Unit)(stream.fromXML(file));
 		}
-		
+
 		// load name
 		reader.moveDown();
 			String name = reader.getValue();
@@ -77,17 +79,17 @@ public class UnitConverter implements Converter{
 		reader.moveDown();
 			String imgName = reader.getValue();
 		reader.moveUp();
-		
+
 		// player
 		reader.moveDown();
 			Player player = (Player) new PlayerConverter().unmarshal(reader,context);
 		reader.moveUp();
-		
+
 		// load stats
 		reader.moveDown();
 			UnitStats stats = (UnitStats) new UnitStatsConverter().unmarshal(reader, context);
 		reader.moveUp();
-		
+
 		return new Unit(name,imgName,player,stats);
 	}
 

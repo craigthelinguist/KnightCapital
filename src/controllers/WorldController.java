@@ -230,7 +230,7 @@ public class WorldController{
 					this.lastMouse = System.currentTimeMillis();
 				}
 			}
-			
+
 
 
 			// deselected the tile
@@ -446,9 +446,9 @@ public class WorldController{
 		Creature[][] members2 = Party.newEmptyParty();
 		members2[0][0] = u3;
 		members2[1][0] = u6;
-		members2[2][0] = hero;
+		members2[1][2] = hero;
 		members2[0][1] = u4;
-		members2[2][1] = u5;
+		members2[1][1] = u5;
 		Party party = new Party(hero,p,members2);
 		party.refresh();
 

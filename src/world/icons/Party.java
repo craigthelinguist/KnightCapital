@@ -42,7 +42,7 @@ public class Party extends WorldIcon implements Iterable<Creature>{
 		owner = player;
 		this.members = members;
 		if (members == null) this.members = Party.newEmptyParty();
-		inventory = new Item[INVENTORY_COLS][INVENTORY_ROWS];
+		inventory = Party.newEmptyInventory();
 	}
 
 	/**
@@ -166,8 +166,8 @@ public class Party extends WorldIcon implements Iterable<Creature>{
 	public boolean addItem(Item item) {
 		for (int y = 0; y < INVENTORY_ROWS; y++){
 			for (int x = 0; x < INVENTORY_COLS; x++){
-				if (inventory[x][y] == null){
-					inventory[x][y] = item;
+				if (inventory[y][x] == null){
+					inventory[y][x] = item;
 					if (item instanceof PassiveItem){
 						PassiveItem passive = (PassiveItem)item;
 						passive.applyEffectsTo(this);
@@ -223,11 +223,11 @@ public class Party extends WorldIcon implements Iterable<Creature>{
 	}
 
 	public static Creature[][] newEmptyParty() {
-		return new Creature[Party.PARTY_COLS][Party.PARTY_ROWS];
+		return new Creature[Party.PARTY_ROWS][Party.PARTY_COLS];
 	}
 
 	public static Item[][] newEmptyInventory() {
-		return new Item[Party.INVENTORY_COLS][Party.INVENTORY_ROWS];
+		return new Item[Party.INVENTORY_ROWS][Party.INVENTORY_COLS];
 	}
 
 	/**
@@ -305,7 +305,7 @@ public class Party extends WorldIcon implements Iterable<Creature>{
 		public boolean hasNext() {
 			for (int y = row ; y < Party.PARTY_ROWS; y++){
 				for (int x = col ; x < Party.PARTY_COLS; x++){
-					if (members[x][y] != null) return true;
+					if (members[y][x] != null) return true;
 				}
 			}
 			return false;
@@ -317,7 +317,7 @@ public class Party extends WorldIcon implements Iterable<Creature>{
 			int newCol = col;
 			for (int y = newRow; y < Party.PARTY_ROWS; y++){
 				for (int x = newCol; x < Party.PARTY_COLS; x++){
-					if (members[x][y] != null){
+					if (members[y][x] != null){
 						row = newRow;
 						col = newCol;
 						col++;
@@ -325,7 +325,7 @@ public class Party extends WorldIcon implements Iterable<Creature>{
 							col = 0;
 							row++;
 						}
-						return members[x][y];
+						return members[y][x];
 					}
 				}
 			}

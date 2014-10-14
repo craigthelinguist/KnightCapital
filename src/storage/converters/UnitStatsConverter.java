@@ -36,52 +36,55 @@ public class UnitStatsConverter implements Converter {
 		writer.startNode("baseArmour");
 			writer.setValue(""+stats.getBase(Stat.ARMOUR));
 		writer.endNode();
+		writer.startNode("attack");;
+			writer.setValue(""+stats.getAttackType());
+		writer.endNode();
 	}
 
 	@Override
 	public Object unmarshal(HierarchicalStreamReader reader, UnmarshallingContext context) {
 
 		UnitStats stats;
-	
+
 			int hp; int dmg; int spd; int arm; AttackType type;
-			
+
 			// hp
 			reader.moveDown();
 				hp = Integer.parseInt(reader.getValue());
 			reader.moveUp();
-		
+
 			// damage
 			reader.moveDown();
 				dmg = Integer.parseInt(reader.getValue());
 			reader.moveUp();
-		
+
 			// speed
 			reader.moveDown();
 				spd = Integer.parseInt(reader.getValue());
 			reader.moveUp();
-		
+
 			// armour
 			reader.moveDown();
 				arm = Integer.parseInt(reader.getValue());
 			reader.moveUp();
-		
+
 			// attack type
 			reader.moveDown();
 				type = AttackType.fromString(reader.getValue());
 			reader.moveUp();
-		
+
 			Integer currentHP = null;
 			if (reader.hasMoreChildren()){
 				reader.moveDown();
 					currentHP = Integer.parseInt(reader.getValue());
 				reader.moveUp();
 			}
-			
+
 			stats = new UnitStats(hp,dmg,spd,arm,type);
 			if (currentHP != null){
 				stats.setCurrent(Stat.HEALTH, currentHP);
 			}
-		
+
 		return stats;
 
 	}
