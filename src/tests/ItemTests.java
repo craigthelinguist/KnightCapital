@@ -74,7 +74,6 @@ public class ItemTests {
 		assertTrue(hero.get(Stat.DAMAGE) == 10 + hero.getBase(Stat.DAMAGE));
 		assertTrue(hero.get(Stat.HEALTH) == 10 + hero.getBase(Stat.HEALTH));
 
-		// this item's target is hero only - make sure unit stats did not updates
 		assertTrue(unit.getBuffed(Stat.DAMAGE) == 10);
 		assertTrue(unit.getBuffed(Stat.HEALTH) == 10);
 		assertTrue(unit.get(Stat.DAMAGE) == 10 + unit.getBase(Stat.DAMAGE));
@@ -84,22 +83,79 @@ public class ItemTests {
 	}
 
 	@Test
-	public void iterator(){
+	public void testRemovalFromParty(){
 
 		init();
 
-		int count = 0;
-		int hero = 0;
-		int unit = 0;
+		Buff b1 = Buff.newTempBuff(Stat.DAMAGE, 10);
+		Buff b2 = Buff.newTempBuff(Stat.HEALTH, 10);
+		Buff[] buffs = new Buff[]{ b1, b2 };
 
-		for (Creature creature : party){
-			if (creature instanceof Hero) hero++;
-			else if (creature instanceof Unit) unit++;
-			count++;
-			System.out.println("in");
+		PassiveItem item = new PassiveItem("","","",buffs,Target.PARTY,"");
+		item.applyEffectsTo(party);
+		item.removeEffectsFrom(party);
+
+		// this item's target is hero only - make sure hero stats did not update
+				assertTrue( hero.getBuffed(Stat.DAMAGE) == 0);
+				assertTrue(hero.getBuffed(Stat.HEALTH) == 0);
+				assertTrue( hero.get(Stat.DAMAGE) == hero.getBase(Stat.DAMAGE));
+				assertTrue( hero.get(Stat.HEALTH) == hero.getBase(Stat.HEALTH));
+
+		// this item's target is hero only - make sure unit stats did not update
+				assertTrue( unit.getBuffed(Stat.DAMAGE) == 0);
+				assertTrue(unit.getBuffed(Stat.HEALTH) == 0);
+				assertTrue( unit.get(Stat.DAMAGE) == unit.getBase(Stat.DAMAGE));
+				assertTrue( unit.get(Stat.HEALTH) == unit.getBase(Stat.HEALTH));
+
+
+	}
+
+	@Test
+	public void testRemovalFromHero(){
+
+		init();
+
+		Buff b1 = Buff.newTempBuff(Stat.DAMAGE, 10);
+		Buff b2 = Buff.newTempBuff(Stat.HEALTH, 10);
+		Buff[] buffs = new Buff[]{ b1, b2 };
+
+		PassiveItem item = new PassiveItem("","","",buffs,Target.HERO,"");
+		item.applyEffectsTo(party);
+		item.removeEffectsFrom(party);
+
+		// this item's target is hero only - make sure hero stats did not update
+				assertTrue( hero.getBuffed(Stat.DAMAGE) == 0);
+				assertTrue(hero.getBuffed(Stat.HEALTH) == 0);
+				assertTrue( hero.get(Stat.DAMAGE) == hero.getBase(Stat.DAMAGE));
+				assertTrue( hero.get(Stat.HEALTH) == hero.getBase(Stat.HEALTH));
+
+		// this item's target is hero only - make sure unit stats did not update
+				assertTrue( unit.getBuffed(Stat.DAMAGE) == 0);
+				assertTrue(unit.getBuffed(Stat.HEALTH) == 0);
+				assertTrue( unit.get(Stat.DAMAGE) == unit.getBase(Stat.DAMAGE));
+				assertTrue( unit.get(Stat.HEALTH) == unit.getBase(Stat.HEALTH));
+
+
+	}
+
+	@Test
+	public void testApplicationToUnknownTarget(){
+
+		init();
+
+		Buff b1 = Buff.newTempBuff(Stat.DAMAGE, 10);
+		Buff b2 = Buff.newTempBuff(Stat.HEALTH, 10);
+		Buff[] buffs = new Buff[]{ b1, b2 };
+
+		PassiveItem item = new PassiveItem("","","",buffs,Target.UNIT,"");
+
+		try{
+			item.applyEffectsTo(party);
+			fail("shouldn't bea ble to apply in ambiguous context");
 		}
+		catch(Exception e){}
 
-		assertTrue("count="+count+", hero="+hero+", unit="+unit, count==2 && hero==1 && unit==1);
+
 
 	}
 
