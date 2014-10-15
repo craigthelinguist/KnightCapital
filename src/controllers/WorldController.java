@@ -121,7 +121,9 @@ public class WorldController implements Serializable{
 	private static final int PAN_RIGHT = KeyEvent.VK_RIGHT;
 	private static final int PAN_LEFT = KeyEvent.VK_LEFT;
 
-	public WorldController(World w, Player p){
+	public WorldController(World w, Player p, Boolean isServer){
+
+		serverOrClient = isServer;
 		world = w;
 		player = p;
 		camera = WorldRenderer.getCentreOfWorld(w);
@@ -130,10 +132,33 @@ public class WorldController implements Serializable{
 		selected = null;
 		highlightedTiles = new HashSet<>();
 
+
+		if(serverOrClient){
+		try {
+			Thread server = new Thread (new Server(this));
+			server.start();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		}
+
+		else{
+
+			Thread client = new Thread( new Client("130.195.4.159", 45812, 45612, this));
+            client.start();
+
+		}
+
+
+
+
+	}
 		/**
 		 * comment this out to get controller to load from main menu
 		 */
 
+		/**
 		if(serverOrClient){
 //<<<<<<< HEAD
 ////			ServerM.run(this);
@@ -246,6 +271,8 @@ public class WorldController implements Serializable{
 
 
 	}
+
+
 
 	/**
 	 * Player has clicked on something. Perform any actions depending on the nature of their
@@ -519,7 +546,7 @@ public class WorldController implements Serializable{
 
 	public static void aaron_main_2(String[] args) throws IOException{
 		World world = WorldLoader.load(Constants.DATA_WORLDS + "test_save.xml");
-		new WorldController(world,world.getPlayers()[0]);
+		new WorldController(world,world.getPlayers()[0],true);
 	}
 
 	public static void myles_main(String[] dun_goofed) {
@@ -583,7 +610,7 @@ public class WorldController implements Serializable{
 		w.getTile(1,6).setIcon(itemIcon2);
 		w.getTile(8,8).setIcon(itemIcon3);
 
-		new WorldController(w,p);
+		new WorldController(w,p,true);
 	}
 
 	public static void ewan_main(String[] args){
@@ -657,7 +684,7 @@ public class WorldController implements Serializable{
 		w.getTile(1,6).setIcon(itemIcon2);
 		w.getTile(8,8).setIcon(itemIcon3);*/
 
-		new WorldController(w,p);
+		new WorldController(w,p,true);
 	}
 
 
@@ -709,6 +736,10 @@ public class WorldController implements Serializable{
 		Set<City> cities = new HashSet<>();
 		cities.add(city);
 		return new World(tiles,players,cities);
+	}
+
+	public MainFrame getGui() {
+		return this.gui;
 	}
 
 }

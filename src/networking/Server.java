@@ -19,7 +19,7 @@ import controllers.WorldController;
  * @author neal and myles
  */
 
-public class Server{
+public class Server implements Runnable{
 
 	private static final int USER_LIMIT = 4;
 	public static final int PORT = 45812;
@@ -58,7 +58,7 @@ public class Server{
 		initServer();
 
 		// Wait for client
-		connectClient();
+		
 
 
 
@@ -95,74 +95,88 @@ public class Server{
 	/**
 	 * Connect client
 	 */
-	private void connectClient() throws IOException{
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+
+
 		while(true){
 
 			// Accept Client Connection
-			Socket temp = serverMessageSocket.accept();//just testing connections.
-
-			System.out.println("accepted message socket");
-
-			Socket beast = serverMoveSocket.accept();
-
-			System.out.println("accepted move socket");
+			Socket temp;
+			try {
+				temp = serverMessageSocket.accept();
 
 
+				System.out.println("accepted message socket");
 
-			for(int i =0 ; i < 10; i++){
-				System.out.println("got connection socket to client: "+ temp.getInetAddress());
+				Socket beast = serverMoveSocket.accept();
 
-				//create messsaging inputs and outputs
-				input = new DataInputStream(temp.getInputStream());
-				out = new DataOutputStream(temp.getOutputStream());
-
-				//create movement inputs and outputs.
-				moveOutput = new ObjectOutputStream(beast.getOutputStream());
-				out.flush();
-				moveInput = new ObjectInputStream(beast.getInputStream());
+				System.out.println("accepted move socket");
 
 
 
+				for(int i =0 ; i < 10; i++){
+					System.out.println("got connection socket to client: "+ temp.getInetAddress());
 
+					//create messsaging inputs and outputs
+					input = new DataInputStream(temp.getInputStream());
+					out = new DataOutputStream(temp.getOutputStream());
 
-
-				//first checks if any previous connections have become unusable.
-				if(users[i]!=null && !users[i].getMessageProt().getStatus() )
-					//if not in use is destroyed.
-					users[i]=null;
-
-
-				//if this connection spot is vacant fills it with the incoming request.
-				if(users[i] == null){
+					//create movement inputs and outputs.
+					moveOutput = new ObjectOutputStream(beast.getOutputStream());
+					out.flush();
+					moveInput = new ObjectInputStream(beast.getInputStream());
 
 
 
 
 
-					users[i] = new Connection (new ServerMessagingProtocol(input, out, users, i),new ServerMovementProtocol(moveInput, moveOutput, users, i, world) );
 
-					Thread messageThread = new Thread(users[i].getMessageProt());
-					Thread moveThread = new Thread(users[i].getMoveProt());
+					//first checks if any previous connections have become unusable.
+					if(users[i]!=null && !users[i].getMessageProt().getStatus() )
+						//if not in use is destroyed.
+						users[i]=null;
 
-					messageThread.start();
-					moveThread.start();
 
-					break;
+					//if this connection spot is vacant fills it with the incoming request.
+					if(users[i] == null){
+
+
+
+
+
+						users[i] = new Connection (new ServerMessagingProtocol(input, out, users, i),new ServerMovementProtocol(moveInput, moveOutput, users, i, world) );
+
+						Thread messageThread = new Thread(users[i].getMessageProt());
+						Thread moveThread = new Thread(users[i].getMoveProt());
+
+						messageThread.start();
+						moveThread.start();
+
+						break;
+					}
 				}
-			}
+
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}//just testing connections.
+
 
 
 		}
-
 	}
-
-//
-//	public static void main(String[] args) {
-//		try {
-//			new Server();
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//	}
 }
+
+		//
+		//	public static void main(String[] args) {
+		//		try {
+		//			new Server();
+		//		} catch (IOException e) {
+		//			e.printStackTrace();
+		//		}
+		//	}
+
 

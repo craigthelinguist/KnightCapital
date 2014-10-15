@@ -54,6 +54,8 @@ public class ClientMovementProtocol implements  Runnable{
 		this.out=out;
 		this.world = world;
 
+		System.out.println("[client move protocol instantiated.]");
+
 		readIncoming = new ClientMoveInputProtocol(in, world);
 		Thread thread = new Thread(readIncoming);
 		thread.start();

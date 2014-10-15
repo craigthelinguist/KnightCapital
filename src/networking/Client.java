@@ -110,22 +110,7 @@ public class Client implements Runnable {
 			System.out.println(e);
 		}
 
-		while(true){
-
-			
-					try {
-						
-						out.writeUTF(message());
-					
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-
-
-			
-
-		}
+		
 	}
 
 	/**
@@ -136,22 +121,22 @@ public class Client implements Runnable {
 	@Override
 	public void run() {
 
-		try {
-			output = new ObjectOutputStream(messageSocket.getOutputStream());
-			out.flush();
-			input = new ObjectInputStream(messageSocket.getInputStream());
-			ID = in.readInt();
+		while(true){
 
-			player = (Player) input.readObject();
-			System.out.println("client request ID: "+ID);
+			
+			try {
+				
+				out.writeUTF(message());
+			
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 
-			//will do more once we get the player class going
+	
 
-		} catch (IOException | ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+}
 
 	}
 

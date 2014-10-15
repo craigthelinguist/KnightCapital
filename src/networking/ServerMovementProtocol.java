@@ -80,7 +80,11 @@ public class ServerMovementProtocol implements Runnable {
 
 								System.out.println("party was owned by this dude!");
 
-							System.out.println(	model.moveParty(party.getOwner(), new Point(i, j), new Point( toDisperse.getI() , toDisperse.getJ())));
+							System.out.println(	model.moveParty(party.getOwner(), new Point(i, j), new Point( toDisperse.getJ() , toDisperse.getI())));
+
+
+							//world.getGui().redraw();
+
 
 							}
 						}
