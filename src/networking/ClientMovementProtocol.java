@@ -24,7 +24,7 @@ import controllers.WorldController;
 
 /**
  *
- * @author hartleneal
+ * @author Neal Hartley && Selemon Yitbarek
  *
  *supposed to handle mouse and key inputs from the client side and then send them to the serverMovementProtocol
  *which then deals with them accordingly in order to update game state.
