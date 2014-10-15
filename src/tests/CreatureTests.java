@@ -20,8 +20,8 @@ public class CreatureTests {
 	Player player;
 
 	@Test
-	public void testDamage(){
-		generateUnit();
+	public void testDamageOnUnarmoured(){
+		generateUnarmouredUnit();
 		int totalHP = unit.get(Stat.HEALTH);
 		int dmg = 20;
 		unit.damage(dmg);
@@ -29,8 +29,17 @@ public class CreatureTests {
 	}
 
 	@Test
+	public void testDamageOnArmoured(){
+		generateArmouredUnit();
+		int totalHP = unit.get(Stat.HEALTH);
+		int dmg = 20;
+		unit.damage(dmg);
+		assertTrue(unit.getHealth() == totalHP-(dmg-unit.get(Stat.ARMOUR)));
+	}
+
+	@Test
 	public void testOverkill(){
-		generateUnit();
+		generateUnarmouredUnit();
 		int totalHP = unit.get(Stat.HEALTH);
 		int dmg = totalHP*2;
 		unit.damage(dmg);
@@ -39,7 +48,7 @@ public class CreatureTests {
 
 	@Test
 	public void testHeal(){
-		generateUnit();
+		generateUnarmouredUnit();
 		int totalHP = unit.get(Stat.HEALTH);
 		int heal = 100;
 		int dmg = 20 - unit.get(Stat.ARMOUR);
@@ -51,7 +60,7 @@ public class CreatureTests {
 
 	@Test
 	public void testHealWhenDead(){
-		generateUnit();
+		generateUnarmouredUnit();
 		int totalHP = unit.get(Stat.HEALTH);
 		int damage = totalHP + unit.get(Stat.ARMOUR);
 		unit.damage(damage);
@@ -66,7 +75,7 @@ public class CreatureTests {
 
 	@Test
 	public void testFullHeal(){
-		generateUnit();
+		generateUnarmouredUnit();
 		int totalHP = unit.get(Stat.HEALTH);
 		unit.damage(totalHP);
 
@@ -74,32 +83,48 @@ public class CreatureTests {
 
 	@Test
 	public void testHealthiness100(){
-		generateUnit();
+		generateUnarmouredUnit();
 		unit.fullHeal();
-		int percent = (int) unit.healthiness();
+		int percent = (int)(unit.healthiness()*100);
 		assertTrue(percent == 100);
 	}
 
 	@Test
+	public void testHealthiness80(){
+		generateUnarmouredUnit();
+		int dmg = (int)(unit.getHealth()*0.2);
+		unit.damage(dmg);
+		int hp = unit.getHealth();
+		int percent = (int)(unit.healthiness()*100);
+		assertTrue(percent == 80);
+	}
+
+	@Test
 	public void testHealthiness50(){
-		generateUnit();
+		generateUnarmouredUnit();
 		int half = unit.get(Stat.HEALTH)/2;
 		unit.setCurrent(Stat.HEALTH, half);
-		int percent = (int) unit.healthiness();
-		assertTrue(percent == 50);
+		int percent = (int)(unit.healthiness()*100);
+		assertTrue("should be 50, was " + percent,percent == 50);
 	}
 
 	@Test
 	public void testHealthiness0(){
-		generateUnit();
+		generateUnarmouredUnit();
 		unit.damage(100);
 		int percent = (int) unit.healthiness();
 		assertTrue(percent == 0);
 	}
 
-	public void generateUnit(){
+	public void generateUnarmouredUnit(){
 		player = new Player("tupac",1);
 		UnitStats stats = new UnitStats(100,25,15,0,AttackType.MELEE);
+		unit = new Unit("Knight","knight",player,stats);
+	}
+
+	public void generateArmouredUnit(){
+		player = new Player("tupac",1);
+		UnitStats stats = new UnitStats(100,25,15,10,AttackType.MELEE);
 		unit = new Unit("Knight","knight",player,stats);
 	}
 
