@@ -51,12 +51,12 @@ import GUI.world.MainFrame;
  * A WorldController. This is the glue between the model (World) and the view (gui, renderer). It responds to mouse, key, and button presses
  * and informs the World to update its game state. It then tells the gui to redraw itself to show any changes in game state. It also handles
  * interactions between different GUIs - for example, passing over control to TownController when the player opens up a town.
- * @author Aaron
+ * @author Aaron && (Neal & Selemon for server stuff)
  */
 public class WorldController implements Serializable{
 
 	//boolean server or client, true if server, false if client.
-	private boolean serverOrClient = false;
+	private boolean serverOrClient = true;
 
 	//server and client.
 	private Server server;

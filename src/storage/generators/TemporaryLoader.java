@@ -123,7 +123,7 @@ public class TemporaryLoader {
 
 	}
 
-	public static World loadWorld(int worldWidth, int worldHeight) {
+	public static Tile[][] loadWorld(int worldWidth, int worldHeight) {
 		Tile[][] tiles = new Tile[worldWidth][worldHeight];
 
 		for(int x = 0; x < worldWidth; x++) {
@@ -134,7 +134,7 @@ public class TemporaryLoader {
 			}
 		}
 
-		return new World(tiles, null, null);
+		return tiles;
 	}
 
 }
