@@ -171,10 +171,6 @@ public class World {
 		Tile tileDestination = getTile(destination.x,destination.y);
 		if (tileLocation == null || tileDestination == null) return false;
 
-		if (tileDestination instanceof CityTile){
-			System.out.println("stop");
-		}
-
 		// check there is a party at location and it is owned by the specified player
 		WorldIcon icon = tileLocation.occupant();
 		if (!(icon instanceof Party)) return false;
@@ -249,13 +245,14 @@ public class World {
 				if (city.hasVisitors()) return false; // can't move into an occupied city
 			}
 
+			// can't move onto impassable tiles
+			else if(!goalTile.passable()) return false;
+
 			// if you're moving to an item and you have full inventory you can't move there
-			else if (goalTile.occupant() != null && goalTile.occupant() instanceof ItemIcon){
+			else if (goalTile.passable() && goalTile.occupant() != null && goalTile.occupant() instanceof ItemIcon){
 				if (party.hasFullInventory()) return false;
 			}
 
-			// can't move onto impassable tiles
-			else if(!goalTile.passable()) return false;
 
 
 
