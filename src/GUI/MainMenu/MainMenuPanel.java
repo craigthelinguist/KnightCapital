@@ -21,6 +21,7 @@ import javax.swing.filechooser.FileFilter;
 import storage.converters.WorldLoader;
 import tools.Constants;
 import tools.ImageLoader;
+import tools.Log;
 import world.World;
 import GUI.world.CustomButton;
 import controllers.WorldController;
@@ -41,6 +42,9 @@ public class MainMenuPanel extends JPanel implements ActionListener{
 	private BufferedImage backgroundImage;
 
 	public MainMenuPanel() {
+		Log.printTitle();
+		Log.printEwan();
+
 		backgroundImage = ImageLoader.load(Constants.GUI_FILEPATH + "mainMenuBackground.png");
 		frame = new JFrame();
 		this.setPreferredSize(new Dimension(650,650));
