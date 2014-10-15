@@ -80,8 +80,11 @@ public class WorldTests {
 		assertTrue(world.getCurrentPlayer() == player1);
 	}
 
+	/**
+	 * Test perma buffs stay after a turn, temp buffs go
+	 */
 	@Test
-	public void testEndTurnTempBuffRemoval(){
+	public void testBuffLifecycles(){
 		setup();
 
 		// make temp item and apply to party
@@ -94,6 +97,13 @@ public class WorldTests {
 
 		// end turn
 		world.endTurn();
+		world.endTurn();
+
+		// check temp buff is gone, perma buff still here
+		Hero hero = party.getHero();
+		assertTrue(hero.getBuffed(Stat.DAMAGE)== 0);
+		assertTrue(hero.getBuffed(Stat.HEALTH) == 10);
+
 
 	}
 
@@ -125,6 +135,7 @@ public class WorldTests {
 		Creature[][] members = Party.newEmptyPartyArray();
 		members[0][0] = hero;
 		this.party = new Party(hero,player1,members);
+		tiles[0][0].setIcon(this.party);
 
 		Player[] players = new Player[]{ player1, player2 };
 		world = new World(tiles,players,cities);

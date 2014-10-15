@@ -453,6 +453,7 @@ public class World {
 			visited.add(point);
 			LinkedList<Point> neighbours = findNeighbours(point);
 			int newDist = node.distance + 1;
+
 			for (Point neighbour : neighbours){
 				if (newDist > movePoints || visited.contains(neighbour)) continue;
 				else queue.offer(new Node(neighbour,newDist));
