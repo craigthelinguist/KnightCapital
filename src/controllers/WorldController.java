@@ -66,6 +66,8 @@ public class WorldController implements Serializable{
 
 	// player this controller belongs to
 	private Player player;
+	
+	private boolean isServer;
 
 	// current tile the player has clicked
 	private Point selected;
@@ -89,7 +91,7 @@ public class WorldController implements Serializable{
 
 	public WorldController(World w, Player p, Boolean isServer){
 
-		serverOrClient = isServer;
+		this.isServer= isServer;
 		world = w;
 		player = p;
 		camera = WorldRenderer.getCentreOfWorld(w);
@@ -99,48 +101,12 @@ public class WorldController implements Serializable{
 		highlightedTiles = new HashSet<>();
 
 
-		if(serverOrClient){
-		try {
-			Thread server = new Thread (new Server(this));
-			server.start();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		}
-
-		else{
-
-			Thread client = new Thread( new Client("130.195.4.159", 45812, 45612, this));
-            client.start();
-
-		}
-
+	
 
 
 
 	}
-		/**
-		 * comment this out to get controller to load from main menu
-<<<<<<< HEAD
-		 */
 
-		/**
-=======
->>>>>>> ed474f492d63444cca5f76d26364700947c28d37
-		if(serverOrClient){
-			try {
-				server = new Server(this);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		else {
-				client = new Client("130.195.4.159", 45812, 45612, this);
-		}
-
-		**/
-	}
 
 	/**
 	 * Player has pushed a key. Perform any actions and update/redraw game-state if necessary.
@@ -528,7 +494,7 @@ public class WorldController implements Serializable{
 		new WorldController(w,p,true);
 	}
 
-<<<<<<< HEAD
+
 	public static void ewan_main(String[] args){
 		/*Loading items*/
 		Buff[] buffsAmulet = new Buff[]{ Buff.newTempBuff(Stat.DAMAGE,5) };
@@ -654,11 +620,7 @@ public class WorldController implements Serializable{
 		return new World(tiles,players,cities);
 	}
 
-	public MainFrame getGui() {
-		return this.gui;
-	}
+	
 
-=======
->>>>>>> ed474f492d63444cca5f76d26364700947c28d37
 }
 
