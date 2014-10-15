@@ -1,4 +1,4 @@
-package storage;
+package storage.generators;
 
 import java.io.File;
 import java.io.IOException;

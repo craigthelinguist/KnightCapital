@@ -20,7 +20,7 @@ import org.junit.Test;
 import player.Player;
 import controllers.WorldController;
 import renderer.Camera;
-import storage.TemporaryLoader;
+import storage.generators.TemporaryLoader;
 import tools.Geometry;
 import world.World;
 import world.icons.Party;

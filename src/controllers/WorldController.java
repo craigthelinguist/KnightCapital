@@ -4,51 +4,36 @@ package controllers;
 
 import game.effects.Buff;
 import game.items.PassiveItem;
-import game.items.Item;
-import game.items.PassiveItem;
 import game.items.Target;
 import game.units.AttackType;
 import game.units.Creature;
 import game.units.Hero;
 import game.units.HeroStats;
 import game.units.Stat;
-import game.units.Stats;
 import game.units.Unit;
 import game.units.UnitStats;
 
-import java.awt.Dimension;
 import java.awt.Point;
-import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.security.auth.login.Configuration;
-import javax.swing.JButton;
 import javax.swing.SwingUtilities;
 
-import com.thoughtworks.xstream.XStream;
-
 import networking.Client;
-import networking.ClientM;
 import networking.NetworkM;
 import networking.Server;
 import player.Player;
 import renderer.Camera;
 import renderer.WorldRenderer;
-import storage.TemporaryLoader;
-import storage.XMLReader;
 import storage.converters.WorldLoader;
-import tools.Geometry;
+import storage.generators.TemporaryLoader;
 import tools.Constants;
+import tools.Geometry;
 import world.World;
 import world.icons.ItemIcon;
 import world.icons.Party;
@@ -59,7 +44,6 @@ import world.tiles.PassableTile;
 import world.tiles.Tile;
 import world.towns.City;
 import GUI.EscapeDialog.EscapeDialog;
-import GUI.party.PartyDialog;
 import GUI.world.GameDialog;
 import GUI.world.MainFrame;
 

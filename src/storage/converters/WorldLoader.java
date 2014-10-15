@@ -22,7 +22,7 @@ import com.thoughtworks.xstream.XStream;
 
 import controllers.WorldController;
 import player.Player;
-import storage.TemporaryLoader;
+import storage.generators.TemporaryLoader;
 import tools.Constants;
 import world.World;
 import world.icons.ItemIcon;

@@ -21,7 +21,7 @@ import javax.swing.JButton;
 import GUI.town.TownGui;
 import player.Player;
 import renderer.Camera;
-import storage.TemporaryLoader;
+import storage.generators.TemporaryLoader;
 import tools.Geometry;
 import tools.Log;
 import world.World;

@@ -1,4 +1,4 @@
-package storage;
+package storage.generators;
 
 import game.units.AttackType;
 import game.units.Hero;

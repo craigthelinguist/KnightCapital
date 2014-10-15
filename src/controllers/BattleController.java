@@ -20,7 +20,7 @@ import javax.swing.SwingUtilities;
 import player.Player;
 import renderer.Camera;
 import renderer.WorldRenderer;
-import storage.TemporaryLoader;
+import storage.generators.TemporaryLoader;
 import tools.Geometry;
 import world.World;
 import world.icons.Party;
