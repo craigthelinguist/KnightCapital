@@ -167,7 +167,7 @@ public class EscapeDialogBackground extends JPanel implements ActionListener{
 					world = WorldLoader.load(filepath);
 					escapeDialog.dispose();
 					frame.dispose();
-					new WorldController(world,world.getPlayers()[0]);
+					new WorldController(world,world.getPlayers()[0], true);
 				} catch (IOException e1) {
 					JOptionPane.showMessageDialog(escapeDialog, "Error loading " + filepath);
 				}

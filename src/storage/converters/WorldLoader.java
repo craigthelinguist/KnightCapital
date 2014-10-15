@@ -297,9 +297,5 @@ public class WorldLoader {
 
 	}
 
-	public static void main(String[] args) throws IOException{
-		World world = WorldLoader.load(Constants.DATA_WORLDS + "test_save.xml");
-		new WorldController(world,world.getPlayers()[0]);
-	}
 
 }
