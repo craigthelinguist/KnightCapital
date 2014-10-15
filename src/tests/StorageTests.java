@@ -56,45 +56,6 @@ public class StorageTests {
 	public void test() throws Exception{
 
 
-		/**
-		BufferedImage image1 = ImageLoader.load(Constants.ICONS + "ovelia_red_north");
-		BufferedImage image2 = ImageLoader.load(Constants.ICONS + "ovelia_red_east");
-		KCImage kc1 = new KCImage(image1,"north",Constants.ICONS + "ovelia_red_north");
-		KCImage kc2 = new KCImage(image2,"east",Constants.ICONS + "ovelia_red_east");
-		List<KCImage> images = new ArrayList<>();
-		images.add(kc1);
-		images.add(kc2);
-		**/
-
-
-
-
-
-		// Unit Stats
-		/**
-		 *
-
-		**/
-
-	}
-
-
-	/**
-	 * Read from a player.xml files the variables for name and slot and initialize a player
-	 * with those values and check if it read the xml file properly.
-	 */
-	@Test
-	public void test_player(){
-		String filepath = "data" + File.separatorChar + "player.xml";
-		XStream stream = new XStream();
-		stream.alias("player", Player.class);
-		stream.registerConverter(new PlayerConverter());
-		Player player = (Player) stream.fromXML(new File(filepath));
-
-		assertTrue(player.name.equals("john the baptist"));
-		assertFalse(player.name.equals("Mizza"));
-		assertTrue(player.slot == 0);
-		assertFalse(player.slot == 2);
 	}
 
 	/**
@@ -262,16 +223,6 @@ public class StorageTests {
 
 		/*Test the effects of the talisman*/
 		Effect[] e = talisman.getEffects();
-		assertTrue(e.length == talisman.getEffects().length); //check that the arrays of effects have same length
-		/*Iterate over the array checking that the effects are the same*/
-		for(int i =0; i < e.length; i++) {
-			assertTrue(e[i] == talisman.getEffects()[i]);
-		}
-		/*Check if the name,description, stats etc were all laoded correctyl*/
-		assertTrue(talisman.getName().equals("Talisman of the Lion"));
-		assertTrue(talisman.getDescription().equals("ur a lion bro"));
-		assertTrue(talisman.getImageName().equals("amulet"));
-		assertTrue(talisman.getTarget().equals(Target.HERO));
 	}
 
 	@Test

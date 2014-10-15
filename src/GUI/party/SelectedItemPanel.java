@@ -8,8 +8,11 @@ import game.units.Stat;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -45,10 +48,16 @@ public class SelectedItemPanel extends JPanel{
 	private Creature unit;
 	private Item item;
 
+	//button for equip Item
+	JButton equipItem;
+
 	// JLabels
 	private JLabel imageLabel;
 	private JLabel nameLabel;
 	private JLabel descriptionLabel;
+
+	//the constraints for this panel
+	GridBagConstraints gc;
 
 	/** Construct new empty Item Panel **/
 	public SelectedItemPanel(PartyDialog master, Dimension d) {
@@ -58,8 +67,17 @@ public class SelectedItemPanel extends JPanel{
 
 		// Set layout
 		this.setLayout(new GridBagLayout());
-		GridBagConstraints gc = new GridBagConstraints();
+		gc = new GridBagConstraints();
 		gc.fill = GridBagConstraints.HORIZONTAL;
+
+		equipItem = new JButton("EquipItem");
+		equipItem.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				//equip the item onto the unit
+			}
+        });
+
 
 		// create and set label for image
 		imageLabel = new JLabel();
@@ -114,6 +132,12 @@ public class SelectedItemPanel extends JPanel{
 	private void updateInfo() {
 		// if selected is an ITEM
 		if(item != null) {
+
+			//set equip button
+			gc.gridx = 0;
+			gc.gridy = 3;
+			this.add(equipItem,gc);
+
 			// set image
 			this.imageLabel.setIcon(new ImageIcon(this.item.getPortrait()));
 
@@ -137,6 +161,9 @@ public class SelectedItemPanel extends JPanel{
 
 		// If selected is a UNIT
 		if(unit != null) {
+			//remove the equip button
+			this.remove(equipItem);
+
 			// set image
 			this.imageLabel.setIcon(new ImageIcon(this.unit.getPortrait()));
 

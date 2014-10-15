@@ -156,7 +156,7 @@ public class IconConverter implements Converter{
 		reader.moveUp();
 
 		// read the members and items
-		Creature[][] members = Party.newEmptyParty();
+		Creature[][] members = Party.newEmptyPartyArray();
 		List<Item> items = new ArrayList<>();
 		while (reader.hasMoreChildren()){
 			reader.moveDown();

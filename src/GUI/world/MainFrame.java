@@ -139,16 +139,18 @@ public class MainFrame extends JFrame  {
 	private class WorldKeyDispatcher implements KeyEventDispatcher {
 		@Override
 		public boolean dispatchKeyEvent(KeyEvent e) {
+
+			System.out.println("key press");
+
+
 			if (closeDialogEnabled || !active){
 				return false;
 			}
 
 
-
-			else if(e.getKeyCode() == KeyEvent.VK_ESCAPE)
-		    {
-				EscapeDialog dialog = new EscapeDialog(MainFrame.this,controller);
-		    }
+			if (e.getID() == KeyEvent.KEY_PRESSED){
+				controller.keyPressed(e);
+			}
 
 			return false;
 		}
@@ -156,11 +158,6 @@ public class MainFrame extends JFrame  {
 
 	public void redraw(){
 		canvas.repaint();
-	}
-
-	/* Main method to test the MainFrame */
-	public static void main(String[] args) {
-		new MainFrame();
 	}
 
 	/**

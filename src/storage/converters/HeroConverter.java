@@ -1,17 +1,14 @@
 package storage.converters;
 
+import game.units.Creature;
+import game.units.Hero;
+import game.units.HeroStats;
+
 import java.io.File;
 import java.lang.reflect.Field;
 
 import player.Player;
 import tools.Constants;
-import game.items.Item;
-import game.units.Creature;
-import game.units.Hero;
-import game.units.HeroStats;
-import game.units.Stats;
-import game.units.Unit;
-import game.units.UnitStats;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.converters.Converter;

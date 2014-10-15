@@ -23,6 +23,7 @@ import javax.swing.OverlayLayout;
 
 import tools.Constants;
 import tools.ImageLoader;
+import world.icons.Party;
 import world.tiles.Tile;
 
 
@@ -44,7 +45,10 @@ public class MainPanelMaster extends JPanel {
 	private ButtonsPanel buttonsPanel;
 	private MiniMap miniMapPanel;
 	private TileInformationPanel tileInfoPanel;
-
+	
+	/* Declare the gridbagconstraints */
+	GridBagConstraints c;
+	
 	public MainPanelMaster(MainFrame frame) {
 		//this.setBorder(BorderFactory.createLineBorder(Color.black)); //draws a border around canvas (just to show where the canvas is) (delete later)
 		this.setPreferredSize(new Dimension(frame.getWidth(),frame.getHeight()));
@@ -52,7 +56,7 @@ public class MainPanelMaster extends JPanel {
 
 		/*Initialize the layout and the insets*/
 		this.setLayout(new GridBagLayout());
-		GridBagConstraints c = new GridBagConstraints();
+		c = new GridBagConstraints();
 		c.insets = new Insets(0,1,0,1);
 		c.anchor = GridBagConstraints.FIRST_LINE_START;
 		c.fill = GridBagConstraints.NONE;
@@ -105,14 +109,22 @@ public class MainPanelMaster extends JPanel {
 	   */
 	public void updateInfo(Tile tile) {
 		tileInfoPanel.updateInfo(tile);
+		if (tile == null) return;
+		if(!(tile.occupant() instanceof Party)) return;
+		Party p =(Party)tile.occupant();
+		//inventoryPanel.updateSlots(p.getInventory());
 		try {
+			this.remove(inventoryPanel);
+			inventoryPanel = new InventoryPanel(mainFrame);
+			c.weightx = 0.0;
+			c.gridx = 3;
+			c.gridy = 0;
+			this.add(inventoryPanel,c);
+			repaint();
 			inventoryPanel.updateInventoryPanel(tile);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-
-
-
 
 }

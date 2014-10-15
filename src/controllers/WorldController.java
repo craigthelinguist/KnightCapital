@@ -4,26 +4,18 @@ package controllers;
 
 import game.effects.Buff;
 import game.items.PassiveItem;
-import game.items.Item;
-import game.items.PassiveItem;
 import game.items.Target;
 import game.units.AttackType;
 import game.units.Creature;
 import game.units.Hero;
 import game.units.HeroStats;
 import game.units.Stat;
-import game.units.Stats;
 import game.units.Unit;
 import game.units.UnitStats;
 
-import java.awt.Dimension;
 import java.awt.Point;
-import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.Serializable;
 import java.net.ServerSocket;
@@ -31,24 +23,18 @@ import java.net.Socket;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.security.auth.login.Configuration;
-import javax.swing.JButton;
 import javax.swing.SwingUtilities;
 
-import com.thoughtworks.xstream.XStream;
-
 import networking.Client;
-import networking.ClientM;
 import networking.NetworkM;
 import networking.Server;
 import player.Player;
 import renderer.Camera;
 import renderer.WorldRenderer;
-import storage.TemporaryLoader;
-import storage.XMLReader;
 import storage.converters.WorldLoader;
-import tools.Geometry;
+import storage.generators.TemporaryLoader;
 import tools.Constants;
+import tools.Geometry;
 import world.World;
 import world.icons.ItemIcon;
 import world.icons.Party;
@@ -58,18 +44,20 @@ import world.tiles.ImpassableTile;
 import world.tiles.PassableTile;
 import world.tiles.Tile;
 import world.towns.City;
-import GUI.party.PartyDialog;
+import GUI.EscapeDialog.EscapeDialog;
 import GUI.world.GameDialog;
 import GUI.world.MainFrame;
 
 /**
- * A WorldController. This is the glue between the model (World) and the view (gui, renderer).
+ * A WorldController. This is the glue between the model (World) and the view (gui, renderer). It responds to mouse, key, and button presses
+ * and informs the World to update its game state. It then tells the gui to redraw itself to show any changes in game state. It also handles
+ * interactions between different GUIs - for example, passing over control to TownController when the player opens up a town.
  * @author Aaron
  */
 public class WorldController implements Serializable{
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 
@@ -83,7 +71,7 @@ public class WorldController implements Serializable{
 	// gui and renderer: the view
 	private MainFrame gui;
 
-	// town controller when you have town view up
+	// current session in town, if there is one
 	private TownController townController;
 
 	// world this controller is for: the model
@@ -144,7 +132,8 @@ public class WorldController implements Serializable{
 
 		else {
 
-			
+
+
 //				try {
 //					NetworkM.createClient("localhost", 2020, "selemonClient", this);
 //				} catch (IOException e) {
@@ -152,12 +141,24 @@ public class WorldController implements Serializable{
 //					e.printStackTrace();
 //				}
 				client = new Client("130.195.4.159", 45812, 45612, this);
-			
 
-			
+
+
+
+//			try {
+//				NetworkM.createClient("localhost", 2020, "selemonClient");
+//				client = new Client("130.195.6.170", 45612, 45812);
+//			} catch (IOException e) {
+//
+//				e.printStackTrace();
+//			}
+			//			client = new Client("130.195.6.98", 45612);
+
+
 		}
 
 	}
+
 
 	public MainFrame getGui(){
 		return gui;
@@ -165,13 +166,10 @@ public class WorldController implements Serializable{
 
 
 	/**
-	 * Player has pushed a key
+	 * Player has pushed a key. Perform any actions and update/redraw game-state if necessary.
 	 * @param ke: details about the key event
 	 */
 	public void keyPressed(KeyEvent ke){
-
-
-
 
 		int code = ke.getKeyCode();
 		if (code == ROTATE_CW){
@@ -206,77 +204,81 @@ public class WorldController implements Serializable{
 			notifier();
 			gui.redraw();
 		}
+		else if(code == KeyEvent.VK_ESCAPE){
+			EscapeDialog dialog = new EscapeDialog(gui,this);
+	    }
+
 
 	}
 
 	/**
-	 * Player has clicked on something.
+	 * Player has clicked on something. Perform any actions depending on the nature of their
+	 * click and update + redraw game-state if necessary.
 	 * @param me: details about the click.
 	 * @param panel: what they clicked on (inventory, world, etc.)
 	 */
 	public void mousePressed(MouseEvent me){
 
-			Point ptIso = new Point(me.getX(),me.getY());
-			Point ptCartesian = Geometry.isometricToCartesian(ptIso, camera, world.dimensions);
-			Tile clickedTile = world.getTile(ptCartesian);
-			Tile selectedTile = world.getTile(selected);
+		Point ptIso = new Point(me.getX(),me.getY());
+		Point ptCartesian = Geometry.isometricToCartesian(ptIso, camera, world.dimensions);
+		Tile clickedTile = world.getTile(ptCartesian);
+		Tile selectedTile = world.getTile(selected);
 
-			// double clicked a city
-			if (leftClicked(me) && selectedTile != null
+		// double clicked a city
+		if (leftClicked(me) && selectedTile != null
 				&& clickedTile instanceof CityTile && selectedTile instanceof CityTile
-				 && doubleClicked() && ((CityTile)(clickedTile)).getCity().ownedBy(player) )
-				{
-					CityTile c1 = (CityTile)clickedTile;
-					CityTile c2 = (CityTile)selectedTile;
-					if (c1.getCity() == c2.getCity()){
-						startTownView(c1.getCity());
-					}
-					this.lastMouse = System.currentTimeMillis();
-
-				}
-
-
-			// deselected the tile
-			else if (selected != null && leftClicked(me) && selectedTile == clickedTile){
-				System.out.println("deselect");
-				deselect();
-				gui.updateInfo(null);
-				gui.redraw();
-				this.lastMouse = System.currentTimeMillis();
+				&& doubleClicked() && ((CityTile)(clickedTile)).getCity().ownedBy(player) )
+		{
+			CityTile c1 = (CityTile)clickedTile;
+			CityTile c2 = (CityTile)selectedTile;
+			if (c1.getCity() == c2.getCity()){
+				startTownView(c1.getCity());
 			}
+			this.lastMouse = System.currentTimeMillis();
 
-			// selected the tile
-			else if (selectedTile != clickedTile && leftClicked(me)){
+		}
+
+
+		// deselected the tile
+		else if (selected != null && leftClicked(me) && selectedTile == clickedTile){
+			System.out.println("deselect");
+			deselect();
+			gui.updateInfo(null);
+			gui.redraw();
+			this.lastMouse = System.currentTimeMillis();
+		}
+
+		// selected the tile
+		else if (selectedTile != clickedTile && leftClicked(me)){
+			selected = ptCartesian;
+			highlightTiles(clickedTile);
+			gui.updateInfo(clickedTile);
+			gui.redraw();
+			this.lastMouse = System.currentTimeMillis();
+		}
+
+		// moved
+		else if (selected != null && rightClicked(me) && isMyTurn()){
+
+			boolean moved = world.moveParty(player, selected, ptCartesian);
+			if (moved){
 				selected = ptCartesian;
 				highlightTiles(clickedTile);
 				gui.updateInfo(clickedTile);
 				gui.redraw();
 				this.lastMouse = System.currentTimeMillis();
 			}
-
-			// moved
-			else if (selected != null && rightClicked(me) && isMyTurn()){
-
-				boolean moved = world.moveParty(player, selected, ptCartesian);
-				if (moved){
-					selected = ptCartesian;
-					highlightTiles(clickedTile);
-					gui.updateInfo(clickedTile);
-					gui.redraw();
-					this.lastMouse = System.currentTimeMillis();
-				}
-				else if (clickedTile != null) {
-					if(clickedTile.occupant() instanceof ItemIcon) {
-						new GameDialog(gui,"Inventory full! You cannot pick up more items!");
-					}
+			else if (clickedTile != null) {
+				if(clickedTile.passable() && clickedTile.occupant() instanceof ItemIcon) {
+					new GameDialog(gui,"Inventory full! You cannot pick up more items!");
 				}
 			}
+		}
 
 	}
 
-
 	/**
-	 * The mouse has moved from lastDrag -> point.
+	 * The mouse has moved from lastDrag -> point. Pan the camera and redraw game-state.
 	 * @param lastDrag: point mouse started at
 	 * @param point: point mouse moved to.
 	 */
@@ -287,18 +289,20 @@ public class WorldController implements Serializable{
 		gui.redraw();
 	}
 
+	/**
+	 * The mouse has been moved. Perform any actions and redraw game state.
+	 * @param me: mouse event that moved.
+	 */
 	public void mouseMoved(MouseEvent me){
-
 		Point ptIso = new Point(me.getX(),me.getY());
 		Point ptCartesian = Geometry.isometricToCartesian(ptIso, camera, world.dimensions);
 		Tile tileHover = world.getTile(ptCartesian);
 		if (tileHover == null) this.hover = ptCartesian;
 		else this.hover = null;
-
 	}
 
 	/**
-	 * Player has clicked a button.
+	 * Player has clicked a button. Perform any actions and redraw game state.
 	 * @param button: the button they clicked.
 	 */
 	public void buttonPressed(String button){
@@ -314,7 +318,7 @@ public class WorldController implements Serializable{
 	}
 
 	/**
-	 * Deselect the current tile. Un-highlight everything.
+	 * Deselect the currently selected tile. Un-highlight everything.
 	 */
 	private void deselect(){
 		selected = null;
@@ -322,7 +326,7 @@ public class WorldController implements Serializable{
 	}
 
 	/**
-	 * Resets the set of highlighted tiles.
+	 * Resets the set of tiles highlighted by this World Controller.
 	 */
 	private void resetHighlightedTiles(){
 		this.highlightedTiles = new HashSet<>();
@@ -350,24 +354,35 @@ public class WorldController implements Serializable{
 
 	/**
 	 * Return true if it is currently the turn of the player attached to this WorldController.
-	 * @return
+	 * @return: true if it is this controller's owner's turn.
 	 */
 	public boolean isMyTurn(){
 		return world.getCurrentPlayer() == this.player;
 	}
 
 	/**
-	 * Return true if the mouse event fired at this time is a double click.
-	 * @return
+	 * Return true if the time between now and the last mouse event was enough to be
+	 * considered a "double click".
+	 * @return: true if it was a double click.
 	 */
 	public boolean doubleClicked(){
 		return System.currentTimeMillis() - this.lastMouse < 700;
 	}
 
+	/**
+	 * Return true if the given mouse event was a left-click.
+	 * @param me: mouse event
+	 * @return: true if me was a left-click.
+	 */
 	public boolean leftClicked(MouseEvent me){
 		return SwingUtilities.isLeftMouseButton(me);
 	}
 
+	/**
+	 * Return true if the given mouse event was a right-click.
+	 * @param me: mouse event
+	 * @return: true if me was a right-click.
+	 */
 	public boolean rightClicked(MouseEvent me){
 		return SwingUtilities.isRightMouseButton(me);
 	}
@@ -381,37 +396,77 @@ public class WorldController implements Serializable{
 		return highlightedTiles.contains(p);
 	}
 
-	public void endTownView(){
+	/**
+	 * Ends the current town session. Also awakens this WorldController and its attached
+	 * gui so they now respond to events.
+	 * @param exit: the exit point of the town.
+	 */
+	public void endTownView(Point exit){
 		awake();
 		this.townController = null;
 		deselect();
-		gui.updateInfo(null);
+		Tile tile = world.getTile(exit.x,exit.y);
+		gui.updateInfo(tile); // update gui info panel with exit point
 		gui.redraw();
 	}
 
+	/**
+	 * Opens a new town session with the specified city. Suspends this WorldController
+	 * and its attached gui and the program's control flow passes to the
+	 * TownController that this method makes.
+	 * @param city: the city that you will be viewing through the TownController.
+	 */
 	public void startTownView(City city){
 		suspend();
 		this.townController = new TownController(city,this);
 	}
 
+	/**
+	 * Awaken this controller. Its attached gui will now draw information and respond
+	 * to events.
+	 */
 	public void awake(){
 		gui.awake();
 		this.active = true;
 	}
 
+	/**
+	 * Make this controller inactive until awakened. Its attached gui will also become
+	 * unresponsive.
+	 */
 	public void suspend(){
 		this.active = false;
 		gui.suspend();
 	}
 
+	/**
+	 * Return the world being controlled by this controller.
+	 * @return: world
+	 */
 	public World getWorld(){
 		return world;
 	}
 
+	/**
+	 * Return the viewing camera of this controller.
+	 * @return: camera
+	 */
 	public Camera getCamera(){
 		return camera;
 	}
 
+	/**
+	 * Returns the player this controller belongs to.
+	 * @return: player
+	 */
+	public Player getPlayer() {
+		return this.player;
+	}
+
+	/**
+	 * Return the tile that is currently selected by the player attached to this controller.
+	 * @return: a tile, or null if there is no tile selected.
+	 */
 	public Tile getSelectedTile(){
 		return world.getTile(selected);
 	}
@@ -421,12 +476,6 @@ public class WorldController implements Serializable{
 		if(client!=null)client.notifyThread();
 		if(client == null)System.out.println("still not initiated");
 	}
-
-	public Dimension getVisualDimensions() {
-		if (gui == null) return Toolkit.getDefaultToolkit().getScreenSize();
-		return gui.getSize();
-	}
-
 
 	public static void main(String[] args) throws IOException{
 		aaron_main(args);
@@ -438,24 +487,7 @@ public class WorldController implements Serializable{
 	}
 
 	public static void myles_main(String[] dun_goofed) {
-		/**
-		 * S I N G L E P L A Y E R
-		 * I
-		 * N
-		 * G
-		 * L
-		 * E
-		 * P
-		 * L
-		 * A
-		 * Y
-		 * E
-		 * R
-		 */
 
-		// Create Items
-		Buff[] buffsAmulet = new Buff[]{ Buff.newTempBuff(Stat.DAMAGE,5) };
-		PassiveItem amulet = new PassiveItem("Amulet of Gains", "amulet", "An amulet that grants sickening gains to Hero.\n +5 Damage",buffsAmulet,Target.HERO, "liontalisman.xml");
 
 	}
 
@@ -482,10 +514,9 @@ public class WorldController implements Serializable{
 		/*Loading the playey*/
 		Player p = new Player("John The Baptist",1);
 		World w = TemporaryLoader.loadWorld("world_temporary.txt",p);
-		HeroStats stats_hero = new HeroStats(60,10,80,0,6,8,AttackType.MELEE);
+		HeroStats stats_hero = new HeroStats(60,10,80,0,6,10,AttackType.MELEE);
 		Hero hero = new Hero("ovelia","ovelia",p,stats_hero);
 
-		hero.setMovePts(10);
 		/*
 		Creature[][] members = Party.newEmptyParty();
 		members[0][0] = hero;
@@ -498,7 +529,7 @@ public class WorldController implements Serializable{
 		Unit u4 = new Unit("archer","archer",p,new UnitStats(60,15,70,0,AttackType.RANGED));
 		Unit u5 = new Unit("archer","archer",p,new UnitStats(60,15,70,0,AttackType.RANGED));
 		Unit u6 = new Unit("knight","knight",p,new UnitStats(100,25,40,1,AttackType.MELEE));
-		Creature[][] members2 = Party.newEmptyParty();
+		Creature[][] members2 = Party.newEmptyPartyArray();
 		members2[0][0] = u3;
 		members2[1][0] = u6;
 		members2[1][2] = hero;
@@ -516,29 +547,6 @@ public class WorldController implements Serializable{
 		w.getTile(1,6).setIcon(itemIcon2);
 		w.getTile(8,8).setIcon(itemIcon3);
 
-		new WorldController(w,p);
-	}
-
-
-	public static void selemon_main(){
-		Player p = new Player("John The Baptist",4);
-		World w = TemporaryLoader.loadWorld("world_temporary.txt",p);
-		HeroStats stats_hero = new HeroStats(60,10,80,0,6,8);
-		Hero hero = new Hero("ovelia",p,stats_hero);
-
-		Creature[][] members = Party.newEmptyParty();
-		members[0][0] = hero;
-		Party party = new Party(hero, p, members);
-
-		//hero.setMovePts(10);
-		XMLReader read = new XMLReader(Constants.ASSETS+"Levels.xml", "levelTwo", hero);
-		read.readLevel();
-		System.out.println(hero.getMovePoints());
-
-		party.setLeader(hero);
-		party.refresh();
-		//hero.setMovePts(8); //we dont need this line since the move point is being set in XMLReader class
-		w.getTile(0,0).setIcon(party);
 		new WorldController(w,p);
 	}
 
@@ -564,16 +572,15 @@ public class WorldController implements Serializable{
 		/*Loading the playey*/
 		Player p = new Player("John The Baptist",1);
 		World w = ewan_world();
-		HeroStats stats_hero = new HeroStats(60,10,80,0,6,8,AttackType.MELEE);
+		HeroStats stats_hero = new HeroStats(60,10,80,0,6,10,AttackType.MELEE);
 		Hero hero = new Hero("ovelia","ovelia",p,stats_hero);
-		hero.setMovePts(10);
 
 		/*load the units into the party*/
 		Unit u3 = new Unit("knight","knight",p,new UnitStats(100,25,40,1,AttackType.MELEE));
 		Unit u4 = new Unit("archer","archer",p,new UnitStats(60,15,70,0,AttackType.RANGED));
 		Unit u5 = new Unit("archer","archer",p,new UnitStats(60,15,70,0,AttackType.RANGED));
 		Unit u6 = new Unit("knight","knight",p,new UnitStats(100,25,40,1,AttackType.MELEE));
-		Creature[][] members2 = Party.newEmptyParty();
+		Creature[][] members2 = Party.newEmptyPartyArray();
 		members2[0][0] = u3;
 		members2[1][0] = u6;
 		members2[2][0] = hero;
@@ -619,43 +626,6 @@ public class WorldController implements Serializable{
 
 
 
-
-	/**
-	 * When u don't want a gui use this for testing purposes only
-	 */
-	@Deprecated
-	private WorldController(World w, Player p, boolean af){
-		world = w;
-		player = p;
-		camera = WorldRenderer.getCentreOfWorld(w);
-		selected = null;
-		highlightedTiles = new HashSet<>();
-	}
-
-	/**
-	 * To test other classes, if they need a WorldController.
-	 * @return
-	 */
-	public static WorldController getTestWorldControllerNoGui(){
-		Player p = new Player("John The Baptist",4);
-		World w = TemporaryLoader.loadWorld("world_temporary.txt",p);
-		HeroStats stats_hero = new HeroStats(60,10,80,0,6,8);
-		Hero hero = new Hero("ovelia",p,stats_hero);
-		Creature[][] members = Party.newEmptyParty();
-		members[0][0] = hero;
-		Party party = new Party(hero, p, members);
-		hero.setMovePts(10);
-		return new WorldController(w,p,true);
-
-	}
-
-	/**
-	 * Returns the player this controller belongs to.
-	 * @return
-	 */
-	public Player getPlayer() {
-		return this.player;
-	}
 
 
 	/**

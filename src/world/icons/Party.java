@@ -5,6 +5,7 @@ import game.items.PassiveItem;
 import game.units.AttackType;
 import game.units.Creature;
 import game.units.Hero;
+import game.units.Stat;
 import game.units.Unit;
 import game.units.UnitStats;
 
@@ -34,12 +35,24 @@ public class Party extends WorldIcon implements Iterable<Creature>{
 	private Creature[][] members;
 	private Hero hero;
 
+	public static Creature[][] newEmptyPartyArray() {
+		return new Creature[Party.PARTY_ROWS][Party.PARTY_COLS];
+	}
+
+	public static Item[][] newEmptyInventory() {
+		return new Item[Party.INVENTORY_ROWS][Party.INVENTORY_COLS];
+	}
+
+	public static Party newEmptyParty(Player player){
+		return new Party(null,player,newEmptyPartyArray());
+	}
+
 	// TODO: should be instantiated with a hero; no party is without one
 	public Party(Hero hero, Player player, Creature[][] members) {
 		this.hero = hero;
 		owner = player;
 		this.members = members;
-		if (members == null) this.members = Party.newEmptyParty();
+		if (members == null) this.members = Party.newEmptyPartyArray();
 		inventory = Party.newEmptyInventory();
 	}
 
@@ -145,7 +158,7 @@ public class Party extends WorldIcon implements Iterable<Creature>{
 	 * hit points and lose all temporary buffs for thie day.
 	 */
 	public void refresh(){
-		movementPoints = hero.getMovePoints();
+		movementPoints = hero.get(Stat.MOVEMENT);
 		for (int i = 0; i < members.length; i++){
 			for (int j = 0; j < members[i].length; j++){
 				Creature member = members[i][j];
@@ -218,14 +231,6 @@ public class Party extends WorldIcon implements Iterable<Creature>{
 
 	public void setMember(Creature c, int x, int y){
 		this.members[y][x] = c;
-	}
-
-	public static Creature[][] newEmptyParty() {
-		return new Creature[Party.PARTY_ROWS][Party.PARTY_COLS];
-	}
-
-	public static Item[][] newEmptyInventory() {
-		return new Item[Party.INVENTORY_ROWS][Party.INVENTORY_COLS];
 	}
 
 	/**
@@ -301,32 +306,41 @@ public class Party extends WorldIcon implements Iterable<Creature>{
 
 		@Override
 		public boolean hasNext() {
-			for (int y = row ; y < Party.PARTY_ROWS; y++){
-				for (int x = col ; x < Party.PARTY_COLS; x++){
+			int y = row; int x = col;
+
+			for ( ; y < Party.PARTY_ROWS; y++){
+				for ( ; x < Party.PARTY_COLS; x++){
 					if (members[y][x] != null) return true;
 				}
+				x = 0;
 			}
+
 			return false;
+
 		}
 
 		@Override
 		public Creature next() {
-			int newRow = row;
-			int newCol = col;
-			for (int y = newRow; y < Party.PARTY_ROWS; y++){
-				for (int x = newCol; x < Party.PARTY_COLS; x++){
+
+			int y = row; int x = col;
+
+			for ( ; y < Party.PARTY_ROWS; y++){
+				for ( ; x < Party.PARTY_COLS; x++){
+
 					if (members[y][x] != null){
-						row = newRow;
-						col = newCol;
-						col++;
+						row = y;
+						col = x+1;
 						if (col == Party.PARTY_COLS){
-							col = 0;
+							col=0;
 							row++;
 						}
+
 						return members[y][x];
 					}
 				}
+				x=0;
 			}
+
 			return null;
 		}
 
