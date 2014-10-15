@@ -4,12 +4,13 @@ import static org.junit.Assert.*;
 
 import java.awt.Point;
 
+import game.units.AttackType;
 import game.units.Hero;
+import game.units.HeroStats;
 
 import org.junit.*;
 
 import player.Player;
-
 import world.World;
 import world.icons.Party;
 import world.tiles.ImpassableTile;
@@ -144,8 +145,8 @@ public class PathfindingTests {
 		tiles[3][3] = PassableTile.newGrassTile(3,3);
 		player = new Player("Ben Dover",1);
 		world = new World(tiles,null,null);
-		hero = new Hero("ovelia",player);
-		hero.setMovePts(4);
+		HeroStats stats = new HeroStats(50,5,5,5,5,4,AttackType.AOE);
+		hero = new Hero("Ovelia","ovelia",player,stats);
 		party = new Party(hero,null,null);
 		party.setLeader(hero);
 		party.setOwner(player);
@@ -154,6 +155,7 @@ public class PathfindingTests {
 	}
 
 	/**
+	 * pictorial representation of the map we're testing on
 	 * [P][G][G][G]
 	 * [X][X][G][G]
 	 * [G][X][G][G]
