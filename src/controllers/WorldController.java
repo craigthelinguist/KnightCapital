@@ -379,12 +379,14 @@ public class WorldController{
 	/**
 	 * Ends the current town session. Also awakens this WorldController and its attached
 	 * gui so they now respond to events.
+	 * @param exit: the exit point of the town.
 	 */
-	public void endTownView(){
+	public void endTownView(Point exit){
 		awake();
 		this.townController = null;
 		deselect();
-		gui.updateInfo(null);
+		Tile tile = world.getTile(exit.x,exit.y);
+		gui.updateInfo(tile); // update gui info panel with exit point
 		gui.redraw();
 	}
 

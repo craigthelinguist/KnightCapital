@@ -84,7 +84,8 @@ public class TownController{
 		text = text.toLowerCase();
 		if (text.equals("leave")){
 			gui.dispose();
-			worldController.endTownView();
+			Point exit = getExitPoint();
+			worldController.endTownView(exit);
 			active = false;
 		}
 		else if(text.equals("exit city")) {
@@ -96,16 +97,12 @@ public class TownController{
 			// find tile to put them on
 			Camera camera = worldController.getCamera();
 			World world = worldController.getWorld();
-			Tile tile = city.getEntryTile();
-			System.out.println("CITY ENTRY: ("+tile.X+","+tile.Y+")");
 
-			// get exit point
-			Point pt = tile.asPoint();
-			pt.y = pt.y + 1;
+			Point pt = getExitPoint();
 
 			// check tile exists, kick them onto world map
 			if (pt.x >= 0 && pt.y >= 0 && pt.x < world.NUM_TILES_ACROSS && pt.y < world.NUM_TILES_DOWN){
-				tile = world.getTile(pt);
+				Tile tile = world.getTile(pt);
 				if (!tile.passable()) return;
 				tile.setIcon(visitors);
 				city.setVisitors(this.newEmptyParty());
@@ -115,6 +112,13 @@ public class TownController{
 
 		}
 
+	}
+
+	private Point getExitPoint(){
+		Tile tile = city.getEntryTile();
+		Point pt = tile.asPoint();
+		pt.y = pt.y + 1;
+		return pt;
 	}
 
 	private Party newEmptyParty(){
