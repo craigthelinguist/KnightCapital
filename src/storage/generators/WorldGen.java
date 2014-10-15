@@ -1,5 +1,8 @@
 package storage.generators;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import game.units.AttackType;
 import game.units.Hero;
 import game.units.HeroStats;
@@ -7,6 +10,7 @@ import player.Player;
 import world.World;
 import world.icons.DecorIcon;
 import world.icons.Party;
+import world.tiles.CityTile;
 import world.tiles.Tile;
 import world.towns.City;
 import controllers.WorldController;
@@ -17,37 +21,44 @@ public class WorldGen {
 	 * Used to contruct the singleplayer map that will be saved into xml
 	 */
 	public static void MylesWorldGen() {
-		Player p1 = new Player("John The Baptist",1);
-		//World w = TemporaryLoader.loadWorld("2player.txt",p1);
+		Player p = new Player("John The Baptist",1);
 
 		HeroStats stats_hero = new HeroStats(60,10,80,0,6,10,AttackType.MELEE);
-		Hero hero = new Hero("Gabe Newell","knight",p1,stats_hero);
+		Hero hero = new Hero("Gabe Newell","knight",p,stats_hero);
 
-		Party party1 = new Party(hero, p1, Party.newEmptyPartyArray());
+		Party party1 = new Party(hero, p, Party.newEmptyPartyArray());
 		party1.refresh();
 
-		Player p2 = new Player("King Potatoes",2);
-		HeroStats stats_hero2 = new HeroStats(60,10,80,0,6,10,AttackType.MELEE);
-		Hero hero2 = new Hero("RMS","knight",p2,stats_hero2);
-		Party party2 = new Party(hero2, p2, Party.newEmptyPartyArray());
-		party2.refresh();
+		int size = 10000;
+		Tile[][] tiles = TemporaryLoader.loadWorld(size, size);
 
-		Tile[][] t = TemporaryLoader.loadWorld(10, 10);
 
-		//Tile[] c1Tiles = new Tile[]{};
 
-		City c1 = new City("Rongotai", "basic", p1, null);
-		City c2 = new City("Porirua","basic", p2, null);
 
-		World w = new World(TemporaryLoader.loadWorld(10, 10), new Player[]{p1, p2}, null);
+
+		// add a city
+		CityTile[][] cityTiles = new CityTile[City.WIDTH][City.WIDTH];
+
+		for (int i=4, a=0; i <= 6; i++, a++){
+			for (int j=4, b=0; j <= 6; j++, b++){
+				CityTile ct = new CityTile(i,j);
+				tiles[i][j] = ct;
+				cityTiles[a][b] = ct;
+			}
+		}
+
+		City city = new City("Porirua","basic", p, cityTiles);
+
+		// world data
+		Player[] players = new Player[]{ p };
+		Set<City> cities = new HashSet<>();
+		cities.add(city);
+
+		World w = new World(tiles, players, cities);
+
 		w.setIcon(party1, 1, 1);
-		w.setIcon(party2, 5, 1);
 
-		DecorIcon tree = new DecorIcon(DecorIcon.TREE);
-
-		w.setIcon(tree, 0, 0);
-
-		new WorldController(w, p1);
+		new WorldController(w, p);
 	}
 
 	public static void main(String[] gabe) {

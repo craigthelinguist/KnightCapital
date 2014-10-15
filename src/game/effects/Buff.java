@@ -1,14 +1,13 @@
 package game.effects;
 
-import game.items.ChargedItem;
-import game.items.Target;
 import game.units.Creature;
-import game.units.Hero;
 import game.units.Stat;
 
 /**
- * A Buff changes the stats of a target.
- * @author craigthelinguist
+ * A Buff changes the stats of something. It has a stat, a magnitude, and a permanence.
+ * Permanent buffs last forever until they're explicitly removed (e.g.: by unequipping
+ * an item). Temporary buffs last until the next day.
+ * @author Aaron Craig
  */
 public class Buff implements Effect{
 
@@ -17,7 +16,7 @@ public class Buff implements Effect{
 	public final boolean permanent;
 
 	/**
-	 *
+	 * Create and return a new Buff.
 	 * @param stat: stat this buff affects
 	 * @param amount: how much to increase or decrease that stat
 	 * @param permanence: if this buff isn't permanent, it will expire after 1 turn
@@ -71,7 +70,11 @@ public class Buff implements Effect{
 		c.setBuffed(stat,newValue);
 	}
 
-
+	/**
+	 * Two buffs are equal if they affect the same stat, have the same
+	 * magnitude, and the same permanence.
+	 * @return: boolean
+	 */
 	@Override
 	public boolean equals(Object other){
 		if (other == null) return false;

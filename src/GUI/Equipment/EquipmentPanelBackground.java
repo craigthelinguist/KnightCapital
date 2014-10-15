@@ -11,6 +11,12 @@ import javax.swing.JPanel;
 import tools.Constants;
 import tools.ImageLoader;
 
+/**
+ * A backgorund image for the equipment panel.
+ * Makes the panel look nicer
+ * @author Ewan Moshi
+ *
+ */
 public class EquipmentPanelBackground extends JPanel{
 
 	private BufferedImage backgroundImage;

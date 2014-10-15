@@ -36,9 +36,9 @@ public class GameDialog extends JDialog {
 		this.setUndecorated(true); //removes the border
 		// TODO: if i don't uncommenet this i can't exit the frame.... need to do this to test end turn
 		// maybe there should be butotn on the gamedialog u click ok and it exits dialog - Aaron
-		
+
         this.setLocationRelativeTo(frame); //set location of dialog relative to frame
-        
+
 	    DialogLayeredPane dLayeredPane = new DialogLayeredPane(this,msg);
 		this.add(dLayeredPane);
 		this.setResizable(false);
@@ -46,7 +46,10 @@ public class GameDialog extends JDialog {
 	}
 
 
-	/*for testing the dialog*/
+	/**
+	 * Test method for the dialog
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		try {
 			GameDialog dialog = new GameDialog(new MainFrame(),"Rescue Neal, he was last seen inside the wizard's tower");

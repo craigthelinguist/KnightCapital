@@ -22,10 +22,16 @@ import networking.Server;
 import storage.converters.WorldLoader;
 import tools.Constants;
 import tools.ImageLoader;
+import tools.Log;
 import world.World;
 import GUI.world.CustomButton;
 import controllers.WorldController;
 
+/**
+ * This panel has the buttons for the main menu and the backgrund image.
+ * @author moshiewan
+ *
+ */
 public class MainMenuPanel extends JPanel implements ActionListener{
 
 	private CustomButton newGame;
@@ -39,6 +45,9 @@ public class MainMenuPanel extends JPanel implements ActionListener{
 	private BufferedImage backgroundImage;
 
 	public MainMenuPanel() {
+		Log.printTitle();
+		Log.printEwan();
+
 		backgroundImage = ImageLoader.load(Constants.GUI_FILEPATH + "mainMenuBackground.png");
 		frame = new JFrame();
 		this.setPreferredSize(new Dimension(650,650));

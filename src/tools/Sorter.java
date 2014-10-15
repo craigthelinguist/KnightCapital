@@ -6,7 +6,7 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- * This class will sort CartesianMappings given a direction.
+ * This class will sort CartesianMappings  top to bottom
  * @author Aaron
  *
  */
@@ -14,7 +14,7 @@ public class Sorter {
 
 	// use the static methods
 	private Sorter(){}
-	
+
 	/**
 	 * Sort points from topmost to bottom-most.
 	 * @param stuffToSort: list of cartesian mappings to sort.
@@ -23,13 +23,13 @@ public class Sorter {
 		TopToBottomSorter sorter = new TopToBottomSorter();
 		Collections.sort(cities,sorter);
 	}
-	
+
 	private static final Point ORIGIN = new Point(0,0);
-	
+
 	/**
 	 * Used to do sorting
 	 **/
-	
+
 	private static class TopToBottomSorter implements Comparator<CartesianMapping<?>> {
 		@Override
 		public int compare(CartesianMapping arg0, CartesianMapping arg1) {

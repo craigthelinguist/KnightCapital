@@ -1,19 +1,35 @@
 package game.units;
 
+/**
+ * Units have four stats: health, damage, speed, and armour. This object holds the base values of these,
+ * as well as the amount by which they have been buffered.
+ *
+ * Health also has a current value.
+ * 		- Health: how much damage this creature can take before dying.
+ * 		- Damage: how much damage this creature inflcits per attack.
+ * 		- Speed: dictates the order in which creatures get to attack in combat.
+ * 		- Armour: damage to this creature is reduced by this amount.
+ *
+ * @author Aaron Craig
+ */
 public class UnitStats {
 
+	// base values
 	protected int baseHealth;
 	protected int baseDamage;
 	protected int baseSpeed;
 	protected int baseArmour;
 
+	// buffed values
 	protected int buffedDamage;
 	protected int buffedSpeed;
 	protected int buffedArmour;
 	protected int buffedHealth;
 
+	// current health
 	protected int currentHealth;
 
+	// rule for how this creature can attack in battle
 	protected AttackType attackType;
 
 	public UnitStats(int health, int damage, int speed, int armour, AttackType type){

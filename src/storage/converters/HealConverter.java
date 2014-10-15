@@ -9,6 +9,11 @@ import com.thoughtworks.xstream.converters.UnmarshallingContext;
 import com.thoughtworks.xstream.io.HierarchicalStreamReader;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 
+/**
+ * Used to read and write xml tags for Heal objects.
+ * @author craigaaro
+ *
+ */
 public class HealConverter implements Converter{
 
 	@Override
@@ -30,14 +35,14 @@ public class HealConverter implements Converter{
 	@Override
 	public Object unmarshal(HierarchicalStreamReader reader, UnmarshallingContext context) {
 		Stat stat; int amount;
-		
+
 		reader.moveDown();
 			stat = Stat.valueOf(reader.getValue());
 		reader.moveUp();
 		reader.moveDown();
 			amount = Integer.parseInt(reader.getValue());
 		reader.moveUp();
-		
+
 		return new Heal(stat,amount);
 	}
 

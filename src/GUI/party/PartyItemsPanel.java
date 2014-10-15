@@ -19,7 +19,7 @@ import world.icons.Party;
 
 /**
  * Responsible for displaying the items that may be equipped to the selected party
- * @author myles
+ * @author myles, Ewan Moshi
  *
  */
 public class PartyItemsPanel extends JPanel{

@@ -21,6 +21,11 @@ import com.thoughtworks.xstream.converters.UnmarshallingContext;
 import com.thoughtworks.xstream.io.HierarchicalStreamReader;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 
+/**
+ * Used to load world objects from xml files
+ * @author craigaaro
+ *
+ */
 public class WorldConverter implements Converter{
 
 	@Override

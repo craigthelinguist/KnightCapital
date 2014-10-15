@@ -20,6 +20,11 @@ import com.thoughtworks.xstream.converters.UnmarshallingContext;
 import com.thoughtworks.xstream.io.HierarchicalStreamReader;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 
+/**
+ * Used to read and write xml tags for Icon objects.
+ * @author craigaaro
+ *
+ */
 public class IconConverter implements Converter{
 
 	@Override

@@ -19,10 +19,19 @@ public class CityTile extends Tile {
 	// city that this CityTile is apart of.
 	private City city;
 
+	/**
+	 * Constructs a new City Tile
+	 * @param x coordinate
+	 * @param y coordinate
+	 */
 	public CityTile(int x, int y){
 		super(x,y);
 	}
 
+	/**
+	 * Set this city tile to be referenced to supplied city
+	 * @param city to point to
+	 */
 	public void setCity(City newCity){
 		if (city != null){
 			throw new RuntimeException("you're setting a cityTile's city after it has already been set!");

@@ -3,7 +3,7 @@ package game.units;
 /**
  * AttackType enumerates all the possible rules for how a Creature can attack in
  * combat.
- * @author craigaaro
+ * @author Aaron Craig
  */
 public enum AttackType {
 

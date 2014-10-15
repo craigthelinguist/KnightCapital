@@ -10,6 +10,11 @@ import java.util.Map;
 import tools.ImageLoader;
 import tools.KCImage;
 
+/**
+ * AnimationMap is a collection of string -> images. You can ask it for the name of an image and it will
+ * return that image. It's a way to store lots of images for something.
+ * @author Aaron Craig
+ */
 public class AnimationMap{
 
 	private Map<String,KCImage> animations;
@@ -129,7 +134,7 @@ public class AnimationMap{
 
 	/**
 	 * Get the substring old within the string string, and replace it with replacement.
-	 * Return the new string.
+	 * Return the new string. When a player's
 	 * @param string: string whose substring you want to replace.
 	 * @param old: substring being replaced
 	 * @param replacement: replacement substring
@@ -150,23 +155,36 @@ public class AnimationMap{
 		return sb.toString();
 	}
 
+	/**
+	 * Get the image associated with the word "portrait". This is a convenience method
+	 * as you often want to get the "portrait" image.
+	 * @return: buffered image
+	 */
 	public BufferedImage getPortrait(){
 		return animations.get("portrait").image;
 	}
 
+	/**
+	 * Get the current image of this animation map.
+	 * @return buffered image
+	 */
 	public BufferedImage getImage(){
 		return animation.image;
 	}
 
+	/**
+	 * Get the image associated with the supplied name.
+	 * @param name: name of image to get
+	 * @return: the associated image
+	 */
 	public BufferedImage getImage(String name){
-
-		if (animations.get(name) == null){
-			System.out.println("stop");
-		}
-
 		return animations.get(name).image;
 	}
 
+	/**
+	 * Set the current image to be the one with the given name.
+	 * @param name: name of image to set.
+	 */
 	public void setImage(String name){
 		KCImage image = animations.get(name);
 		if (image != null){
@@ -175,10 +193,18 @@ public class AnimationMap{
 		}
 	}
 
+	/**
+	 * Get the name of the current image.
+	 * @return: string
+	 */
 	public String getName(){
 		return animationName;
 	}
 
+	/**
+	 * Return the images in this animation map as a list of KC images.
+	 * @return list<KCImage.
+	 */
 	public List<KCImage> asList(){
 		List<KCImage> images = new ArrayList<>();
 		for (KCImage image : animations.values()){

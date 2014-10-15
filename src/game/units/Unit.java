@@ -4,7 +4,7 @@ import player.Player;
 
 /**
  * Units populate parties and fight in battles. They have stats.
- * @author craigthelinguist
+ * @author Aaron Craig
  */
 public class Unit extends Creature {
 

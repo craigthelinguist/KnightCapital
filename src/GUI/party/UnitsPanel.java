@@ -34,7 +34,7 @@ import world.icons.Party;
  * If the user does own the party, they can see a coloured bar for each of the 3 stats
  * a unit has.
  *
- * @author myles
+ * @author myles, Ewan Moshi
  *
  */
 public class UnitsPanel extends JPanel{

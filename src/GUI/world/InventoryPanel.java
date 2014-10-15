@@ -166,7 +166,7 @@ public class InventoryPanel extends JPanel implements MouseListener {
 	    }
 		if(e.getSource() == slots[0][1]) {
 			slots[0][1].changeBackground(ImageManipulation.lighten(slots[0][1].getBackgroundImage(),55));
-			dSlot2 = new ItemSlotInformation(frame,items[0][1].getItem().getDescription());
+			dSlot2 = new ItemSlotInformation(frame,items[0][1].getItem().getItem().getDescription());
 			dSlot2.setLocation(frame.getWidth()-425,frame.getHeight()-400);
 			dSlot2.setVisible(true);
 	    }
@@ -229,6 +229,12 @@ public class InventoryPanel extends JPanel implements MouseListener {
 	public void mouseReleased(MouseEvent e) {}
 
 
+	/**
+	 * Update the inventory panel.
+	 * Iterate through the items of the party and redraw all the items into the Item Slot Panels.
+	 * @param tile
+	 * @throws Exception
+	 */
 	public void updateInventoryPanel(Tile tile) throws Exception {
 		if (tile == null) return;
 		if(!(tile.occupant() instanceof Party)) return;
@@ -270,107 +276,5 @@ public class InventoryPanel extends JPanel implements MouseListener {
 			}
 		}
 	}
-
-
-
-   // Iterate through the array at store all non-0 items (e.g. with a queue, can simulate with a LinkedList).
-
-   // Iterate through again and simply  pull the stored items one by one into the array
-
-
-	public void updateSlots(Item[][] items) {
-		System.out.println("sfdsdfsdfsdf");
-		this.items = items;
-		ArrayList<Item> slotsTemp = new ArrayList<>();
-		ItemSlotPanel[][] slotPanelTemp = new ItemSlotPanel[INVENTORY_ROWS][INVENTORY_COLS];
-
-		for(int i = 0; i < items.length; i++) {
-			for(int j = 0; j < items[0].length; j++) {
-				if(items[i][j] != null) {
-					slotPanelTemp[i][j] = new ItemSlotPanel(items[i][j].getImageName()+"Slot");
-					slotsTemp.add(items[i][j]);
-				}
-			}
-		}
-
-		int row = 0;
-		int col = 0;
-		for(int i = 0; i < slotsTemp.size(); i++) {
-			Item itm = slotsTemp.get(i);
-			this.items[row][col] = itm;
-			col++;
-			if(col == INVENTORY_COLS) {
-				row++;
-				col = 0;
-			}
-		}
-		//this.slots = slotPanelTemp;
-		this.slots =  new ItemSlotPanel[INVENTORY_ROWS][INVENTORY_COLS];
-		//this.validate();
-		//this.revalidate();
-		//this.repaint();
-		int count = 0;
-		//this.removeAll(); this is the secret boys
-		this.repaint();
-		this.updateUI();
-			for(int i = 0; i < items.length; i++) {
-				for(int j = 0; j < items[0].length; j++) {
-					if(this.items[i][j] != null) {
-						if(slots[i][j] == null) {
-							if(i == 1 && j == 2) {
-								c.insets = new Insets(10,10,15,16);
-							}
-							else if(i == 0 && j == 2) {
-								c.insets = new Insets(15,10,10,16);
-							}
-							else if(i == 1  && j == 0) {
-								c.insets = new Insets(10,15,15,10);
-							}
-							else if(i == 1 && j == 1) {
-								c.insets = new Insets(10,15,15,10);
-							}
-							else {
-								c.insets = new Insets(15,15,10,10);
-							}
-							slots[i][j] = new ItemSlotPanel(items[i][j].getImageName()+"Slot");
-							c.gridx = j;
-							c.gridy = i;
-							slots[i][j].addMouseListener(this);
-							this.add(slots[i][j],c);
-							count++;
-						}
-					}
-
-				}
-			}
-
-		/**for(int i = 0; i < slots.length; i++) {
-			for(int j = 0; j < slots[0].length; j++) {
-				if(slotsTemp.get(count) != null) {
-					if(i == 1 && j == 2) {
-						c.insets = new Insets(10,10,15,16);
-					}
-					else if(i == 0 && j == 2) {
-						c.insets = new Insets(15,10,10,16);
-					}
-					else if(i == 1  && j == 0) {
-						c.insets = new Insets(10,15,15,10);
-					}
-					else if(i == 1 && j == 1) {
-						c.insets = new Insets(10,15,15,10);
-					}
-					else {
-						c.insets = new Insets(15,15,10,10);
-					}
-					slots[i][j] = new ItemSlotPanel(slotsTemp.get(count).getImageName());
-					c.gridx = j;
-					c.gridy = i;
-					slots[i][j].addMouseListener(this);
-					this.add(slots[i][j],c);
-					count++;
-				}
-			}
-		}
-	}*/
-	}
 }
+

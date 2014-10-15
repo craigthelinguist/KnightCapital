@@ -19,6 +19,11 @@ import renderer.WorldRenderer;
 import tools.Constants;
 import world.World;
 
+/**
+ * The canvas to draw game on.
+ * @author moshiewan
+ *
+ */
 public class Canvas extends JPanel implements MouseListener, MouseMotionListener{
 
 	private WorldController controller;

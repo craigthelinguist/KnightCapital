@@ -37,7 +37,7 @@ import world.icons.Party;
  * 			-Breakdown of what it will do if applied
  *
  * By default when you open your hero is displayed.
- * @author myles
+ * @author myles, Ewan Moshi
  *
  */
 public class SelectedItemPanel extends JPanel{

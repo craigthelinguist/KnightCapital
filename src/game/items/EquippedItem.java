@@ -6,7 +6,7 @@ import game.units.Hero;
 /**
  * An equipped item must be equipped to your hero before its effect takes place.
  * e.g.: a sword that increases attack
- * @author craigthelinguist
+ * @author Aaron Craig
  */
 public class EquippedItem extends Item{
 

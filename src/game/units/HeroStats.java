@@ -1,5 +1,13 @@
 package game.units;
 
+/**
+ * Heroes have 2 more stats than units. They have sight and movement, which affect the party they lead.
+ *
+ * 		- Sight: how far the hero's party can see on the world map (not yet implemented).
+ * 		- Movement: how far the hero's party can move on the world map.
+ *
+ * @author Aaron Craig
+ */
 public class HeroStats extends UnitStats{
 
 	protected int baseSight;
@@ -16,6 +24,11 @@ public class HeroStats extends UnitStats{
 		buffedSight = 0;
 	}
 
+	/**
+	 * Set the base value for some stat.
+	 * @param stat: value whose base value you will change.
+	 * @param value: new value of the stat.
+	 */
 	public void setBase(Stat stat, int value){
 		if (stat == Stat.SIGHT) baseSight = value;
 		else if (stat == Stat.MOVEMENT) baseMovement = value;

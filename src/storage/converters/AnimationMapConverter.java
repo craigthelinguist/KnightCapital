@@ -1,11 +1,9 @@
 package storage.converters;
 
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
 import renderer.AnimationMap;
-import tools.ImageLoader;
 import tools.KCImage;
 
 import com.thoughtworks.xstream.converters.Converter;
@@ -14,7 +12,10 @@ import com.thoughtworks.xstream.converters.UnmarshallingContext;
 import com.thoughtworks.xstream.io.HierarchicalStreamReader;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 
-
+/**
+ * Used to read and write xml tags for AnimationMap.
+ * @author craigaaro
+ */
 public class AnimationMapConverter implements Converter {
 
 	@Override
