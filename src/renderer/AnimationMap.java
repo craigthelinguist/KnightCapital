@@ -134,7 +134,7 @@ public class AnimationMap{
 
 	/**
 	 * Get the substring old within the string string, and replace it with replacement.
-	 * Return the new string.
+	 * Return the new string. When a player's
 	 * @param string: string whose substring you want to replace.
 	 * @param old: substring being replaced
 	 * @param replacement: replacement substring
