@@ -3,9 +3,8 @@ package game.units;
 import player.Player;
 
 /**
- *
+ * Units populate parties and fight in battles. They have stats.
  * @author craigthelinguist
- *
  */
 public class Unit extends Creature {
 

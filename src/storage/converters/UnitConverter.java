@@ -1,16 +1,14 @@
 package storage.converters;
 
+import game.units.Creature;
+import game.units.Unit;
+import game.units.UnitStats;
+
 import java.io.File;
 import java.lang.reflect.Field;
 
 import player.Player;
 import tools.Constants;
-import game.items.Item;
-import game.units.AttackType;
-import game.units.Creature;
-import game.units.Stats;
-import game.units.Unit;
-import game.units.UnitStats;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.converters.Converter;
@@ -43,12 +41,12 @@ public class UnitConverter implements Converter{
 
 		writer.startNode("stats");
 			UnitStatsConverter statsConverter = new UnitStatsConverter();
-			Stats stats;
+			UnitStats stats;
 			try{
 				//TODO
 				Field f = Creature.class.getDeclaredField("stats");
 				f.setAccessible(true);
-				stats = (Stats) f.get(unit);
+				stats = (UnitStats) f.get(unit);
 				statsConverter.marshal(stats,writer,context);
 			}
 			catch(Exception e){

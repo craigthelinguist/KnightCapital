@@ -33,7 +33,7 @@ public abstract class Creature {
 	protected LinkedList<Buff> buffs;
 
 	// who owns the creature + stats
-	protected Stats stats;
+	protected UnitStats stats;
 	protected Player owner;
 
 	public Creature(String name, String imgName, Player player, UnitStats stats) {
@@ -214,7 +214,7 @@ public abstract class Creature {
 	 * @return boolean whether dead or not.
 	 */
 	public boolean isDead() {
-		return stats.getTotal(Stat.HEALTH) <= 0;
+		return stats.getCurrent(Stat.HEALTH) <= 0;
 	}
 
 	public AttackType getAttackType(){

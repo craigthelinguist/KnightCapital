@@ -8,18 +8,6 @@ public class HeroStats extends UnitStats{
 	protected int buffedSight;
 	protected int buffedMovement;
 
-	@Deprecated
-	/**
-	 * USE THE CONSTRUCTOR WITH ATTACK TYPE PARAMETER
-	 */
-	public HeroStats(int health, int damage, int speed, int armour, int sight, int movement) {
-		super(health, damage, speed, armour);
-		baseMovement = movement;
-		baseSight = sight;
-		buffedMovement = 0;
-		buffedSight = 0;
-	}
-
 	public HeroStats(int health, int damage, int speed, int armour, int sight, int movement, AttackType type) {
 		super(health, damage, speed, armour, type);
 		baseMovement = movement;

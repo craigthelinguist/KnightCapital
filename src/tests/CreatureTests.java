@@ -116,6 +116,20 @@ public class CreatureTests {
 		assertTrue(percent == 0);
 	}
 
+	@Test
+	public void testDeadness(){
+		generateUnarmouredUnit();
+		unit.damage(unit.getHealth());
+		assertTrue(unit.isDead());
+	}
+
+	@Test
+	public void testNotDeadness(){
+		generateUnarmouredUnit();
+		unit.damage(1);
+		assertFalse(unit.isDead());
+	}
+
 	public void generateUnarmouredUnit(){
 		player = new Player("tupac",1);
 		UnitStats stats = new UnitStats(100,25,15,0,AttackType.MELEE);
