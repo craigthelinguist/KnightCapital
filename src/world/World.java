@@ -80,6 +80,7 @@ public class World {
 				int income = c.getIncome();
 				players[currentPlayer].increaseGold(income);
 			}
+
 		}
 
 		// if you have cycled through all players, it is a new day.
@@ -153,6 +154,7 @@ public class World {
 	 */
 	public int getDay() {
 		return currentDay;
+
 	}
 
 	/**
@@ -168,6 +170,10 @@ public class World {
 		Tile tileLocation = getTile(location.x,location.y);
 		Tile tileDestination = getTile(destination.x,destination.y);
 		if (tileLocation == null || tileDestination == null) return false;
+
+		if (tileDestination instanceof CityTile){
+			System.out.println("stop");
+		}
 
 		// check there is a party at location and it is owned by the specified player
 		WorldIcon icon = tileLocation.occupant();
@@ -220,87 +226,103 @@ public class World {
 	 */
 	private boolean pathExists(Point start, final Point goal){
 
-		// preliminaries
+		//	GET INFO YOU NEED TO FIND THE PATH
+
 		Party party = (Party)(getTile(start.x,start.y).occupant());
 		int movePts = party.getMovePoints();
 		if (movePts <= 0) return false;
 
 		Tile goalTile = tiles[goal.x][goal.y];
 
-		// if you're moving to a city check if it's valid
-		if (goalTile instanceof CityTile){
-			CityTile tile = (CityTile)tiles[goal.x][goal.y];
-			City city = tile.getCity();
-			if (!city.isEmpty() && !city.ownedBy(party.getOwner())) return false; // can't move into a city you don't own
-			if (city.getEntryTile() != tile) return false; // must move into city via the entrance
-			if (city.hasVisitors()) return false; // can't move into an occupied city
-		}
 
-		// if you're moving to an item and you have full inventory you can't move there
-		else if (goalTile.occupant() != null && goalTile.occupant() instanceof ItemIcon){
-			if (party.hasFullInventory()) return false;
-		}
 
-		if(!goalTile.passable()) return false;
 
-		// a wrapper class for the nodes in the fringe
-		class Node implements Comparable<Node>{
-			final Point point;
-			final int costToHere;
-			final int weight;
 
-			public Node(Point p, int cost){
-				point = p;
-				costToHere = cost;
-				weight = costToHere + heuristic(goal);
+		//	CHECK YOU CAN MOVE ONTO THE GOAL TILE
+
+			// if you're moving to a city check if it's valid
+			if (goalTile instanceof CityTile){
+				CityTile tile = (CityTile)tiles[goal.x][goal.y];
+				City city = tile.getCity();
+				if (!city.isEmpty() && !city.ownedBy(party.getOwner())) return false; // can't move into a city you don't own
+				if (city.getEntryTile() != tile) return false; // must move into city via the entrance
+				if (city.hasVisitors()) return false; // can't move into an occupied city
 			}
 
-			// taxicab distance is the heuristic since we're using a discrete grid
-			int heuristic(Point other){
-				return Geometry.taxicab(point, other);
+			// if you're moving to an item and you have full inventory you can't move there
+			else if (goalTile.occupant() != null && goalTile.occupant() instanceof ItemIcon){
+				if (party.hasFullInventory()) return false;
 			}
 
-			@Override
-			public int compareTo(Node other) {
-				return weight - other.weight;
+			// can't move onto impassable tiles
+			else if(!goalTile.passable()) return false;
+
+
+
+
+
+		// WRAPPER CLASS FOR THE NODES IN THE FRINGE
+
+			class Node implements Comparable<Node>{
+				final Point point;
+				final int costToHere;
+				final int weight;
+
+				public Node(Point p, int cost){
+					point = p;
+					costToHere = cost;
+					weight = costToHere + heuristic(goal);
+				}
+
+				// taxicab distance is the heuristic since we're using a discrete grid
+				int heuristic(Point other){
+					return Geometry.taxicab(point, other);
+				}
+
+				@Override
+				public int compareTo(Node other) {
+					return weight - other.weight;
+				}
+
 			}
 
-		}
+		// INITIALISE DATA STRUCTURES FOR THE BREADTH-FIRST SEARCH
 
-		// initialise the fringe and declare variables
-		Node node = new Node(start,0);
-		HashSet<Point> visited = new HashSet<>();
-		PriorityQueue<Node> fringe = new PriorityQueue<>();
-		fringe.offer(node);
-		Point point; Tile tile;
+			Node node = new Node(start,0);
+			HashSet<Point> visited = new HashSet<>();
+			PriorityQueue<Node> fringe = new PriorityQueue<>();
+			fringe.offer(node);
+			Point point; Tile tile;
 
-		while (!fringe.isEmpty()){
+		// PERFORM BREAD-FIRST SEARCH
 
-			// get next node, check its feasibility
-			node = fringe.poll();
-			if (node.costToHere > movePts) continue;
-			point = node.point;
-			if (visited.contains(point)) continue;
-			tile = getTile(point);
-			if (tile != goalTile && !tile.passable() && point != start) continue;
+			while (!fringe.isEmpty()){
 
-			// mark as visited
-			visited.add(point);
+				// get next node, check its feasibility
+				node = fringe.poll();
+				if (node.costToHere > movePts) continue;
+				point = node.point;
+				if (visited.contains(point)) continue;
+				tile = getTile(point);
+				if (tile != goalTile && !tile.passable() && point != start) continue;
 
-			// if you're at the goal, stop
-			if (node.point.equals(goal)) return true;
+				// mark as visited
+				visited.add(point);
 
-			// otherwise push neighbours onto fringe
-			LinkedList<Point> neighbours = findNeighbours(point);
-			int cost = node.costToHere + 1;
-			for (Point pt : neighbours){
-				Node nd = new Node(pt,cost);
-				fringe.offer(nd);
+				// if you're at the goal, stop
+				if (node.point.equals(goal)) return true;
+
+				// otherwise push neighbours onto fringe
+				LinkedList<Point> neighbours = findNeighbours(point);
+				int cost = node.costToHere + 1;
+				for (Point pt : neighbours){
+					Node nd = new Node(pt,cost);
+					fringe.offer(nd);
+				}
+
 			}
 
-		}
-
-		return false;
+			return false;
 
 	}
 
