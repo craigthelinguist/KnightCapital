@@ -18,6 +18,7 @@ import tools.Geometry;
 import tools.Constants;
 import tools.Sorter;
 import world.World;
+import world.icons.DecorIcon;
 import world.icons.ItemIcon;
 import world.icons.WorldIcon;
 import world.tiles.CityTile;
@@ -71,6 +72,7 @@ public class WorldRenderer {
 			Object toDraw = mapping.thing;
 			if (toDraw instanceof City) drawCity(graphics,mapping.point,camera,(City)toDraw);
 			else if (toDraw instanceof ItemIcon) drawItemIcon(graphics,(CartesianMapping<ItemIcon>) mapping,camera);
+			else if (toDraw instanceof DecorIcon) drawDecorIcon(graphics,(CartesianMapping<DecorIcon>) mapping, camera);
 			else if (toDraw instanceof WorldIcon) drawIcon(graphics,(CartesianMapping<WorldIcon>) mapping,camera);
 			else if (toDraw instanceof Tile) drawTile(graphics,(CartesianMapping<Tile>) mapping,camera);
 		}
@@ -78,8 +80,6 @@ public class WorldRenderer {
 		// Some basic debug info
 		graphics.setColor(Color.BLACK);
 		graphics.drawString("Knight Capital", 30, 30);
-		graphics.drawString("Current Rotation: "+(camera.getOrientation() * 90), 30, 50);
-		graphics.drawString("Current Origin: ("+camera.getOriginX()+","+camera.getOriginY()+")", 30, 70);
 		graphics.drawString("Arrow keys to move camera", 30, 110);
 		graphics.drawString("Press r & e to rotate cw & ccw", 30, 130);
 		graphics.setColor(Color.RED);
@@ -117,9 +117,13 @@ public class WorldRenderer {
 				else if (controller.isHighlighted(ptCart)) intensity = 25;
 
 				CartesianMapping<Tile> tileToDraw = new CartesianMapping<>(-2,tile,ptRotated,intensity);
+
 				if(tile instanceof ImpassableTile) {
 					tileToDraw = new CartesianMapping<>(2, tile, ptRotated, intensity);
 				}
+
+
+
 				drawBuffer.add(tileToDraw);
 
 				// add occupant to buffer
@@ -218,6 +222,27 @@ public class WorldRenderer {
 		int iconY = isoY + ICON_HT/4;
 		int iconX = isoX + TILE_WD/2 - ICON_WD/2;
 		mapping.thing.draw(graphics,iconX,iconY);
+	}
+
+	/**
+	 * Draws a decor icon.
+	 * Assumes that the point is the point obtained by rotating the city's topmost tile (from the
+	 * camera's perspective) along the camera's viewing perspective and then converting into isometric with no further
+	 * manipulation.
+	 * @param graphics: object on which to draw
+	 * @param ptIso: an isometric point in space
+	 * @param camera: viewing perspective
+	 * @param occupant: the icon to be drawn
+	 */
+	private static void drawDecorIcon(Graphics graphics, CartesianMapping<DecorIcon> mapping, Camera camera) {
+		Point ptIso = mapping.point;
+
+		int ht = mapping.thing.getImage().getHeight();
+
+		int dy = ht - Constants.TILE_HT;
+		ptIso.y = ptIso.y - dy;
+
+		mapping.thing.draw(graphics, ptIso.x, ptIso.y);
 	}
 
 	private static void drawTile(Graphics graphics, CartesianMapping<Tile> mapping, Camera camera) {
