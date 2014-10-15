@@ -160,35 +160,35 @@ public class InventoryPanel extends JPanel implements MouseListener {
 
 		if(e.getSource() == slots[0][0]) {
 			slots[0][0].changeBackground(ImageManipulation.lighten(slots[0][0].getBackgroundImage(),55));
-			dSlot1 = new ItemSlotInformation(frame,items[0][0].getDescription());
+			dSlot1 = new ItemSlotInformation(frame,items[0][0].getItem().getDescription());
 			dSlot1.setLocation(frame.getWidth()-500,frame.getHeight()-400);
 			dSlot1.setVisible(true);
 	    }
 		if(e.getSource() == slots[0][1]) {
 			slots[0][1].changeBackground(ImageManipulation.lighten(slots[0][1].getBackgroundImage(),55));
-			dSlot2 = new ItemSlotInformation(frame,items[0][1].getDescription());
+			dSlot2 = new ItemSlotInformation(frame,items[0][1].getItem().getItem().getDescription());
 			dSlot2.setLocation(frame.getWidth()-425,frame.getHeight()-400);
 			dSlot2.setVisible(true);
 	    }
 		if(e.getSource() == slots[0][2]) {
 			slots[0][2].changeBackground(ImageManipulation.lighten(slots[0][2].getBackgroundImage(),55));
-			dSlot3 = new ItemSlotInformation(frame,items[0][2].getDescription());
+			dSlot3 = new ItemSlotInformation(frame,items[0][2].getItem().getDescription());
 			dSlot3.setLocation(frame.getWidth()-375,frame.getHeight()-400);
 			dSlot3.setVisible(true);
 	    }
 		if(e.getSource() == slots[1][0]) {
 			slots[1][0].changeBackground(ImageManipulation.lighten(slots[1][0].getBackgroundImage(),55));
-			dSlot4 = new ItemSlotInformation(frame,items[1][0].getDescription());
+			dSlot4 = new ItemSlotInformation(frame,items[1][0].getItem().getDescription());
 			dSlot4.setLocation(frame.getWidth()-500,frame.getHeight()-400);
 		}
 		if(e.getSource() == slots[1][1]) {
 			slots[1][1].changeBackground(ImageManipulation.lighten(slots[1][1].getBackgroundImage(),55));
-			dSlot5 = new ItemSlotInformation(frame,items[1][1].getDescription());
+			dSlot5 = new ItemSlotInformation(frame,items[1][1].getItem().getDescription());
 			dSlot5.setLocation(frame.getWidth()-500,frame.getHeight()-400);
 	    }
 		if(e.getSource() == slots[1][2]) {
 			slots[1][2].changeBackground(ImageManipulation.lighten(slots[1][2].getBackgroundImage(),55));
-			dSlot6 = new ItemSlotInformation(frame,items[1][2].getDescription());
+			dSlot6 = new ItemSlotInformation(frame,items[1][2].getItem().getDescription());
 			dSlot6.setLocation(frame.getWidth()-500,frame.getHeight()-400);
 		}
 	}

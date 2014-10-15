@@ -7,6 +7,7 @@ import game.units.Creature;
 import game.units.Hero;
 import game.items.Target;
 
+
 public class PassiveItem extends Item{
 
 	public PassiveItem(String name, String imgName, String description, Effect[] effectsArray, Target target, String filename) {
