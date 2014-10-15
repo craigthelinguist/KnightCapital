@@ -3,6 +3,11 @@ package tools;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 
+/**
+ * Provides convenience methods for manipulating buffered images.
+ * @author Aaron Craig
+ *
+ */
 public class ImageManipulation {
 
 	private ImageManipulation(){}
@@ -12,11 +17,11 @@ public class ImageManipulation {
 		final int WIDTH = image.getWidth();
 		final int HEIGHT = image.getHeight();
 		BufferedImage resultingImage = new BufferedImage(WIDTH, HEIGHT, image.getType());
-		
+
 		byte[] pixels = ((DataBufferByte) image.getRaster().getDataBuffer()).getData();
 		byte[] result = ((DataBufferByte) resultingImage.getRaster().getDataBuffer()).getData();
 
-		
+
 		int increment = intensity; // lighten by this amount
 
 		// every 4 bytes is the (alpha,r,g,b) of a pixel
