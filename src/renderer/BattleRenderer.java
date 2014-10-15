@@ -68,23 +68,6 @@ public class BattleRenderer {
 		g.setColor(Color.BLACK);
 		g.drawString("Knight Capital Battle Renderer v0.1", 30, 30);
 	}
-	/**
-	 * Return true if the tile with origin pt would be visible on the screen represented by resolution.
-	 * @param pt: a point in isometric space.
-	 * @param resolution: screen bounds
-	 * @return: boolean
-	 */
-	public static boolean isPointOnScreen(Point pt, Camera camera, Dimension dimensions){
-		final int TILE_WD = Constants.TILE_WD;
-		final int TILE_HT = Constants.TILE_HT;
-		pt = Geometry.cartesianToIsometric(pt, camera);
-		int x = pt.x; int y = pt.y;
-		return x > 0 - TILE_WD
-			&& x < dimensions.width + TILE_WD
-			&& y > 0 - TILE_HT
-			&& y < dimensions.height + TILE_HT;
-	}
-
 
 	/**
 	 * Iterate over all tiles in the controller's world. Draws the tiles and adds any icons on them to the buffer.
@@ -100,7 +83,7 @@ public class BattleRenderer {
 		for (int y = 0; y < tiles.length; y++){
 			for (int x = 0; x < tiles[y].length; x++){
 				Point ptCart = new Point(x,y);
-				if (!isPointOnScreen(ptCart,controller.getCamera(),resolution)) continue;
+				if (!Geometry.isPointOnScreen(ptCart,controller.getCamera(),resolution)) continue;
 
 				// add tile to buffer
 				Tile tile = world.getTile(x,y);

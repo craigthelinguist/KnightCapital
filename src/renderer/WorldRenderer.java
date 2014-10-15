@@ -89,23 +89,6 @@ public class WorldRenderer {
 	}
 
 	/**
-	 * Return true if the tile with origin pt would be visible on the screen represented by resolution.
-	 * @param pt: a point in isometric space.
-	 * @param resolution: screen bounds
-	 * @return: boolean
-	 */
-	public static boolean isPointOnScreen(Point pt, Camera camera, Dimension dimensions){
-		final int TILE_WD = Constants.TILE_WD;
-		final int TILE_HT = Constants.TILE_HT;
-		pt = Geometry.cartesianToIsometric(pt, camera);
-		int x = pt.x; int y = pt.y;
-		return x > 0 - TILE_WD
-			&& x < dimensions.width + TILE_WD
-			&& y > 0 - TILE_HT
-			&& y < dimensions.height + TILE_HT;
-	}
-
-	/**
 	 * Iterate over all tiles in the controller's world. Draws the tiles and adds any icons on them to the buffer.
 	 * @param graphics: object on which to draw things
 	 * @param controller: contains info about world to be drawn
@@ -119,12 +102,14 @@ public class WorldRenderer {
 		for (int y = 0; y < tiles.length; y++){
 			for (int x = 0; x < tiles[y].length; x++){
 				Point ptCart = new Point(x,y);
-				if (!isPointOnScreen(ptCart,controller.getCamera(),dimensions)) continue;
 
 				// add tile to buffer)
 				Tile tile = world.getTile(x,y);
 				if (tile instanceof CityTile) continue;
 				Point ptRotated = Geometry.rotateByCamera(ptCart, camera, world.dimensions);
+
+
+				if (!Geometry.isPointOnScreen(ptRotated,controller.getCamera(),dimensions)) continue;
 
 
 				int intensity = 0;
