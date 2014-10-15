@@ -492,10 +492,9 @@ public class WorldController{
 		/*Loading the playey*/
 		Player p = new Player("John The Baptist",1);
 		World w = TemporaryLoader.loadWorld("world_temporary.txt",p);
-		HeroStats stats_hero = new HeroStats(60,10,80,0,6,8,AttackType.MELEE);
+		HeroStats stats_hero = new HeroStats(60,10,80,0,6,10,AttackType.MELEE);
 		Hero hero = new Hero("ovelia","ovelia",p,stats_hero);
 
-		hero.setMovePts(10);
 		/*
 		Creature[][] members = Party.newEmptyParty();
 		members[0][0] = hero;
@@ -551,9 +550,8 @@ public class WorldController{
 		/*Loading the playey*/
 		Player p = new Player("John The Baptist",1);
 		World w = ewan_world();
-		HeroStats stats_hero = new HeroStats(60,10,80,0,6,8,AttackType.MELEE);
+		HeroStats stats_hero = new HeroStats(60,10,80,0,6,10,AttackType.MELEE);
 		Hero hero = new Hero("ovelia","ovelia",p,stats_hero);
-		hero.setMovePts(10);
 
 		/*load the units into the party*/
 		Unit u3 = new Unit("knight","knight",p,new UnitStats(100,25,40,1,AttackType.MELEE));

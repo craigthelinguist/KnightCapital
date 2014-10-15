@@ -16,10 +16,8 @@ public class WorldGen {
 	public static void MylesWorldGen() {
 		Player p = new Player("John The Baptist",1);
 		World w = TemporaryLoader.loadWorld("singleplayer.txt",p);
-		HeroStats stats_hero = new HeroStats(60,10,80,0,6,8,AttackType.MELEE);
+		HeroStats stats_hero = new HeroStats(60,10,80,0,6,10,AttackType.MELEE);
 		Hero hero = new Hero("Gabe Newell","knight",p,stats_hero);
-
-		hero.setMovePts(10);
 
 		Party p1 = new Party(hero, p, Party.newEmptyPartyArray());
 		p1.refresh();

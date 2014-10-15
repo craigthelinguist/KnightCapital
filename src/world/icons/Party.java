@@ -5,6 +5,7 @@ import game.items.PassiveItem;
 import game.units.AttackType;
 import game.units.Creature;
 import game.units.Hero;
+import game.units.Stat;
 import game.units.Unit;
 import game.units.UnitStats;
 
@@ -157,7 +158,7 @@ public class Party extends WorldIcon implements Iterable<Creature>{
 	 * hit points and lose all temporary buffs for thie day.
 	 */
 	public void refresh(){
-		movementPoints = hero.getMovePoints();
+		movementPoints = hero.get(Stat.MOVEMENT);
 		for (int i = 0; i < members.length; i++){
 			for (int j = 0; j < members[i].length; j++){
 				Creature member = members[i][j];
