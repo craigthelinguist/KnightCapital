@@ -32,5 +32,5 @@ public enum Stat {
 
 	// how far your hero can move on the world map each day
 	MOVEMENT;
-	
+
 }
