@@ -306,32 +306,41 @@ public class Party extends WorldIcon implements Iterable<Creature>{
 
 		@Override
 		public boolean hasNext() {
-			for (int y = row ; y < Party.PARTY_ROWS; y++){
-				for (int x = col ; x < Party.PARTY_COLS; x++){
+			int y = row; int x = col;
+
+			for ( ; y < Party.PARTY_ROWS; y++){
+				for ( ; x < Party.PARTY_COLS; x++){
 					if (members[y][x] != null) return true;
 				}
+				x = 0;
 			}
+
 			return false;
+
 		}
 
 		@Override
 		public Creature next() {
-			int newRow = row;
-			int newCol = col;
-			for (int y = newRow; y < Party.PARTY_ROWS; y++){
-				for (int x = newCol; x < Party.PARTY_COLS; x++){
+
+			int y = row; int x = col;
+
+			for ( ; y < Party.PARTY_ROWS; y++){
+				for ( ; x < Party.PARTY_COLS; x++){
+
 					if (members[y][x] != null){
-						row = newRow;
-						col = newCol;
-						col++;
+						row = y;
+						col = x+1;
 						if (col == Party.PARTY_COLS){
-							col = 0;
+							col=0;
 							row++;
 						}
+
 						return members[y][x];
 					}
 				}
+				x=0;
 			}
+
 			return null;
 		}
 
