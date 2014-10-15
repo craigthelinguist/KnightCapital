@@ -36,17 +36,6 @@ public abstract class Creature {
 	protected Stats stats;
 	protected Player owner;
 
-
-	@Deprecated
-	/** Use the other one **/
-	protected Creature(String imgName, Player player, Stats stats) {
-		this.name = imgName;
-		this.imgName = imgName;
-		this.stats = stats;
-		buffs = new LinkedList<>();
-		changeOwner(player);
-	}
-
 	public Creature(String name, String imgName, Player player, UnitStats stats) {
 		this.name = name;
 		this.stats = stats;

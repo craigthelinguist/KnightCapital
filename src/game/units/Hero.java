@@ -24,13 +24,6 @@ public class Hero extends Creature {
 	// how far this hero can move on the world
 	private Item[] inventory;
 
-	@Deprecated
-	/** Use the other constructor **/
-	public Hero(String imgName,Player player, HeroStats stats){
-		super(imgName,player,stats);
-		inventory = new Item[INVENTORY_SIZE];
-	}
-
 	public Hero(String name, String imgName, Player player, HeroStats stats){
 		super(name,imgName,player,stats);
 		inventory = new Item[INVENTORY_SIZE];
