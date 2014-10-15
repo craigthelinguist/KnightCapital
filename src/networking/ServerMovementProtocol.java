@@ -18,8 +18,8 @@ import controllers.WorldController;
 
 /**
  *
- * @author hartleneal
- * server side dealing with key events and mouse events sent from the client side movement protocol.
+ * @author Neal Hartley && Selemon Yitbarek
+ * server side dealing with incoming packets. uses them for updating
  */
 
 public class ServerMovementProtocol implements Runnable {

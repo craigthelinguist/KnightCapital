@@ -5,6 +5,7 @@ import java.io.Serializable;
 import controllers.WorldController;
 
 /**
+ * @author Neal Hartley && Selemon Yitbarek
  * this class is used for passing the mouseevent, world and id
  * to and from server and client
  * */

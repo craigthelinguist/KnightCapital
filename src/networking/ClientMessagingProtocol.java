@@ -17,7 +17,8 @@ import javax.swing.JTextField;
 
 /**
  *
- * @author Neal Hartley Runnable thread implemented by the client in order to
+ * @author Neal Hartley && Selemon Yitbarek
+ *         Runnable thread implemented by the client in order to
  *         listen to responses form the server port. Will hold functionality to
  *         deal with different types of incoming messages and how they will
  *         affect the clients current board state.

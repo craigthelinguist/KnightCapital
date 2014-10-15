@@ -1,8 +1,12 @@
-<world>
+<world>twoplayer.level
   <players>
     <player>
       <slot>1</slot>
       <name>Player 1</name>
+    </player>
+    <player>
+      <slot>2</slot>
+      <name>Player 2</name>
     </player>
   </players>
   <cities>
@@ -14,7 +18,7 @@
     <city>
       <name>Rongotai</name>
       <imageName>basic</imageName>
-      <player>1</player>
+      <player>2</player>
     </city>
   </cities>
   <tiles>
@@ -3498,7 +3502,81 @@
       <x>16</x>
       <y>13</y>
       <imageName>grass_1</imageName>
-      <icon>null</icon>
+      <icon>
+        <type>Party</type>
+        <owner>
+          <slot>2</slot>
+        </owner>
+        <member>
+          <row>0</row>
+          <col>0</col>
+          <unit>
+            <name>Knight</name>
+            <imageName>knight</imageName>
+            <slot>2</slot>
+            <stats>
+              <baseHealth>100</baseHealth>
+              <baseDamage>25</baseDamage>
+              <baseSpeed>40</baseSpeed>
+              <baseArmour>5</baseArmour>
+              <attack>melee</attack>
+            </stats>
+          </unit>
+        </member>
+        <member>
+          <row>0</row>
+          <col>2</col>
+          <unit>
+            <name>Knight</name>
+            <imageName>knight</imageName>
+            <slot>2</slot>
+            <stats>
+              <baseHealth>100</baseHealth>
+              <baseDamage>25</baseDamage>
+              <baseSpeed>40</baseSpeed>
+              <baseArmour>5</baseArmour>
+              <attack>melee</attack>
+            </stats>
+          </unit>
+        </member>
+        <member>
+          <row>1</row>
+          <col>1</col>
+          <unit>
+            <name>Archer</name>
+            <imageName>archer</imageName>
+            <slot>2</slot>
+            <stats>
+              <baseHealth>60</baseHealth>
+              <baseDamage>15</baseDamage>
+              <baseSpeed>90</baseSpeed>
+              <baseArmour>0</baseArmour>
+              <attack>ranged</attack>
+            </stats>
+          </unit>
+        </member>
+        <member>
+          <row>1</row>
+          <col>2</col>
+          <hero>
+            <name>Sir Gaben</name>
+            <imageName>knight</imageName>
+            <player>
+              <slot>2</slot>
+            </player>
+            <herostats>
+              <baseHealth>60</baseHealth>
+              <baseDamage>20</baseDamage>
+              <baseSpeed>30</baseSpeed>
+              <baseArmour>0</baseArmour>
+              <baseSight>6</baseSight>
+              <baseMovement>8</baseMovement>
+              <attack>aoe</attack>
+              <currentHealth>60</currentHealth>
+            </herostats>
+          </hero>
+        </member>
+      </icon>
     </tile>
     <tile>
       <type>passable</type>

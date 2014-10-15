@@ -7,7 +7,7 @@ import java.io.IOException;
 
 /**
  *
- * @author hartleneal
+ * @author Neal Hartley && Selemon yitbarek
  *protocol for dealing with messages sent from the chat client. Just an echo server. recieves a message from a given user and bounces it back
  *to all clients.
  */

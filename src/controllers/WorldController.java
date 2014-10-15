@@ -16,21 +16,8 @@ import game.units.UnitStats;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.InetAddress;
-
 import java.io.IOException;
 import java.io.Serializable;
-
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashSet;
@@ -39,9 +26,7 @@ import java.util.Set;
 import javax.swing.SwingUtilities;
 
 import networking.Client;
-import networking.NetworkM;
 import networking.Server;
-import networking.ServerM;
 import player.Player;
 import renderer.Camera;
 import renderer.WorldRenderer;
@@ -66,27 +51,14 @@ import GUI.world.MainFrame;
  * A WorldController. This is the glue between the model (World) and the view (gui, renderer). It responds to mouse, key, and button presses
  * and informs the World to update its game state. It then tells the gui to redraw itself to show any changes in game state. It also handles
  * interactions between different GUIs - for example, passing over control to TownController when the player opens up a town.
- * @author Aaron
+ * @author Neal, Solo-man, Aaron
  */
 public class WorldController implements Serializable{
 
-	/**
-	 *
-	 */
-	private static final long serialVersionUID = 1L;
-
-	//boolean server or client, true if server, false if client.
-	private boolean serverOrClient = false;
-
-	//server and client.
-	private Server server;
 	private Client client;
 
 	// gui and renderer: the view
 	private MainFrame gui;
-
-	// current session in town, if there is one
-	private TownController townController;
 
 	// world this controller is for: the model
 	private final World world;
@@ -96,7 +68,6 @@ public class WorldController implements Serializable{
 
 	// current tile the player has clicked
 	private Point selected;
-	private Point hover; // point your mouse is over
 
 	// highlighted tiles that are showing where the player's selected party can move to
 	private Set<Point> highlightedTiles;
@@ -104,14 +75,8 @@ public class WorldController implements Serializable{
 	// the camera that the player is viewing from
 	private Camera camera;
 
-	// whether this worldController is currently doing anything
-	private boolean active = true;
+	// last time a mouse event happened
 	private long lastMouse = 0;
-
-
-	private ServerSocket serverSocket;
-	private Socket socket;
-
 
 	// key bindings
 	private static final int ROTATE_CW = KeyEvent.VK_R;
@@ -132,74 +97,20 @@ public class WorldController implements Serializable{
 
 		/**
 		 * comment this out to get controller to load from main menu
-		 */
-
 		if(serverOrClient){
-//<<<<<<< HEAD
-////			ServerM.run(this);
-//
-//			NetworkM.createServer(this, 2020, 2);
-//=======
-			//NetworkM.createServer(this, 2020, 2);
 			try {
 				server = new Server(this);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
 		}
-
 		else {
-
-//<<<<<<< HEAD
-////			ClientM.run(this);
-////				client.start();
-//				try {
-//					NetworkM.createClient("localhost", 2020, "selemonClient");
-//				} catch (IOException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//=======
-
-
-//				try {
-//					NetworkM.createClient("localhost", 2020, "selemonClient", this);
-//				} catch (IOException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
 				client = new Client("130.195.4.159", 45812, 45612, this);
-
-
-
-
-//			try {
-//				NetworkM.createClient("localhost", 2020, "selemonClient");
-//				client = new Client("130.195.6.170", 45612, 45812);
-//			} catch (IOException e) {
-//
-//				e.printStackTrace();
-//			}
-			//			client = new Client("130.195.6.98", 45612);
-
-
-
 		}
 
+		**/
+
 	}
-
-
-	public MainFrame getGui(){
-		return gui;
-	}
-
-
-
-
-
-
 
 	/**
 	 * Player has pushed a key. Perform any actions and update/redraw game-state if necessary.
@@ -241,7 +152,7 @@ public class WorldController implements Serializable{
 			gui.redraw();
 		}
 		else if(code == KeyEvent.VK_ESCAPE){
-			EscapeDialog dialog = new EscapeDialog(gui,this);
+			new EscapeDialog(gui,this);
 	    }
 
 
@@ -255,12 +166,13 @@ public class WorldController implements Serializable{
 	 */
 	public void mousePressed(MouseEvent me){
 
+		// get info about the mouse click
 		Point ptIso = new Point(me.getX(),me.getY());
 		Point ptCartesian = Geometry.isometricToCartesian(ptIso, camera, world.dimensions);
 		Tile clickedTile = world.getTile(ptCartesian);
 		Tile selectedTile = world.getTile(selected);
 
-		// double clicked a city
+		// double clicked a city; enter town view
 		if (leftClicked(me) && selectedTile != null
 				&& clickedTile instanceof CityTile && selectedTile instanceof CityTile
 				&& doubleClicked() && ((CityTile)(clickedTile)).getCity().ownedBy(player) )
@@ -271,11 +183,9 @@ public class WorldController implements Serializable{
 				startTownView(c1.getCity());
 			}
 			this.lastMouse = System.currentTimeMillis();
-
 		}
 
-
-		// deselected the tile
+		// left-clicked the selection; deselect
 		else if (selected != null && leftClicked(me) && selectedTile == clickedTile){
 			System.out.println("deselect");
 			deselect();
@@ -284,7 +194,7 @@ public class WorldController implements Serializable{
 			this.lastMouse = System.currentTimeMillis();
 		}
 
-		// selected the tile
+		// left-clicked something; select
 		else if (selectedTile != clickedTile && leftClicked(me)){
 			selected = ptCartesian;
 			highlightTiles(clickedTile);
@@ -293,10 +203,13 @@ public class WorldController implements Serializable{
 			this.lastMouse = System.currentTimeMillis();
 		}
 
-		// moved
+		// right-clicked something while selected; move to that tile
 		else if (selected != null && rightClicked(me) && isMyTurn()){
 
+			// attempt to move the party
 			boolean moved = world.moveParty(player, selected, ptCartesian);
+
+			// update view if move was sucessful
 			if (moved){
 				selected = ptCartesian;
 				highlightTiles(clickedTile);
@@ -304,6 +217,8 @@ public class WorldController implements Serializable{
 				gui.redraw();
 				this.lastMouse = System.currentTimeMillis();
 			}
+
+			// if you didn't move and tried to pick up item, show dialog
 			else if (clickedTile != null) {
 				if(clickedTile.passable() && clickedTile.occupant() instanceof ItemIcon) {
 					new GameDialog(gui,"Inventory full! You cannot pick up more items!");
@@ -332,9 +247,7 @@ public class WorldController implements Serializable{
 	public void mouseMoved(MouseEvent me){
 		Point ptIso = new Point(me.getX(),me.getY());
 		Point ptCartesian = Geometry.isometricToCartesian(ptIso, camera, world.dimensions);
-		Tile tileHover = world.getTile(ptCartesian);
-		if (tileHover == null) this.hover = ptCartesian;
-		else this.hover = null;
+		world.getTile(ptCartesian);
 	}
 
 	/**
@@ -342,7 +255,6 @@ public class WorldController implements Serializable{
 	 * @param button: the button they clicked.
 	 */
 	public void buttonPressed(String button){
-
 		if (button.equals("EndTurn")){
 			world.endTurn();
 			deselect();
@@ -350,7 +262,6 @@ public class WorldController implements Serializable{
 			gui.redraw();
 			gui.makeGameDialog("Day " + world.getDay());
 		}
-
 	}
 
 	/**
@@ -439,7 +350,6 @@ public class WorldController implements Serializable{
 	 */
 	public void endTownView(Point exit){
 		awake();
-		this.townController = null;
 		deselect();
 		Tile tile = world.getTile(exit.x,exit.y);
 		gui.updateInfo(tile); // update gui info panel with exit point
@@ -454,7 +364,7 @@ public class WorldController implements Serializable{
 	 */
 	public void startTownView(City city){
 		suspend();
-		this.townController = new TownController(city,this);
+		new TownController(city,this);
 	}
 
 	/**
@@ -463,7 +373,6 @@ public class WorldController implements Serializable{
 	 */
 	public void awake(){
 		gui.awake();
-		this.active = true;
 	}
 
 	/**
@@ -471,7 +380,6 @@ public class WorldController implements Serializable{
 	 * unresponsive.
 	 */
 	public void suspend(){
-		this.active = false;
 		gui.suspend();
 	}
 
@@ -500,6 +408,14 @@ public class WorldController implements Serializable{
 	}
 
 	/**
+	 * Get the gui attached to this controller.
+	 * @return
+	 */
+	public MainFrame getGui(){
+		return gui;
+	}
+
+	/**
 	 * Return the tile that is currently selected by the player attached to this controller.
 	 * @return: a tile, or null if there is no tile selected.
 	 */
@@ -508,7 +424,6 @@ public class WorldController implements Serializable{
 	}
 
 	public void notifier(){
-
 		if(client!=null)client.notifyThread();
 		if(client == null)System.out.println("still not initiated");
 	}
@@ -520,11 +435,6 @@ public class WorldController implements Serializable{
 	public static void aaron_main_2(String[] args) throws IOException{
 		World world = WorldLoader.load(Constants.DATA_WORLDS + "test_save.xml");
 		new WorldController(world,world.getPlayers()[0]);
-	}
-
-	public static void myles_main(String[] dun_goofed) {
-
-
 	}
 
 	public static void aaron_main(String[] args){
@@ -584,131 +494,6 @@ public class WorldController implements Serializable{
 		w.getTile(8,8).setIcon(itemIcon3);
 
 		new WorldController(w,p);
-	}
-
-	public static void ewan_main(String[] args){
-		/*Loading items*/
-		Buff[] buffsAmulet = new Buff[]{ Buff.newTempBuff(Stat.DAMAGE,5) };
-		PassiveItem amulet = new PassiveItem("amulet", "amulet", "An amulet that grants sickening gains.\n +5 Damage",buffsAmulet,Target.HERO, "liontalisman.xml");
-
-		Buff[] buffsWeapon = new Buff[]{ Buff.newPermaBuff(Stat.DAMAGE,5), Buff.newTempBuff(Stat.ARMOUR, 10) };
-		PassiveItem weapon = new PassiveItem("weapon", "weapon", "A powerful weapon crafted by the mighty Mizza +5 Damage",buffsWeapon,Target.HERO, null);
-
-		Buff[] buffsArrows= new Buff[]{ Buff.newTempBuff(Stat.DAMAGE,1) };
-		PassiveItem arrows = new PassiveItem("poisonarrow", "poisonarrow", "Poisonous arrows whose feathers were made from the hairs of Mizza. All archers in party gain +1 damage",buffsArrows, Target.PARTY, null);
-
-
-		ItemIcon amuletChest = new ItemIcon(amulet);
-
-		ItemIcon weaponChest = new ItemIcon(weapon);
-
-		ItemIcon arrowsChest = new ItemIcon(arrows);
-
-
-		/*Loading the playey*/
-		Player p = new Player("John The Baptist",1);
-		World w = ewan_world();
-		HeroStats stats_hero = new HeroStats(60,10,80,0,6,10,AttackType.MELEE);
-		Hero hero = new Hero("ovelia","ovelia",p,stats_hero);
-
-		/*load the units into the party*/
-		Unit u3 = new Unit("knight","knight",p,new UnitStats(100,25,40,1,AttackType.MELEE));
-		Unit u4 = new Unit("archer","archer",p,new UnitStats(60,15,70,0,AttackType.RANGED));
-		Unit u5 = new Unit("archer","archer",p,new UnitStats(60,15,70,0,AttackType.RANGED));
-		Unit u6 = new Unit("knight","knight",p,new UnitStats(100,25,40,1,AttackType.MELEE));
-		Creature[][] members2 = Party.newEmptyPartyArray();
-		members2[0][0] = u3;
-		members2[1][0] = u6;
-		members2[2][0] = hero;
-		members2[0][1] = u4;
-		members2[2][1] = u5;
-		Party party = new Party(hero,p,members2);
-		party.refresh();
-		party.addItem(arrows);
-
-
-
-		Tile[][] tiles = w.getTiles();
-		for (int y = 1; y < 10; y++){
-			for (int x = 1; x < 10; x++){
-				double rand = Math.floor((Math.random() * 20) + 1);
-				if(rand > 18 && (!(w.getTile(x,y) instanceof ImpassableTile))) {
-					w.getTile(x,y).setIcon(weaponChest);
-				}
-				else if(rand > 17 && (!(w.getTile(x,y) instanceof ImpassableTile))) {
-					w.getTile(x,y).setIcon(amuletChest);
-				}
-				else if(rand > 16 && (!(w.getTile(x,y) instanceof ImpassableTile))) {
-					w.getTile(x,y).setIcon(arrowsChest);
-				}
-				else {
-
-				}
-			}
-		}
-
-
-		/*Lay the items down on the tiles*/
-		w.getTile(0,0).setIcon(party);
-		/**w.getTile(1,1).setIcon(itemIcon); //place a floor item on this tile
-		w.getTile(1,2).setIcon(itemIcon2);
-		w.getTile(1,3).setIcon(itemIcon2);
-		w.getTile(1,4).setIcon(itemIcon);
-		w.getTile(1,6).setIcon(itemIcon2);
-		w.getTile(8,8).setIcon(itemIcon3);*/
-
-		new WorldController(w,p);
-	}
-
-
-
-
-
-	/**
-	 * This is a test for creating a world with custom tiles.
-	 * @return World
-	 */
-	public static World ewan_world() {
-		Player p = new Player("John The Baptist",4);
-
-
-
-		// create tiles
-		Tile[][] tiles = new Tile[10][10];
-		for (int y = 0; y < 10; y++){
-			for (int x = 0; x < 10; x++){
-				double rand = Math.floor((Math.random() * 50) + 1);
-				if(rand > 48) {
-					tiles[x][y] = new ImpassableTile("tree",8,9);
-				}
-				else if(rand > 45) {
-					tiles[x][y] = new ImpassableTile("bigTree",8,9);
-				}
-				else if(rand > 40 ) {
-					tiles[x][y] = PassableTile.newDirtTile(x,y);
-				}
-				else {
-					tiles[x][y] = PassableTile.newGrassTile(x,y);
-				}
-			}
-		}
-
-		// add a city
-		CityTile[][] cityTiles = new CityTile[City.WIDTH][City.WIDTH];
-
-		for (int i=4, a=0; i <= 6; i++, a++){
-			for (int j=4, b=0; j <= 6; j++, b++){
-				CityTile ct = new CityTile(i,j);
-				tiles[i][j] = ct;
-				cityTiles[a][b] = ct;
-			}
-		}
-
-		City city = new City("Porirua","basic", p, cityTiles);
-		Player[] players = new Player[]{ p };
-		Set<City> cities = new HashSet<>();
-		cities.add(city);
-		return new World(tiles,players,cities);
 	}
 
 }

@@ -30,8 +30,11 @@ import world.tiles.CityTile;
 import world.tiles.Tile;
 import world.towns.City;
 
-
-
+/**
+ * This is the controller for the town session. It handles gui interactions and updates the town view
+ * accordingly.
+ * @author Aaron
+ */
 public class TownController{
 
 	// state stuff
@@ -40,7 +43,7 @@ public class TownController{
 
 	// gui stuff
 	private TownGui gui;
-	private boolean active = true;
+	private boolean active = true; //
 
 	// super
 	private WorldController worldController;
@@ -67,27 +70,39 @@ public class TownController{
 		this.worldController = controller;
 	}
 
+	/**
+	 * Return the party garrisoned in the city.
+	 * @return: party
+	 */
 	public Party getGarrison(){
 		return city.getGarrison();
 	}
 
+	/**
+	 * Return the party visiting this city.
+	 * @return: party
+	 */
 	public Party getVisitors(){
 		return city.getVisitors();
 	}
 
-	public boolean active(){
-		return active;
-	}
-
+	/**
+	 * Respond to a button press event from the gui.
+	 * @param text: name of the button pressed.
+	 */
 	public void buttonPressed(String text) {
-		if (!active) return;
+
 		text = text.toLowerCase();
+
+		// end the town session; reactivate world controller
 		if (text.equals("leave")){
 			gui.dispose();
 			Point exit = getExitPoint();
 			worldController.endTownView(exit);
 			active = false;
 		}
+
+		// if there is a visiting party, eject them to the world map
 		else if(text.equals("exit city")) {
 
 			// check there's a party to kick out
@@ -95,9 +110,7 @@ public class TownController{
 			if (visitors == null || visitors.isEmpty()) return;
 
 			// find tile to put them on
-			Camera camera = worldController.getCamera();
 			World world = worldController.getWorld();
-
 			Point pt = getExitPoint();
 
 			// check tile exists, kick them onto world map
@@ -105,15 +118,18 @@ public class TownController{
 				Tile tile = world.getTile(pt);
 				if (!tile.passable()) return;
 				tile.setIcon(visitors);
-				city.setVisitors(this.newEmptyParty());
+				city.setVisitors(Party.newEmptyParty(city.getOwner()));
 				visitors = city.getVisitors();
 				this.gui.repaint();
 			}
-
 		}
 
 	}
 
+	/**
+	 * Get the point in the world map's array that is the exit tile for the city.
+	 * @return: a point.
+	 */
 	private Point getExitPoint(){
 		Tile tile = city.getEntryTile();
 		Point pt = tile.asPoint();
@@ -121,18 +137,10 @@ public class TownController{
 		return pt;
 	}
 
-	private Party newEmptyParty(){
-		return new Party(null, city.getOwner(), Party.newEmptyPartyArray());
-	}
-
-	protected void mouseMoved(Point from, Point to){
-
-	}
-
-	protected void mouseEvent(){
-
-	}
-
+	/**
+	 * Get the city this world controller is attached to.
+	 * @return: city.
+	 */
 	public City getCity() {
 		return this.city;
 	}
