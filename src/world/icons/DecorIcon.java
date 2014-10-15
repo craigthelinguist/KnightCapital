@@ -41,12 +41,12 @@ public class DecorIcon extends WorldIcon{
 		}
 		else if(type == ROCK) {
 			name = "rock_icon_";
-			max = 2;
+			max = 1;
 			passable = false;
 		}
 		else if(type == BUSH) {
 			name = "bush_icon_";
-			max = 3;
+			max = 1;
 			passable = false;
 		}
 		else {
