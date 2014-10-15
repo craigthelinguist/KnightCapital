@@ -34,7 +34,7 @@ import controllers.TownController;
 
 /**
  * TownExchangePanel lets you exchange units and items between the visiting party and garrisoned party.
- * @author craigthelinguist, Ewan Moshi
+ * @author Ewan Moshi && Craig Aaron
  *
  */
 public class TownExchangePanel extends JPanel implements MouseListener, MouseMotionListener, ActionListener{

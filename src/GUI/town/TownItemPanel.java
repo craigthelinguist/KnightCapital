@@ -27,7 +27,7 @@ import world.towns.City;
 
 /**
  * The panel that holds all of the party's items inside the town.
- * @author Ewan Moshi
+ * @author Ewan Moshi && Aaron craig
  *
  */
 public class TownItemPanel extends JPanel{

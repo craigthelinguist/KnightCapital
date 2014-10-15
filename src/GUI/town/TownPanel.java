@@ -21,7 +21,7 @@ import world.icons.Party;
 
 /**
  * Main panl for the Town GUI
- * @author Ewan Moshi
+ * @author Ewan Moshi && Craig Aaron
  *
  */
 public class TownPanel extends JPanel{
