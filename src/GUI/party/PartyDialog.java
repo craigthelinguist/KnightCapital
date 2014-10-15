@@ -62,7 +62,7 @@ import GUI.world.MainFrame;
  * 		-Nothing more I don't think.
  *
  *
- * @author myles
+ * @author myles, Ewan Moshi
  *
  */
 public class PartyDialog extends JDialog  {

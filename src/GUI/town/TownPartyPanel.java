@@ -21,6 +21,11 @@ import tools.Constants;
 import world.icons.Party;
 import world.towns.City;
 
+/**
+ * The panel that dispalys the party inside the town.
+ * @author Ewan Moshi
+ *
+ */
 public class TownPartyPanel extends JPanel {
 
 	// constants
@@ -41,13 +46,13 @@ public class TownPartyPanel extends JPanel {
 		this.master = master;
 		this.setPreferredSize(new Dimension(CELL_WD*PARTY_COLS+1,CELL_HT*PARTY_ROWS+1));
 	}
-	
+
 	@Override
 	protected void paintComponent(Graphics g){
 		g.setColor(Color.BLACK);
-		
+
 		Party party = master.getParty(this);
-		
+
 		for (int x = 0; x < PARTY_COLS; x++){
 			for (int y = 0; y < PARTY_ROWS; y++){
 				int xDraw = x * CELL_WD;

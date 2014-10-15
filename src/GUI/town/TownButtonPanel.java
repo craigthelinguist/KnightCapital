@@ -18,6 +18,11 @@ import tools.ImageLoader;
 import GUI.world.CustomButton;
 import controllers.TownController;
 
+/**
+ * A panel that holds all the buttons on the town gui.
+ * @author Ewan Moshi
+ *
+ */
 public class TownButtonPanel extends JPanel{
 
 	private TownController controller;

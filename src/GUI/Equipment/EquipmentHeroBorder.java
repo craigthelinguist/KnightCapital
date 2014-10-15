@@ -8,6 +8,11 @@ import javax.swing.JPanel;
 import tools.Constants;
 import GUI.world.Border;
 
+/**
+ * A border for the equipment panel
+ * @author Ewan Moshi
+ *
+ */
 public class EquipmentHeroBorder extends JPanel {
 
 	public EquipmentHeroBorder() {

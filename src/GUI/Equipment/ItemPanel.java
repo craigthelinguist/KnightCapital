@@ -9,6 +9,11 @@ import javax.swing.JPanel;
 import tools.Constants;
 import tools.ImageLoader;
 
+/**
+ * An item panel that displays images of the item
+ * @author moshiewan
+ *
+ */
 public class ItemPanel extends JPanel {
 
 	private BufferedImage backgroundSlot;

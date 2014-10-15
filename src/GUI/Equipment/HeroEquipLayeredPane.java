@@ -8,6 +8,11 @@ import javax.swing.JLayeredPane;
 
 import GUI.party.PartyDialog;
 
+/**
+ * A layered pane for the hero's border and equipping item panel.
+ * @author Ewan Moshi
+ *
+ */
 
 public class HeroEquipLayeredPane extends JLayeredPane{
 

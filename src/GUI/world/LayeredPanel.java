@@ -49,6 +49,9 @@ public class LayeredPanel extends JLayeredPane{
 
 	}
 
+	/**Resize all the components on this layered Pane
+	 *
+	 */
     @Override
     public void doLayout() {
     	/*Resize all the components on this layeredPane*/

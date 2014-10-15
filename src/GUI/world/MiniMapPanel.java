@@ -9,6 +9,11 @@ import javax.swing.JPanel;
 import tools.Constants;
 import tools.ImageLoader;
 
+/**
+ * Mini map panel that disaplys the mini map for the game.
+ * @author moshiewan
+ *
+ */
 public class MiniMapPanel extends JPanel {
 
 	private BufferedImage backgroundImage;

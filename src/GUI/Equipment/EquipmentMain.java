@@ -29,6 +29,11 @@ import GUI.world.CustomButton;
 import GUI.world.GameDialog;
 import GUI.world.MainFrame;
 
+/**
+ * The main panel for the equipment panel
+ * @author Ewan Moshi
+ *
+ */
 public class EquipmentMain extends JDialog implements ActionListener{
 
 	CustomButton button_leave;

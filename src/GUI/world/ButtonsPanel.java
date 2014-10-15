@@ -65,6 +65,9 @@ public class ButtonsPanel extends JPanel  {
 
 	}
 
+	/**
+	 * Set up the action listeners for the buttons.
+	 */
 	private void setupActionListeners(){
 
 		endTurnButton.addActionListener(new ActionListener(){

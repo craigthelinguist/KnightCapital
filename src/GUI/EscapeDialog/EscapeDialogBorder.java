@@ -10,6 +10,11 @@ import tools.Constants;
 import GUI.world.Border;
 import GUI.world.GameDialog;
 
+/**
+ * The border for the escape dialog
+ * @author Ewan Moshi
+ *
+ */
 public class EscapeDialogBorder extends JPanel{
 
 	private EscapeDialog  ed;

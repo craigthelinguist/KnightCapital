@@ -16,6 +16,11 @@ import javax.swing.JPanel;
 import tools.Constants;
 import tools.ImageLoader;
 
+/**
+ * Displays information about the item
+ * @author moshiewan
+ *
+ */
 public class ItemSlotInformation extends JDialog  {
 
 	/**
