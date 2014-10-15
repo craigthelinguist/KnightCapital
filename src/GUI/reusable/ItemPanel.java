@@ -28,6 +28,10 @@ import tools.Constants;
 import world.icons.ItemIcon;
 import world.icons.Party;
 
+/**
+ * Takes a party and lets you reoder their items.
+ * @author Neal Hartley & Miley Glass
+ */
 public class ItemPanel extends JPanel {
 
 	// data that this Ordering Panel Displays

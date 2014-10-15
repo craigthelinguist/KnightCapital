@@ -13,7 +13,7 @@ import tools.ImageLoader;
 
 /**
  * A panel that has the storage background image
- * @author Ewan Moshi
+ * @author Ewan Moshi && Aaron Craig
  *
  */
 public class StoragePanel extends JPanel{

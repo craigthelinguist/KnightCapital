@@ -20,7 +20,7 @@ import controllers.TownController;
 
 /**
  * A panel that holds all the buttons on the town gui.
- * @author Ewan Moshi
+ * @author Ewan Moshi && Aaron Craig
  *
  */
 public class TownButtonPanel extends JPanel{

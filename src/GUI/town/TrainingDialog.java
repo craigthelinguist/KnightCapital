@@ -25,15 +25,25 @@ import world.icons.Party;
 import world.towns.City;
 import controllers.TownController;
 
+/**
+ * The TrainingDialog lets you select a unit to train in town.
+ * @author Aaron Craig
+ */
 public class TrainingDialog extends JDialog {
 
+	/**
+	 * Mapping of name of unit -> cost of unit
+	 */
 	static final Map<String,Integer> costs = new HashMap<>();
 	static {
 		costs.put("Knight", 125);
 		costs.put("Archer", 75);
 	}
 
+	// controller this dialog is attached to
 	private TownController controller;
+
+	// displays gold the player has
 	private JLabel goldLabel;
 
 	protected TrainingDialog(TownController master, JFrame frame){

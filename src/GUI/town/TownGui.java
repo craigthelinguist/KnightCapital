@@ -17,7 +17,7 @@ import world.icons.Party;
 
 /**
  * The town gui frame.
- * @author Ewan Moshi
+ * @author Ewan Moshi && Aaron Craig
  *
  */
 public class TownGui extends JFrame {

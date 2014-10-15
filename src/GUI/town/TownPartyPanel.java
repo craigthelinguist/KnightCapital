@@ -23,7 +23,7 @@ import world.towns.City;
 
 /**
  * The panel that dispalys the party inside the town.
- * @author Ewan Moshi
+ * @author Ewan Moshi && Craig Aaron
  *
  */
 public class TownPartyPanel extends JPanel {

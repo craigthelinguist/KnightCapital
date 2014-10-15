@@ -28,6 +28,10 @@ import player.Player;
 import tools.Constants;
 import world.icons.Party;
 
+/**
+ * takes a party and lets you reoder their members
+ * @author solo-man, aaron craig
+ */
 public class PartyPanel extends JPanel {
 
 	// data this townPartyPanel displays
