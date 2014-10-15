@@ -35,6 +35,7 @@ public class City {
 
 	// on the overworld, a city is a collection of 3x3 CityTiles.
 	public static final int WIDTH = 3;
+	public static final int CITY_INCOME = 100;
 	private final CityTile[][] tiles;
 
 	// who owns this city
@@ -130,14 +131,6 @@ public class City {
 		g.drawImage(animations.getImage(), x, y, null);
 	}
 
-	public int getImageHeight(){
-		return animations.getImage().getHeight();
-	}
-
-	public int getImageWidth(){
-		return animations.getImage().getWidth();
-	}
-
 	/**
 	 * Return the tile that would be visually leftmost from the perspective of the given camera.
 	 * @param camera: viewing perspective
@@ -152,50 +145,6 @@ public class City {
 		else throw new RuntimeException("unknown camera orientation: " + orientation);
 	}
 
-	public void setAnimationName(String name){
-		animations.setImage(name);
-	}
-
-	public String getAnimationName(){
-		return animations.getName();
-	}
-
-
-	public Party getVisitors() {
-		return visitors;
-	}
-
-	public Party getGarrison(){
-		return garrison;
-	}
-
-
-	public void setGarrison(Party party) {
-		this.garrison = party;
-	}
-
-
-	public void setVisitors(Party party) {
-		this.visitors = party;
-	}
-
-
-	public BufferedImage getPortrait() {
-		return animations.getPortrait();
-	}
-
-	public Player getOwner() {
-		return this.owner;
-	}
-
-	public String getName() {
-		return this.name;
-	}
-
-	public String getImageName(){
-		return this.imageName;
-	}
-
 	/**
 	 * Gets the entrance tile for the city
 	 * @return CityTile
@@ -205,18 +154,9 @@ public class City {
 	}
 
 	/**
-	 * Test method to print out the items of the visitors.
+	 * Change who owns this city. Updates all animations for this city.
+	 * @param owner: person who now owns this city.
 	 */
-	public void printVisitorsItems() {
-		for(int i = 0; i < visitors.getInventory().length; i++) {
-			for(int j = 0; j < visitors.getInventory()[i].length; j++) {
-				if(visitors.getItem(i,j) != null) {
-					System.out.println(visitors.getItem(i,j).getName());
-				}
-			}
-		}
-	}
-
 	public void changeOwner(Player owner){
 		this.owner = owner;
 		this.animations.updateColours(owner.getColour());
@@ -238,6 +178,100 @@ public class City {
 	 */
 	public boolean hasVisitors() {
 		return this.visitors != null && !this.visitors.isEmpty();
+	}
+
+	/**
+	 * Return the amount of gold this city provides each turn.
+	 * @return
+	 */
+	public int getIncome() {
+		return CITY_INCOME;
+	}
+
+	/**
+	 * Set the current image for this city.
+	 * @param name: name of image to set.
+	 */
+	public void setAnimationName(String name){
+		animations.setImage(name);
+	}
+
+	/**
+	 * Get name of current image for this city.
+	 * @return string
+	 */
+	public String getAnimationName(){
+		return animations.getName();
+	}
+
+	/**
+	 * Get the city visitors.
+	 * @return: party visiting the city.
+	 */
+	public Party getVisitors() {
+		return visitors;
+	}
+
+	/**
+	 * Get the city garrison.
+	 * @return: party stationed in city garrison.
+	 */
+	public Party getGarrison(){
+		return garrison;
+	}
+
+	/**
+	 * Set the city garrison.
+	 * @param party: party now garrisoned in city.
+	 */
+	public void setGarrison(Party party) {
+		this.garrison = party;
+	}
+
+
+	/**
+	 * Set the visitors in this city.
+	 * @param party: party now in this city.
+	 */
+	public void setVisitors(Party party) {
+		this.visitors = party;
+	}
+
+
+	/**
+	 * Return the image representing this city's portrait.
+	 * @return: buffered image
+	 */
+	public BufferedImage getPortrait() {
+		return animations.getPortrait();
+	}
+
+	/**
+	 * Get the player that owns this city.
+	 * @return: player/
+	 */
+	public Player getOwner() {
+		return this.owner;
+	}
+
+	/**
+	 * Get the name of this city.
+	 * @return: string
+	 */
+	public String getName() {
+		return this.name;
+	}
+
+	/**
+	 * Get the base image name for this city.
+	 * @return: string
+	 */
+	public String getImageName(){
+		return this.imageName;
+	}
+
+	public int getImageHeight() {
+		return animations.getImage().getHeight();
 	}
 
 }

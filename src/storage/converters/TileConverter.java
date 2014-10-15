@@ -105,6 +105,9 @@ public class TileConverter implements Converter {
 		writer.startNode("y");
 		writer.setValue(""+it.Y);
 		writer.endNode();
+		writer.startNode("imageName");
+		writer.setValue(it.getImageName());
+		writer.endNode();
 	}
 
 	private Object unmarshal_impassable(HierarchicalStreamReader reader, UnmarshallingContext context) {

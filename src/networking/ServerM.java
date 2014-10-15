@@ -54,9 +54,11 @@ public class ServerM extends Thread{
 //	}
 
 
-	@Override
+
+
 	public void run(){
 		//eternal loop.
+//<<<<<<< HEAD
 		Message message = null;
 		try {
 //			ServerSocket socketConnection = new ServerSocket(8989);
@@ -94,6 +96,50 @@ public class ServerM extends Thread{
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+//=======
+//		while(true){
+//
+//			System.out.println("looping[SERVER]");
+//
+//
+//			//loop through socket connections checking for updates.
+//			for(int i = 0; i < socket.length; i++){
+//				System.out.println("checking input from :" + i + "  connection");
+//				try {
+//
+//					in = new ObjectInputStream(socket[i].getInputStream());
+//
+//
+//					Message message = (Message) in.readObject();
+//
+////					MouseEvent event = message.getMouseEvent();
+//
+//					world = message.getWorld();
+//					System.out.println("updated my world[SERVERM]");
+//
+//					for(int j =  0 ; j<socket.length; j++){
+//
+//						out = new ObjectOutputStream(socket[i].getOutputStream());
+//
+//						Message mess = new Message(world);
+//
+//						out.writeObject(mess);
+//						System.out.println("sent out world to" + j + "player");
+//					}
+//
+//
+//				} catch (IOException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				} catch (ClassNotFoundException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//
+//
+//
+//			}
+
 		}
 
 

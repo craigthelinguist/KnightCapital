@@ -179,26 +179,4 @@ public class PartyPanel extends JPanel {
 
 	}
 
-
-
-	public static void main(String[] args){
-		JFrame frame = new JFrame();
-		JPanel panel = new JPanel();
-		Player player = new Player("Biggie Smalls",2);
-		Hero hero = new Hero("ovelia",player, new HeroStats(40,10,80,0,8,8));
-		Creature[][] members = Party.newEmptyParty();
-		members[0][0] = hero;
-		members[0][1] = new Unit("knight",player, new UnitStats(80,20,20,5));
-		members[1][1] = new Unit("knight",player, new UnitStats(80,20,20,5));
-		Party party = new Party(hero, player, members);
-		PartyPanel tpp = new PartyPanel(party);
-		//tpp.party = party;
-		panel.add(tpp);
-		frame.add(tpp);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.pack();
-		frame.setVisible(true);
-	}
-
-
 }

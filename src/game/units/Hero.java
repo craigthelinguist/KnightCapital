@@ -19,29 +19,8 @@ import tools.ImageLoader;
  */
 public class Hero extends Creature {
 
-	public static final int INVENTORY_SIZE = 6;
-
-	// how far this hero can move on the world
-	private Item[] inventory;
-
-	@Deprecated
-	/** Use the other constructor **/
-	public Hero(String imgName,Player player, HeroStats stats){
-		super(imgName,player,stats);
-		inventory = new Item[INVENTORY_SIZE];
-	}
-
 	public Hero(String name, String imgName, Player player, HeroStats stats){
 		super(name,imgName,player,stats);
-		inventory = new Item[INVENTORY_SIZE];
-	}
-
-	public int getMovePoints(){
-		return this.stats.getTotal(Stat.MOVEMENT);
-	}
-
-	public void setMovePts(int newPts){
-		this.stats.setBase(Stat.MOVEMENT, newPts);
 	}
 
 }

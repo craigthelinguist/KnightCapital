@@ -101,7 +101,7 @@ public class TileInformationPanel extends JPanel{
 
 
 			/*Setup the labels to display the city image*/
-			tileInfoTitle = new JLabel("City");
+			tileInfoTitle = new JLabel(city.getName());
 			tileInfoTitle.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 30));
 			tileInfoTitle.setForeground(new Color(225,179,55));
 			c.insets = new Insets(0,0,0,120);
@@ -172,7 +172,7 @@ public class TileInformationPanel extends JPanel{
 				c.gridy = 4;
 				this.add(tileLabel,c);
 
-				tileInfoTitle = new JLabel("Ovelia");
+				tileInfoTitle = new JLabel(party.getHero().getName());
 				tileInfoTitle.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 20)); //set font of JLabel to franklin gothic medium
 				tileInfoTitle.setForeground(new Color(225,179,55));
 				c.insets = new Insets(0,0,0,120);
@@ -183,7 +183,7 @@ public class TileInformationPanel extends JPanel{
 				this.add(tileInfoTitle,c);
 
 				/*set up the label that displays how many moves the player has left */
-				name = new JLabel("Harry");
+				name = new JLabel(party.getOwner().name);
 				name.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 13));
 				name.setForeground(new Color(225,179,55));
 				c.insets = new Insets(10,0,0,0);
@@ -194,15 +194,21 @@ public class TileInformationPanel extends JPanel{
 
 				/*set up the label that displays how many moves the player has left */
 				Party p =(Party)occupant;
-				int damage = p.getHero().getBase(Stat.DAMAGE);
-				int health = p.getHero().getBase(Stat.HEALTH);
-				int armour = p.getHero().getBase(Stat.ARMOUR);
+				int moves = p.getMovePoints();
+				int totalMoves = p.getHero().get(Stat.MOVEMENT);
+				int healthiness = p.healthiness();
 
-				int buffD = p.getHero().getBuffed(Stat.DAMAGE);
-				int buffH = p.getHero().getBuffed(Stat.HEALTH);
-				int buffA = p.getHero().getBuffed(Stat.ARMOUR);
+				String html = "<html><font color='yellow'>Moves: </font>";
 
-				movesLeft = new JLabel("<html>Health: "+health+"<font color='green'> +"+buffH+"</font> <br>Damage: "+damage+"<font color='green'> +"+buffD+"</font> <br>Armour: "+armour+"<font color='green'> +"+buffA+"</font><br></html>");
+				if (moves == 0){
+					html += "<font color='red'>" + moves + "/" + totalMoves + "</font><br/>";
+				}
+				else{
+					html += "<font color='white'>" + moves + "/" + totalMoves + "</font><br/>";
+				}
+
+				html += "<font color='yellow'>Healthiness: </font><font color='white'>" + healthiness + "%</font><br/></html>";
+				movesLeft = new JLabel(html);
 				movesLeft.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 15));
 				movesLeft.setForeground(new Color(225,179,55));
 				c.insets = new Insets(1,0,8,0);
@@ -234,16 +240,6 @@ public class TileInformationPanel extends JPanel{
 				c.gridy = 5;
 				this.add(partyButton,c);
 
-				/*Get the members of the party and check their health. Get average and dispaly in label*/
-				int average = party.healthiness();
-
-				partySize = new JLabel("<html>Party Health: <font color = 'green'>"+average+"%</font></html>");
-				partySize.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 15));
-				partySize.setForeground(new Color(225,179,55));
-				c.insets = new Insets(1,1,8,0);
-				c.gridx = 1;
-				c.gridy = 5;
-				this.add(partySize,c);
 				revalidate(); //revalidate this panel (displays all the information)
 			}
 

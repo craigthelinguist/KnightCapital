@@ -308,7 +308,7 @@ public class PartyDialog extends JDialog  {
 		Unit u4 = new Unit("archer","knight",p,new UnitStats(60,15,70,0,AttackType.RANGED));
 		Unit u5 = new Unit("archer","knight",p,new UnitStats(60,15,70,0,AttackType.RANGED));
 		Unit u6 = new Unit("knight","knight",p,new UnitStats(100,25,40,1,AttackType.MELEE));
-		Creature[][] members = Party.newEmptyParty();
+		Creature[][] members = Party.newEmptyPartyArray();
 		members[0][0] = u3;
 		members[0][1] = u6;
 		members[0][2] = hero;

@@ -11,16 +11,6 @@ public class PassiveItem extends Item{
 
 	public PassiveItem(String name, String imgName, String description, Effect[] effectsArray, Target target, String filename) {
 		super(name,imgName,description,effectsArray,target,filename);
-
-
-		/*
-		for (int i = 0; i < buffs.length; i++){
-			Buff b = buffs[i];
-			if (b.target != Target.HERO || b.target != Target.PARTY){
-				throw new RuntimeException("A passiveitem can only have buffs that affect the hero or the entire party");
-			}
-		}
-		*/
 	}
 
 	/**

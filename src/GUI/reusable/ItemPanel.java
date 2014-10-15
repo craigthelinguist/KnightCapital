@@ -33,7 +33,7 @@ public class ItemPanel extends JPanel {
 	// data that this Ordering Panel Displays
 	private Party party;
 	private Point dragging;
-	
+
 	private Item selected;
 
 	private final int PORTRAIT_WIDTH = Constants.INVENTORY_DIMENSIONS.width;
@@ -157,7 +157,7 @@ public class ItemPanel extends JPanel {
 		public void mousePressed(MouseEvent e) {
 			Point pt = asArrayIndices(e.getX(),e.getY());
 			if (party != null && party.getMember(pt.x, pt.y) != null){
-				
+
 				dragging = asArrayIndices(e.getX(),e.getY());
 			}
 		}
@@ -177,25 +177,5 @@ public class ItemPanel extends JPanel {
 		}
 
 	}
-
-	public static void main(String[] args){
-		JFrame frame = new JFrame();
-		JPanel panel = new JPanel();
-		Player player = new Player("Biggie Smalls",2);
-		Hero hero = new Hero("ovelia",player, new HeroStats(40,10,80,0,8,8));
-		Creature[][] members = Party.newEmptyParty();
-		members[0][0] = hero;
-		Party party = new Party(hero, player, members);
-		Buff[] buffsAmulet = new Buff[]{ Buff.newTempBuff(Stat.DAMAGE, 5) };
-		party.addItem(new PassiveItem("Amulet", "amulet", "An amulet that grants sickening gains.\n +5 Damage",buffsAmulet,Target.HERO,"liontalisman.xml"));
-		ItemPanel tpp = new ItemPanel(party);
-
-		panel.add(tpp);
-		frame.add(panel);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.pack();
-		frame.setVisible(true);
-	}
-
 
 }

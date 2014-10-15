@@ -7,10 +7,19 @@ import java.awt.event.MouseListener;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.awt.Point;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import world.World;
+import world.icons.Party;
+import world.icons.WorldIcon;
+import world.tiles.Tile;
+import controllers.WorldController;
 
 
 /**
@@ -21,33 +30,62 @@ import javax.swing.JPanel;
  *which then deals with them accordingly in order to update game state.
  *
  */
-public class ClientMovementProtocol implements MouseListener, KeyListener, Runnable{
-	private DataInputStream in;
-	private DataOutputStream out;
+public class ClientMovementProtocol implements  Runnable{
+	private ObjectInputStream in;
+	private ObjectOutputStream out;
+	private WorldController world;
 	private int keyPressed;
+
+	private Point current;
+	private int currentILoc;
+	private int currentJLoc;
+
+	private Packet incoming;
+
+	private ClientMoveInputProtocol  readIncoming;
 
 
 	//System.out.println(String.valueOf(ke.getKeyChar()).toUpperCase());
 
 
-	public ClientMovementProtocol(DataInputStream in, DataOutputStream out){
+	public ClientMovementProtocol(ObjectInputStream in, ObjectOutputStream out, WorldController world){
 
 		this.in=in;
 		this.out=out;
+		this.world = world;
+
+		readIncoming = new ClientMoveInputProtocol(in, world);
+		Thread thread = new Thread(readIncoming);
+		thread.start();
 
 
-		JFrame f =  new JFrame();
-		JPanel x =  new JPanel();
-		x.add(new JLabel("Test"));https://developer.valvesoftware.com/wiki/Source_Multiplayer_Networking
+		World model = world.getWorld();
+		Tile[][] tiles = model.getTiles();
+		for (int i = 0; i < tiles.length; i++){
+			for (int j = 0; j < tiles[i].length; j++){
 
-		x.addMouseListener(this);
-		x.addKeyListener(this);
-		x.setSize(200, 200);
-		f.add(x);
+				Tile tile = tiles[i][j];
+				WorldIcon occupant = tile.occupant();
+				if (occupant instanceof Party){
+					Party party = (Party)occupant;
+
+					if(party.getOwner() == world.getPlayer()){
+
+						currentILoc = i;
+						currentJLoc = j;
 
 
-		f.setVisible(true);
-		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+					}
+
+				}
+
+			}
+		}
+
+
+
+
+
 	}
 
 
@@ -56,6 +94,45 @@ public class ClientMovementProtocol implements MouseListener, KeyListener, Runna
 
 	@Override
 	public void run() {
+
+		while(true){
+
+			World model = world.getWorld();
+			Tile[][] tiles = model.getTiles();
+			for (int i = 0; i < tiles.length; i++){
+				for (int j = 0; j < tiles[i].length; j++){
+
+					Tile tile = tiles[i][j];
+					WorldIcon occupant = tile.occupant();
+					if (occupant instanceof Party){
+						Party party = (Party)occupant;
+
+						if(party.getOwner() == world.getPlayer()){
+
+
+							if(currentILoc!=i && currentJLoc != j){
+                             System.out.println("there has been a change!");
+                             Packet update = new Packet(world.getPlayer(), i, j);
+                             currentILoc = i; currentJLoc = j;
+
+
+                             try {
+								out.writeObject(update);
+							} catch (IOException e) {
+								System.out.println("couldn't send packets");
+								e.printStackTrace();
+							}
+
+							}
+						}
+					}
+				}
+			}
+
+
+		}
+
+
 
 
 	}
@@ -67,85 +144,5 @@ public class ClientMovementProtocol implements MouseListener, KeyListener, Runna
 
 	}
 
-
-
-
-	@Override
-	public void keyTyped(KeyEvent e) {
-
-
-	}
-
-
-
-
-	/**
-	 * when a key event is pressed it turns it into an integer which is sent via the outputstream
-	 * to the server side.
-	 */
-
-	@Override
-	public void keyPressed(KeyEvent e) {
-
-
-		keyPressed = e.getKeyCode();
-		String keyPressedString = e.toString();
-
-
-		System.out.println("in client move prot and a key was pressed: " + keyPressed);
-
-		try {
-			out.writeInt(keyPressed);
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-
-
-
-	}
-
-
-
-	@Override
-	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-		System.out.println("mouse pressed!!");
-
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
 
 }

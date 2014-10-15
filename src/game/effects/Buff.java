@@ -52,7 +52,6 @@ public class Buff implements Effect{
 
 	/**
 	 * Apply this buff to a creature.
-	 * SHOULD ONLY BE CALLED FROM CREATURE.
 	 * @param c: creature to apply buff to
 	 */
 	public void applyTo(Creature c){
@@ -64,7 +63,6 @@ public class Buff implements Effect{
 	/**
 	 * Remove this buff from a creature.
 	 * This method should 'undo' the effects of applyTo(c)
-	 * SHOULD ONLY BE CALLED FROM CREATURE.
 	 * @param c: creature to remove buff from.
 	 */
 	public void removeFrom(Creature c){
@@ -73,16 +71,10 @@ public class Buff implements Effect{
 		c.setBuffed(stat,newValue);
 	}
 
-	/**
-	 * Return true if this buff is permanent.
-	 * @return: boolean
-	 */
-	public boolean isPermanent() {
-		return permanent;
-	}
 
 	@Override
 	public boolean equals(Object other){
+		if (other == null) return false;
 		if (!(other instanceof Buff)) return false;
 		Buff otherBuff = (Buff)other;
 		return otherBuff.stat == stat && otherBuff.amount == amount && otherBuff.permanent == permanent;

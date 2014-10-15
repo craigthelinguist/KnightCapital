@@ -21,7 +21,7 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 
 import player.Player;
-import storage.TemporaryLoader;
+import storage.generators.TemporaryLoader;
 import tools.Constants;
 import tools.ImageLoader;
 import world.World;

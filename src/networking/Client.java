@@ -12,6 +12,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 
+import controllers.WorldController;
 import player.Player;
 /**
  *A client connection receives information about the current state of the game
@@ -27,14 +28,16 @@ public class Client implements Runnable {
 
 	private static PrintWriter printWriter;
 
+	//World for clients!
+    private WorldController world;
 
 	//in and out for messaging.
 	private  static DataInputStream in;
 	private static DataOutputStream out;
 
 	//in and out for movement.
-	private static DataInputStream moveIn;
-	private static DataOutputStream moveOut;
+	private static ObjectInputStream moveIn;
+	private static ObjectOutputStream moveOut;
 
 	private static ClientMessagingProtocol clientMessager;
 	private static ClientMovementProtocol clientMover;
@@ -51,8 +54,9 @@ public class Client implements Runnable {
 
 
 
-	public Client(String ipAddress, int msgPort, int movePort) {
+	public Client(String ipAddress, int msgPort, int movePort, WorldController world) {
 		String s = "wrong!";
+		this.world = world;
 
 		try {
 
@@ -78,14 +82,17 @@ public class Client implements Runnable {
 
 
 			//construct in and out stream for movement
-			moveIn = new DataInputStream(moveSocket.getInputStream());
-			moveOut = new DataOutputStream(moveSocket.getOutputStream());
+			moveIn = new ObjectInputStream(moveSocket.getInputStream());
+			moveOut = new ObjectOutputStream(moveSocket.getOutputStream());
+			out.flush();
+			
+			System.out.println("[client] made data and object streams!");
 
 			//initialises the client protocol thread which is always -
 			//- listening for incoming messages from the server.
 			clientMessager = new ClientMessagingProtocol(in,out);
 
-			clientMover = new ClientMovementProtocol(moveIn, moveOut);
+			clientMover = new ClientMovementProtocol(moveIn, moveOut, world);
 
 
 			Thread listener = new Thread(clientMessager);
@@ -105,30 +112,18 @@ public class Client implements Runnable {
 
 		while(true){
 
-			try {
+			
+					try {
+						
+						out.writeUTF(message());
+					
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 
-				    if(!clientMessager.getStatus()){
 
-				    	System.out.println("server inactive...closing application");
-				    	System.exit(0);
-
-				    }
-					out.writeUTF(message());
-
-
-			}
-			//suppress the exception shutdown the client
-			catch (EOFException e) {
-
-			System.out.println("server no longer active, shutting down");
-			System.exit(0);
-
-			}
-
-			catch (IOException e) {
-
-				e.printStackTrace();
-			}
+			
 
 		}
 	}

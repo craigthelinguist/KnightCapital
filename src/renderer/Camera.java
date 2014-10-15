@@ -1,5 +1,7 @@
 package renderer;
 
+import java.io.Serializable;
+
 import tools.Constants;
 
 /**
@@ -12,6 +14,10 @@ import tools.Constants;
 
 public class Camera {
 
+	/**
+	 * 
+	 */
+	
 	// For orientation direction
 	public static final int NORTH = 0;
 	public static final int EAST = 1;

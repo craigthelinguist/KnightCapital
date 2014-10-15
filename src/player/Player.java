@@ -1,7 +1,13 @@
 package player;
 
-public class Player {
+import java.io.Serializable;
 
+public class Player implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	// name = name of the player
 	// slot = player 1, player 2, etc.
 	public final String name;

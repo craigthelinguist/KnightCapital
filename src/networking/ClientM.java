@@ -32,8 +32,10 @@ public class ClientM extends Thread implements MouseListener{
 	 * constructor
 	 * @param socket - the socket for the client
 	 * */
-	public ClientM(Socket socket){
+	public ClientM(Socket socket, WorldController game){
+
 		this.socket = socket;
+	    this.world = game;
 
 	}
 
@@ -46,38 +48,6 @@ public class ClientM extends Thread implements MouseListener{
 	@Override
 	public void run() {
 
-		Message message = new Message(world);
-
-		System.out.println("ready bruh!");
-
-		try {
-//			Socket socket = new Socket(InetAddress.getLocalHost(), 8989);
-			System.out.println("In there boii");
-			ObjectOutputStream clientOutputStream = new ObjectOutputStream(socket.getOutputStream());
-		    System.out.println("past output");
-//			ObjectInputStream clientInputStream = new ObjectInputStream(socket.getInputStream());
-		    System.out.println("past input");
-
-		    byte[] gyeah = Serialization.serialize(world);
-		    System.out.println("serialized");
-		    clientOutputStream.write(gyeah);
-
-//		    world = in;
-
-//		    message = (Message) clientInputStream.readObject();
-
-		    System.out.println("recieved bawse!!");
-
-
-
-
-		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 
 
 
@@ -121,6 +91,8 @@ public class ClientM extends Thread implements MouseListener{
 		// TODO Auto-generated method stub
 
 	}
+
+
 
 
 

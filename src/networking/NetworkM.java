@@ -27,95 +27,21 @@ private static int numConnects = 0;
 	 * @param world - WorldControl.
 	 * @param port - The port number.
 	 * @param clients - Number of clients
+	 * @throws IOException
 	 *
 	 *
 	 **/
-	public static void createServer(WorldController world, int port, int clients){
-
-		System.out.println("listening on port : "+port);
-
-		ServerM swerv;
-		try{
-
-
-			//array of clients connecting to the server
-//			ClientM[] connections = new ClientM[clients];
-
-			Socket[] connectors = new Socket[clients];
-
-
-			socket = new ServerSocket(port);
-
-
-			//make the state of the game waiting
-
-			System.out.println("waiting for "+clients+" to join");
-
-			//			world.setState = waiting
-			//loop till game over
-			while(clients!=0){
-				Socket sock = socket.accept();
-				//add client socket to clients.
-				connectors[numConnects] = sock;
-
-				//update counters.
-				clients--;
-				numConnects++;
-
-                //make input output streams
-				out = new DataOutputStream(sock.getOutputStream());
-				out.flush();
-				in = new DataInputStream(sock.getInputStream());
-
-
-				//send out greetings from server to client.
-				out.writeUTF("hello from server");
-				out.flush();
-
-				System.out.println(in.readUTF());
-				System.out.println("accepted connection from : "+sock.getInetAddress());
-
-//				int id = world;
-
-				//loop around adding a client till client equals 0
-
-				System.out.println("waiting for "+clients+" to join");
+	public static void createServer(WorldController world, int port, int clients) throws IOException{
 
 
 
 
-				//can now start implementing world and game connections with clients.
-				if(clients==0){
-					System.out.println("All clients are now connected");
-					//make the state of the game to playing
-					//example: game.setState(WorldController.playing);
-
-//					 swerv = new ServerM(sock, world);
-//					swerv.start();
-
-					//start the threads
-
-					swerv = new ServerM(sock, world);
-		             swerv.start();
-
-					startGame(world, connectors, sock);
-//					socket.close();
-					//connection step completed
-					return;
-				}
 			}
 
 
-             socket.close();
 
 
-		}catch(IOException e){e.printStackTrace();}
-
-
-	}
-
-
-	public static void createClient(String addr, int port, String name) throws IOException {
+	public static void createClient(String addr, int port, String name, WorldController game) throws IOException {
 		Socket s = new Socket(addr, port);
 		System.out.println("CONNECTED TO " + addr + ": " + port);
 		DataOutputStream out = new DataOutputStream(s.getOutputStream());
@@ -125,7 +51,9 @@ private static int numConnects = 0;
 		System.out.println(input.readUTF());
 
 
-		ClientM sv = new ClientM(s);
+
+		ClientM sv = new ClientM(s, game);
+
 		sv.run();
 
 
@@ -169,5 +97,7 @@ private static int numConnects = 0;
 		}
 
 	}
+
+
 
 }
