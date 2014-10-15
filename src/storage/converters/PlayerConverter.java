@@ -13,6 +13,11 @@ import com.thoughtworks.xstream.converters.UnmarshallingContext;
 import com.thoughtworks.xstream.io.HierarchicalStreamReader;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 
+/**
+ * used to load player objects from <player> tags
+ * @author craigaaro
+ *
+ */
 public class PlayerConverter implements Converter {
 
 	@Override
@@ -27,7 +32,7 @@ public class PlayerConverter implements Converter {
 	 * @param writer
 	 * @param reader
 	 */
-	public void marshal(Object source, HierarchicalStreamWriter writer, MarshallingContext context) {		
+	public void marshal(Object source, HierarchicalStreamWriter writer, MarshallingContext context) {
 		if (source == null){
 			writer.setValue("null");
 			return;
@@ -47,14 +52,14 @@ public class PlayerConverter implements Converter {
 	 */
 	public Object unmarshal(HierarchicalStreamReader reader, UnmarshallingContext context) {
 		if (!reader.hasMoreChildren()){
-			
+
 			String str = reader.getValue();
 			if (str.equals("null")) return null;
 			else{
 				int index = Integer.parseInt(str);
 				return WorldLoader.getPlayer(index);
 			}
-			
+
 		}
 		Player player;
 		reader.moveDown();

@@ -8,7 +8,11 @@ import java.io.File;
 import tools.Constants;
 
 import com.thoughtworks.xstream.XStream;
-
+/**
+ * Used to load item objects from data files.
+ * @author craigaaro
+ *
+ */
 public class ItemLoader{
 
 	private ItemLoader(){}

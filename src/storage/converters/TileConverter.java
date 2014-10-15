@@ -16,6 +16,10 @@ import com.thoughtworks.xstream.converters.UnmarshallingContext;
 import com.thoughtworks.xstream.io.HierarchicalStreamReader;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 
+/**
+ * Used to load tile objects from data files.
+ * @author craigaaro *
+ */
 public class TileConverter implements Converter {
 
 	@Override
