@@ -10,6 +10,10 @@ import javax.imageio.ImageIO;
 
 import renderer.Animation;
 
+/**
+ * Provides convenience methods for loading images.
+ * @author Aaron Craig
+ */
 public class ImageLoader {
 
 	// use the static methods

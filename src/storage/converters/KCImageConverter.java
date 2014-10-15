@@ -11,6 +11,10 @@ import com.thoughtworks.xstream.converters.UnmarshallingContext;
 import com.thoughtworks.xstream.io.HierarchicalStreamReader;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 
+/**
+ * Used to load KCImage objects from file.
+ * @author craigaaro
+ */
 public class KCImageConverter implements Converter {
 
 	@Override

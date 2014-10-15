@@ -32,10 +32,15 @@ import world.tiles.PassableTile;
 import world.tiles.Tile;
 import world.towns.City;
 
+/**
+ * Used to load and save worlds.
+ * @author Aaron the Craig
+ */
 public class WorldLoader {
 
 	private WorldLoader(){}
 
+	// stores data about the world being constructed
 	private static Map<String,City> incompleteCities = new HashMap<>();
 	private static Map<String,List<CityTile>> cityTiles = new HashMap<>();
 	private static Map<Integer,Player> players = new HashMap<>();
@@ -76,7 +81,10 @@ public class WorldLoader {
 		ps.close();
 	}
 
-
+	/**
+	 * Reconstruct this world given the information in its maps.
+	 * @return: a World object
+	 */
 	protected static World constructWorld(){
 
 		// reconstruct the cities
@@ -101,6 +109,12 @@ public class WorldLoader {
 
 	}
 
+	/**
+	 * Given a list of city tiles, return the corresponding CityTile[][] array.
+	 * @param cityName: name of the city
+	 * @param cityTiles: sequential list of city tiles
+	 * @return
+	 */
 	private static CityTile[][] as2Darray(String cityName, List<CityTile> cityTiles){
 
 		// quick check to make sure you have the right number of tiles

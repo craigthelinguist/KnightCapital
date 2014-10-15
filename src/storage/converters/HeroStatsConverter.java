@@ -15,7 +15,11 @@ import com.thoughtworks.xstream.converters.MarshallingContext;
 import com.thoughtworks.xstream.converters.UnmarshallingContext;
 import com.thoughtworks.xstream.io.HierarchicalStreamReader;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
-
+/**
+ * Used to read and write xml tags for HeroStats objects.
+ * @author craigaaro
+ *
+ */
 public class HeroStatsConverter implements Converter{
 
 	@Override

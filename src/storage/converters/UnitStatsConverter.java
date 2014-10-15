@@ -13,7 +13,11 @@ import com.thoughtworks.xstream.converters.MarshallingContext;
 import com.thoughtworks.xstream.converters.UnmarshallingContext;
 import com.thoughtworks.xstream.io.HierarchicalStreamReader;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
-
+/**
+ * Used to load unit stats objects from files
+ * @author craigaaro
+ *
+ */
 public class UnitStatsConverter implements Converter {
 
 	@Override

@@ -25,6 +25,11 @@ import com.thoughtworks.xstream.converters.UnmarshallingContext;
 import com.thoughtworks.xstream.io.HierarchicalStreamReader;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 
+/**
+ * Used to read and write xml tags for Item objects.
+ * @author craigaaro
+ *
+ */
 public class ItemConverter implements Converter{
 
 	@Override

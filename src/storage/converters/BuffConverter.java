@@ -9,6 +9,10 @@ import com.thoughtworks.xstream.converters.UnmarshallingContext;
 import com.thoughtworks.xstream.io.HierarchicalStreamReader;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 
+/**
+ * Used to read and write xml tags for Buffs.
+ * @author craigaaro
+ */
 public class BuffConverter implements Converter{
 
 	@Override
@@ -32,9 +36,9 @@ public class BuffConverter implements Converter{
 
 	@Override
 	public Object unmarshal(HierarchicalStreamReader reader, UnmarshallingContext context) {
-		
+
 		Stat stat; boolean permanent; int amount;
-		
+
 		reader.moveDown();
 			stat = Stat.valueOf(reader.getValue());
 		reader.moveUp();
@@ -47,7 +51,7 @@ public class BuffConverter implements Converter{
 
 		if (permanent) return Buff.newPermaBuff(stat, amount);
 		else return Buff.newTempBuff(stat, amount);
-		
+
 	}
 
 }
