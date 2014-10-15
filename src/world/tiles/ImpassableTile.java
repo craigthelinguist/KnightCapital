@@ -4,7 +4,7 @@ import world.icons.Party;
 
 /**
  * Creates a tile that cannot be stood on by a party in the world.
- * @author Aaron
+ * @author Aaron, myles
  */
 public class ImpassableTile extends Tile{
 
