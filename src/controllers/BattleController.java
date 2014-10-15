@@ -209,6 +209,10 @@ public class BattleController{
 		frame.redraw();
 	}
 
+	/**
+	 * Respond to a mouse moved event.
+	 * @param me: the event.
+	 */
 	public void mouseMoved(MouseEvent me){
 
 		Point ptIso = new Point(me.getX(),me.getY());
@@ -264,19 +268,34 @@ public class BattleController{
 		resetHighlightedTiles();
 	}
 
-
+	/**
+	 * Get the world attached to this controller.
+	 * @return: world
+	 */
 	public World getWorld(){
 		return world;
 	}
 
+	/**
+	 * Get the current viewing perspective of this controller.
+	 * @return: camera
+	 */
 	public Camera getCamera(){
 		return camera;
 	}
 
+	/**
+	 * Get the currently selected tile, if it exists.
+	 * @return: currenty selected tile, or null if there isn't one.
+	 */
 	public Tile getSelectedTile(){
 		return world.getTile(selected);
 	}
 
+	/**
+	 * Get the width of the gui dimensions.
+	 * @return: dimension object
+	 */
 	public Dimension getVisualDimensions() {
 		if (frame == null) return Toolkit.getDefaultToolkit().getScreenSize();
 		return frame.getSize();

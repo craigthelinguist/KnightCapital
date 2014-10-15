@@ -16,21 +16,8 @@ import game.units.UnitStats;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.InetAddress;
-
 import java.io.IOException;
 import java.io.Serializable;
-
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashSet;
@@ -39,9 +26,7 @@ import java.util.Set;
 import javax.swing.SwingUtilities;
 
 import networking.Client;
-import networking.NetworkM;
 import networking.Server;
-import networking.ServerM;
 import player.Player;
 import renderer.Camera;
 import renderer.WorldRenderer;
@@ -70,11 +55,6 @@ import GUI.world.MainFrame;
  */
 public class WorldController implements Serializable{
 
-	/**
-	 *
-	 */
-	private static final long serialVersionUID = 1L;
-
 	//boolean server or client, true if server, false if client.
 	private boolean serverOrClient = false;
 
@@ -96,7 +76,6 @@ public class WorldController implements Serializable{
 
 	// current tile the player has clicked
 	private Point selected;
-	private Point hover; // point your mouse is over
 
 	// highlighted tiles that are showing where the player's selected party can move to
 	private Set<Point> highlightedTiles;
@@ -132,15 +111,9 @@ public class WorldController implements Serializable{
 
 		/**
 		 * comment this out to get controller to load from main menu
-		 */
+
 
 		if(serverOrClient){
-//<<<<<<< HEAD
-////			ServerM.run(this);
-//
-//			NetworkM.createServer(this, 2020, 2);
-//=======
-			//NetworkM.createServer(this, 2020, 2);
 			try {
 				server = new Server(this);
 			} catch (IOException e) {
@@ -151,42 +124,13 @@ public class WorldController implements Serializable{
 		}
 
 		else {
-
-//<<<<<<< HEAD
-////			ClientM.run(this);
-////				client.start();
-//				try {
-//					NetworkM.createClient("localhost", 2020, "selemonClient");
-//				} catch (IOException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//=======
-
-
-//				try {
-//					NetworkM.createClient("localhost", 2020, "selemonClient", this);
-//				} catch (IOException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
 				client = new Client("130.195.4.159", 45812, 45612, this);
 
 
 
-
-//			try {
-//				NetworkM.createClient("localhost", 2020, "selemonClient");
-//				client = new Client("130.195.6.170", 45612, 45812);
-//			} catch (IOException e) {
-//
-//				e.printStackTrace();
-//			}
-			//			client = new Client("130.195.6.98", 45612);
-
-
-
 		}
+
+		**/
 
 	}
 
@@ -333,8 +277,6 @@ public class WorldController implements Serializable{
 		Point ptIso = new Point(me.getX(),me.getY());
 		Point ptCartesian = Geometry.isometricToCartesian(ptIso, camera, world.dimensions);
 		Tile tileHover = world.getTile(ptCartesian);
-		if (tileHover == null) this.hover = ptCartesian;
-		else this.hover = null;
 	}
 
 	/**
