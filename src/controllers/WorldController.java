@@ -66,6 +66,8 @@ public class WorldController implements Serializable{
 
 	// player this controller belongs to
 	private Player player;
+	
+	private boolean isServer;
 
 	// current tile the player has clicked
 	private Point selected;
@@ -87,7 +89,9 @@ public class WorldController implements Serializable{
 	private static final int PAN_RIGHT = KeyEvent.VK_RIGHT;
 	private static final int PAN_LEFT = KeyEvent.VK_LEFT;
 
-	public WorldController(World w, Player p){
+	public WorldController(World w, Player p, Boolean isServer){
+
+		this.isServer= isServer;
 		world = w;
 		player = p;
 		camera = WorldRenderer.getCentreOfWorld(w);
@@ -96,21 +100,13 @@ public class WorldController implements Serializable{
 		selected = null;
 		highlightedTiles = new HashSet<>();
 
-		/**
-		 * comment this out to get controller to load from main menu
-		if(serverOrClient){
-			try {
-				server = new Server(this);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		else {
-				client = new Client("130.195.4.159", 45812, 45612, this);
-		}
 
-		**/
+	
+
+
+
 	}
+
 
 	/**
 	 * Player has pushed a key. Perform any actions and update/redraw game-state if necessary.
@@ -157,6 +153,8 @@ public class WorldController implements Serializable{
 
 
 	}
+
+
 
 	/**
 	 * Player has clicked on something. Perform any actions depending on the nature of their
@@ -434,7 +432,7 @@ public class WorldController implements Serializable{
 
 	public static void aaron_main_2(String[] args) throws IOException{
 		World world = WorldLoader.load(Constants.DATA_WORLDS + "test_save.xml");
-		new WorldController(world,world.getPlayers()[0]);
+		new WorldController(world,world.getPlayers()[0],true);
 	}
 
 	public static void aaron_main(String[] args){
@@ -493,8 +491,136 @@ public class WorldController implements Serializable{
 		w.getTile(1,6).setIcon(itemIcon2);
 		w.getTile(8,8).setIcon(itemIcon3);
 
-		new WorldController(w,p);
+		new WorldController(w,p,true);
 	}
+
+
+	public static void ewan_main(String[] args){
+		/*Loading items*/
+		Buff[] buffsAmulet = new Buff[]{ Buff.newTempBuff(Stat.DAMAGE,5) };
+		PassiveItem amulet = new PassiveItem("amulet", "amulet", "An amulet that grants sickening gains.\n +5 Damage",buffsAmulet,Target.HERO, "liontalisman.xml");
+
+		Buff[] buffsWeapon = new Buff[]{ Buff.newPermaBuff(Stat.DAMAGE,5), Buff.newTempBuff(Stat.ARMOUR, 10) };
+		PassiveItem weapon = new PassiveItem("weapon", "weapon", "A powerful weapon crafted by the mighty Mizza +5 Damage",buffsWeapon,Target.HERO, null);
+
+		Buff[] buffsArrows= new Buff[]{ Buff.newTempBuff(Stat.DAMAGE,1) };
+		PassiveItem arrows = new PassiveItem("poisonarrow", "poisonarrow", "Poisonous arrows whose feathers were made from the hairs of Mizza. All archers in party gain +1 damage",buffsArrows, Target.PARTY, null);
+
+
+		ItemIcon amuletChest = new ItemIcon(amulet);
+
+		ItemIcon weaponChest = new ItemIcon(weapon);
+
+		ItemIcon arrowsChest = new ItemIcon(arrows);
+
+
+		/*Loading the playey*/
+		Player p = new Player("John The Baptist",1);
+		World w = ewan_world();
+		HeroStats stats_hero = new HeroStats(60,10,80,0,6,10,AttackType.MELEE);
+		Hero hero = new Hero("ovelia","ovelia",p,stats_hero);
+
+		/*load the units into the party*/
+		Unit u3 = new Unit("knight","knight",p,new UnitStats(100,25,40,1,AttackType.MELEE));
+		Unit u4 = new Unit("archer","archer",p,new UnitStats(60,15,70,0,AttackType.RANGED));
+		Unit u5 = new Unit("archer","archer",p,new UnitStats(60,15,70,0,AttackType.RANGED));
+		Unit u6 = new Unit("knight","knight",p,new UnitStats(100,25,40,1,AttackType.MELEE));
+		Creature[][] members2 = Party.newEmptyPartyArray();
+		members2[0][0] = u3;
+		members2[1][0] = u6;
+		members2[2][0] = hero;
+		members2[0][1] = u4;
+		members2[2][1] = u5;
+		Party party = new Party(hero,p,members2);
+		party.refresh();
+		party.addItem(arrows);
+
+
+
+		Tile[][] tiles = w.getTiles();
+		for (int y = 1; y < 10; y++){
+			for (int x = 1; x < 10; x++){
+				double rand = Math.floor((Math.random() * 20) + 1);
+				if(rand > 18 && (!(w.getTile(x,y) instanceof ImpassableTile))) {
+					w.getTile(x,y).setIcon(weaponChest);
+				}
+				else if(rand > 17 && (!(w.getTile(x,y) instanceof ImpassableTile))) {
+					w.getTile(x,y).setIcon(amuletChest);
+				}
+				else if(rand > 16 && (!(w.getTile(x,y) instanceof ImpassableTile))) {
+					w.getTile(x,y).setIcon(arrowsChest);
+				}
+				else {
+
+				}
+			}
+		}
+
+
+		/*Lay the items down on the tiles*/
+		w.getTile(0,0).setIcon(party);
+		/**w.getTile(1,1).setIcon(itemIcon); //place a floor item on this tile
+		w.getTile(1,2).setIcon(itemIcon2);
+		w.getTile(1,3).setIcon(itemIcon2);
+		w.getTile(1,4).setIcon(itemIcon);
+		w.getTile(1,6).setIcon(itemIcon2);
+		w.getTile(8,8).setIcon(itemIcon3);*/
+
+		new WorldController(w,p,true);
+	}
+
+
+
+
+
+	/**
+	 * This is a test for creating a world with custom tiles.
+	 * @return World
+	 */
+	public static World ewan_world() {
+		Player p = new Player("John The Baptist",4);
+
+
+
+		// create tiles
+		Tile[][] tiles = new Tile[10][10];
+		for (int y = 0; y < 10; y++){
+			for (int x = 0; x < 10; x++){
+				double rand = Math.floor((Math.random() * 50) + 1);
+				if(rand > 48) {
+					tiles[x][y] = new ImpassableTile("tree",8,9);
+				}
+				else if(rand > 45) {
+					tiles[x][y] = new ImpassableTile("bigTree",8,9);
+				}
+				else if(rand > 40 ) {
+					tiles[x][y] = PassableTile.newDirtTile(x,y);
+				}
+				else {
+					tiles[x][y] = PassableTile.newGrassTile(x,y);
+				}
+			}
+		}
+
+		// add a city
+		CityTile[][] cityTiles = new CityTile[City.WIDTH][City.WIDTH];
+
+		for (int i=4, a=0; i <= 6; i++, a++){
+			for (int j=4, b=0; j <= 6; j++, b++){
+				CityTile ct = new CityTile(i,j);
+				tiles[i][j] = ct;
+				cityTiles[a][b] = ct;
+			}
+		}
+
+		City city = new City("Porirua","basic", p, cityTiles);
+		Player[] players = new Player[]{ p };
+		Set<City> cities = new HashSet<>();
+		cities.add(city);
+		return new World(tiles,players,cities);
+	}
+
+	
 
 }
 

@@ -18,6 +18,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileFilter;
 
+import networking.Server;
 import storage.converters.WorldLoader;
 import tools.Constants;
 import tools.ImageLoader;
@@ -37,6 +38,8 @@ public class MainMenuPanel extends JPanel implements ActionListener{
 	private CustomButton loadGame;
 	private CustomButton joinGame;
 	private CustomButton quitGame;
+
+	private WorldController wc;
 
 	private JFrame frame;
 	private BufferedImage backgroundImage;
@@ -136,12 +139,19 @@ public class MainMenuPanel extends JPanel implements ActionListener{
 				filepath = chooser.getSelectedFile().getPath();
 				try {
 					World world = WorldLoader.load(filepath);
+
 					frame.dispose();
-					new WorldController(world,world.getPlayers()[0]);
+					 wc = new WorldController(world,world.getPlayers()[0], true);
+
+
+
+
+
 				} catch (IOException e1) {
 					JOptionPane.showMessageDialog(frame, "Error loading " + filepath);
 				}
 			}
+
 		}
 
 		// if possible start the file chooser in this directory
@@ -166,7 +176,7 @@ public class MainMenuPanel extends JPanel implements ActionListener{
 				try {
 					world = WorldLoader.load(filepath);
 					frame.dispose();
-					new WorldController(world,world.getPlayers()[0]);
+					new WorldController(world,world.getPlayers()[0], true);
 				} catch (IOException e1) {
 					JOptionPane.showMessageDialog(frame, "Error loading " + filepath);
 				}
@@ -176,6 +186,49 @@ public class MainMenuPanel extends JPanel implements ActionListener{
 		}
 		else if(e.getSource() == joinGame) {
 			//what to do if button pressed is join game
+
+
+
+
+
+			String path = Constants.DATA_SCENARIOS;
+			File f = new File(path);
+			JFileChooser chooser = new JFileChooser(f);
+			Filter filter = new Filter(".level");
+			chooser.setFileFilter(filter);
+			int value = chooser.showOpenDialog(null);
+			String filepath = null;
+			if (value == JFileChooser.APPROVE_OPTION){
+				filepath = chooser.getSelectedFile().getPath();
+				try {
+					World world = WorldLoader.load(filepath);
+
+					frame.dispose();
+					 wc = new WorldController(world,world.getPlayers()[1], false);
+
+
+
+
+
+				} catch (IOException e1) {
+					JOptionPane.showMessageDialog(frame, "Error loading " + filepath);
+				}
+			}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 		}
 		else if(e.getSource() == quitGame) {
 			System.exit(0);

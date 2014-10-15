@@ -172,17 +172,17 @@ public class World {
 
 		// check there is a party at location and it is owned by the specified player
 		WorldIcon icon = tileLocation.occupant();
-		if (!(icon instanceof Party)) return false;
+		if (!(icon instanceof Party)) {System.out.println("1st"); return false; }
 		Party party = (Party)icon;
-		if (!(party.ownedBy(player))) return false;
+		if (!(party.ownedBy(player))){System.out.println("2nd"); return false;  }
 
 		// attempt to move party from location to destination
-		if (!pathExists(location,destination)) return false;
+		if (!pathExists(location,destination)) {System.out.println("3rd");return false;}
 
 		// Check if an item is at destination, if so, pick up item and move player there
 		if(tileDestination.occupant() instanceof ItemIcon) {
 			ItemIcon itemIcon = (ItemIcon)tileDestination.occupant();
-			if(!party.addItem(itemIcon.item)) return false;
+			if(!party.addItem(itemIcon.item)){ System.out.println("4th"); return false;}
 		}
 
 		else if (tileDestination instanceof CityTile){
@@ -470,4 +470,5 @@ public class World {
 	public Player[] getPlayers() {
 		return this.players;
 	}
+
 }
