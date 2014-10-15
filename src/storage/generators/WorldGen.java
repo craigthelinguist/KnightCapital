@@ -21,7 +21,7 @@ public class WorldGen {
 
 		hero.setMovePts(10);
 
-		Party p1 = new Party(hero, p, Party.newEmptyParty());
+		Party p1 = new Party(hero, p, Party.newEmptyPartyArray());
 		p1.refresh();
 
 		w.setIcon(p1, 15, 15);

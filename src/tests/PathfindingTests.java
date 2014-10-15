@@ -117,6 +117,10 @@ public class PathfindingTests {
 		assertFalse("invalid move so goal tile shouldn't be occupied", world.getTile(goal).occupied());
 	}
 
+	/**
+	 * Return true if the simulation still has its initial conditions.
+	 * @return
+	 */
 	public boolean initialConditions(){
 		if (!(party.ledBy(hero))) return false;
 		if (!(party.getMovePoints() > 0)) return false;
@@ -125,6 +129,9 @@ public class PathfindingTests {
 		return true;
 	}
 
+	/**
+	 * Put simulation into initial state.
+	 */
 	public void init(){
 		Tile[][] tiles = new Tile[4][4];
 		tiles[0][0] = PassableTile.newGrassTile(0,0);

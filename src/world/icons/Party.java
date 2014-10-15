@@ -34,12 +34,24 @@ public class Party extends WorldIcon implements Iterable<Creature>{
 	private Creature[][] members;
 	private Hero hero;
 
+	public static Creature[][] newEmptyPartyArray() {
+		return new Creature[Party.PARTY_ROWS][Party.PARTY_COLS];
+	}
+
+	public static Item[][] newEmptyInventory() {
+		return new Item[Party.INVENTORY_ROWS][Party.INVENTORY_COLS];
+	}
+
+	public static Party newEmptyParty(Player player){
+		return new Party(null,player,newEmptyPartyArray());
+	}
+
 	// TODO: should be instantiated with a hero; no party is without one
 	public Party(Hero hero, Player player, Creature[][] members) {
 		this.hero = hero;
 		owner = player;
 		this.members = members;
-		if (members == null) this.members = Party.newEmptyParty();
+		if (members == null) this.members = Party.newEmptyPartyArray();
 		inventory = Party.newEmptyInventory();
 	}
 
@@ -218,14 +230,6 @@ public class Party extends WorldIcon implements Iterable<Creature>{
 
 	public void setMember(Creature c, int x, int y){
 		this.members[y][x] = c;
-	}
-
-	public static Creature[][] newEmptyParty() {
-		return new Creature[Party.PARTY_ROWS][Party.PARTY_COLS];
-	}
-
-	public static Item[][] newEmptyInventory() {
-		return new Item[Party.INVENTORY_ROWS][Party.INVENTORY_COLS];
 	}
 
 	/**

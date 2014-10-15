@@ -257,7 +257,7 @@ public class WorldLoader {
 		Unit u2 = UnitLoader.load("knight.xml",player1);
 		Unit u3 = UnitLoader.load("archer.xml",player1);
 		Hero h1 = HeroLoader.load("ovelia.xml",player1);
-		Creature[][] members = Party.newEmptyParty();
+		Creature[][] members = Party.newEmptyPartyArray();
 		members[0][0] = u1;
 		members[0][2] = u2;
 		members[1][1] = u3;
@@ -270,7 +270,7 @@ public class WorldLoader {
 		Unit u5 = UnitLoader.load("knight.xml",player1);
 		Unit u6 = UnitLoader.load("archer.xml",player1);
 		Hero h2 = HeroLoader.load("gaben.xml",player1);
-		Creature[][] members2 = Party.newEmptyParty();
+		Creature[][] members2 = Party.newEmptyPartyArray();
 		members2[0][0] = u1;
 		members2[0][2] = u2;
 		members2[1][1] = u3;

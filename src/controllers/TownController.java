@@ -55,11 +55,11 @@ public class TownController{
 
 
 		if (city.getGarrison() == null){
-			Party g = new Party(null,city.getOwner(),Party.newEmptyParty());
+			Party g = new Party(null,city.getOwner(),Party.newEmptyPartyArray());
 			city.setGarrison(g);
 		}
 		if (city.getVisitors() == null){
-			Party v = new Party(null,city.getOwner(),Party.newEmptyParty());
+			Party v = new Party(null,city.getOwner(),Party.newEmptyPartyArray());
 			city.setVisitors(v);
 		}
 
@@ -118,7 +118,7 @@ public class TownController{
 	}
 
 	private Party newEmptyParty(){
-		return new Party(null, city.getOwner(), Party.newEmptyParty());
+		return new Party(null, city.getOwner(), Party.newEmptyPartyArray());
 	}
 
 	protected void mouseMoved(Point from, Point to){

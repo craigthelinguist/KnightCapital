@@ -508,7 +508,7 @@ public class WorldController{
 		Unit u4 = new Unit("archer","archer",p,new UnitStats(60,15,70,0,AttackType.RANGED));
 		Unit u5 = new Unit("archer","archer",p,new UnitStats(60,15,70,0,AttackType.RANGED));
 		Unit u6 = new Unit("knight","knight",p,new UnitStats(100,25,40,1,AttackType.MELEE));
-		Creature[][] members2 = Party.newEmptyParty();
+		Creature[][] members2 = Party.newEmptyPartyArray();
 		members2[0][0] = u3;
 		members2[1][0] = u6;
 		members2[1][2] = hero;
@@ -560,7 +560,7 @@ public class WorldController{
 		Unit u4 = new Unit("archer","archer",p,new UnitStats(60,15,70,0,AttackType.RANGED));
 		Unit u5 = new Unit("archer","archer",p,new UnitStats(60,15,70,0,AttackType.RANGED));
 		Unit u6 = new Unit("knight","knight",p,new UnitStats(100,25,40,1,AttackType.MELEE));
-		Creature[][] members2 = Party.newEmptyParty();
+		Creature[][] members2 = Party.newEmptyPartyArray();
 		members2[0][0] = u3;
 		members2[1][0] = u6;
 		members2[2][0] = hero;
