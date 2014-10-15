@@ -3,7 +3,10 @@ package tests;
 import static org.junit.Assert.*;
 
 import java.awt.Point;
+import java.util.Set;
 
+import game.items.Item;
+import game.items.PassiveItem;
 import game.units.AttackType;
 import game.units.Hero;
 import game.units.HeroStats;
@@ -12,6 +15,7 @@ import org.junit.*;
 
 import player.Player;
 import world.World;
+import world.icons.ItemIcon;
 import world.icons.Party;
 import world.tiles.ImpassableTile;
 import world.tiles.PassableTile;
@@ -115,6 +119,99 @@ public class PathfindingTests {
 		assertEquals("shouldn't have lost move point for invalid move", party.getMovePoints(), movesb4);
 		assertTrue("haven't moved so init conditions should still be true", initialConditions());
 		assertFalse("invalid move so goal tile shouldn't be occupied", world.getTile(goal).occupied());
+	}
+
+	@Test
+	public void invalidDestination(){
+		init();
+		assertTrue(initialConditions());
+		Point end = new Point(-1,-1);
+		boolean moved = world.moveParty(player, start, end);
+		assertFalse(moved);
+		assertTrue(initialConditions());
+		end = new Point(1,0);
+		Point pos = new Point(-1,0);
+		moved = world.moveParty(player, pos, end);
+		assertFalse(moved);
+		assertTrue(initialConditions());
+	}
+
+	@Test
+	public void testValidMoves(){
+		init();
+		Set<Point> tiles = world.getValidMoves(party, world.getTile(start));
+		assertEquals("size was " + tiles.size(), tiles.size(),13);
+	}
+
+	@Test
+	public void invalidPlayerSupplied(){
+		init();
+		assertTrue(initialConditions());
+		Point end = new Point(1,0);
+		boolean moved = world.moveParty(null, start, end);
+		assertFalse(moved);
+		assertTrue(initialConditions());
+	}
+
+	@Test
+	public void noPartyAtStart(){
+		init();
+		assertTrue(initialConditions());
+		Point pos = new Point(2,0);
+		boolean moved = world.moveParty(player, pos, pos);
+		assertFalse(moved);
+		assertTrue(initialConditions());
+	}
+
+	@Test
+	public void pickUpItemIcon(){
+		init();
+		assertTrue(initialConditions());
+		Tile[][] tiles = world.getTiles();
+		Item item = new PassiveItem(null,null,null,null, null, null);
+		ItemIcon icon = new ItemIcon(item);
+		tiles[1][0].setIcon(icon);
+		Point end = new Point(1,0);
+		boolean moved = world.moveParty(player, start, end);
+		assertTrue(moved);
+		Item[][] items = party.getInventory();
+		int count = 0;
+		for (int i = 0; i < items.length; i++){
+			for (int j = 0; j < items[i].length; j++){
+				if (items[i][j] != null) count++;
+			}
+		}
+		assertEquals(count,1);
+	}
+
+	@Test
+	public void pickUpItemWhenInventoryFull(){
+
+		init();
+		assertTrue(initialConditions());
+		Tile[][] tiles = world.getTiles();
+		Item item = new PassiveItem(null,null,null,null, null, null);
+		ItemIcon icon = new ItemIcon(item);
+		tiles[1][0].setIcon(icon);
+		Point end = new Point(1,0);
+
+		for (int i = 0; i < 6; i++){
+			party.addItem(item);
+		}
+
+		boolean moved = world.moveParty(player, start, end);
+		assertFalse(moved);
+		Item[][] items = party.getInventory();
+		int count = 0;
+		for (int i = 0; i < items.length; i++){
+			for (int j = 0; j < items[i].length; j++){
+				if (items[i][j] != null) count++;
+			}
+		}
+		assertEquals(count,Party.INVENTORY_SIZE);
+
+		assertTrue(initialConditions());
+
 	}
 
 	/**

@@ -16,7 +16,21 @@ import game.units.UnitStats;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.InetAddress;
+
+import java.io.IOException;
+import java.io.Serializable;
+
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashSet;
@@ -27,6 +41,7 @@ import javax.swing.SwingUtilities;
 import networking.Client;
 import networking.NetworkM;
 import networking.Server;
+import networking.ServerM;
 import player.Player;
 import renderer.Camera;
 import renderer.WorldRenderer;
@@ -53,7 +68,12 @@ import GUI.world.MainFrame;
  * interactions between different GUIs - for example, passing over control to TownController when the player opens up a town.
  * @author Aaron
  */
-public class WorldController{
+public class WorldController implements Serializable{
+
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
 
 	//boolean server or client, true if server, false if client.
 	private boolean serverOrClient = false;
@@ -115,25 +135,56 @@ public class WorldController{
 		 */
 
 		if(serverOrClient){
-			NetworkM.createServer(this, 2020, 2);
+//<<<<<<< HEAD
+////			ServerM.run(this);
+//
+//			NetworkM.createServer(this, 2020, 2);
+//=======
+			//NetworkM.createServer(this, 2020, 2);
 			try {
-				server = new Server();
+				server = new Server(this);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+
 		}
 
 		else {
 
-			try {
-				NetworkM.createClient("localhost", 2020, "selemonClient");
-				client = new Client("130.195.6.170", 45612, 45812);
-			} catch (IOException e) {
+//<<<<<<< HEAD
+////			ClientM.run(this);
+////				client.start();
+//				try {
+//					NetworkM.createClient("localhost", 2020, "selemonClient");
+//				} catch (IOException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//=======
 
-				e.printStackTrace();
-			}
+
+//				try {
+//					NetworkM.createClient("localhost", 2020, "selemonClient", this);
+//				} catch (IOException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+				client = new Client("130.195.4.159", 45812, 45612, this);
+
+
+
+
+//			try {
+//				NetworkM.createClient("localhost", 2020, "selemonClient");
+//				client = new Client("130.195.6.170", 45612, 45812);
+//			} catch (IOException e) {
+//
+//				e.printStackTrace();
+//			}
 			//			client = new Client("130.195.6.98", 45612);
+
+
 
 		}
 
@@ -143,6 +194,11 @@ public class WorldController{
 	public MainFrame getGui(){
 		return gui;
 	}
+
+
+
+
+
 
 
 	/**

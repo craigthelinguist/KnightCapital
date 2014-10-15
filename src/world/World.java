@@ -74,6 +74,13 @@ public class World {
 	 */
 	public void endTurn(){
 
+
+		// if you've cycled through all players, it is a new day
+		currentPlayer = (currentPlayer+1)%players.length;
+		if (currentPlayer == 0){
+			currentDay++;
+		}
+
 		/*Iterate over the cities in the world, if the city belongs to the player that's ending his turn. Increase his gold by 10. Do this for every city the player owns.*/
 		for(City c : this.getCities()) {
 			if (c.ownedBy(players[currentPlayer])){
@@ -93,20 +100,12 @@ public class World {
 				if (wi instanceof Party){
 					Party party = (Party)wi;
 					if (party.ownedBy(players[currentPlayer])){
-						if (party.getHero() == null){
-							System.out.println("break");
-						}
 						party.refresh();
 					}
 				}
 			}
 		}
 
-		// if you've cycled through all players, it is a new day
-		currentPlayer = (currentPlayer+1)%players.length;
-		if (currentPlayer == 0){
-			currentDay++;
-		}
 	}
 
 	/**
@@ -454,6 +453,7 @@ public class World {
 			visited.add(point);
 			LinkedList<Point> neighbours = findNeighbours(point);
 			int newDist = node.distance + 1;
+
 			for (Point neighbour : neighbours){
 				if (newDist > movePoints || visited.contains(neighbour)) continue;
 				else queue.offer(new Node(neighbour,newDist));
