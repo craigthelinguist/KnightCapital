@@ -9,6 +9,11 @@ import tools.Constants;
 import tools.ImageLoader;
 import tools.ImageManipulation;
 
+/**
+ * Stores the item inside this panel.
+ * @author Ewan Moshi
+ *
+ */
 public class ItemSlotPanel extends JPanel {
 
 	private BufferedImage backgroundImage;

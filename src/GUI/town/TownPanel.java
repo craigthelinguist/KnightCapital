@@ -19,6 +19,11 @@ import tools.Constants;
 import tools.ImageLoader;
 import world.icons.Party;
 
+/**
+ * Main panl for the Town GUI
+ * @author Ewan Moshi
+ *
+ */
 public class TownPanel extends JPanel{
 
 	// constants

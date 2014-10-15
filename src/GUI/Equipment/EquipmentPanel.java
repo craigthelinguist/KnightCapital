@@ -14,6 +14,11 @@ import GUI.party.PartyDialog;
 import tools.Constants;
 import tools.ImageLoader;
 
+/**
+ * Equipment panel stores all of hte item panels that you can equip items onto.
+ * @author Ewan Moshi
+ *
+ */
 public class EquipmentPanel extends JPanel {
 
 	private BufferedImage backgroundImage;

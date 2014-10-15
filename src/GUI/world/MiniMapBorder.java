@@ -9,15 +9,20 @@ import javax.swing.JPanel;
 import tools.Constants;
 import tools.ImageLoader;
 
+/**
+ * The border (image) for the mini map
+ * @author moshiewan
+ *
+ */
 public class MiniMapBorder extends JPanel {
-	
+
 	private BufferedImage backgroundImage;
-	
+
 	public MiniMapBorder() {
 		this.setOpaque(false);
 		/*Initialize the image for the mini map border*/
-		backgroundImage = ImageLoader.load(Constants.GUI_FILEPATH + "miniMapBorder.png");	
-	
+		backgroundImage = ImageLoader.load(Constants.GUI_FILEPATH + "miniMapBorder.png");
+
 	}
 
   @Override
@@ -26,5 +31,5 @@ public class MiniMapBorder extends JPanel {
     // paint the background image and scale it to fill the entire space
     g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
   }
-	
+
 }

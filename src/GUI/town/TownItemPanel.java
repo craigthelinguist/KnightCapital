@@ -25,6 +25,11 @@ import world.icons.Party;
 import world.tiles.CityTile;
 import world.towns.City;
 
+/**
+ * The panel that holds all of the party's items inside the town.
+ * @author Ewan Moshi
+ *
+ */
 public class TownItemPanel extends JPanel{
 
 	private final int ITEM_WD = Constants.INVENTORY_DIMENSIONS.width;

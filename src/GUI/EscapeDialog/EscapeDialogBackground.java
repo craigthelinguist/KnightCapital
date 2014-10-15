@@ -28,6 +28,11 @@ import GUI.world.CustomButton;
 import GUI.world.MainFrame;
 import controllers.WorldController;
 
+/**
+ * A background image and all of the buttons on the escape dialog are stored on this panel.
+ * @author Ewan Moshi
+ *
+ */
 public class EscapeDialogBackground extends JPanel implements ActionListener{
 	/* Initialize buttons */
 	private CustomButton declineButton;

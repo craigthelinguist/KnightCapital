@@ -17,6 +17,11 @@ import javax.swing.JPanel;
 import tools.Constants;
 import tools.ImageLoader;
 
+/**
+ * This class displays a panel which will show a description of the item.
+ * @author Ewan Moshi
+ *
+ */
 public class ItemInfoPanel extends JPanel   {
 
 	private String message;

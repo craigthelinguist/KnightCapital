@@ -15,7 +15,7 @@ import world.icons.Party;
 
 /**
  * Responsible for displaying the items currently equipped to the hero of selected party
- * @author myles
+ * @author myles, Ewan Moshi
  *
  */
 public class HeroItemsPanel extends JPanel{

@@ -45,10 +45,10 @@ public class MainPanelMaster extends JPanel {
 	private ButtonsPanel buttonsPanel;
 	private MiniMap miniMapPanel;
 	private TileInformationPanel tileInfoPanel;
-	
+
 	/* Declare the gridbagconstraints */
 	GridBagConstraints c;
-	
+
 	public MainPanelMaster(MainFrame frame) {
 		//this.setBorder(BorderFactory.createLineBorder(Color.black)); //draws a border around canvas (just to show where the canvas is) (delete later)
 		this.setPreferredSize(new Dimension(frame.getWidth(),frame.getHeight()));
