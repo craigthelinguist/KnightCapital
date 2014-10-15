@@ -12,10 +12,18 @@ import game.units.Stat;
 import game.units.Unit;
 import game.units.UnitStats;
 
+/**
+ * A class that will test the functionality of buffs
+ * @author Aaron, Neal
+ *
+ */
 public class BuffTests {
 
 	private Unit unit;
 
+	/**
+	 * Test that the buffs are equivalent
+	 */
 	@Test
 	public void testEquivalence(){
 		Buff b1 = Buff.newPermaBuff(Stat.DAMAGE,10);
@@ -33,6 +41,9 @@ public class BuffTests {
 		assertFalse(b1.equals(b5));
 	}
 
+	/**
+	 * Test that the buffs are applied correctly to the unit
+	 */
 	@Test
 	public void testApplication(){
 		Buff buff = Buff.newTempBuff(Stat.DAMAGE, 10);
@@ -48,6 +59,9 @@ public class BuffTests {
 		assertTrue(totalDamageNow == unit.getBase(Stat.DAMAGE) + buff.amount);
 	}
 
+	/**
+	 * Remove the buff and test if the buff has been removed from the unit's stat.
+	 */
 	@Test
 	public void testRemoval(){
 		Buff buff = Buff.newTempBuff(Stat.DAMAGE, 10);
@@ -59,6 +73,10 @@ public class BuffTests {
 		assertTrue(unit.get(Stat.DAMAGE) == unit.getBase(Stat.DAMAGE) );
 	}
 
+	/**
+	 * A method to initialize a unit.
+	 * Helper method for th tests.
+	 */
 	private void init(){
 		Player player1 = new Player("DJ Pearce", 1);
 		UnitStats stats = new UnitStats(10,10,10,10,AttackType.MELEE);
