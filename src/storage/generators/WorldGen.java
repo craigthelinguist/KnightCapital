@@ -29,12 +29,9 @@ public class WorldGen {
 		Party party1 = new Party(hero, p, Party.newEmptyPartyArray());
 		party1.refresh();
 
-		int size = 10000;
+		int size = 30;
+
 		Tile[][] tiles = TemporaryLoader.loadWorld(size, size);
-
-
-
-
 
 		// add a city
 		CityTile[][] cityTiles = new CityTile[City.WIDTH][City.WIDTH];
@@ -56,7 +53,14 @@ public class WorldGen {
 
 		World w = new World(tiles, players, cities);
 
+		DecorIcon tree = new DecorIcon(DecorIcon.TREE);
+		DecorIcon rock = new DecorIcon(DecorIcon.ROCK);
+		DecorIcon bush = new DecorIcon(DecorIcon.BUSH);
+
 		w.setIcon(party1, 1, 1);
+		w.setIcon(tree, 3, 3);
+		w.setIcon(rock, 6, 3);
+		w.setIcon(bush, 9, 3);
 
 		new WorldController(w, p);
 	}
