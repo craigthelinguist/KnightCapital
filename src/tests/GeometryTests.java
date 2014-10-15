@@ -14,6 +14,11 @@ import world.World;
 import world.tiles.PassableTile;
 import world.tiles.Tile;
 
+/**
+ * A class for testing the gemometry of the world.
+ * @author
+ *
+ */
 public class GeometryTests {
 
 
