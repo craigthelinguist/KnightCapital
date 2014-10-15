@@ -71,13 +71,6 @@ public class Buff implements Effect{
 		c.setBuffed(stat,newValue);
 	}
 
-	/**
-	 * Return true if this buff is permanent.
-	 * @return: boolean
-	 */
-	public boolean isPermanent() {
-		return permanent;
-	}
 
 	@Override
 	public boolean equals(Object other){

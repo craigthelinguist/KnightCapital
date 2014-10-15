@@ -147,7 +147,7 @@ public abstract class Creature {
 		Iterator<Buff> iter = buffs.iterator();
 		while (iter.hasNext()){
 			Buff buff = iter.next();
-			if (!buff.isPermanent()){
+			if (!buff.permanent){
 				buff.removeFrom(this);
 				iter.remove();
 			}
