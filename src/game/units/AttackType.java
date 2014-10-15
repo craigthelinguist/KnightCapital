@@ -1,25 +1,33 @@
 package game.units;
 
+/**
+ * AttackType enumerates all the possible rules for how a Creature can attack in
+ * combat.
+ * @author craigaaro
+ */
 public enum AttackType {
-	
+
 	// can hit one target in the front row
 	MELEE,
-	
+
 	// can hit one target anywhere
 	RANGED,
-	
+
 	// hits every enemy
 	AOE,
-	
+
 	// hits all enemies in a line
 	LINE,
-	
+
 	// hits everyone in the row
 	ROW,
-	
+
 	// hit a random enemy
 	RANDOM;
-	
+
+	/**
+	 * Get a string representation of this attack type.
+	 */
 	@Override
 	public String toString(){
 		if (this == MELEE) return "melee";
@@ -29,7 +37,12 @@ public enum AttackType {
 		else if (this == ROW) return "row";
 		else return "random";
 	}
-	
+
+	/**
+	 * Create an AttackType from its string representation.
+	 * @param str: string representation of an attack type.
+	 * @return: an attack type.
+	 */
 	public static AttackType fromString(String str){
 		if (str.equals("melee")) return MELEE;
 		else if (str.equals("ranged")) return RANGED;
@@ -39,5 +52,5 @@ public enum AttackType {
 		else if (str.equals("random")) return RANDOM;
 		else throw new RuntimeException("unrecognised string for attack type");
 	}
-	
+
 }
