@@ -5,7 +5,9 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.InetAddress;
 import java.net.Socket;
+import java.net.UnknownHostException;
 
 import controllers.WorldController;
 import player.Player;
@@ -44,61 +46,39 @@ public class ClientM extends Thread implements MouseListener{
 	@Override
 	public void run() {
 
-		System.out.println("Connection found");
-		try{
+		Message message = new Message(world);
 
-             System.out.println("inside try[CLIENT]");
-             Message message;
+		System.out.println("ready bruh!");
 
-			in = new ObjectInputStream(socket.getInputStream());
+		try {
+//			Socket socket = new Socket(InetAddress.getLocalHost(), 8989);
+			System.out.println("In there boii");
+			ObjectOutputStream clientOutputStream = new ObjectOutputStream(socket.getOutputStream());
+		    System.out.println("past output");
+//			ObjectInputStream clientInputStream = new ObjectInputStream(socket.getInputStream());
+		    System.out.println("past input");
 
-			System.out.println("past in [client]");
-			//Retrieve the message sent from the server
-			//Message message = (Message) in.readObject();
-			//ID = message.getID();
-			System.out.println("message recieved CLIENT");
-			out = new ObjectOutputStream(socket.getOutputStream());
-			out.flush();
-			//update the gui
-			//
-			//
-			boolean exit = false;
+		    byte[] gyeah = Serialization.serialize(world);
+		    System.out.println("serialized");
+		    clientOutputStream.write(gyeah);
 
-			world.getGui().getCanvas().addMouseListener(this);
-			while(!exit){
+//		    world = in;
 
-				System.out.println("looping[CLIENT]");
+//		    message = (Message) clientInputStream.readObject();
 
-				message = (Message) in.readObject();
-
-				world = message.getWorld();
-				if(world.getGui().getCanvas().getClicked()){
-					try {
-						System.out.println("a changed has happened client side");
-						world.getGui().getCanvas().setClicked(false);
-						out.writeObject(new Message(null, world, ID));
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-				}
-				System.out.println("should have worldController.");
-				//here we up date the gui with world
-				//and display it
+		    System.out.println("recieved bawse!!");
 
 
 
-			}
 
-
-			socket.close();
-
-		}catch(IOException e){
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
 
 
 	}

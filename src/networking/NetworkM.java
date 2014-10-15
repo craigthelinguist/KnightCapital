@@ -45,7 +45,7 @@ private static int numConnects = 0;
 
 
 			socket = new ServerSocket(port);
-			
+
 
 			//make the state of the game waiting
 
@@ -82,28 +82,31 @@ private static int numConnects = 0;
 				System.out.println("waiting for "+clients+" to join");
 
 
-              
+
 
 				//can now start implementing world and game connections with clients.
-//				if(clients==0){
-//					System.out.println("All clients are now connected");
-//					//make the state of the game to playing
-//					//example: game.setState(WorldController.playing);
-//
-////					 swerv = new ServerM(sock, world);
-////					swerv.start();
-//
-//					//start the threads
-//
-//					startGame(world, connectors, sock);
+				if(clients==0){
+					System.out.println("All clients are now connected");
+					//make the state of the game to playing
+					//example: game.setState(WorldController.playing);
+
+//					 swerv = new ServerM(sock, world);
+//					swerv.start();
+
+					//start the threads
+
+					swerv = new ServerM(sock, world);
+		             swerv.start();
+
+					startGame(world, connectors, sock);
 //					socket.close();
-//					//connection step completed
-//					return;
-//				}
+					//connection step completed
+					return;
+				}
 			}
-           
-			 swerv = new ServerM(connectors, world);
-             swerv.start();
+
+
+             socket.close();
 
 
 		}catch(IOException e){e.printStackTrace();}
@@ -120,12 +123,12 @@ private static int numConnects = 0;
 		out.flush();
 		DataInputStream input = new DataInputStream(s.getInputStream());
 		System.out.println(input.readUTF());
-		
-		
+
+
 		ClientM sv = new ClientM(s);
 		sv.run();
-		
-		
+
+
 	}
 
 

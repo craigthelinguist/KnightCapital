@@ -21,10 +21,16 @@ import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashSet;
@@ -40,6 +46,7 @@ import networking.Client;
 import networking.ClientM;
 import networking.NetworkM;
 import networking.Server;
+import networking.ServerM;
 import player.Player;
 import renderer.Camera;
 import renderer.WorldRenderer;
@@ -127,18 +134,21 @@ public class WorldController{
 		 */
 
 		if(serverOrClient){
+//			ServerM.run(this);
+
 			NetworkM.createServer(this, 2020, 2);
 		}
 
 		else {
 
-			try {
-				NetworkM.createClient("localhost", 2020, "selemonClient");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-//			client = new Client("130.195.6.98", 45612);
+//			ClientM.run(this);
+//				client.start();
+				try {
+					NetworkM.createClient("localhost", 2020, "selemonClient");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 
 		}
 
@@ -147,6 +157,11 @@ public class WorldController{
 	public MainFrame getGui(){
 		return gui;
 	}
+
+
+
+
+
 
 
 	/**
