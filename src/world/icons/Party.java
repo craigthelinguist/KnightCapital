@@ -16,6 +16,9 @@ import java.util.Iterator;
 import player.Player;
 
 /**
+ * Party Icon
+ *
+ * Party Icon is used to represent the current position of a party within the world screen.
  *
  * @author craigthelinguist
  *
@@ -35,18 +38,37 @@ public class Party extends WorldIcon implements Iterable<Creature>{
 	private Creature[][] members;
 	private Hero hero;
 
+	/**
+	 * Create a new empty array for creatures
+	 * @return empty creature array
+	 */
 	public static Creature[][] newEmptyPartyArray() {
 		return new Creature[Party.PARTY_ROWS][Party.PARTY_COLS];
 	}
 
+	/**
+	 * Creates a new empty array for items, aka an empty inventory
+	 * @return empty inventory array
+	 */
 	public static Item[][] newEmptyInventory() {
 		return new Item[Party.INVENTORY_ROWS][Party.INVENTORY_COLS];
 	}
 
+	/**
+	 * Creates and returns an empty party, including empty creature array
+	 * @param player who owns this
+	 * @return new empty party
+	 */
 	public static Party newEmptyParty(Player player){
 		return new Party(null,player,newEmptyPartyArray());
 	}
 
+	/**
+	 * Contructs a new Party
+	 * @param hero member of party
+	 * @param player who owns this party
+	 * @param members : creature[][] of units
+	 */
 	// TODO: should be instantiated with a hero; no party is without one
 	public Party(Hero hero, Player player, Creature[][] members) {
 		this.hero = hero;
@@ -214,11 +236,17 @@ public class Party extends WorldIcon implements Iterable<Creature>{
 		return hero.getImage();
 	}
 
+	/**
+	 * Get portrait image of this party
+	 */
 	@Override
 	public BufferedImage getPortrait(){
 		return hero.getPortrait();
 	}
 
+	/**
+	 * Get animation name
+	 */
 	@Override
 	public void setAnimationName(String name) {
 		hero.setAnimation(name);
@@ -258,8 +286,6 @@ public class Party extends WorldIcon implements Iterable<Creature>{
 			for (int j = 0; j < members[i].length; j++){
 				// if any member is not dead return false
 				Creature creature = members[i][j];
-
-
 				if(creature != null){
 					if (!members[i][j].isDead()) return false;
 				}
@@ -299,6 +325,9 @@ public class Party extends WorldIcon implements Iterable<Creature>{
 		return new PartyIterator();
 	}
 
+	/**
+	 * Iterate through party
+	 */
 	private class PartyIterator implements Iterator<Creature>{
 
 		int row = 0;
