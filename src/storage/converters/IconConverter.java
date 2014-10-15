@@ -1,13 +1,15 @@
 package storage.converters;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import player.Player;
 import game.items.Item;
 import game.units.Creature;
 import game.units.Hero;
 import game.units.Unit;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import player.Player;
+import world.icons.DecorIcon;
 import world.icons.ItemIcon;
 import world.icons.Party;
 import world.icons.WorldIcon;
@@ -36,9 +38,11 @@ public class IconConverter implements Converter{
 			writer.startNode("type");
 				if (object instanceof Party) writer.setValue("Party");
 				else if (object instanceof ItemIcon) writer.setValue("ItemIcon");
+				else if (object instanceof DecorIcon) writer.setValue("DecorIcon");
 			writer.endNode();
 			if (object instanceof Party) marshalParty(object,writer,context);
 			else if (object instanceof ItemIcon) marshalItemIcon(object,writer,context);
+			else if (object instanceof DecorIcon) marshalDecorIcon(object, writer, context);
 			else throw new RuntimeException("I'm martialling some icon that I do'nt recognise");
 
 	}
@@ -52,6 +56,14 @@ public class IconConverter implements Converter{
 			new ItemConverter().marshal(item, writer, context);
 		writer.endNode();
 
+	}
+
+	private void marshalDecorIcon(Object object, HierarchicalStreamWriter writer, MarshallingContext context) {
+
+		DecorIcon di = (DecorIcon)object;
+		writer.startNode("number");
+			writer.setValue("" + di.getType());
+		writer.endNode();
 	}
 
 	public void marshalParty(Object object, HierarchicalStreamWriter writer, MarshallingContext context) {
@@ -134,7 +146,15 @@ public class IconConverter implements Converter{
 
 		if (type.equals("Party")) return unmarshalParty(reader,context);
 		else if (type.equals("ItemIcon")) return unmarshalItemIcon(reader,context);
+		else if (type.equals("DecorIcon")) return unmarshalDecorIcon(reader, context);
 		else throw new RuntimeException("we have a world icon that isn't party or itemIcon");
+	}
+
+	private DecorIcon unmarshalDecorIcon(HierarchicalStreamReader reader, UnmarshallingContext context){
+		reader.moveDown();
+			int number = Integer.parseInt(reader.getValue());
+		reader.moveUp();
+		return new DecorIcon(number);
 	}
 
 	private ItemIcon unmarshalItemIcon(HierarchicalStreamReader reader, UnmarshallingContext context){

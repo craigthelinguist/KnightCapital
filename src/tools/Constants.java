@@ -32,6 +32,7 @@ public class Constants {
 	public static final String PORTRAITS = "assets" + File.separatorChar+ "portraits" +   File.separatorChar;
 	public static final String ITEMS = Constants.ASSETS + "itemIcons" + File.separatorChar;
 	public static final String ASSETS_TILES = Constants.ASSETS + "tiles" + File.separatorChar;
+	public static final String DECOR_ICONS = Constants.ASSETS + "icons" + File.separatorChar + "decor" + File.separatorChar;
 
 	// all images inside the GUIAssets
 	public static final String GUI_FILEPATH = Constants.ASSETS + "GUIAssets" + File.separatorChar;

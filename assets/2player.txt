@@ -1,0 +1,20 @@
+
+# This is the world made for singleplayer experience. probably multiplayer as well by the look of it.
+
+# T = tree
+# G = grass
+# R = rock
+# D = dirt
+# B = bush
+
+10 10
+GGGGGGGGGG
+GGGGGGGGGG
+GGGGGGGGGG
+GGGGGGGGGG
+GGGGGGGGGG
+GGGGGGGGGG
+GGGGGGGGGG
+GGGGGGGGGG
+GGGGGGGGGG
+GGGGGGGGGG
