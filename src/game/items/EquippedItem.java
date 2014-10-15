@@ -26,7 +26,7 @@ public class EquippedItem extends Item{
 	 * Remove this item and it's effects from a hero
 	 * @param hero to remove item from
 	 */
-	public void removeFrom(Hero hero) {
+	public void unequipFrom(Hero hero) {
 		apply(hero, false);
 	}
 
