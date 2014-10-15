@@ -76,7 +76,7 @@ public class TrainingDialog extends JDialog {
 				else if (string.equals("Archer")){
 					int cost = costs.get(string);
 					if (cost > player.getGold() || !city.getGarrison().hasSpace()) return;
-					Unit unit = UnitLoader.load("knight.xml", city.getOwner());
+					Unit unit = UnitLoader.load("archer.xml", city.getOwner());
 					garrison.addUnit(unit);
 					player.decreaseGold(cost);
 					goldLabel.setText("" + player.getGold());
