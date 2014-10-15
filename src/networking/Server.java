@@ -8,7 +8,11 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
+
+import controllers.WorldController;
 
 /**
  * Simple Server for distributing game information with Clients
@@ -39,16 +43,25 @@ public class Server{
 	private DataInputStream input;
 	private DataOutputStream out;
 
-	//input output for move
-	private DataInputStream moveInput;
-	private DataOutputStream moveOutput;
+	//input output object streams for move
+	private ObjectInputStream moveInput;
+	private ObjectOutputStream moveOutput;
 
-	public Server() throws IOException{
+
+	private WorldController world;
+
+	public Server(WorldController world) throws IOException{
+
+		this.world = world;
+
 		// Initialise Server Socket
 		initServer();
 
 		// Wait for client
 		connectClient();
+
+
+
 
 		//Wait for input/check for disconnect
 		//waitForInput();
@@ -104,8 +117,14 @@ public class Server{
 				out = new DataOutputStream(temp.getOutputStream());
 
 				//create movement inputs and outputs.
-				moveInput = new DataInputStream(beast.getInputStream());
-				moveOutput = new DataOutputStream(beast.getOutputStream());
+				moveOutput = new ObjectOutputStream(beast.getOutputStream());
+				out.flush();
+				moveInput = new ObjectInputStream(beast.getInputStream());
+
+
+
+
+
 
 				//first checks if any previous connections have become unusable.
 				if(users[i]!=null && !users[i].getMessageProt().getStatus() )
@@ -120,8 +139,7 @@ public class Server{
 
 
 
-					users[i] = new Connection (new ServerMessagingProtocol(input, out, users, i),
-							new ServerMovementProtocol(moveInput, moveOutput, users, i) );
+					users[i] = new Connection (new ServerMessagingProtocol(input, out, users, i),new ServerMovementProtocol(moveInput, moveOutput, users, i, world) );
 
 					Thread messageThread = new Thread(users[i].getMessageProt());
 					Thread moveThread = new Thread(users[i].getMoveProt());
@@ -138,13 +156,13 @@ public class Server{
 
 	}
 
-
-	public static void main(String[] args) {
-		try {
-			new Server();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+//
+//	public static void main(String[] args) {
+//		try {
+//			new Server();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//	}
 }
 

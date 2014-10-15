@@ -137,7 +137,7 @@ private static int numConnects = 0;
 	}
 
 
-	public static void createClient(String addr, int port, String name) throws IOException {
+	public static void createClient(String addr, int port, String name, WorldController game) throws IOException {
 		Socket s = new Socket(addr, port);
 		System.out.println("CONNECTED TO " + addr + ": " + port);
 		DataOutputStream out = new DataOutputStream(s.getOutputStream());
@@ -147,7 +147,7 @@ private static int numConnects = 0;
 		System.out.println(input.readUTF());
 
 
-		ClientM sv = new ClientM(s);
+		ClientM sv = new ClientM(s, game);
 		sv.run();
 
 
@@ -191,5 +191,7 @@ private static int numConnects = 0;
 		}
 
 	}
+	
+	
 
 }

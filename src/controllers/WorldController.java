@@ -25,6 +25,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashSet;
@@ -65,7 +66,12 @@ import GUI.world.MainFrame;
  * A WorldController. This is the glue between the model (World) and the view (gui, renderer).
  * @author Aaron
  */
-public class WorldController{
+public class WorldController implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	//boolean server or client, true if server, false if client.
 	private boolean serverOrClient = false;
@@ -127,9 +133,9 @@ public class WorldController{
 		 */
 
 		if(serverOrClient){
-			NetworkM.createServer(this, 2020, 2);
+			//NetworkM.createServer(this, 2020, 2);
 			try {
-				server = new Server();
+				server = new Server(this);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -138,13 +144,17 @@ public class WorldController{
 
 		else {
 
-			try {
-				NetworkM.createClient("localhost", 2020, "selemonClient");
-				client = new Client("130.195.6.170", 45612, 45812);
-			} catch (IOException e) {
+			
+//				try {
+//					NetworkM.createClient("localhost", 2020, "selemonClient", this);
+//				} catch (IOException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+				client = new Client("130.195.4.159", 45812, 45612, this);
+			
 
-				e.printStackTrace();
-			}
+			
 		}
 
 	}

@@ -30,8 +30,10 @@ public class ClientM extends Thread implements MouseListener{
 	 * constructor
 	 * @param socket - the socket for the client
 	 * */
-	public ClientM(Socket socket){
+	public ClientM(Socket socket, WorldController game){
+		
 		this.socket = socket;
+	    this.world = game;
 
 	}
 
@@ -50,7 +52,7 @@ public class ClientM extends Thread implements MouseListener{
              System.out.println("inside try[CLIENT]");
              Message message;
 
-			in = new ObjectInputStream(socket.getInputStream());
+
 
 			System.out.println("past in [client]");
 			//Retrieve the message sent from the server
@@ -64,25 +66,26 @@ public class ClientM extends Thread implements MouseListener{
 			//
 			boolean exit = false;
 
-			world.getGui().getCanvas().addMouseListener(this);
+			//world.getGui().getCanvas().addMouseListener(this);
 			while(!exit){
 
-				System.out.println("looping[CLIENT]");
+				
 
-				message = (Message) in.readObject();
+				//message = (Message) in.readObject();
 
-				world = message.getWorld();
+				//world = message.getWorld();
 				if(world.getGui().getCanvas().getClicked()){
 					try {
 						System.out.println("a changed has happened client side");
 						world.getGui().getCanvas().setClicked(false);
+						
 						out.writeObject(new Message(null, world, ID));
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 				}
-				System.out.println("should have worldController.");
+				
 				//here we up date the gui with world
 				//and display it
 
@@ -94,9 +97,6 @@ public class ClientM extends Thread implements MouseListener{
 			socket.close();
 
 		}catch(IOException e){
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -143,5 +143,7 @@ public class ClientM extends Thread implements MouseListener{
 	}
 
 
+
+	
 
 }
