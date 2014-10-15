@@ -58,6 +58,7 @@ import world.tiles.ImpassableTile;
 import world.tiles.PassableTile;
 import world.tiles.Tile;
 import world.towns.City;
+import GUI.EscapeDialog.EscapeDialog;
 import GUI.party.PartyDialog;
 import GUI.world.GameDialog;
 import GUI.world.MainFrame;
@@ -199,6 +200,10 @@ public class WorldController{
 			notifier();
 			gui.redraw();
 		}
+		else if(code == KeyEvent.VK_ESCAPE){
+			EscapeDialog dialog = new EscapeDialog(gui,this);
+	    }
+
 
 	}
 
