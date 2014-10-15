@@ -11,6 +11,11 @@ import world.icons.WorldIcon;
 import world.tiles.Tile;
 import controllers.WorldController;
 
+/**
+ * 
+ * @author Neal Hartley && Selemon Yitbarek
+ *  deals with incoming movement packets. Uses them to update players locations on map.
+ */
 public class ClientMoveInputProtocol implements Runnable{
 
 	

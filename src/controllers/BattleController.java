@@ -209,6 +209,10 @@ public class BattleController{
 		frame.redraw();
 	}
 
+	/**
+	 * Respond to a mouse moved event.
+	 * @param me: the event.
+	 */
 	public void mouseMoved(MouseEvent me){
 
 		Point ptIso = new Point(me.getX(),me.getY());
@@ -264,43 +268,37 @@ public class BattleController{
 		resetHighlightedTiles();
 	}
 
-
+	/**
+	 * Get the world attached to this controller.
+	 * @return: world
+	 */
 	public World getWorld(){
 		return world;
 	}
 
+	/**
+	 * Get the current viewing perspective of this controller.
+	 * @return: camera
+	 */
 	public Camera getCamera(){
 		return camera;
 	}
 
+	/**
+	 * Get the currently selected tile, if it exists.
+	 * @return: currenty selected tile, or null if there isn't one.
+	 */
 	public Tile getSelectedTile(){
 		return world.getTile(selected);
 	}
 
+	/**
+	 * Get the width of the gui dimensions.
+	 * @return: dimension object
+	 */
 	public Dimension getVisualDimensions() {
 		if (frame == null) return Toolkit.getDefaultToolkit().getScreenSize();
 		return frame.getSize();
-	}
-
-	public static void main(String[] strungout) {
-		// build temp world
-		World w = TemporaryLoader.loadWorld(100, 100);
-
-		// make new players
-		Player p1 = new Player("Fruit", 1);
-		Player p2 = new Player("Vegetable", 2);
-
-		//make new partys
-		Hero h1 = new Hero("Mr Fruit Salad", "ovelia", p1, new HeroStats(100, 100, 100, 100, 100, 100, AttackType.MELEE));
-		Party party1 = new Party(h1, p1, Party.quickKnightParty(p1));
-
-		Hero h2 = new Hero("Lord Vegetables", "ovelia", p2, new HeroStats(100, 100, 100, 100, 100, 100, AttackType.MELEE));
-		Party party2 = new Party(h2, p2, Party.quickKnightParty(p2));
-
-
-		//create battle controller
-		new BattleController(w, new MainFrame(), party1, party2);
-
 	}
 
 }

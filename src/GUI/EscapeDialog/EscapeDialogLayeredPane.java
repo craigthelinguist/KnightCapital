@@ -8,6 +8,11 @@ import GUI.world.DialogPanel;
 import GUI.world.GameDialog;
 import GUI.world.MainFrame;
 
+/**
+ * A layered pane that stores the background image and the background panel that holds all of the buttons.
+ * @author Ewan Moshi
+ *
+ */
 public class EscapeDialogLayeredPane extends JLayeredPane{
 
 	int width;

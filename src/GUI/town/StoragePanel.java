@@ -11,18 +11,23 @@ import javax.swing.JPanel;
 import tools.Constants;
 import tools.ImageLoader;
 
+/**
+ * A panel that has the storage background image
+ * @author Ewan Moshi
+ *
+ */
 public class StoragePanel extends JPanel{
 
 	private BufferedImage backgroundImage;
-	
+
 	public StoragePanel() {
 		this.setPreferredSize(new Dimension(540,390));
 		/*There is storageBackground and storageBackground2, they have different backgrounds*/
 		backgroundImage = ImageLoader.load(Constants.GUI_TOWN + "storageBackground.png");
 	}
-	
-	
-	
+
+
+
 	  @Override
 	  protected void paintComponent(Graphics g) {
 	    super.paintComponent(g);

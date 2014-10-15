@@ -25,6 +25,11 @@ import world.World;
 import GUI.world.CustomButton;
 import controllers.WorldController;
 
+/**
+ * This panel has the buttons for the main menu and the backgrund image.
+ * @author moshiewan
+ *
+ */
 public class MainMenuPanel extends JPanel implements ActionListener{
 
 	private CustomButton newGame;

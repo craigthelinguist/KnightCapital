@@ -12,6 +12,11 @@ import GUI.world.Border;
 import tools.Constants;
 import tools.ImageLoader;
 
+/**
+ * A border for the equipment panel
+ * @author Ewan Moshi
+ *
+ */
 public class EquipmentBorder extends JPanel{
 
 	public EquipmentBorder() {

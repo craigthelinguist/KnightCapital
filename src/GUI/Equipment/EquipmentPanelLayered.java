@@ -7,7 +7,11 @@ import javax.swing.BorderFactory;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
-
+/**
+ * A layered pane that stores the background, the equipment panel and the hero layered pane.
+ * @author Ewan Moshi
+ *
+ */
 
 public class EquipmentPanelLayered extends JLayeredPane{
 

@@ -3,7 +3,12 @@ package networking;
 import java.io.Serializable;
 
 import player.Player;
-
+/**
+ * 
+ * @author Neal Hartley
+ *serializable class that stores data for sending along an ObjectOutputStream
+ *holds all cojent information regarding player movements.
+ */
 public class Packet implements Serializable{
 
 	/**

@@ -10,6 +10,11 @@ import controllers.WorldController;
 import GUI.world.DialogLayeredPane;
 import GUI.world.MainFrame;
 
+/**
+ * An escape dialog that will show up in the game and allow the user to resume,quit,load,save etc.
+ * @author Ewan Moshi
+ *
+ */
 public class EscapeDialog extends JDialog  {
 
 	protected MainFrame frame;

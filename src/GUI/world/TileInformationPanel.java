@@ -243,7 +243,7 @@ public class TileInformationPanel extends JPanel{
 				revalidate(); //revalidate this panel (displays all the information)
 			}
 
-			// item on the tile, draw a picture of a treasure chest or something
+			// item on the tile, draw a picture of a treasure chest
 			else if (occupant instanceof ItemIcon){
 				ItemIcon ii = (ItemIcon)occupant;
 

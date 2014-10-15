@@ -17,6 +17,11 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.AbstractBorder;
 
+/**
+ * This class lets you create a custom border.
+ * @author moshiewan
+ *
+ */
 public class Border extends AbstractBorder {
 
 	  Image topCenterImage, topLeftImage, topRight;
@@ -42,12 +47,16 @@ public class Border extends AbstractBorder {
 	  public Insets getBorderInsets(Component c) {
 	    if (insets != null) {
 	      return insets;
-	    } 
+	    }
 	    else {
 	      return new Insets(topCenterImage.getHeight(null), leftCenterImage.getWidth(null), bottomCenterImage.getHeight(null), rightCenterImage.getWidth(null));
 	    }
 	  }
 
+	  /**
+	   * Paint the border around the component
+	   *
+	   */
 	  public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
 	    g.setColor(Color.white);
 	    g.fillRect(x, y, width, height);
