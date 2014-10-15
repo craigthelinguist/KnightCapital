@@ -27,11 +27,12 @@ import world.tiles.Tile;
 import world.towns.City;
 
 /**
- * WorldRenderer provides static methods for
+ * WorldRenderer provides static methods for drawing a World on a graphics object.
  * @author Myles, Aaron
  */
 public class WorldRenderer {
 
+	// grahpical constants
 	private static final int TILE_WD = Constants.TILE_WD;
 	private static final int TILE_HT = Constants.TILE_HT;
 	private static final int HALF_TILE_WD = TILE_WD/2;
