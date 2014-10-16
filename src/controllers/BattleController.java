@@ -40,8 +40,8 @@ import GUI.world.MainFrame;
  * 		-Ranged units can attack anyone.
  * 		-AOE units attack everyone.
  * 		-Battles continue to the death
- * 		-No rush 20 min
- *
+ * 		-No rush 20 min (lold)
+ *	
  */
 public class BattleController{
 
