@@ -68,8 +68,7 @@ public class Constants {
 
 	public static final String PartyPanelTitle = "Party Panel";
 	public static final String PartyPanelDescription = "Select a unit/item to get a more detailed description about it. Drag units to change battle formation.";
-	
-	//streak of peace
+
 	// shit for data loading.
 	public static final String XMLTESTS = "data" + File.separatorChar + "test" + File.separatorChar;
 	public static final String DATA_UNITS = "data" + File.separatorChar + "units" + File.separatorChar;
