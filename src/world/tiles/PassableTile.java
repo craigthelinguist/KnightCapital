@@ -27,30 +27,6 @@ public class PassableTile extends Tile{
 	}
 
 	/**
-	 * Contructs a new dirt tile
-	 * @param x coordinate
-	 * @param y coordinate
-	 * @return new dirt tile
-	 */
-	public static PassableTile newDirtTile(int x, int y){
-		return new PassableTile("dirt",x,y);
-	}
-
-	/**
-	 * Contructs a new grass tile
-	 * @param x coordinate
-	 * @param y coordinate
-	 * @return new grass tile
-	 */
-	public static PassableTile newGrassTile(int x, int y){
-
-		// Generate a random number to get variation in the types of grass that are displayed, to minimise the 'tiling' effect seen when using the same texture;
-		int random = 1 + (int)(Math.random() * 3);
-		return new PassableTile("grass_"+random,x,y);
-
-	}
-
-	/**
 	 * Can it be passed by a creature?
 	 */
 	@Override

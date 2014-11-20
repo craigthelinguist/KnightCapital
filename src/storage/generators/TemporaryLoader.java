@@ -14,6 +14,7 @@ import world.tiles.CityTile;
 import world.tiles.ImpassableTile;
 import world.tiles.PassableTile;
 import world.tiles.Tile;
+import world.tiles.TileFactory;
 import world.towns.City;
 
 /**
@@ -71,19 +72,19 @@ public class TemporaryLoader {
 
 					switch (line[x]){
 						case GRASS_TILE:
-							tiles[x][y] = PassableTile.newGrassTile(x,y);
+							tiles[x][y] = TileFactory.newGrassTile(x,y);
 							break;
 						case DIRT_TILE:
-							tiles[x][y] = PassableTile.newDirtTile(x,y);
+							tiles[x][y] = TileFactory.newDirtTile(x,y);
 							break;
 						case TREE_TILE:
-							tiles[x][y] = ImpassableTile.newTreeTile(x,y);
+							tiles[x][y] = TileFactory.newTreeTile(x,y);
 							break;
 						case BUSH_TILE:
-							tiles[x][y] = ImpassableTile.newBushTile(x,y);
+							tiles[x][y] = TileFactory.newBushTile(x,y);
 							break;
 						case ROCK_TILE:
-							tiles[x][y] = ImpassableTile.newRockTile(x,y);
+							tiles[x][y] = TileFactory.newRockTile(x,y);
 							break;
 						default:
 							throw new IOException("Unknown symbol " + line[x] + " at ("+"x"+","+y+")");
@@ -130,7 +131,7 @@ public class TemporaryLoader {
 			//int rand = 0 + (int)(Math.random()*worldWidth);
 			for(int y = 0; y < worldHeight; y++) {
 				//if(x > rand)tiles[x][y] = ImpassableTile.newTreeTile(x, y);
-				tiles[x][y] = PassableTile.newGrassTile(x, y);
+				tiles[x][y] = TileFactory.newGrassTile(x, y);
 			}
 		}
 
@@ -144,7 +145,7 @@ public class TemporaryLoader {
 			//int rand = 0 + (int)(Math.random()*worldWidth);
 			for(int y = 0; y < worldHeight; y++) {
 				//if(x > rand)tiles[x][y] = ImpassableTile.newTreeTile(x, y);
-				tiles[x][y] = PassableTile.newGrassTile(x, y);
+				tiles[x][y] = TileFactory.newGrassTile(x, y);
 			}
 		}
 

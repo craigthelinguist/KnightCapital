@@ -39,6 +39,8 @@ public abstract class Tile {
 
 	protected Tile(String imgName, int x, int y){
 		X = x; Y = y;
+		if (imgName == null) return;
+		
 		imageName = imgName;
 		animations = new AnimationMap();
 

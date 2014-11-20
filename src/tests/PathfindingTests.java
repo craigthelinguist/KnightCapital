@@ -17,9 +17,10 @@ import player.Player;
 import world.World;
 import world.icons.ItemIcon;
 import world.icons.Party;
-import world.tiles.ImpassableTile;
-import world.tiles.PassableTile;
+import world.tiles.TileFactory;
+import world.tiles.TileFactory;
 import world.tiles.Tile;
+import world.tiles.TileFactory;
 
 /**
  * Tests pathfinding in the World class.
@@ -231,22 +232,22 @@ public class PathfindingTests {
 	 */
 	public void init(){
 		Tile[][] tiles = new Tile[4][4];
-		tiles[0][0] = PassableTile.newGrassTile(0,0);
-		tiles[0][1] = ImpassableTile.newVoidTile(0,1);
-		tiles[0][2] = PassableTile.newGrassTile(0,2);
-		tiles[0][3] = ImpassableTile.newVoidTile(0,3);
-		tiles[1][0] = PassableTile.newGrassTile(1,0);
-		tiles[1][1] = ImpassableTile.newVoidTile(1,1);
-		tiles[1][2] = ImpassableTile.newVoidTile(1,2);
-		tiles[1][3] = ImpassableTile.newVoidTile(1,3);
-		tiles[2][0] = PassableTile.newGrassTile(2,0);
-		tiles[2][1] = PassableTile.newGrassTile(2,1);
-		tiles[2][2] = PassableTile.newGrassTile(2,2);
-		tiles[2][3] = PassableTile.newGrassTile(2,3);
-		tiles[3][0] = PassableTile.newGrassTile(3,0);
-		tiles[3][1] = PassableTile.newGrassTile(3,1);
-		tiles[3][2] = PassableTile.newGrassTile(3,2);
-		tiles[3][3] = PassableTile.newGrassTile(3,3);
+		tiles[0][0] = TileFactory.newGrassTile(0,0);
+		tiles[0][1] = TileFactory.newVoidTile(0,1);
+		tiles[0][2] = TileFactory.newGrassTile(0,2);
+		tiles[0][3] = TileFactory.newVoidTile(0,3);
+		tiles[1][0] = TileFactory.newGrassTile(1,0);
+		tiles[1][1] = TileFactory.newVoidTile(1,1);
+		tiles[1][2] = TileFactory.newVoidTile(1,2);
+		tiles[1][3] = TileFactory.newVoidTile(1,3);
+		tiles[2][0] = TileFactory.newGrassTile(2,0);
+		tiles[2][1] = TileFactory.newGrassTile(2,1);
+		tiles[2][2] = TileFactory.newGrassTile(2,2);
+		tiles[2][3] = TileFactory.newGrassTile(2,3);
+		tiles[3][0] = TileFactory.newGrassTile(3,0);
+		tiles[3][1] = TileFactory.newGrassTile(3,1);
+		tiles[3][2] = TileFactory.newGrassTile(3,2);
+		tiles[3][3] = TileFactory.newGrassTile(3,3);
 		player = new Player("Ben Dover",1);
 		world = new World(tiles,null,null);
 		HeroStats stats = new HeroStats(50,5,5,5,5,4,AttackType.AOE);

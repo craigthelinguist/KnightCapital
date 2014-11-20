@@ -215,20 +215,6 @@ public class MainMenuPanel extends JPanel implements ActionListener{
 				}
 			}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 		}
 		else if(e.getSource() == quitGame) {
 			System.exit(0);

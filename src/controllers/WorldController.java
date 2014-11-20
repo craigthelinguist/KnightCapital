@@ -43,6 +43,7 @@ import world.tiles.CityTile;
 import world.tiles.ImpassableTile;
 import world.tiles.PassableTile;
 import world.tiles.Tile;
+import world.tiles.TileFactory;
 import world.towns.City;
 import GUI.EscapeDialog.EscapeDialog;
 import GUI.world.GameDialog;
@@ -594,10 +595,10 @@ public class WorldController implements Serializable{
 					tiles[x][y] = new ImpassableTile("bigTree",8,9);
 				}
 				else if(rand > 40 ) {
-					tiles[x][y] = PassableTile.newDirtTile(x,y);
+					tiles[x][y] = TileFactory.newDirtTile(x,y);
 				}
 				else {
-					tiles[x][y] = PassableTile.newGrassTile(x,y);
+					tiles[x][y] = TileFactory.newGrassTile(x,y);
 				}
 			}
 		}

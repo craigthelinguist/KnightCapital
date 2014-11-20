@@ -30,6 +30,7 @@ import world.icons.Party;
 import world.tiles.CityTile;
 import world.tiles.PassableTile;
 import world.tiles.Tile;
+import world.tiles.TileFactory;
 import world.towns.City;
 
 /**
@@ -235,7 +236,7 @@ public class WorldLoader {
 		Tile[][] tiles = new Tile[20][20];
 		for (int i = 0; i < 20; i++){
 			for (int j = 0; j < 20; j++){
-				tiles[i][j] = PassableTile.newGrassTile(i, j);
+				tiles[i][j] = TileFactory.newGrassTile(i, j);
 			}
 		}
 

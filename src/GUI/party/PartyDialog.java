@@ -35,6 +35,7 @@ import tools.Log;
 import world.icons.Party;
 import world.tiles.PassableTile;
 import world.tiles.Tile;
+import world.tiles.TileFactory;
 import GUI.Equipment.HeroEquipLayeredPane;
 import GUI.reusable.ItemPanel;
 import GUI.reusable.PartyPanel;
@@ -330,7 +331,7 @@ public class PartyDialog extends JDialog  {
 
 		// Create new tile to place party on,
 		// party must be on a tile
-		Tile t = PassableTile.newDirtTile(0, 0);
+		Tile t = TileFactory.newDirtTile(0, 0);
 		t.setIcon(party);
 
 		// make magic

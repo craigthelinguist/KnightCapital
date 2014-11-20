@@ -19,6 +19,7 @@ import world.icons.Party;
 import world.tiles.CityTile;
 import world.tiles.PassableTile;
 import world.tiles.Tile;
+import world.tiles.TileFactory;
 import world.towns.City;
 
 public class MovingIntoCityTests {
@@ -116,7 +117,7 @@ public class MovingIntoCityTests {
 		// populate world with passable grass tiles
 		for (int i = 0; i < tiles.length; i++){
 			for (int j = 0; j < tiles[i].length; j++){
-				tiles[i][j] = PassableTile.newGrassTile(i, j);
+				tiles[i][j] = TileFactory.newGrassTile(i, j);
 			}
 		}
 

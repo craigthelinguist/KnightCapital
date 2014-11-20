@@ -31,6 +31,7 @@ import world.icons.Party;
 import world.tiles.CityTile;
 import world.tiles.PassableTile;
 import world.tiles.Tile;
+import world.tiles.TileFactory;
 import world.towns.City;
 
 /**
@@ -121,7 +122,7 @@ public class WorldTests {
 		player2 = new Player("2pac", 2);
 
 		Tile[][] tiles = new Tile[1][1];
-		tiles[0][0] = PassableTile.newGrassTile(0, 0);
+		tiles[0][0] = TileFactory.newGrassTile(0, 0);
 		cities = new HashSet<>();
 		City c1 = new City("Porirua",null,player1,null);
 		City c2 = new City("Newtown",null,player1,null);

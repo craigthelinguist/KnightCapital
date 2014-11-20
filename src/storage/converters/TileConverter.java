@@ -8,6 +8,7 @@ import world.tiles.CityTile;
 import world.tiles.ImpassableTile;
 import world.tiles.PassableTile;
 import world.tiles.Tile;
+import world.tiles.TileFactory;
 import world.towns.City;
 
 import com.thoughtworks.xstream.converters.Converter;
@@ -124,7 +125,7 @@ public class TileConverter implements Converter {
 		reader.moveDown();
 			String imageName = reader.getValue();
 		reader.moveUp();
-		if (imageName == null) return ImpassableTile.newVoidTile(x, y);
+		if (imageName == null) return TileFactory.newVoidTile(x, y);
 		else return new ImpassableTile(imageName, x, y);
 	}
 
