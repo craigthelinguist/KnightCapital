@@ -248,7 +248,7 @@ public class PartyDialog extends JDialog  {
 	 * Updates the selectedPanel with selected item
 	 */
 	protected void updateSelectedWithItem(Item item) {
-		System.out.println("[Party Dialog]Updating Selected Item");
+		//System.out.println("[Party Dialog]Updating Selected Item");
 		this.selectedItemPanel.setSelectedItem(item);
 	}
 
@@ -256,7 +256,7 @@ public class PartyDialog extends JDialog  {
 	 * Updates the selectedPanel with selected unit
 	 */
 	protected void updateSelectedWithUnit(Creature unit) {
-		System.out.println("[Party Dialog]Updating Selected Unit");
+		//System.out.println("[Party Dialog]Updating Selected Unit");
 		this.selectedItemPanel.setSelectedUnit(unit);
 	}
 
@@ -266,7 +266,7 @@ public class PartyDialog extends JDialog  {
 	 * I'm pretty sure I'm supposed to use dispose().
 	 */
 	private void closeDialog() {
-		Log.print("[PartyDialog] Closing party dialog");
+		//Log.print("[PartyDialog] Closing party dialog");
 		this.dispose();
 	}
 
