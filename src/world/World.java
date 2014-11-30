@@ -415,11 +415,6 @@ public class World {
 
 	}
 
-	/**
-	 * Return the set of valid moves for the given party on the selected tile.
-	 * @param party: the party that is moving.
-	 * @param start: the tile they're starting from.
-	 */
 	public Set<Point> getValidMoves(Party party, Tile start) {
 
 		// a wrapper class for the nodes in the queue
@@ -444,6 +439,7 @@ public class World {
 		Point point = new Point(start.X,start.Y);
 		Node node = new Node(point,0);
 		Set<Point> visited = new HashSet<>();
+		Set<Point> validMoves = new HashSet<>();
 		Queue<Node> queue = new ArrayDeque<>();
 		queue.offer(node);
 
@@ -451,6 +447,9 @@ public class World {
 			node = queue.poll();
 			point = node.point;
 			visited.add(point);
+			Tile tile = tiles[point.x][point.y];
+			if (!tile.passable() && tile != start) continue;
+			if (tile != start) validMoves.add(point);
 			LinkedList<Point> neighbours = findNeighbours(point);
 			int newDist = node.distance + 1;
 
@@ -459,8 +458,8 @@ public class World {
 				else queue.offer(new Node(neighbour,newDist));
 			}
 		}
-
-		return visited;
+		
+		return validMoves;
 	}
 
 	public Player getCurrentPlayer(){

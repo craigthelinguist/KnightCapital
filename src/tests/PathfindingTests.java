@@ -141,7 +141,7 @@ public class PathfindingTests {
 	public void testValidMoves(){
 		init();
 		Set<Point> tiles = world.getValidMoves(party, world.getTile(start));
-		assertEquals("size was " + tiles.size(), tiles.size(),13);
+		assertEquals("size was " + tiles.size(), tiles.size(),6);
 	}
 
 	@Test
