@@ -25,19 +25,13 @@ public class TownGui extends JFrame {
 	private TownPanel panel;
 
 	public TownGui(TownController townController) {
-
-
-
 		panel = new TownPanel(townController,this);
-
-		BoxLayout layout = new BoxLayout(this,BoxLayout.PAGE_AXIS);//this.add(panel);
+		BoxLayout layout = new BoxLayout(this,BoxLayout.PAGE_AXIS);
 		this.add(panel);
-
 		this.pack();
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
 		this.setVisible(true);
-
 	}
 
 }

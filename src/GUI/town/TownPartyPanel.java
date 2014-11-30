@@ -83,6 +83,7 @@ public class TownPartyPanel extends JPanel {
 
 				// portrait outline
 				g.drawRect(xDraw, yDraw, PORTRAIT_WD, PORTRAIT_HT);
+				g.setColor(Color.BLACK);
 
 
 			}

@@ -39,7 +39,7 @@ public class TownButtonPanel extends JPanel{
 		button_leave = new CustomButton(closeTownDefault, closeTownPressed, closeTownHover);
 
 		//this.add(panel_exchange);
-		JLabel townName = new JLabel(controller.getCity().getName()+" City");
+		JLabel townName = new JLabel(controller.getCity().getName());
 		townName.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 20)); //set font of JLabel to franklin gothic medium
 		townName.setForeground(new Color(225,179,55));
 		townName.setOpaque(false);

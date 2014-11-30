@@ -273,5 +273,5 @@ public class City {
 	public int getImageHeight() {
 		return animations.getImage().getHeight();
 	}
-
+	
 }

@@ -36,8 +36,6 @@ public class TownPanel extends JPanel{
 	private TownGui gui;
 
 	// components
-
-
 	private TownExchangePanel panel_exchange;
 	private TownButtonPanel panel_buttons;
 
@@ -47,7 +45,6 @@ public class TownPanel extends JPanel{
 		this.splash = ImageLoader.load(FILEPATH + BACKDROP, ".jpg");
 		this.setPreferredSize(new Dimension(splash.getWidth(),splash.getHeight()));
 
-		Dimension childDimensions = new Dimension(getWidth()/3,getHeight()/3);
 		panel_exchange = new TownExchangePanel(townController, gui);
 		panel_buttons = new TownButtonPanel(new Dimension(10,10),townController);
 
@@ -55,14 +52,8 @@ public class TownPanel extends JPanel{
 		this.setLayout(bl);
 		this.add(panel_exchange,bl.SOUTH);
 
-		//this.setLayout(new FlowLayout(FlowLayout.LEFT));
-
 		panel_buttons.setOpaque(false);
 		this.add(panel_buttons,BorderLayout.WEST);
-
-
-		System.out.println(panel_exchange.getPreferredSize());
-		System.out.println(panel_exchange.getSize());
 
 	}
 

@@ -91,7 +91,6 @@ public class WorldController implements Serializable{
 	private static final int PAN_LEFT = KeyEvent.VK_LEFT;
 
 	public WorldController(World w, Player p, Boolean isServer){
-
 		this.isServer= isServer;
 		world = w;
 		player = p;
@@ -100,12 +99,6 @@ public class WorldController implements Serializable{
 		gui.setController(this);
 		selected = null;
 		highlightedTiles = new HashSet<>();
-
-
-	
-
-
-
 	}
 
 
