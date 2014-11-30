@@ -123,12 +123,12 @@ public class BattleController{
 		int code = ke.getKeyCode();
 		if (code == ROTATE_CW){
 			camera.rotateClockwise();
-			world.updateSprites(true);
+			world.rotateOccupants(true);
 			frame.redraw();
 		}
 		else if (code == ROTATE_CCW){
 			camera.rotateCounterClockwise();
-			world.updateSprites(false);
+			world.rotateOccupants(false);
 			frame.redraw();
 		}
 		else if (code == PAN_UP){

@@ -228,78 +228,18 @@ public class World {
 		return points;
 	}
 
-	public void updateSprites(boolean clockwise) {
+	public void rotateOccupants(boolean clockwise) {
 		for (int i = 0; i < tiles.length; i++){
 			for (int j = 0; j < tiles[i].length; j++){
 				Tile tile = tiles[i][j];
-
-				String name = tiles[i][j].getAnimationName();
-				int playerDir;
-				if(name == null) continue;
-
-				if (name.contains("north")) playerDir = Camera.NORTH;
-				else if (name.contains("east")) playerDir = Camera.EAST;
-				else if (name.contains("south")) playerDir = Camera.SOUTH;
-				else if (name.contains("west")) playerDir = Camera.WEST;
-				else throw new RuntimeException("Unknown animation name: " + name);
-
-				if (clockwise) playerDir = (playerDir+1)%4;
-				else if (playerDir == 0) playerDir = 3;
-				else playerDir = playerDir - 1;
-
-				if (playerDir == Camera.NORTH) {
-					tiles[i][j].setAnimation("north");
-				}
-				else if (playerDir == Camera.EAST) {
-					tiles[i][j].setAnimation("east");
-				}
-				else if (playerDir == Camera.SOUTH) {
-					tiles[i][j].setAnimation("south");
-				}
-				else if (playerDir == Camera.WEST) {
-					tiles[i][j].setAnimation("west");
-				}
-
-
-				WorldIcon wi = tile.occupant();
-
-				if (wi != null){
-					if (playerDir == Camera.NORTH) {
-						wi.setAnimationName("north");
-					}
-					else if (playerDir == Camera.EAST) {
-						wi.setAnimationName("east");
-					}
-					else if (playerDir == Camera.SOUTH) {
-						wi.setAnimationName("south");
-					}
-					else if (playerDir == Camera.WEST) {
-						wi.setAnimationName("west");
-					}
-				}
-
+				tile.rotate(clockwise);
+				WorldIcon icon = tile.occupant();
+				if (icon != null) icon.rotate(clockwise);
 			}
 		}
 
 		for (City city : cities){
-
-			String name = city.getAnimationName();
-			int cityDir;
-			if (name.contains("north")) cityDir = Camera.NORTH;
-			else if (name.contains("east")) cityDir = Camera.EAST;
-			else if (name.contains("south")) cityDir = Camera.SOUTH;
-			else if (name.contains("west")) cityDir = Camera.WEST;
-			else throw new RuntimeException("Unknown animation name: " + name);
-
-			if (clockwise) cityDir = (cityDir+1)%4;
-			else if (cityDir == 0) cityDir = 3;
-			else cityDir = cityDir - 1;
-
-			if (cityDir == Camera.NORTH) city.setAnimationName("north");
-			else if (cityDir == Camera.EAST) city.setAnimationName("east");
-			else if (cityDir == Camera.SOUTH) city.setAnimationName("south");
-			else if (cityDir == Camera.WEST) city.setAnimationName("west");
-
+			city.rotate(clockwise);
 		}
 
 

@@ -111,13 +111,13 @@ public class WorldController implements Serializable{
 		int code = ke.getKeyCode();
 		if (code == ROTATE_CW){
 			camera.rotateClockwise();
-			world.updateSprites(true);
+			world.rotateOccupants(true);
 			notifier();
 			gui.redraw();
 		}
 		else if (code == ROTATE_CCW){
 			camera.rotateCounterClockwise();
-			world.updateSprites(false);
+			world.rotateOccupants(false);
 			notifier();
 			gui.redraw();
 		}

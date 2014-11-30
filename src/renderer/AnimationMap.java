@@ -213,5 +213,31 @@ public class AnimationMap{
 		return images;
 	}
 
+	public void rotate(boolean clockwise) {
+		
+		// get current orientation
+		int playerDir;
+		if (animationName == null) return;
+		if (animationName.contains("north")) playerDir = Camera.NORTH;
+		else if (animationName.contains("east")) playerDir = Camera.EAST;
+		else if (animationName.contains("south")) playerDir = Camera.SOUTH;
+		else if (animationName.contains("west")) playerDir = Camera.WEST;
+		else throw new RuntimeException("Unknown animation name when rotating animation map: " + animationName);
+		
+		// rotate
+		if (clockwise) playerDir = (playerDir+1)%4;
+		else if (playerDir == 0) playerDir = 3;
+		else playerDir = playerDir - 1;
+		
+		// set new orientation
+		if (playerDir == Camera.NORTH) this.setImage("north");
+		else if (playerDir == Camera.EAST) this.setImage("east");
+		else if (playerDir == Camera.SOUTH) this.setImage("south");
+		else if (playerDir == Camera.WEST) this.setImage("west");
+		else throw new RuntimeException("Unknown animation name for rotated image: " + animationName);
+		
+		
+	}
+
 
 }

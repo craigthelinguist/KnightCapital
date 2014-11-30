@@ -273,5 +273,9 @@ public class City {
 	public int getImageHeight() {
 		return animations.getImage().getHeight();
 	}
+
+	public void rotate(boolean clockwise) {
+		this.animations.rotate(clockwise);
+	}
 	
 }

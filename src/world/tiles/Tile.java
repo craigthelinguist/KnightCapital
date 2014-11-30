@@ -11,6 +11,7 @@ import java.awt.image.DataBufferInt;
 import java.awt.image.WritableRaster;
 
 import renderer.AnimationMap;
+import renderer.Camera;
 import tools.Constants;
 import tools.ImageLoader;
 import tools.ImageManipulation;
@@ -52,6 +53,11 @@ public abstract class Tile {
 
 		animations.addDirectedImages(Constants.ASSETS_TILES, imageName, null);
 		animations.setImage("north");
+	}
+	
+	public void rotate(boolean clockwise){
+		if (animations == null) return;
+		animations.rotate(clockwise);
 	}
 
 	/**
