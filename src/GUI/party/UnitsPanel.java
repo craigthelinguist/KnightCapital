@@ -46,7 +46,7 @@ public class UnitsPanel extends JPanel{
 	private Party party;
 	private Point dragging;
 
-	public Creature selected;
+	private Creature selected;
 
 	private final int PORTRAIT_WIDTH = Constants.PORTRAIT_DIMENSIONS.width;
 	private final int PORTRAIT_HEIGHT = Constants.PORTRAIT_DIMENSIONS.height;
@@ -173,6 +173,7 @@ public class UnitsPanel extends JPanel{
 		@Override
 		public void mouseExited(MouseEvent e) {
 			dragging = null;
+			UnitsPanel.this.repaint();
 		}
 
 		@Override
