@@ -131,6 +131,37 @@ public class Camera {
 		orientation = orient;
 	}
 
+	public static int inverseOrientation(int direction){
+		if (direction == Camera.EAST) return Camera.WEST;
+		else if (direction == Camera.WEST) return Camera.EAST;
+		else if (direction == Camera.NORTH) return Camera.SOUTH;
+		else return Camera.NORTH;
+	}
+	
+	/**
+	 * If someone is facing the direction origin, and I'm facing the direction perspective,
+	 * this method returns the direction that they're facing from my perspective.
+	 * @param origin: direction they're facing
+	 * @param perspective: direction I'm facing
+	 * @return direction that it looks like they're facing from my perspective.
+	 */
+	public static int getOrientationFromPerspective(int origin, int perspective) {
+		
+		if (perspective == Camera.NORTH) return origin;
+		else if (perspective == Camera.EAST){
+			return (origin+1)%4;
+		}
+		else if (perspective == Camera.SOUTH){
+			return Camera.inverseOrientation(origin);		
+		}
+		else if (perspective == Camera.WEST){
+			if (origin == Camera.NORTH) return Camera.WEST;
+			else return origin - 1;
+		}
+		
+		else throw new RuntimeException("fuck man");
+	}
+
 
 
 

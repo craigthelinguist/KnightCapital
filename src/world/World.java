@@ -202,14 +202,8 @@ public class World {
 		tileDestination.setIcon(party);
 		int dist = Geometry.taxicab(location, destination);
 
-		// update party
+		// update party move points
 		party.decreaseMovePoints(dist);
-		boolean east = destination.x - destination.y > location.x - location.y;
-		boolean north = destination.x + destination.y < location.x + location.y;
-		if (east && north) party.setAnimationName("north");
-		else if (east && !north) party.setAnimationName("east");
-		else if (!east && north) party.setAnimationName("west");
-		else if (!east && !north) party.setAnimationName("south");
 
 		return true;
 	}
@@ -228,7 +222,13 @@ public class World {
 		return points;
 	}
 
+	/**
+	 * Rotate everything in the world 90 degrees.
+	 * @param clockwise: whether you should rotate left or right.
+	 */
 	public void rotateOccupants(boolean clockwise) {
+		
+		// rotate tiles and occupants
 		for (int i = 0; i < tiles.length; i++){
 			for (int j = 0; j < tiles[i].length; j++){
 				Tile tile = tiles[i][j];
@@ -238,12 +238,10 @@ public class World {
 			}
 		}
 
+		// rotate cities
 		for (City city : cities){
 			city.rotate(clockwise);
 		}
-
-
-		// TODO Auto-generated method stub
 
 	}
 

@@ -200,8 +200,25 @@ public class WorldController implements Serializable{
 			// attempt to move the party
 			boolean moved = world.moveParty(player, selected, ptCartesian);
 
-			// update view if move was sucessful
 			if (moved){
+				
+				// update model of party
+				boolean east = clickedTile.X - clickedTile.Y > selectedTile.X - selectedTile.Y;
+				boolean north = clickedTile.X + clickedTile.Y < selectedTile.X + selectedTile.Y;
+				int dir = 0;
+				if (east && north) dir = Camera.NORTH;
+				else if (east && !north) dir = Camera.EAST;
+				else if (!east && north) dir = Camera.WEST;
+				else if (!east && !north) dir = Camera.SOUTH;
+				int orientation = this.getCamera().getOrientation();
+				orientation = Camera.getOrientationFromPerspective(dir,orientation);
+				Party party = (Party)clickedTile.occupant();
+				if (orientation == Camera.NORTH) party.setAnimationName("north");
+				else if (orientation == Camera.EAST) party.setAnimationName("east");
+				else if (orientation == Camera.SOUTH) party.setAnimationName("south");
+				else if (orientation == Camera.WEST) party.setAnimationName("west");
+				
+				// update view
 				selected = ptCartesian;
 				highlightTiles(clickedTile);
 				gui.updateInfo(clickedTile);
