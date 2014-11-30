@@ -186,7 +186,6 @@ public class WorldController implements Serializable{
 
 		// left-clicked the selection; deselect
 		else if (selected != null && leftClicked(me) && selectedTile == clickedTile){
-			System.out.println("deselect");
 			deselect();
 			gui.updateInfo(null);
 			gui.redraw();

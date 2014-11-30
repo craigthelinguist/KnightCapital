@@ -151,4 +151,9 @@ public class TemporaryLoader {
 
 		return new World(tiles, null, null);
 	}
+	
+	public static void main(String[] args){
+		World w = TemporaryLoader.loadWorld("world_temporary.txt", null);
+	}
+	
 }

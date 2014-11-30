@@ -63,9 +63,9 @@ public class TileFactory {
 	public static ImpassableTile newBushTile(int x, int y){
 		DecorIcon di = new DecorIcon(DecorIcon.BUSH);
 		int random = 1 + (int)(Math.random() * 2);
-		ImpassableTile it = new ImpassableTile("bush_"+random,x,y);
+		ImpassableTile it = new ImpassableTile("grass_"+random,x,y);
 		it.setIcon(di);
-		return new ImpassableTile("bush_"+random, x, y);
+		return it;
 	}
 
 	/**
@@ -77,9 +77,9 @@ public class TileFactory {
 	public static ImpassableTile newRockTile(int x, int y){
 		DecorIcon di = new DecorIcon(DecorIcon.ROCK);
 		int random = 1 + (int)(Math.random() * 2);
-		ImpassableTile it = new ImpassableTile("rock_"+random,x,y);
+		ImpassableTile it = new ImpassableTile("grass_"+random,x,y);
 		it.setIcon(di);
-		return new ImpassableTile("rock_"+random, x, y);
+		return it;
 	}
 	
 	

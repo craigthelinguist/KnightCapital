@@ -111,11 +111,6 @@ public class WorldRenderer {
 
 
 				if (!Geometry.isPointOnScreen(ptRotated,controller.getCamera(),dimensions)) continue;
-
-
-				if (tile instanceof ImpassableTile && tile.occupied()){
-					System.out.print("break");
-				}
 				
 				int intensity = 0;
 				if (tile == controller.getSelectedTile()) intensity = 55;
@@ -139,6 +134,11 @@ public class WorldRenderer {
 				// add occupant to buffer
 				if (tile.occupant() != null){
 					WorldIcon occupant = tile.occupant();
+					
+					if (occupant.getClass() == DecorIcon.class){
+						System.out.println("braek");
+					}
+					
 					Point ptRotatedIcon = Geometry.copyPoint(ptRotated);
 					CartesianMapping<WorldIcon> iconToDraw = new CartesianMapping<>(1,occupant,ptRotatedIcon,0);
 					drawBuffer.add(iconToDraw);
