@@ -1,5 +1,7 @@
 package world.tiles;
 
+import world.icons.DecorIcon;
+
 public class TileFactory {
 
 	private TileFactory(){}
@@ -45,8 +47,11 @@ public class TileFactory {
 	 * @return new tree tile
 	 */
 	public static ImpassableTile newTreeTile(int x, int y){
-		int random = 1 + (int)(Math.random() * 2);
-		return new ImpassableTile("tree_"+random, x, y);
+		DecorIcon di = new DecorIcon(DecorIcon.TREE);
+		int random = 1 + (int)(Math.random() * 3);
+		ImpassableTile it = new ImpassableTile("grass_"+random,x,y);
+		it.setIcon(di);
+		return it;
 	}
 
 	/**
@@ -56,8 +61,11 @@ public class TileFactory {
 	 * @return new bush tile
 	 */
 	public static ImpassableTile newBushTile(int x, int y){
+		DecorIcon di = new DecorIcon(DecorIcon.BUSH);
 		int random = 1 + (int)(Math.random() * 2);
-		return new ImpassableTile("bush_"+random, x, y);
+		ImpassableTile it = new ImpassableTile("grass_"+random,x,y);
+		it.setIcon(di);
+		return it;
 	}
 
 	/**
@@ -67,9 +75,12 @@ public class TileFactory {
 	 * @return new rock tile
 	 */
 	public static ImpassableTile newRockTile(int x, int y){
+		DecorIcon di = new DecorIcon(DecorIcon.ROCK);
 		int random = 1 + (int)(Math.random() * 2);
-		return new ImpassableTile("rock_"+random, x, y);
+		ImpassableTile it = new ImpassableTile("grass_"+random,x,y);
+		it.setIcon(di);
+		return it;
 	}
-
+	
 	
 }
