@@ -26,11 +26,8 @@ public class PassableTile extends Tile{
 		super(imageName,x,y);
 	}
 
-	/**
-	 * Can it be passed by a creature?
-	 */
 	@Override
-	public boolean passable() {
+	public boolean canStandOn(Party party) {
 		return !occupied() || this.occupant() instanceof ItemIcon;
 	}
 
@@ -40,6 +37,15 @@ public class PassableTile extends Tile{
 	@Override
 	public String asString() {
 		return "passable";
+	}
+
+	@Override
+	public boolean isPassable(Party party){
+		if (!this.occupied()) return true;
+		if (this.occupant instanceof ItemIcon) return !party.hasFullInventory();
+		if (!(this.occupant instanceof Party)) return false;
+		Party otherParty = (Party)this.occupant;
+		return otherParty.getOwner() == party.getOwner();
 	}
 
 

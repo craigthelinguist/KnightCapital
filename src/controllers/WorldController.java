@@ -211,8 +211,13 @@ public class WorldController implements Serializable{
 
 			// if you didn't move and tried to pick up item, show dialog
 			else if (clickedTile != null) {
-				if(clickedTile.passable() && clickedTile.occupant() instanceof ItemIcon) {
-					new GameDialog(gui,"Inventory full! You cannot pick up more items!");
+				WorldIcon occupant = selectedTile.occupant();
+				if (occupant instanceof Party){
+					Party party = (Party)occupant;
+					if (party.hasFullInventory() && clickedTile.occupant() instanceof ItemIcon
+							&& clickedTile.canStandOn(party)){
+						new GameDialog(gui,"Inventory full! You cannot pick up more items!");
+					}
 				}
 			}
 		}
@@ -450,13 +455,11 @@ public class WorldController implements Serializable{
 		Hero hero = new Hero("ovelia","ovelia",p,stats_hero);
 
 		/*
-		Creature[][] members = Party.newEmptyParty();
 		members[0][0] = hero;
 		Party party = new Party(hero, p, members);
 		party.refresh();*/
 
 		/*load a party*/
-		//Hero h2 = new Hero("dark_knight","knight",p,new HeroStats(140,35,55,5,8,6,AttackType.MELEE));
 		Unit u3 = new Unit("knight","knight",p,new UnitStats(100,25,40,1,AttackType.MELEE));
 		Unit u4 = new Unit("archer","archer",p,new UnitStats(60,15,70,0,AttackType.RANGED));
 		Unit u5 = new Unit("archer","archer",p,new UnitStats(60,15,70,0,AttackType.RANGED));
@@ -469,9 +472,18 @@ public class WorldController implements Serializable{
 		members2[1][1] = u5;
 		Party party = new Party(hero,p,members2);
 		party.refresh();
+		
+		Hero h2 = new Hero("dark_knight","knight",p,new HeroStats(140,35,55,5,8,6,AttackType.MELEE));
+		Creature[][] members = Party.newEmptyPartyArray();
+		members[0][0] = h2;
+		Party party2 = new Party(h2,p,members);
+		party2.refresh();
+		
+		
 
 		party.addItem(arrows);
 		w.getTile(0,0).setIcon(party);
+		w.getTile(0,1).setIcon(party2);
 		w.getTile(1,1).setIcon(itemIcon); //place a floor item on this tile
 		w.getTile(1,2).setIcon(itemIcon2);
 		w.getTile(1,3).setIcon(itemIcon2);
@@ -481,6 +493,7 @@ public class WorldController implements Serializable{
 
 		new WorldController(w,p,true);
 	}
-
+	
 }
+
 

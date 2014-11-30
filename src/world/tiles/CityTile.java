@@ -4,6 +4,8 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 
+import player.Player;
+
 import tools.ImageManipulation;
 import world.icons.Party;
 import world.icons.WorldIcon;
@@ -62,16 +64,25 @@ public class CityTile extends Tile {
 		return null;
 	}
 
-	@Override
-	public boolean passable() {
-		// TODO: this should return true if the tile is the entrance to the city.
-		// that way world will put the party inside the city garrison.
-		return false;
-	}
 
 	@Override
 	public String asString() {
 		return "city";
+	}
+
+	@Override
+	public boolean canStandOn(Party party) {
+		if (city.getEntryTile() != this) return false;
+		Player partyOwner = party.getOwner();
+		Player cityOwner = city.getOwner();
+		if (partyOwner != cityOwner && city.isEmpty()) return true;
+		if (partyOwner == cityOwner && !city.hasVisitors()) return true;
+		return false;
+	}
+	
+	@Override
+	public boolean isPassable(Party party) {
+		return canStandOn(party);
 	}
 
 }

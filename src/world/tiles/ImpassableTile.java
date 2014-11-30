@@ -34,7 +34,7 @@ public class ImpassableTile extends Tile{
 	
 	/** Identifying Passable **/
 	@Override
-	public boolean passable() {
+	public boolean canStandOn(Party party) {
 		return false; //fuck your passability
 	}
 
@@ -42,6 +42,11 @@ public class ImpassableTile extends Tile{
 	@Override
 	public String asString() {
 		return "impassable";
+	}
+
+	@Override
+	public boolean isPassable(Party party) {
+		return false;
 	}
 
 
