@@ -81,13 +81,19 @@ public class EquipmentMain extends JDialog implements ActionListener{
 		/*Load some items to test with*/
 		/*Loading items*/
 		Buff[] buffsAmulet = new Buff[]{ Buff.newTempBuff(Stat.DAMAGE,5) };
-		PassiveItem amulet = new PassiveItem("amulet", "amulet", "An amulet that grants sickening gains.\n +5 Damage",buffsAmulet,Target.HERO, "liontalisman.xml");
+		PassiveItem amulet = new PassiveItem("amulet", "amulet",
+				"An amulet that grants sickening gains.\n +5 Damage",
+				buffsAmulet,Target.HERO);
 
 		Buff[] buffsWeapon = new Buff[]{ Buff.newPermaBuff(Stat.DAMAGE,5), Buff.newTempBuff(Stat.ARMOUR, 10) };
-		PassiveItem weapon = new PassiveItem("weapon", "weapon", "A powerful weapon crafted by the mighty Mizza +5 Damage",buffsWeapon,Target.HERO,null);
+		PassiveItem weapon = new PassiveItem("weapon", "weapon",
+				"A powerful weapon crafted by the mighty Mizza +5 Damage",
+				buffsWeapon,Target.HERO);
 
 		Buff[] buffsArrows= new Buff[]{ Buff.newTempBuff(Stat.DAMAGE,1) };
-		PassiveItem arrows = new PassiveItem("poisonarrow", "poisonarrow", "Poisonous arrows whose feathers were made from the hairs of Mizza. All archers in party gain +1 damage",buffsArrows, Target.PARTY, null);
+		PassiveItem arrows = new PassiveItem("poisonarrow", "poisonarrow",
+				"Poisonous arrows whose feathers were made from the hairs of Mizza. All archers in party gain +1 damage",
+				buffsArrows, Target.PARTY);
 
 		/*Loading the playey*/
 		Player p = new Player("John The Baptist",4);

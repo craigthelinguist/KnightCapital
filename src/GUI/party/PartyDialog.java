@@ -296,14 +296,18 @@ public class PartyDialog extends JDialog  {
 
 		// Give party an item
 		Buff[] buffsArrows= new Buff[]{ Buff.newTempBuff(Stat.DAMAGE,1) };
-		PassiveItem arrows = new PassiveItem("poisonarrow", "poisonarrow", "Poisonous arrows whose feathers were made from the hairs of Mizza. All archers in party gain +1 damage",buffsArrows, Target.PARTY, null);
+		PassiveItem arrows = new PassiveItem("poisonarrow", "poisonarrow",
+				"Poisonous arrows whose feathers were made from the hairs of Mizza. All archers in party gain +1 damage",
+				buffsArrows, Target.PARTY);
 
 		// give hero two items
 		Buff[] buffsAmulet = new Buff[]{ Buff.newTempBuff(Stat.DAMAGE,5) };
-		EquippedItem amulet = new EquippedItem("amulet", "amulet", "An amulet that grants sickening gains.\n +5 Damage",buffsAmulet,Target.HERO, "liontalisman.xml");
+		EquippedItem amulet = new EquippedItem("amulet", "amulet",
+				"An amulet that grants sickening gains.\n +5 Damage",
+				buffsAmulet,Target.HERO);
 
 		Buff[] buffsWeapon = new Buff[]{ Buff.newPermaBuff(Stat.DAMAGE,5), Buff.newTempBuff(Stat.ARMOUR, 10) };
-		EquippedItem weapon = new EquippedItem("weapon", "weapon", "Sword",buffsWeapon,Target.HERO, null);
+		EquippedItem weapon = new EquippedItem("weapon", "weapon", "Sword",buffsWeapon,Target.HERO);
 
 		Unit u3 = new Unit("knight","knight",p,new UnitStats(100,25,40,1,AttackType.MELEE));
 		Unit u4 = new Unit("archer","knight",p,new UnitStats(60,15,70,0,AttackType.RANGED));

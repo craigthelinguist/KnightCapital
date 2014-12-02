@@ -37,7 +37,7 @@ public class ItemTests {
 		Buff b2 = Buff.newTempBuff(Stat.HEALTH, 10);
 		Buff[] buffs = new Buff[]{ b1, b2 };
 
-		PassiveItem item = new PassiveItem("","","",buffs,Target.HERO,"");
+		PassiveItem item = new PassiveItem("","","",buffs,Target.HERO);
 		item.applyEffectsTo(party);
 
 		// make sure hero stats updated
@@ -64,7 +64,7 @@ public class ItemTests {
 		Buff b2 = Buff.newTempBuff(Stat.HEALTH, 10);
 		Buff[] buffs = new Buff[]{ b1, b2 };
 
-		PassiveItem item = new PassiveItem("","","",buffs,Target.PARTY,"");
+		PassiveItem item = new PassiveItem("","","",buffs,Target.PARTY);
 		System.out.println("stop");
 		item.applyEffectsTo(party);
 
@@ -91,7 +91,7 @@ public class ItemTests {
 		Buff b2 = Buff.newTempBuff(Stat.HEALTH, 10);
 		Buff[] buffs = new Buff[]{ b1, b2 };
 
-		PassiveItem item = new PassiveItem("","","",buffs,Target.PARTY,"");
+		PassiveItem item = new PassiveItem("","","",buffs,Target.PARTY);
 		item.applyEffectsTo(party);
 		item.removeEffectsFrom(party);
 
@@ -119,7 +119,7 @@ public class ItemTests {
 		Buff b2 = Buff.newTempBuff(Stat.HEALTH, 10);
 		Buff[] buffs = new Buff[]{ b1, b2 };
 
-		PassiveItem item = new PassiveItem("","","",buffs,Target.HERO,"");
+		PassiveItem item = new PassiveItem("","","",buffs,Target.HERO);
 		item.applyEffectsTo(party);
 		item.removeEffectsFrom(party);
 
@@ -147,7 +147,7 @@ public class ItemTests {
 		Buff b2 = Buff.newTempBuff(Stat.HEALTH, 10);
 		Buff[] buffs = new Buff[]{ b1, b2 };
 
-		PassiveItem item = new PassiveItem("","","",buffs,Target.UNIT,"");
+		PassiveItem item = new PassiveItem("","","",buffs,Target.UNIT);
 
 		try{
 			item.applyEffectsTo(party);

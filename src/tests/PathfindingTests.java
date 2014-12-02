@@ -169,7 +169,7 @@ public class PathfindingTests {
 		init();
 		assertTrue(initialConditions());
 		Tile[][] tiles = world.getTiles();
-		Item item = new PassiveItem(null,null,null,null, null, null);
+		Item item = new PassiveItem(null,null,null,null, null);
 		ItemIcon icon = new ItemIcon(item);
 		tiles[1][0].setIcon(icon);
 		Point end = new Point(1,0);
@@ -191,7 +191,7 @@ public class PathfindingTests {
 		init();
 		assertTrue(initialConditions());
 		Tile[][] tiles = world.getTiles();
-		Item item = new PassiveItem(null,null,null,null, null, null);
+		Item item = new PassiveItem(null,null,null,null, null);
 		ItemIcon icon = new ItemIcon(item);
 		tiles[1][0].setIcon(icon);
 		Point end = new Point(1,0);

@@ -9,8 +9,8 @@ import game.effects.Effect;
  */
 public class ChargedItem extends Item{
 
-	public ChargedItem(String name, String imgName, String description, Effect[] effects, Target target, String filename) {
-		super(name, imgName, description, effects, target, filename);
+	public ChargedItem(String name, String imgName, String description, Effect[] effects, Target target) {
+		super(name, imgName, description, effects, target);
 	}
 
 }

@@ -92,7 +92,7 @@ public class WorldTests {
 		Buff b1 = Buff.newTempBuff(Stat.DAMAGE, 10);
 		Buff b2 = Buff.newPermaBuff(Stat.HEALTH, 10);
 		Buff[] buffs = new Buff[]{ b1, b2 };
-		PassiveItem item = new PassiveItem("","","",buffs,Target.HERO,"");
+		PassiveItem item = new PassiveItem("","","",buffs,Target.HERO);
 		party.setOwner(player1);
 		item.applyEffectsTo(party);
 

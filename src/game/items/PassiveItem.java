@@ -10,8 +10,8 @@ import game.items.Target;
 
 public class PassiveItem extends Item{
 
-	public PassiveItem(String name, String imgName, String description, Effect[] effectsArray, Target target, String filename) {
-		super(name,imgName,description,effectsArray,target,filename);
+	public PassiveItem(String name, String imgName, String description, Effect[] effectsArray, Target target) {
+		super(name,imgName,description,effectsArray,target);
 	}
 
 	/**

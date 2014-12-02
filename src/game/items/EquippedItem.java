@@ -10,8 +10,8 @@ import game.units.Hero;
  */
 public class EquippedItem extends Item{
 
-	public EquippedItem(String name, String imgName, String description, Buff[] buffs, Target target, String filename) {
-		super(name,imgName,description,buffs,target,filename);
+	public EquippedItem(String name, String imgName, String description, Buff[] buffs, Target target) {
+		super(name,imgName,description,buffs,target);
 	}
 
 	/**
