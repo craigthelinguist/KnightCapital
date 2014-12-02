@@ -213,10 +213,12 @@ public class WorldController implements Serializable{
 				int orientation = this.getCamera().getOrientation();
 				orientation = Camera.getOrientationFromPerspective(dir,orientation);
 				Party party = (Party)clickedTile.occupant();
-				if (orientation == Camera.NORTH) party.setAnimationName("north");
-				else if (orientation == Camera.EAST) party.setAnimationName("east");
-				else if (orientation == Camera.SOUTH) party.setAnimationName("south");
-				else if (orientation == Camera.WEST) party.setAnimationName("west");
+				if (party != null){ // will be null if, for example, you clicked on a CityTile
+					if (orientation == Camera.NORTH) party.setAnimationName("north");
+					else if (orientation == Camera.EAST) party.setAnimationName("east");
+					else if (orientation == Camera.SOUTH) party.setAnimationName("south");
+					else if (orientation == Camera.WEST) party.setAnimationName("west");
+				}
 				
 				// update view
 				selected = ptCartesian;
