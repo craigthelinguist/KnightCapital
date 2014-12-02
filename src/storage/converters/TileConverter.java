@@ -102,17 +102,21 @@ public class TileConverter implements Converter {
 	private void marshal_impassable(Object object, HierarchicalStreamWriter writer, MarshallingContext context) {
 		ImpassableTile it = (ImpassableTile)object;
 		writer.startNode("type");
-		writer.setValue(it.asString());
+			writer.setValue(it.asString());
 		writer.endNode();
-		writer.startNode("x");
+			writer.startNode("x");
 		writer.setValue(""+it.X);
 		writer.endNode();
 		writer.startNode("y");
-		writer.setValue(""+it.Y);
+			writer.setValue(""+it.Y);
 		writer.endNode();
 		writer.startNode("imageName");
-		writer.setValue(it.getImageName());
+			writer.setValue(it.getImageName());
 		writer.endNode();
+		writer.startNode("icon");
+			new IconConverter().marshal(it.occupant(), writer, context);
+		writer.endNode();
+		
 	}
 
 	private Object unmarshal_impassable(HierarchicalStreamReader reader, UnmarshallingContext context) {
@@ -125,8 +129,16 @@ public class TileConverter implements Converter {
 		reader.moveDown();
 			String imageName = reader.getValue();
 		reader.moveUp();
+		reader.moveDown();
+			WorldIcon icon = (WorldIcon)new IconConverter().unmarshal(reader, context);
+		reader.moveUp();
+		
 		if (imageName == null) return TileFactory.newVoidTile(x, y);
-		else return new ImpassableTile(imageName, x, y);
+		else{
+			ImpassableTile it = new ImpassableTile(imageName, x, y);
+			it.setIcon(icon);
+			return it;
+		}
 	}
 
 	private void marshal_city(Object object, HierarchicalStreamWriter writer, MarshallingContext context) {
