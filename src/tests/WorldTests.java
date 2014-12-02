@@ -94,7 +94,7 @@ public class WorldTests {
 		Buff[] buffs = new Buff[]{ b1, b2 };
 		PassiveItem item = new PassiveItem("","","",buffs,Target.HERO);
 		party.setOwner(player1);
-		item.applyEffectsTo(party);
+		item.applyTo(party.getHero());
 
 		// end turn
 		world.endTurn();

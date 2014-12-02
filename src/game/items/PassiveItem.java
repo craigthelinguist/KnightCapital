@@ -15,22 +15,6 @@ public class PassiveItem extends Item{
 	}
 
 	/**
-	 * Apply all of the buffs on this passive item to their target.
-	 * @param party: party to whom the buffs will be applied.
-	 */
-	public void applyEffectsTo(Party party){
-		apply(party,true);
-	}
-
-	/**
-	 * Remove all of the buffs on this passive item from their target.
-	 * @param party: party whose buffs you will remove.
-	 */
-	public void removeEffectsFrom(Party party){
-		apply(party,false);
-	}
-
-	/**
 	 * Helper method. Either applies or unapplies all buffs to the
 	 * given party.
 	 * @param party: party whose buffs you'll apply/unapply
@@ -57,17 +41,13 @@ public class PassiveItem extends Item{
 	@Override
 	public boolean applyTo(Party party) {
 		if (this.target != Target.PARTY) return false;
-		for (Creature creature : party){
-			if (!(applyTo(creature))){
-				throw new RuntimeException("error applying item " + this + " to party " + party);
-			}
-		}
+		apply(party,true);
 		return true;
 	}
 
 	@Override
 	public boolean applyTo(Creature creature) {
-		if (this.target != Target.UNIT) return false;
+		if (this.target != Target.UNIT && this.target != Target.HERO) return false;
 		if (creature == null) return true;
 		for (Effect e : effects){
 			creature.addBuff((Buff)e);
@@ -78,11 +58,7 @@ public class PassiveItem extends Item{
 	@Override
 	public boolean removeFrom(Party party) {
 		if (this.target != Target.PARTY) return false;
-		for (Creature creature : party){
-			if (!(removeFrom(creature))){
-				throw new RuntimeException("error removing item " + this + " from party " + party);
-			}
-		}
+		apply(party,false);
 		return true;
 	}
 
