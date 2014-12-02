@@ -31,15 +31,6 @@ public class EquippedItem extends Item{
 		throw new UnsupportedOperationException("Cannot apply equipped item " + this + " to " + p);
 	}
 	
-	/**
-	 * Cannot remove
-	 */
-	@Override
-	public boolean removeFrom(Creature creature){
-		if (!(creature instanceof Hero)) return false;
-		apply((Hero)creature, false);
-		return true;
-	}
 
 	/**
 	 * Cannot remove EquippedItem's from a party.
@@ -52,8 +43,10 @@ public class EquippedItem extends Item{
 	 * Remove this item and it's effects from a hero
 	 * @param hero to remove item from
 	 */
-	public void unequipFrom(Hero hero) {
-		apply(hero, false);
+	public boolean removeFrom(Creature creature) {
+		if (!(creature instanceof Hero)) return false;
+		apply((Hero)creature, false);
+		return true;
 	}
 
 	/**
