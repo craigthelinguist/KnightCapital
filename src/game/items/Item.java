@@ -1,6 +1,7 @@
 package game.items;
 
 import game.effects.Effect;
+import game.units.Creature;
 
 import java.awt.image.BufferedImage;
 
@@ -8,6 +9,7 @@ import renderer.AnimationMap;
 import tools.Constants;
 import tools.ImageLoader;
 import tools.Log;
+import world.icons.Party;
 
 /**
  * An item is an array of effects. They have some target to which they apply (e.g.: entire party, single unit, single hero).
@@ -31,9 +33,6 @@ public abstract class Item {
 	// who this item's effects apply to
 	protected Target target;
 
-	// deprecated field; remnant of data loading/saving system
-	private final String filename;
-
 	/**
 	 * Create and return new Item.
 	 * @param name: item's name
@@ -43,7 +42,7 @@ public abstract class Item {
 	 * @param target: who this item's effects should be applied to.
 	 * @param filename: deprecated; remnant of data loading/saving system.
 	 */
-	public Item(String name, String imgName, String description, Effect[] effects, Target target, String filename){
+	public Item(String name, String imgName, String description, Effect[] effects, Target target){
 		this.name = name;
 		this.imageName = imgName;
 		this.description = description;
@@ -51,19 +50,15 @@ public abstract class Item {
 		this.animations.addImage("portrait", Constants.ITEMS + imgName, ImageLoader.load(Constants.ITEMS + imgName));
 		this.animations.addImage("regular", Constants.ITEMS + imgName, ImageLoader.load(Constants.ITEMS + imgName));
 		this.effects = effects;
-		this.filename = filename;
 		if (this.effects == null) this.effects = new Effect[0];
 		this.target = target;
 	}
-
-	/**
-	 * Return the filename containing the stats for this image.
-	 * @return: string
-	 */
-	public String getFilename(){
-		return this.filename;
-	}
-
+	
+	public abstract boolean applyTo(Party p);
+	public abstract boolean applyTo(Creature c);
+	public abstract boolean removeFrom(Party p);
+	public abstract boolean removeFrom(Creature c);
+	
 	/**
 	 * Return the image representing this item.
 	 * @return: bufferedimage

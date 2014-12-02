@@ -11,7 +11,12 @@ public enum Target {
 
 	// everyone in the party
 	PARTY,
-
+	PARTY_RANGED,
+	PARTY_MELEE,
+	
+	// melee only
+	MELEE,
+	
 	// one unit
 	UNIT;
 

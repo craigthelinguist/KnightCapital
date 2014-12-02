@@ -213,10 +213,12 @@ public class WorldController implements Serializable{
 				int orientation = this.getCamera().getOrientation();
 				orientation = Camera.getOrientationFromPerspective(dir,orientation);
 				Party party = (Party)clickedTile.occupant();
-				if (orientation == Camera.NORTH) party.setAnimationName("north");
-				else if (orientation == Camera.EAST) party.setAnimationName("east");
-				else if (orientation == Camera.SOUTH) party.setAnimationName("south");
-				else if (orientation == Camera.WEST) party.setAnimationName("west");
+				if (party != null){ // will be null if, for example, you clicked on a CityTile
+					if (orientation == Camera.NORTH) party.setAnimationName("north");
+					else if (orientation == Camera.EAST) party.setAnimationName("east");
+					else if (orientation == Camera.SOUTH) party.setAnimationName("south");
+					else if (orientation == Camera.WEST) party.setAnimationName("west");
+				}
 				
 				// update view
 				selected = ptCartesian;
@@ -448,13 +450,19 @@ public class WorldController implements Serializable{
 	public static void aaron_main(String[] args){
 		/*Loading items*/
 		Buff[] buffsAmulet = new Buff[]{ Buff.newTempBuff(Stat.DAMAGE,5) };
-		PassiveItem amulet = new PassiveItem("amulet", "amulet", "An amulet that grants sickening gains.\n +5 Damage",buffsAmulet,Target.HERO, "liontalisman.xml");
+		PassiveItem amulet = new PassiveItem("amulet", "amulet",
+				"An amulet that grants sickening gains.\n +5 Damage",
+				buffsAmulet,Target.HERO);
 
 		Buff[] buffsWeapon = new Buff[]{ Buff.newPermaBuff(Stat.DAMAGE,5), Buff.newTempBuff(Stat.ARMOUR, 10) };
-		PassiveItem weapon = new PassiveItem("weapon", "weapon", "A powerful weapon crafted by the mighty Mizza +5 Damage",buffsWeapon,Target.HERO,null);
+		PassiveItem weapon = new PassiveItem("weapon", "weapon",
+				"A powerful weapon crafted by the mighty Mizza +5 Damage",
+				buffsWeapon,Target.HERO);
 
-		Buff[] buffsArrows= new Buff[]{ Buff.newTempBuff(Stat.DAMAGE,1) };
-		PassiveItem arrows = new PassiveItem("poisonarrow", "poisonarrow", "Poisonous arrows whose feathers were made from the hairs of Mizza. All archers in party gain +1 damage",buffsArrows, Target.PARTY,null);
+		Buff[] buffsArrows= new Buff[]{ Buff.newPermaBuff(Stat.DAMAGE,1) };
+		PassiveItem arrows = new PassiveItem("poisonarrow", "poisonarrow",
+				"Poisonous arrows whose feathers were made from the hairs of Mizza. All archers in party gain +1 damage",
+				buffsArrows, Target.PARTY);
 
 
 

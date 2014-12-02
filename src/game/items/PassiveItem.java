@@ -10,24 +10,8 @@ import game.items.Target;
 
 public class PassiveItem extends Item{
 
-	public PassiveItem(String name, String imgName, String description, Effect[] effectsArray, Target target, String filename) {
-		super(name,imgName,description,effectsArray,target,filename);
-	}
-
-	/**
-	 * Apply all of the buffs on this passive item to their target.
-	 * @param party: party to whom the buffs will be applied.
-	 */
-	public void applyEffectsTo(Party party){
-		apply(party,true);
-	}
-
-	/**
-	 * Remove all of the buffs on this passive item from their target.
-	 * @param party: party whose buffs you will remove.
-	 */
-	public void removeEffectsFrom(Party party){
-		apply(party,false);
+	public PassiveItem(String name, String imgName, String description, Effect[] effectsArray, Target target) {
+		super(name,imgName,description,effectsArray,target);
 	}
 
 	/**
@@ -52,6 +36,39 @@ public class PassiveItem extends Item{
 			}
 			else throw new RuntimeException("I don't know how to apply this buff!");
 		}
+	}
+
+	@Override
+	public boolean applyTo(Party party) {
+		if (this.target != Target.PARTY) return false;
+		apply(party,true);
+		return true;
+	}
+
+	@Override
+	public boolean applyTo(Creature creature) {
+		if (this.target != Target.UNIT && this.target != Target.HERO) return false;
+		if (creature == null) return true;
+		for (Effect e : effects){
+			creature.addBuff((Buff)e);
+		}
+		return true;
+	}
+
+	@Override
+	public boolean removeFrom(Party party) {
+		if (this.target != Target.PARTY) return false;
+		apply(party,false);
+		return true;
+	}
+
+	@Override
+	public boolean removeFrom(Creature creature) {
+		if (this.target != Target.UNIT) return false;
+		for (Effect e : effects){
+			creature.addBuff((Buff)e);
+		}
+		return true;
 	}
 
 }

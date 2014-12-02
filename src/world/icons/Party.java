@@ -203,7 +203,7 @@ public class Party extends WorldIcon implements Iterable<Creature>{
 					inventory[y][x] = item;
 					if (item instanceof PassiveItem){
 						PassiveItem passive = (PassiveItem)item;
-						passive.applyEffectsTo(this);
+						passive.applyTo(this);
 					}
 					return true;
 				}

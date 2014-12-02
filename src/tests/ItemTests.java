@@ -37,12 +37,12 @@ public class ItemTests {
 		Buff b2 = Buff.newTempBuff(Stat.HEALTH, 10);
 		Buff[] buffs = new Buff[]{ b1, b2 };
 
-		PassiveItem item = new PassiveItem("","","",buffs,Target.HERO,"");
-		item.applyEffectsTo(party);
+		PassiveItem item = new PassiveItem("","","",buffs,Target.HERO);
+		item.applyTo(party.getHero());
 
 		// make sure hero stats updated
-		assertTrue(  hero.getBuffed(Stat.DAMAGE) == 10);
-		assertTrue( hero.getBuffed(Stat.HEALTH)==10);
+		assertTrue(hero.getBuffed(Stat.DAMAGE) == 10);
+		assertTrue(hero.getBuffed(Stat.HEALTH)==10);
 		assertTrue(hero.get(Stat.DAMAGE) == 10 + hero.getBase(Stat.DAMAGE));
 		assertTrue(hero.get(Stat.HEALTH) == 10 + hero.getBase(Stat.HEALTH));
 
@@ -64,9 +64,9 @@ public class ItemTests {
 		Buff b2 = Buff.newTempBuff(Stat.HEALTH, 10);
 		Buff[] buffs = new Buff[]{ b1, b2 };
 
-		PassiveItem item = new PassiveItem("","","",buffs,Target.PARTY,"");
+		PassiveItem item = new PassiveItem("","","",buffs,Target.PARTY);
 		System.out.println("stop");
-		item.applyEffectsTo(party);
+		item.applyTo(party);
 
 		// make sure hero stats updated
 		assertTrue(  hero.getBuffed(Stat.DAMAGE) == 10);
@@ -91,9 +91,9 @@ public class ItemTests {
 		Buff b2 = Buff.newTempBuff(Stat.HEALTH, 10);
 		Buff[] buffs = new Buff[]{ b1, b2 };
 
-		PassiveItem item = new PassiveItem("","","",buffs,Target.PARTY,"");
-		item.applyEffectsTo(party);
-		item.removeEffectsFrom(party);
+		PassiveItem item = new PassiveItem("","","",buffs,Target.PARTY);
+		item.applyTo(party);
+		item.removeFrom(party);
 
 		// this item's target is hero only - make sure hero stats did not update
 				assertTrue( hero.getBuffed(Stat.DAMAGE) == 0);
@@ -119,9 +119,9 @@ public class ItemTests {
 		Buff b2 = Buff.newTempBuff(Stat.HEALTH, 10);
 		Buff[] buffs = new Buff[]{ b1, b2 };
 
-		PassiveItem item = new PassiveItem("","","",buffs,Target.HERO,"");
-		item.applyEffectsTo(party);
-		item.removeEffectsFrom(party);
+		PassiveItem item = new PassiveItem("","","",buffs,Target.HERO);
+		item.applyTo(party);
+		item.removeFrom(party);
 
 		// this item's target is hero only - make sure hero stats did not update
 				assertTrue( hero.getBuffed(Stat.DAMAGE) == 0);
@@ -147,15 +147,11 @@ public class ItemTests {
 		Buff b2 = Buff.newTempBuff(Stat.HEALTH, 10);
 		Buff[] buffs = new Buff[]{ b1, b2 };
 
-		PassiveItem item = new PassiveItem("","","",buffs,Target.UNIT,"");
+		PassiveItem item = new PassiveItem("","","",buffs,Target.UNIT);
 
-		try{
-			item.applyEffectsTo(party);
-			fail("shouldn't bea ble to apply in ambiguous context");
-		}
-		catch(Exception e){}
-
-
+		assertFalse("shouldn't bea ble to apply in ambiguous context",
+				item.applyTo(party));
+		
 
 	}
 

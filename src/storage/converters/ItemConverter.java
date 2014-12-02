@@ -145,13 +145,13 @@ public class ItemConverter implements Converter{
 
 		Item item;
 		if (type.equals("passive")){
-			item = new PassiveItem(name,imageName,description,effectsArray,target,filename);
+			item = new PassiveItem(name,imageName,description,effectsArray,target);
 		}
 		else if (type.equals("charged")){
-			item = new ChargedItem(name,imageName,description,effectsArray,target,filename);
+			item = new ChargedItem(name,imageName,description,effectsArray,target);
 		}
 		else if (type.equals("equipped")){
-			item = new EquippedItem(name,imageName,description,(Buff[])effectsArray,target,filename);
+			item = new EquippedItem(name,imageName,description,(Buff[])effectsArray,target);
 		}
 		else throw new RuntimeException("Unknown kind of item: " + type);
 		return item;
