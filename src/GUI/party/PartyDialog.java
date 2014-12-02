@@ -329,8 +329,8 @@ public class PartyDialog extends JDialog  {
 		party.addItem(arrows);
 		party.addItem(arrows);
 		party.addItem(arrows);
-		amulet.equipTo(hero);
-		weapon.equipTo(hero);
+		amulet.applyTo(hero);
+		weapon.applyTo(hero);
 
 
 		// Create new tile to place party on,

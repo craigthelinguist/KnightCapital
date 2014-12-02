@@ -1,6 +1,7 @@
 package game.items;
 
 import game.effects.Effect;
+import game.units.Creature;
 
 import java.awt.image.BufferedImage;
 
@@ -8,6 +9,7 @@ import renderer.AnimationMap;
 import tools.Constants;
 import tools.ImageLoader;
 import tools.Log;
+import world.icons.Party;
 
 /**
  * An item is an array of effects. They have some target to which they apply (e.g.: entire party, single unit, single hero).
@@ -51,6 +53,11 @@ public abstract class Item {
 		if (this.effects == null) this.effects = new Effect[0];
 		this.target = target;
 	}
+	
+	public abstract boolean applyTo(Party p);
+	public abstract boolean applyTo(Creature c);
+	public abstract boolean removeFrom(Party p);
+	public abstract boolean removeFrom(Creature c);
 	
 	/**
 	 * Return the image representing this item.

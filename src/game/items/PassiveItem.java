@@ -54,4 +54,45 @@ public class PassiveItem extends Item{
 		}
 	}
 
+	@Override
+	public boolean applyTo(Party party) {
+		if (this.target != Target.PARTY) return false;
+		for (Creature creature : party){
+			if (!(applyTo(creature))){
+				throw new RuntimeException("error applying item " + this + " to party " + party);
+			}
+		}
+		return true;
+	}
+
+	@Override
+	public boolean applyTo(Creature creature) {
+		if (this.target != Target.UNIT) return false;
+		if (creature == null) return true;
+		for (Effect e : effects){
+			creature.addBuff((Buff)e);
+		}
+		return true;
+	}
+
+	@Override
+	public boolean removeFrom(Party party) {
+		if (this.target != Target.PARTY) return false;
+		for (Creature creature : party){
+			if (!(removeFrom(creature))){
+				throw new RuntimeException("error removing item " + this + " from party " + party);
+			}
+		}
+		return true;
+	}
+
+	@Override
+	public boolean removeFrom(Creature creature) {
+		if (this.target != Target.UNIT) return false;
+		for (Effect e : effects){
+			creature.addBuff((Buff)e);
+		}
+		return true;
+	}
+
 }

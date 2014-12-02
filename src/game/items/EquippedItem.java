@@ -1,6 +1,8 @@
 package game.items;
 
+import world.icons.Party;
 import game.effects.Buff;
+import game.units.Creature;
 import game.units.Hero;
 
 /**
@@ -14,14 +16,38 @@ public class EquippedItem extends Item{
 		super(name,imgName,description,buffs,target);
 	}
 
+	@Override
+	public boolean applyTo(Creature creature) {
+		if (!(creature instanceof Hero)) return false;
+		apply((Hero)creature, true);
+		return true;
+	}
+	
 	/**
-	 * Equip this item and apply it's effect to a hero
-	 * @param hero to get going
+	 * Cannot apply EquippedItem's to party.
 	 */
-	public void equipTo(Hero hero) {
-		apply(hero, true);
+	@Override
+	public boolean applyTo(Party p){
+		throw new UnsupportedOperationException("Cannot apply equipped item " + this + " to " + p);
+	}
+	
+	/**
+	 * Cannot remove
+	 */
+	@Override
+	public boolean removeFrom(Creature creature){
+		if (!(creature instanceof Hero)) return false;
+		apply((Hero)creature, false);
+		return true;
 	}
 
+	/**
+	 * Cannot remove EquippedItem's from a party.
+	 */
+	@Override
+	public boolean removeFrom(Party p){
+		throw new UnsupportedOperationException("Cannot remmove equipped item " + this + " from " + p);
+	}
 	/**
 	 * Remove this item and it's effects from a hero
 	 * @param hero to remove item from
@@ -44,5 +70,6 @@ public class EquippedItem extends Item{
 			else hero.removeBuff(buff);
 		}
 	}
+
 
 }
