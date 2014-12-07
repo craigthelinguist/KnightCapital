@@ -1,7 +1,7 @@
 package game.items;
 
 import game.effects.Effect;
-import game.units.Creature;
+import game.units.creatures.Creature;
 
 import java.awt.image.BufferedImage;
 

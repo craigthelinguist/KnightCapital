@@ -1,11 +1,11 @@
 package controllers;
 
-import game.units.AttackType;
-import game.units.Creature;
-import game.units.Hero;
-import game.units.HeroStats;
-import game.units.Unit;
-import game.units.UnitStats;
+import game.units.creatures.Creature;
+import game.units.creatures.Hero;
+import game.units.creatures.Unit;
+import game.units.stats.AttackType;
+import game.units.stats.HeroStats;
+import game.units.stats.UnitStats;
 
 import java.awt.Dimension;
 import java.awt.Point;

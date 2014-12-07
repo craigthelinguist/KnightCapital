@@ -2,7 +2,7 @@ package game.items;
 
 import world.icons.Party;
 import game.effects.Effect;
-import game.units.Creature;
+import game.units.creatures.Creature;
 
 /**
  * A ChargedItem is some item that you use on something and then it's gone

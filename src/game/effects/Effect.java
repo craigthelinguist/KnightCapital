@@ -1,6 +1,6 @@
 package game.effects;
 
-import game.units.Creature;
+import game.units.creatures.Creature;
 
 /**
  * Effect is the top-level interface for all effects that are attached to items.

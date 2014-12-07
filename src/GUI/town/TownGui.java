@@ -1,8 +1,8 @@
 package GUI.town;
 
-import game.units.Creature;
-import game.units.Hero;
-import game.units.Unit;
+import game.units.creatures.Creature;
+import game.units.creatures.Hero;
+import game.units.creatures.Unit;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;

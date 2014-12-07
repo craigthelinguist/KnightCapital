@@ -1,4 +1,4 @@
-package game.units;
+package game.units.creatures;
 
 import java.awt.image.BufferedImage;
 import java.util.Iterator;
@@ -13,6 +13,9 @@ import tools.Constants;
 import tools.ImageLoader;
 import tools.Log;
 import game.effects.Buff;
+import game.units.stats.AttackType;
+import game.units.stats.Stat;
+import game.units.stats.UnitStats;
 
 /**
  * A creature represents anything on the world or in a battle that is controlled by a player and can be given

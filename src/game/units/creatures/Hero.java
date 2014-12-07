@@ -1,8 +1,9 @@
-package game.units;
+package game.units.creatures;
 
 import game.effects.Buff;
 import game.items.EquippedItem;
 import game.items.Item;
+import game.units.stats.HeroStats;
 
 import java.awt.image.BufferedImage;
 import java.util.LinkedList;

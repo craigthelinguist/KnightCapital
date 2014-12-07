@@ -7,7 +7,7 @@ import player.Player;
 import com.thoughtworks.xstream.XStream;
 
 import tools.Constants;
-import game.units.Unit;
+import game.units.creatures.Unit;
 /**
  * Used to load load unit object sfrom files.
  * @author craigaaro
@@ -25,6 +25,8 @@ public class UnitLoader {
 	 * @return unit that belongs to specified player.
 	 */
 	public static Unit load(String filename, Player player){
+		filename = filename.toLowerCase();
+		if (!filename.endsWith(".xml")) filename += ".xml";
 		File file = new File(Constants.DATA_UNITS + filename);
 		XStream stream = new XStream();
 		stream.alias("unit", Unit.class);

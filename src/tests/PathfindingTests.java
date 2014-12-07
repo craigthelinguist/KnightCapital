@@ -7,9 +7,9 @@ import java.util.Set;
 
 import game.items.Item;
 import game.items.PassiveItem;
-import game.units.AttackType;
-import game.units.Hero;
-import game.units.HeroStats;
+import game.units.creatures.Hero;
+import game.units.stats.AttackType;
+import game.units.stats.HeroStats;
 
 import org.junit.*;
 

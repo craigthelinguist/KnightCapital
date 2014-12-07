@@ -1,7 +1,7 @@
 package game.effects;
 
-import game.units.Creature;
-import game.units.Stat;
+import game.units.creatures.Creature;
+import game.units.stats.Stat;
 
 /**
  * A Buff changes the stats of something. It has a stat, a magnitude, and a permanence.

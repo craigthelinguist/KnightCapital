@@ -8,7 +8,7 @@ import game.items.EquippedItem;
 import game.items.Item;
 import game.items.PassiveItem;
 import game.items.Target;
-import game.units.UnitStats;
+import game.units.stats.UnitStats;
 
 import java.awt.image.BufferedImage;
 import java.io.File;

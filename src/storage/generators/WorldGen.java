@@ -3,9 +3,9 @@ package storage.generators;
 import java.util.HashSet;
 import java.util.Set;
 
-import game.units.AttackType;
-import game.units.Hero;
-import game.units.HeroStats;
+import game.units.creatures.Hero;
+import game.units.stats.AttackType;
+import game.units.stats.HeroStats;
 import player.Player;
 import world.World;
 import world.icons.DecorIcon;

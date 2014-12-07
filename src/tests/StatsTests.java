@@ -4,11 +4,11 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import game.units.AttackType;
-import game.units.HeroStats;
-import game.units.Stat;
-import game.units.Unit;
-import game.units.UnitStats;
+import game.units.creatures.Unit;
+import game.units.stats.AttackType;
+import game.units.stats.HeroStats;
+import game.units.stats.Stat;
+import game.units.stats.UnitStats;
 
 public class StatsTests {
 

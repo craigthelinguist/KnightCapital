@@ -5,10 +5,10 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import player.Player;
-import game.units.AttackType;
-import game.units.Stat;
-import game.units.Unit;
-import game.units.UnitStats;
+import game.units.creatures.Unit;
+import game.units.stats.AttackType;
+import game.units.stats.Stat;
+import game.units.stats.UnitStats;
 /**
  * Test the functionality of creatures.
  * @author Neal Hartley

@@ -11,10 +11,10 @@ import java.awt.image.BufferedImage;
 import game.effects.Buff;
 import game.items.PassiveItem;
 import game.items.Target;
-import game.units.AttackType;
-import game.units.Hero;
-import game.units.HeroStats;
-import game.units.Stat;
+import game.units.creatures.Hero;
+import game.units.stats.AttackType;
+import game.units.stats.HeroStats;
+import game.units.stats.Stat;
 
 import javax.swing.BorderFactory;
 import javax.swing.JDialog;

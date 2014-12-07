@@ -7,10 +7,10 @@ import org.junit.Test;
 import player.Player;
 import game.effects.Buff;
 import game.effects.Heal;
-import game.units.AttackType;
-import game.units.Stat;
-import game.units.Unit;
-import game.units.UnitStats;
+import game.units.creatures.Unit;
+import game.units.stats.AttackType;
+import game.units.stats.Stat;
+import game.units.stats.UnitStats;
 
 /**
  * A class that will test the functionality of buffs

@@ -3,8 +3,8 @@ package game.items;
 import world.icons.Party;
 import game.effects.Buff;
 import game.effects.Effect;
-import game.units.Creature;
-import game.units.Hero;
+import game.units.creatures.Creature;
+import game.units.creatures.Hero;
 import game.items.Target;
 
 

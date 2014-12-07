@@ -1,4 +1,5 @@
-package game.units;
+package game.units.stats;
+
 
 /**
  * Units have four stats: health, damage, speed, and armour. This object holds the base values of these,

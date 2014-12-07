@@ -1,7 +1,7 @@
 package storage.converters;
 
-import game.units.Hero;
-import game.units.Unit;
+import game.units.creatures.Hero;
+import game.units.creatures.Unit;
 
 import java.io.File;
 
@@ -26,6 +26,8 @@ public class HeroLoader {
 	 * @return: hero that belongs to the player
 	 */
 	public static Hero load(String filename, Player player1){
+		filename = filename.toLowerCase();
+		if (!filename.endsWith(".xml")) filename += ".xml";
 		File file = new File(Constants.DATA_HEROES + filename);
 		XStream stream = new XStream();
 		stream.alias("hero", Hero.class);

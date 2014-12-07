@@ -3,9 +3,9 @@ package storage.converters;
 import java.io.File;
 
 import tools.Constants;
-import game.units.AttackType;
-import game.units.Stat;
-import game.units.UnitStats;
+import game.units.stats.AttackType;
+import game.units.stats.Stat;
+import game.units.stats.UnitStats;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.converters.Converter;

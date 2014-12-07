@@ -1,6 +1,6 @@
 package GUI.town;
 
-import game.units.Unit;
+import game.units.creatures.Unit;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -25,6 +25,8 @@ import world.icons.Party;
 import world.towns.City;
 import controllers.TownController;
 
+import game.units.factories.UnitFactory;
+
 /**
  * The TrainingDialog lets you select a unit to train in town.
  * @author Aaron Craig
@@ -34,11 +36,6 @@ public class TrainingDialog extends JDialog {
 	/**
 	 * Mapping of name of unit -> cost of unit
 	 */
-	static final Map<String,Integer> costs = new HashMap<>();
-	static {
-		costs.put("Knight", 125);
-		costs.put("Archer", 75);
-	}
 
 	// controller this dialog is attached to
 	private TownController controller;
@@ -58,6 +55,7 @@ public class TrainingDialog extends JDialog {
 		choice.setMaximumSize(new Dimension(80,25));
 		choice.addItem("Knight");
 		choice.addItem("Archer");
+		choice.addItem("Dark Knight");
 		choice.setSelectedIndex(0);
 
 		// train button
@@ -68,30 +66,18 @@ public class TrainingDialog extends JDialog {
 			@Override
 			public void actionPerformed(ActionEvent event) {
 
-				Party garrison = controller.getGarrison();
-				if (!garrison.hasSpace()) return;
-
-				String string = (String)choice.getSelectedItem();
+				String unitName = (String)choice.getSelectedItem();
 				City city = controller.getCity();
 				Player player = city.getOwner();
-
-				if (string.equals("Knight")){
-					int cost = costs.get(string);
-					if (cost > player.getGold() || !city.getGarrison().hasSpace()) return;
-					Unit unit = UnitLoader.load("knight.xml", city.getOwner());
-					garrison.addUnit(unit);
-					player.decreaseGold(cost);
+				try {
+					UnitFactory.TrainUnit(unitName, player, city);
 					goldLabel.setText("" + player.getGold());
+				} catch (Exception e) {
+					System.out.println(e);
+					System.out.println(e.getMessage());
+					// @TODO: give a proper error dialog
 				}
-				else if (string.equals("Archer")){
-					int cost = costs.get(string);
-					if (cost > player.getGold() || !city.getGarrison().hasSpace()) return;
-					Unit unit = UnitLoader.load("archer.xml", city.getOwner());
-					garrison.addUnit(unit);
-					player.decreaseGold(cost);
-					goldLabel.setText("" + player.getGold());
-				}
-
+			
 			}
 
 		});

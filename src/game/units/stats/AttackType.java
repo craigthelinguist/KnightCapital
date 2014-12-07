@@ -1,4 +1,4 @@
-package game.units;
+package game.units.stats;
 
 /**
  * AttackType enumerates all the possible rules for how a Creature can attack in

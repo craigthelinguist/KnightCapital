@@ -1,7 +1,7 @@
 package storage.converters;
 
 import game.effects.Buff;
-import game.units.Stat;
+import game.units.stats.Stat;
 
 import com.thoughtworks.xstream.converters.Converter;
 import com.thoughtworks.xstream.converters.MarshallingContext;

@@ -9,10 +9,10 @@ import game.items.EquippedItem;
 import game.items.Item;
 import game.items.PassiveItem;
 import game.items.Target;
-import game.units.AttackType;
-import game.units.Stat;
-import game.units.Unit;
-import game.units.UnitStats;
+import game.units.creatures.Unit;
+import game.units.stats.AttackType;
+import game.units.stats.Stat;
+import game.units.stats.UnitStats;
 
 import java.awt.image.BufferedImage;
 import java.io.File;

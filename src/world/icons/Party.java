@@ -2,12 +2,12 @@ package world.icons;
 
 import game.items.Item;
 import game.items.PassiveItem;
-import game.units.AttackType;
-import game.units.Creature;
-import game.units.Hero;
-import game.units.Stat;
-import game.units.Unit;
-import game.units.UnitStats;
+import game.units.creatures.Creature;
+import game.units.creatures.Hero;
+import game.units.creatures.Unit;
+import game.units.stats.AttackType;
+import game.units.stats.Stat;
+import game.units.stats.UnitStats;
 
 import java.awt.Point;
 import java.awt.image.BufferedImage;
@@ -301,13 +301,11 @@ public class Party extends WorldIcon implements Iterable<Creature>{
 	 * @return: an int.
 	 */
 	public int size(){
-		int count = 0;
-		for (int i = 0; i < members.length; i++){
-			for (int j = 0; i < members[i].length; j++){
-				if (members[i][j] != null) count++;
-			}
+		int counter = 0;
+		for (Creature cr : this){
+			counter++;
 		}
-		return count;
+		return counter;
 	}
 
 	/**
@@ -393,24 +391,33 @@ public class Party extends WorldIcon implements Iterable<Creature>{
 	 * @return: true if this party has space left, false if full.
 	 */
 	public boolean hasSpace() {
-		for (int i = 0; i < members.length; i++){
-			for (int j = 0; j < members[i].length; j++){
-				if (members[i][j] == null) return true;
-			}
+		int counter = 0;
+		for (Creature c : this){
+			counter++;
 		}
-		return false;
+		return counter < 6;
 	}
 
 	/**
-	 * Attempt to add the unit to the first empty slot in the party.
+	 * Attempt to add the creature to the first empty slot in the party, if it can be added. If the
+	 * creature is a hero and the party is empty, then it will be added the party's hero will be set
+	 * to be that hero.
+	 * @return
+	 * 		true:
+	 * 			- if the creature was successfully added to the party.
+	 * 		false:
+	 * 			- if the creature is a unit and the party is full.
+	 * 			- if the creature is a hero and the party is non-empty.
 	 * @param unit: unit to add
 	 * @return: true if successfully added, false otherwise.
 	 */
-	public boolean addUnit(Unit unit) {
+	public boolean addUnit(Creature creature) {
+		if (creature instanceof Hero && this.size() != 0) return false;
 		for (int i = 0; i < members.length; i++){
 			for (int j = 0; j < members[i].length; j++){
 				if (members[i][j] == null){
-					members[i][j] = unit;
+					members[i][j] = creature;
+					if (creature instanceof Hero) this.hero = (Hero)creature;
 					return true;
 				}
 			}

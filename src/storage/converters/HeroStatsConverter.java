@@ -1,9 +1,9 @@
 package storage.converters;
 
-import game.units.AttackType;
-import game.units.HeroStats;
-import game.units.Stat;
-import game.units.UnitStats;
+import game.units.stats.AttackType;
+import game.units.stats.HeroStats;
+import game.units.stats.Stat;
+import game.units.stats.UnitStats;
 
 import java.io.File;
 

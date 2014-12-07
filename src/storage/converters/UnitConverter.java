@@ -1,8 +1,8 @@
 package storage.converters;
 
-import game.units.Creature;
-import game.units.Unit;
-import game.units.UnitStats;
+import game.units.creatures.Creature;
+import game.units.creatures.Unit;
+import game.units.stats.UnitStats;
 
 import java.io.File;
 import java.lang.reflect.Field;

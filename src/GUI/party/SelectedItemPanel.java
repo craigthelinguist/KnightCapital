@@ -1,9 +1,9 @@
 package GUI.party;
 
 import game.items.Item;
-import game.units.Creature;
-import game.units.Hero;
-import game.units.Stat;
+import game.units.creatures.Creature;
+import game.units.creatures.Hero;
+import game.units.stats.Stat;
 
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;

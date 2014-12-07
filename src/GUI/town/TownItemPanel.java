@@ -3,12 +3,12 @@ package GUI.town;
 import game.effects.Buff;
 import game.items.Item;
 import game.items.PassiveItem;
-import game.units.Creature;
-import game.units.Hero;
-import game.units.HeroStats;
-import game.units.Stat;
-import game.units.Unit;
-import game.units.UnitStats;
+import game.units.creatures.Creature;
+import game.units.creatures.Hero;
+import game.units.creatures.Unit;
+import game.units.stats.HeroStats;
+import game.units.stats.Stat;
+import game.units.stats.UnitStats;
 
 import java.awt.Color;
 import java.awt.Dimension;

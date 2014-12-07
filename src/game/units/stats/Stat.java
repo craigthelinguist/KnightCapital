@@ -1,4 +1,4 @@
-package game.units;
+package game.units.stats;
 
 public enum Stat {
 

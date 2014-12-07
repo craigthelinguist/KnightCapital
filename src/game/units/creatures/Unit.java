@@ -1,5 +1,6 @@
-package game.units;
+package game.units.creatures;
 
+import game.units.stats.UnitStats;
 import player.Player;
 
 /**

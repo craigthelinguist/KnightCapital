@@ -1,4 +1,5 @@
-package game.units;
+package game.units.stats;
+
 
 /**
  * Heroes have 2 more stats than units. They have sight and movement, which affect the party they lead.
