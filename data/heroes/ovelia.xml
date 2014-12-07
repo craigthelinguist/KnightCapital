@@ -1,14 +1,14 @@
 <hero>
-<name>Ovelia</name>
-<imageName>ovelia</imageName>
-<player>null</player>
-<herostats>
-	<baseHealth>60</baseHealth>
-	<baseDamage>20</baseDamage>
-	<baseSpeed>30</baseSpeed>
-	<baseArmour>0</baseArmour>
-	<baseSight>6</baseSight>
-	<baseMovement>8</baseMovement>
-	<baseAttack>aoe</baseAttack>
-</herostats>
+	<name>Ovelia</name>
+	<imageName>ovelia</imageName>
+	<player>null</player>
+	<herostats>
+		<baseHealth>60</baseHealth>
+		<baseDamage>20</baseDamage>
+		<baseSpeed>30</baseSpeed>
+		<baseArmour>0</baseArmour>
+		<baseSight>6</baseSight>
+		<baseMovement>8</baseMovement>
+		<baseAttack>aoe</baseAttack>
+	</herostats>
 </hero>
