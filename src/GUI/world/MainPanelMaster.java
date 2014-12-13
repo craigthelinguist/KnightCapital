@@ -44,7 +44,7 @@ public class MainPanelMaster extends JPanel {
 	private InventoryPanel inventoryPanel;
 	private ButtonsPanel buttonsPanel;
 	private MiniMap miniMapPanel;
-	private TileInformationPanel tileInfoPanel;
+	private InfoPanel tileInfoPanel;
 
 	/* Declare the gridbagconstraints */
 	GridBagConstraints c;
@@ -75,7 +75,7 @@ public class MainPanelMaster extends JPanel {
 		c.gridy = 0;
 		this.add(buttonsPanel,c);
 
-		tileInfoPanel = new TileInformationPanel(mainFrame);
+		tileInfoPanel = new InfoPanel(mainFrame);
 		c.gridx =2;
 		c.gridy =0;
 		this.add(tileInfoPanel,c);
