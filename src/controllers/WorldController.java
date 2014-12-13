@@ -477,7 +477,7 @@ public class WorldController implements Serializable{
 		Player p = new Player("John The Baptist",1);
 		World w = TemporaryLoader.loadWorld("world_temporary.txt",p);
 		HeroStats stats_hero = new HeroStats(60,10,80,0,6,10,AttackType.MELEE);
-		Hero hero = new Hero("ovelia","ovelia",p,stats_hero);
+		Hero hero = new Hero("Ovelia","ovelia",p,stats_hero);
 
 		/*
 		members[0][0] = hero;
@@ -485,10 +485,10 @@ public class WorldController implements Serializable{
 		party.refresh();*/
 
 		/*load a party*/
-		Unit u3 = new Unit("knight","knight",p,new UnitStats(100,25,40,1,AttackType.MELEE));
-		Unit u4 = new Unit("archer","archer",p,new UnitStats(60,15,70,0,AttackType.RANGED));
-		Unit u5 = new Unit("archer","archer",p,new UnitStats(60,15,70,0,AttackType.RANGED));
-		Unit u6 = new Unit("knight","knight",p,new UnitStats(100,25,40,1,AttackType.MELEE));
+		Unit u3 = new Unit("Knight","knight",p,new UnitStats(100,25,40,1,AttackType.MELEE));
+		Unit u4 = new Unit("Archer","archer",p,new UnitStats(60,15,70,0,AttackType.RANGED));
+		Unit u5 = new Unit("Archer","archer",p,new UnitStats(60,15,70,0,AttackType.RANGED));
+		Unit u6 = new Unit("Knight","knight",p,new UnitStats(100,25,40,1,AttackType.MELEE));
 		Creature[][] members2 = Party.newEmptyPartyArray();
 		members2[0][0] = u3;
 		members2[1][0] = u6;
@@ -498,7 +498,7 @@ public class WorldController implements Serializable{
 		Party party = new Party(hero,p,members2);
 		party.refresh();
 		
-		Hero h2 = new Hero("dark_knight","knight",p,new HeroStats(140,35,55,5,8,6,AttackType.MELEE));
+		Hero h2 = new Hero("Dark Knight","knight",p,new HeroStats(140,35,55,5,8,6,AttackType.MELEE));
 		Creature[][] members = Party.newEmptyPartyArray();
 		members[0][0] = h2;
 		Party party2 = new Party(h2,p,members);
