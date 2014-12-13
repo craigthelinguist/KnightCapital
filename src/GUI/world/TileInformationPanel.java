@@ -18,6 +18,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import player.Player;
+
 import tools.Constants;
 import tools.ImageLoader;
 import world.icons.ItemIcon;
@@ -49,12 +51,14 @@ public class TileInformationPanel extends JPanel{
 	JLabel movesLeft = new JLabel();
 	JLabel partySize = new JLabel();
 
+	private MainFrame mainframe;
 
 	GridBagConstraints c;
 
 
-	public TileInformationPanel() {
+	public TileInformationPanel(MainFrame mainFrame) {
 		/*set the size of this panel to be size of the image*/
+		this.mainframe = mainFrame;
 		this.setPreferredSize(new Dimension(375,200));
 		this.setOpaque(false);
 		/*Initialize the image for the inventory panel*/
@@ -286,12 +290,18 @@ public class TileInformationPanel extends JPanel{
 		}
 	}
 
+	/**
+	 * Create a new PartyDialog instance.
+	 */
 	private void displayPartyDialog() {
-
-		//if isOwner = true
+		// this should really be somewhere more high-level
 		if(lastSelectedTile != null && lastSelectedTile.occupant() instanceof Party){
-			new PartyDialog(new JFrame(), this.lastSelectedTile, true);
+			Party party = (Party) lastSelectedTile.occupant();
+			Player player = this.mainframe.getPlayer();
+			boolean ownsInstance = party.ownedBy(player);
+			new PartyDialog(new JFrame(), this.lastSelectedTile, ownsInstance);
 		}
+		
 	}
 
 	private void resetPanel() {

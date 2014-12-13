@@ -75,7 +75,7 @@ public class MainPanelMaster extends JPanel {
 		c.gridy = 0;
 		this.add(buttonsPanel,c);
 
-		tileInfoPanel = new TileInformationPanel();
+		tileInfoPanel = new TileInformationPanel(mainFrame);
 		c.gridx =2;
 		c.gridy =0;
 		this.add(tileInfoPanel,c);

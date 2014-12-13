@@ -47,8 +47,10 @@ public class PartyItemsPanel extends JPanel{
 
 
 		// listeners
+		if (master.isOwner()){
 		this.addMouseListener(new SlotListener());
 		this.addMouseMotionListener(new SlotListener());
+		}
 	}
 
 	private void redraw() {
@@ -89,6 +91,9 @@ public class PartyItemsPanel extends JPanel{
 
 	@Override
 	protected void paintComponent(Graphics g){
+		
+		if (!master.isOwner()) return;
+		
 		//g.setColor(Color.WHITE);
 		//g.fillRect(0,0,getWidth(),getHeight());
 		g.setColor(Color.BLACK);

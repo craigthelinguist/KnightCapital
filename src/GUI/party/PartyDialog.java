@@ -192,25 +192,16 @@ public class PartyDialog extends JDialog  {
         this.add(partyItemsPanel, gc);
         // god i hate swing
 
-        // Hero Items Panel
-		HeroEquipLayeredPane heroLayer = new HeroEquipLayeredPane();
-        gc.gridx = 4;
-        gc.gridy = 4;
-        gc.gridwidth = 2;
-        gc.gridheight = 2;
-        this.add(heroLayer, gc);
-
-
+       	// Hero Items Panel
         /**
-        heroItemsPanel = new HeroItemsPanel(this, party, new Dimension(COMPONENT_WIDTH, COMPONENT_HEIGHT / 2));
-        heroItemsPanel.setBackground(Color.GREEN);
-        gc.gridx = 4;
-        gc.gridy = 4;
-        gc.gridwidth = 2;
-        gc.gridheight = 2;
-        this.add(heroItemsPanel, gc);*/
-
-
+         * adds a panel to display items equipped to hero 
+       	HeroEquipLayeredPane heroLayer = new HeroEquipLayeredPane(this);
+       	gc.gridx = 4;
+       	gc.gridy = 4;
+       	gc.gridwidth = 2;
+       	gc.gridheight = 2;
+       	this.add(heroLayer, gc);
+     	*/
 
         this.setResizable(false);
 		this.setVisible(true);

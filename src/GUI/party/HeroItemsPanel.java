@@ -38,6 +38,9 @@ public class HeroItemsPanel extends JPanel{
 	@Override
 	protected void paintComponent(Graphics g){
 
+		// only draw items in the party if you're allowed to see them
+		if (!master.isOwner()) return;
+		
 		g.setColor(Color.BLACK);
 
 		for (int y = 0; y < INVENTORY_ROWS; y++){
@@ -52,14 +55,7 @@ public class HeroItemsPanel extends JPanel{
 				}
 
 				boolean weShouldDraw = true;
-
 				if (item == null) weShouldDraw = false;
-
-
-				//if (master.getDraggedPanel() != null && master.getDraggedPanel() == this){
-				//	if (master.getDraggedPoint().equals(new Point(x,y))) weShouldDraw = false; // being dragged
-				//}
-
 
 				if (weShouldDraw){
 					BufferedImage portrait = item.getImage();

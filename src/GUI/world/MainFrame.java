@@ -11,6 +11,7 @@ import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
 import java.awt.Point;
 import java.awt.Toolkit;
+import java.awt.Window;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
@@ -24,6 +25,8 @@ import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
+
+import player.Player;
 
 import GUI.EscapeDialog.EscapeDialog;
 import controllers.BattleController;
@@ -82,7 +85,13 @@ public class MainFrame extends JFrame  {
 
 	public Canvas getCanvas(){return canvas;}
 
-
+	/**
+	 * Return the player to whom this MainFrame belongs.
+	 */
+	public Player getPlayer(){
+		return controller.getPlayer();
+	}
+	
 	public void setController(WorldController wc){
 		controller = wc;
 		canvas.setController(wc);
