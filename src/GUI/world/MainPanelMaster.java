@@ -125,6 +125,7 @@ public class MainPanelMaster extends JPanel {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
 	}
 
 }

@@ -15,6 +15,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 
 import javax.swing.GroupLayout;
@@ -28,6 +30,7 @@ import player.Player;
 
 import tools.Constants;
 import tools.ImageLoader;
+import tools.ImageManipulation;
 import world.icons.DecorIcon;
 import world.icons.ItemIcon;
 import world.icons.Party;
@@ -54,7 +57,8 @@ public class InfoPanel extends JPanel{
 	// bg image of info panel
 	private BufferedImage backgroundImage;
 
-	private Tile lastSelectedTile;
+	private Party selectedParty = null;
+	private Tile lastSelectedTile = null;
 
 	// contents of the info panel
 	private ImageIcon iconPortrait = new ImageIcon();
@@ -62,8 +66,7 @@ public class InfoPanel extends JPanel{
 	private JLabel labelTitle = new JLabel();
 	private JLabel labelDescription = new JLabel();
 
-	// button which takes you to a PartyDialog
-	private CustomButton partyButton;
+	private PortraitListener portraitListener = new PortraitListener();
 	
 	// MainFrame to which this info panel belongs
 	private MainFrame mainframe;
@@ -81,6 +84,58 @@ public class InfoPanel extends JPanel{
 		// a wrapper for keeping the panel centred vertically
 		this.setLayout(new GridBagLayout());
 		this.add(panel, new GridBagConstraints());
+		
+		this.labelPortrait.addMouseListener(portraitListener);
+		
+		
+	}
+	
+	private class PortraitListener implements MouseListener{
+
+		private boolean active = false;
+		
+		@Override
+		public void mouseClicked(MouseEvent arg0) {
+			if (!active) return;
+			InfoPanel.this.displayPartyDialog(selectedParty);
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent arg0) {
+			if (!active) return;
+			System.out.println("We in");
+			BufferedImage currentImage = (BufferedImage) InfoPanel.this.iconPortrait.getImage();
+			BufferedImage lightened = ImageManipulation.lighten(currentImage, 55);
+			updatePortrait(lightened);
+			InfoPanel.this.repaint();
+		}
+
+		@Override
+		public void mouseExited(MouseEvent arg0) {
+			if (!active) return;
+			System.out.println("We out");
+			Party party = InfoPanel.this.selectedParty;
+			updatePortrait(party.getPortrait());
+			InfoPanel.this.repaint();
+		}
+
+		@Override
+		public void mousePressed(MouseEvent arg0) {}
+
+		@Override
+		public void mouseReleased(MouseEvent arg0) {}
+		
+		public void enable(){
+			this.active = true;
+		}
+		
+		public void disable(){
+			this.active = false;
+		}
+		
+		public boolean isActive(){
+			return active;
+		}
 		
 	}
 	
@@ -156,13 +211,20 @@ public class InfoPanel extends JPanel{
 	 */
 	public void updateInfo(Tile tile) {
 		
-		this.lastSelectedTile = tile;
-		
-		// nothing selected, display a blank panel
-		this.resetInfo();
+		// nothing selected - draw nothing.
 		if (tile == null){
+			this.resetInfo();
+			this.lastSelectedTile = null;
 			return;
 		}
+		
+		// if the selection hasn't changed you don't have to redraw anything
+		if (this.lastSelectedTile == tile){
+			return;
+		}
+		
+		this.lastSelectedTile = tile;
+		this.resetInfo();
 		
 		// city tile selected, draw some info about the city
 		if (tile instanceof CityTile){
@@ -196,6 +258,8 @@ public class InfoPanel extends JPanel{
 			html += "</html>";
 			labelDescription.setText(html);
 			updateTitle(party.getHero().getName());
+			this.portraitListener.enable();
+			this.selectedParty = party;
 			return;
 		}
 		
@@ -220,16 +284,15 @@ public class InfoPanel extends JPanel{
 		
 	}
 	
+	/**
+	 * Update the title of InfoPanel with the given string.
+	 * @param titleText: string that should be the title.
+	 */
 	private void updateTitle(String titleText){
 		String title = "<html><font color='yellow'>"+titleText+"</font></html>";
 		labelTitle.setText(title);
 	}
 	
-	
-	private String htmlForOwner(String ownerName){
-		return "<font color='yellow'>"+ownerName+"</font><br/>";
-	}
-
 	/**
 	 * Update the ImageIcon to display the specified image. Update labelPortrait to display
 	 * the newly-updated ImageIcon.
@@ -239,6 +302,16 @@ public class InfoPanel extends JPanel{
 		iconPortrait.setImage(img);
 		labelPortrait.setIcon(iconPortrait);
 		labelPortrait.setHorizontalAlignment(SwingConstants.LEFT);
+	}
+	
+	/**
+	 * Helper method.
+	 * Generate some html for a line that says who the owner of the thing is.
+	 * @param ownerName: string that is the owner of the thing being displayed in this InfoPanel
+	 * @return html string
+	 */
+	private String htmlForOwner(String ownerName){
+		return "<font color='yellow'>"+ownerName+"</font><br/>";
 	}
 	
 	/**
@@ -274,15 +347,11 @@ public class InfoPanel extends JPanel{
 	/**
 	 * Create a new PartyDialog instance.
 	 */
-	private void displayPartyDialog() {
+	private void displayPartyDialog(Party party) {
 		// this should really be somewhere more high-level
-		if(lastSelectedTile != null && lastSelectedTile.occupant() instanceof Party){
-			Party party = (Party) lastSelectedTile.occupant();
-			Player player = this.mainframe.getPlayer();
-			boolean ownsInstance = party.ownedBy(player);
-			new PartyDialog(new JFrame(), this.lastSelectedTile, ownsInstance);
-		}
-		
+		Player player = this.mainframe.getPlayer();
+		boolean ownsInstance = party.ownedBy(player);
+		new PartyDialog(new JFrame(), this.lastSelectedTile, ownsInstance);
 	}
 
 	/**
@@ -292,9 +361,8 @@ public class InfoPanel extends JPanel{
 		labelPortrait.setIcon(null);
 		labelTitle.setText("");
 		labelDescription.setText("");
-		if(partyButton != null) {
-			partyButton.setVisible(false);
-		}
+		portraitListener.disable();
+		selectedParty = null;
 	}
 	
 	public static void main(String[] args){
@@ -313,14 +381,11 @@ public class InfoPanel extends JPanel{
 		Party party = Party.newEmptyParty(player);
 		party.addUnit(hero); 
 		party.setOwner(player);
-		InfoPanel.party = party;
 		tile.setIcon(party);
 		
 		ip.updateInfo(tile);
 		ip.repaint();
 		
 	}
-
-	private static Party party;
 
 }
