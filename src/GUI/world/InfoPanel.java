@@ -28,6 +28,7 @@ import player.Player;
 
 import tools.Constants;
 import tools.ImageLoader;
+import world.icons.DecorIcon;
 import world.icons.ItemIcon;
 import world.icons.Party;
 import world.icons.WorldIcon;
@@ -105,7 +106,7 @@ public class InfoPanel extends JPanel{
 		labelTitle.setHorizontalAlignment(SwingConstants.RIGHT);
 		labelTitle.setPreferredSize(new Dimension(200,40));
 		labelTitle.setMaximumSize(new Dimension(200,40));
-		labelTitle.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 20));
+		labelTitle.setFont(new Font("Franklin Gothic Medium", Font.PLAIN, 25));
 
 		// layout set up
 		GroupLayout layout = new GroupLayout(panel);
@@ -164,90 +165,59 @@ public class InfoPanel extends JPanel{
 		}
 		
 		// city tile selected, draw some info about the city
-		else if (tile instanceof CityTile){
-			CityTile ct = (CityTile)tile;
-			City city = ct.getCity();
-
-			
-			updateImageIcon(city.getPortrait());
-			
+		if (tile instanceof CityTile){
+			City city = ((CityTile)tile).getCity();
+			updatePortrait(city.getPortrait());
 			String html = "<html><body style='width: 200px'>";
-			html += this.htmlForOwner(party);
+			html += this.htmlForOwner(city.getOwner().name);
+			html += "</html>";
+			labelDescription.setText(html);
+			updateTitle(city.getName());
+			return;
+		}
+		
+		WorldIcon occupant = tile.occupant();
+		
+		// empty tile
+		if (occupant == null){
+			updatePortrait(tile.getPortrait());
+			updateTitle("Grasslands");
+			return;
+		}
+		
+		// party on tile
+		if (occupant instanceof Party){
+			Party party = (Party) occupant;
+			this.updatePortrait(party.getPortrait());
+			String html = "<html><body style='width: 200px'>";
+			html += this.htmlForOwner(party.getOwner().name);
 			html += this.htmlForMovesLeft(party);
 			html += this.htmlForHealthiness(party);
 			html += "</html>";
 			labelDescription.setText(html);
-			
-			updateTitle(city.getName());
-
-
-			/*Setup the labels to display the city image*/
-			labelTitle = new JLabel(city.getName());
-			labelTitle.setForeground(new Color(225,179,55));
-
+			updateTitle(party.getHero().getName());
+			return;
 		}
-		else{
-
-			WorldIcon occupant = tile.occupant();
-
-			// empty tile selected, display some grass or something
-			if (occupant == null){
-				resetInfo();
-
-				/*Setup the labels to display grass*/
-				labelTitle = new JLabel("Grass");
-				labelTitle.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 30)); //set font of JLabel to franklin gothic medium
-				labelTitle.setForeground(new Color(225,179,55));
-
-				/*Create the label and set icon of label to the player's icon*/
-				iconPortrait = new ImageIcon(tile.getPortrait());
-				labelPortrait = new JLabel(iconPortrait);
-
-				/*Insets parameters are top, left, bottom, right */
-				revalidate();
-			}
-
-			else if (occupant instanceof Party){
-				Party party = (Party)occupant;
-				resetInfo();
-
-				// portrait
-				this.updateImageIcon(party.getPortrait());
-				
-				// description
-				String html = "<html><body style='width: 200px'>";
-				html += this.htmlForOwner(party);
-				html += this.htmlForMovesLeft(party);
-				html += this.htmlForHealthiness(party);
-				html += "</html>";
-				labelDescription.setText(html);
-				
-				// title
-				updateTitle(party.getHero().getName());
-				
-				// healthiness
-				revalidate(); //revalidate this panel (displays all the information)
-			}
-
-			// item on the tile, draw a picture of a treasure chest
-			else if (occupant instanceof ItemIcon){
-				ItemIcon ii = (ItemIcon)occupant;
-
-				/*Rest the panels*/
-				resetInfo();
-
-				/*draw the icon on the panel*/
-				labelTitle = new JLabel("Item");
-				labelTitle.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 30));
-				labelTitle.setForeground(new Color(225,179,55));
-
-				/*Create the label and set icon of label to the player's icon*/
-				iconPortrait = new ImageIcon(ii.getImage());
-				labelPortrait = new JLabel(iconPortrait);
-				
-			}
-
+		
+		// item on tile
+		if (occupant instanceof ItemIcon){
+			ItemIcon itemIcon = (ItemIcon) occupant;
+			updateTitle("Item");
+			updatePortrait(itemIcon.getPortrait());
+			return;
 		}
+		
+		// decor icon on tile
+		if (occupant instanceof DecorIcon){
+			DecorIcon decorIcon = (DecorIcon) occupant;
+			updateTitle("Scenery");
+			updatePortrait(decorIcon.getPortrait());
+			return;
+		}
+
+		// shouldn't get down to here.
+		throw new RuntimeException("Drawing info for unknown tile occupant: " + occupant.getClass().toString());
+		
 	}
 	
 	private void updateTitle(String titleText){
@@ -255,9 +225,9 @@ public class InfoPanel extends JPanel{
 		labelTitle.setText(title);
 	}
 	
-	private String htmlForOwner(Party party) {
-		String owner = party.getOwner().name;
-		return "<font color='yellow'>"+owner+"</font><br/>";
+	
+	private String htmlForOwner(String ownerName){
+		return "<font color='yellow'>"+ownerName+"</font><br/>";
 	}
 
 	/**
@@ -265,7 +235,7 @@ public class InfoPanel extends JPanel{
 	 * the newly-updated ImageIcon.
 	 * @param img: the new image to be displayed
 	 */
-	private void updateImageIcon(BufferedImage img){
+	private void updatePortrait(BufferedImage img){
 		iconPortrait.setImage(img);
 		labelPortrait.setIcon(iconPortrait);
 		labelPortrait.setHorizontalAlignment(SwingConstants.LEFT);
@@ -341,7 +311,8 @@ public class InfoPanel extends JPanel{
 		HeroStats stats_hero = new HeroStats(60,10,80,0,6,10,AttackType.MELEE);
 		Hero hero = new Hero("Tom Kazansky","archer",player,stats_hero);
 		Party party = Party.newEmptyParty(player);
-		party.addUnit(hero);
+		party.addUnit(hero); 
+		party.setOwner(player);
 		InfoPanel.party = party;
 		tile.setIcon(party);
 		
