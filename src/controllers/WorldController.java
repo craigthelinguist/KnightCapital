@@ -474,10 +474,10 @@ public class WorldController implements Serializable{
 
 
 		/*Loading the playey*/
-		Player p = new Player("John The Baptist",1);
+		Player p = new Player("Neuromancers",1);
 		World w = TemporaryLoader.loadWorld("world_temporary.txt",p);
 		HeroStats stats_hero = new HeroStats(60,10,80,0,6,10,AttackType.MELEE);
-		Hero hero = new Hero("Ovelia","ovelia",p,stats_hero);
+		Hero hero = new Hero("Molly Millions","ovelia",p,stats_hero);
 
 		/*
 		members[0][0] = hero;
@@ -498,7 +498,7 @@ public class WorldController implements Serializable{
 		Party party = new Party(hero,p,members2);
 		party.refresh();
 		
-		Hero h2 = new Hero("Dark Knight","knight",p,new HeroStats(140,35,55,5,8,6,AttackType.MELEE));
+		Hero h2 = new Hero("Big Gaben","knight",p,new HeroStats(140,35,55,5,8,6,AttackType.MELEE));
 		Creature[][] members = Party.newEmptyPartyArray();
 		members[0][0] = h2;
 		Party party2 = new Party(h2,p,members);
