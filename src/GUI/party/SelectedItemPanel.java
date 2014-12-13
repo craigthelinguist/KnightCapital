@@ -129,10 +129,10 @@ public class SelectedItemPanel extends JPanel{
 
 	}
 
-	private void updateInfo() {
-		// if selected is an ITEM
-		if(item != null) {
-
+	/**
+	 * Update the selected item panel for the currently selected item.
+	 */
+	private void updateInfoItem(){
 			//set equip button
 			gc.gridx = 0;
 			gc.gridy = 3;
@@ -146,78 +146,76 @@ public class SelectedItemPanel extends JPanel{
 
 			// set description
 			this.descriptionLabel.setText(this.item.getAnimationName());
+	}
+	
+	/**
+	 * Update the selected item panel for the currently selected unit.
+	 */
+	private void updateInfoUnit(){
+		//remove the equip button
+		this.remove(equipItem);
+	
+		// set image
+		this.imageLabel.setIcon(new ImageIcon(this.unit.getPortrait()));
 
-			if(master.isOwner()) {
-				// display stats
-				System.out.println("[SelectedItemPanel] Accessor is owner of item");
-			}
+		// set name
+		this.nameLabel.setText("<html><font color='yellow'>"+this.unit.getName()+"</font></html>");
 
-			//else nothing
-			else {
-				System.out.println("[SelectedItemPanel] Accessor is not owner of item");
-			}
+		// if you don't have visibility over this unit, you're done, 
+		if (!master.isOwner()) return;
+			
+		// otherwise display its stats, moves, etc.
+		int damageBase = this.unit.getBase(Stat.DAMAGE);
+		int healthBase = this.unit.getBase(Stat.HEALTH);
+		int armourBase = this.unit.getBase(Stat.ARMOUR);
+		int speedBase = this.unit.getBase(Stat.SPEED);
+		int damageBuff = this.unit.getBuffed(Stat.DAMAGE);
+		int healthBuff = this.unit.getBuffed(Stat.HEALTH);
+		int armourBuff = this.unit.getBuffed(Stat.ARMOUR);
+		int speedBuff = this.unit.getBuffed(Stat.SPEED);
+		int healthCurrent = this.unit.get(Stat.HEALTH);
+
+		// format the info
+		StringBuilder html = new StringBuilder("<html>");
+		html.append(generateHTMLForHealth(healthCurrent,healthBase,healthBuff));
+		html.append(generateHTML("Damage",damageBase,damageBuff));
+		html.append(generateHTML("Armour",armourBase,armourBuff));
+		html.append(generateHTML("Speed",speedBase,speedBuff));
+			
+		// hero has extra stats
+		if (unit instanceof Hero){
+			Hero hero = (Hero)unit;
+			int sight = hero.getBase(Stat.SIGHT);
+			int buff_sight = hero.getBuffed(Stat.SIGHT);
+			int move = hero.getBase(Stat.MOVEMENT);
+			int buff_move = hero.getBuffed(Stat.MOVEMENT);
+			html.append(generateHTML("Sight",sight,buff_sight));
+			html.append(generateHTML("Movement",move,buff_move));
 		}
-
-
-		// If selected is a UNIT
-		if(unit != null) {
-			//remove the equip button
-			this.remove(equipItem);
-
-			// set image
-			this.imageLabel.setIcon(new ImageIcon(this.unit.getPortrait()));
-
-			// set name
-			this.nameLabel.setText("<html><font color='yellow'>"+this.unit.getName()+"</font></html>");
-
-
-			/*set up the label that displays how many moves the player has left */
-			int damage = this.unit.getBase(Stat.DAMAGE);
-			int health = this.unit.getBase(Stat.HEALTH);
-			int armour = this.unit.getBase(Stat.ARMOUR);
-			int speed = this.unit.getBase(Stat.SPEED);
-
-			int buffD = this.unit.getBuffed(Stat.DAMAGE);
-			int buffH = this.unit.getBuffed(Stat.HEALTH);
-			int buffA = this.unit.getBuffed(Stat.ARMOUR);
-			int buff_speed = this.unit.getBuffed(Stat.SPEED);
-
-			int curr_health = this.unit.get(Stat.HEALTH);
-
-			StringBuilder html = new StringBuilder("<html>");
-			html.append(generateHTMLForHealth(curr_health,health,buffH));
-			html.append(generateHTML("Damage",damage,buffD));
-			html.append(generateHTML("Armour",armour,buffA));
-			html.append(generateHTML("Speed",speed,buff_speed));
-			if (unit instanceof Hero){
-
-				Hero hero = (Hero)unit;
-				int sight = hero.getBase(Stat.SIGHT);
-				int buff_sight = hero.getBuffed(Stat.SIGHT);
-				int move = hero.getBase(Stat.MOVEMENT);
-				int buff_move = hero.getBuffed(Stat.MOVEMENT);
-
-				html.append(generateHTML("Sight",sight,buff_sight));
-				html.append(generateHTML("Movement",move,buff_move));
-
-			}
-			html.append("</html>");
-
-			//set description
-			this.descriptionLabel.setText("<html><font color='yellow'> " + this.unit.getName() + " </font></html>");
-			this.descriptionLabel.setText(html.toString());
-			if(master.isOwner()) {
-				// display stats
-				System.out.println("[SelectedItemPanel] Accessor is owner of party");
-			}
-
-			//else nothing
-			else {
-				System.out.println("[SelectedItemPanel] Accessor is not owner of party");
-			}
-		}
+			
+		// close html tag
+		html.append("</html>");
+			
+		//set description
+		this.descriptionLabel.setText("<html><font color='yellow'> " + this.unit.getName() + " </font></html>");
+		this.descriptionLabel.setText(html.toString());	
+	}
+	
+	/**
+	 * Update the text output for the selected item panel.
+	 */
+	private void updateInfo() {
+		if (item != null) updateInfoItem();
+		else if (unit != null) updateInfoUnit();
 	}
 
+	/**
+	 * Generates an html string for the unit's health. 
+	 * @param current: their current health
+	 * @param base: their base health
+	 * @param buff: amount their health is buffed by
+	 * @return an html-formatted string
+	 */
 	private String generateHTMLForHealth(int current, int base, int buff){
 		StringBuilder str = new StringBuilder();
 		str.append("<font color='yellow'>Health: </font> <font color='white'>"+current+"/</font>");
@@ -235,6 +233,13 @@ public class SelectedItemPanel extends JPanel{
 		return str.toString();
 	}
 
+	/**
+	 * Generates an html string for any of the unit's stats (except health!)
+	 * @param name: name of the stat
+	 * @param base: base value of the stat
+	 * @param buff: buffed value of the stat
+	 * @return an html-formatted string
+	 */
 	private String generateHTML(String name, int base, int buff){
 		StringBuilder str = new StringBuilder();
 		str.append("<font color='yellow'>"+name+": </font>");
