@@ -73,7 +73,7 @@ public class InfoPanel extends JPanel{
 
 	public InfoPanel(MainFrame mainFrame) {
 		
-		// set fields
+		// set fields, parameters
 		this.mainframe = mainFrame;
 		this.setPreferredSize(new Dimension(375,200));
 		this.setBackground(Color.BLACK);
@@ -85,11 +85,17 @@ public class InfoPanel extends JPanel{
 		this.setLayout(new GridBagLayout());
 		this.add(panel, new GridBagConstraints());
 		
+		// mouse listener for the portrait
 		this.labelPortrait.addMouseListener(portraitListener);
-		
 		
 	}
 	
+	/**
+	 * PortraitListener responds to mouse events that involve the portrait in the InfoPanel. If you hover over
+	 * a portrait it should lighten up, and if you mouse off the portrait it will go back to normal colour.
+	 * If you click on a portrait it should take you to a new PartyDialog.
+	 * @author craigthelinguist
+	 */
 	private class PortraitListener implements MouseListener{
 
 		private boolean active = false;
@@ -125,14 +131,24 @@ public class InfoPanel extends JPanel{
 		@Override
 		public void mouseReleased(MouseEvent arg0) {}
 		
+		/**
+		 * Enable the PortraitListener. It will now respond to events.
+		 */
 		public void enable(){
 			this.active = true;
 		}
 		
+		/**
+		 * Disable the PortraitListener. It will no longer respond to events.
+		 */
 		public void disable(){
 			this.active = false;
 		}
 		
+		/**
+		 * Check whether this PortraitListener is currently responding to events.
+		 * @return boolean
+		 */
 		public boolean isActive(){
 			return active;
 		}
