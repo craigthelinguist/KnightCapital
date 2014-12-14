@@ -55,7 +55,7 @@ public class ClientMoveInputProtocol implements Runnable{
                             
 							System.out.println("found a party instance");
 							
-							if(party.getOwner().slot == incoming.getplayer().slot){
+							if(party.getOwner().getSlot() == incoming.getplayer().getSlot()){
  
 								System.out.println("party was owned by this dude!");
 								

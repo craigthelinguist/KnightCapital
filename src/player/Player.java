@@ -1,6 +1,8 @@
 package player;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Represents a player in an instance of a game being played on the world.
@@ -12,8 +14,8 @@ public class Player implements Serializable{
 
 	// name = name of the player
 	// slot = player 1, player 2, etc.
-	public final String name;
-	public final int slot;
+	private final String name;
+	private final int slot;
 
 	// how much gold this player has
 	private int gold;
@@ -24,6 +26,15 @@ public class Player implements Serializable{
 	public static final int BLUE = 2;
 	public static final int GREEN = 3;
 	public static final int VIOLET = 4;
+	
+	public static final Map<Integer,String> PLAYER_COLOR_HEX = new HashMap<>();
+	static {
+		PLAYER_COLOR_HEX.put(Player.RED, "#DC143C");
+		PLAYER_COLOR_HEX.put(Player.BLUE, "#1E90FF");
+		PLAYER_COLOR_HEX.put(Player.GREEN, "#7FFF00");
+		PLAYER_COLOR_HEX.put(Player.VIOLET, "#EE82EE");
+		PLAYER_COLOR_HEX.put(Player.NEUTRAL, "#FFFFFF");
+	}
 
 	/**
 	 * Constructs a new player.
@@ -36,18 +47,16 @@ public class Player implements Serializable{
 		this.slot = slot;
 	}
 
-	public int getSlot(){return this.slot;}
-
 	/**
 	 * Return the colour of this player as a string.
 	 * @return: string
 	 */
 	public String getColour(){
-		if (slot == 1) return "red";
-		else if (slot == 2) return "blue";
-		else if (slot == 3) return "green";
-		else if (slot == 4) return "violet";
-		else throw new RuntimeException("illegal slot for player " + name + ", slot was " + slot);
+		if (getSlot() == 1) return "red";
+		else if (getSlot() == 2) return "blue";
+		else if (getSlot() == 3) return "green";
+		else if (getSlot() == 4) return "violet";
+		else throw new RuntimeException("illegal slot for player " + getName() + ", slot was " + getSlot());
 	}
 
 	/**
@@ -74,6 +83,14 @@ public class Player implements Serializable{
 	public void decreaseGold(int amount){
 		if (amount <= 0) return;
 		this.gold -= amount;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public int getSlot(){
+		return this.slot;
 	}
 
 }

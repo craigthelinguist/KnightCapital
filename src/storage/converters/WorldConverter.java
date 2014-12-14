@@ -47,10 +47,10 @@ public class WorldConverter implements Converter{
 			for (Player player : players){
 				writer.startNode("player");
 					writer.startNode("slot");
-						writer.setValue("" + player.slot);
+						writer.setValue("" + player.getSlot());
 					writer.endNode();
 					writer.startNode("name");
-						writer.setValue("" + player.name);
+						writer.setValue("" + player.getName());
 					writer.endNode();
 				writer.endNode();
 			}
@@ -67,7 +67,7 @@ public class WorldConverter implements Converter{
 						writer.setValue(city.getImageName());
 					writer.endNode();
 					writer.startNode("player");
-						writer.setValue(""+city.getOwner().slot);
+						writer.setValue(""+city.getOwner().getSlot());
 					writer.endNode();
 				writer.endNode();
 			}
@@ -111,7 +111,7 @@ public class WorldConverter implements Converter{
 				reader.moveUp();
 
 				// record player in data loader
-				WorldLoader.insertPlayer(player.slot, player);
+				WorldLoader.insertPlayer(player.getSlot(), player);
 
 			}
 		reader.moveUp();

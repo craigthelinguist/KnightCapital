@@ -76,7 +76,7 @@ public class ServerMovementProtocol implements Runnable {
 
 							System.out.println("found a party instance");
 
-							if(party.getOwner().slot == toDisperse.getplayer().slot){
+							if(party.getOwner().getSlot() == toDisperse.getplayer().getSlot()){
 
 								System.out.println("party was owned by this dude!");
 

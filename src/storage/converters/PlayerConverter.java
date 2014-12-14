@@ -39,7 +39,7 @@ public class PlayerConverter implements Converter {
 		}
 		Player player = (Player)source;
 		writer.startNode("slot");
-		writer.setValue("" + player.slot);
+		writer.setValue("" + player.getSlot());
 		writer.endNode();
 	}
 
@@ -74,7 +74,7 @@ public class PlayerConverter implements Converter {
 				String name = reader.getValue();
 				player = new Player(name,slot);
 			reader.moveUp();
-			WorldLoader.insertPlayer(player.slot, player);
+			WorldLoader.insertPlayer(player.getSlot(), player);
 		}
 		return player;
 	}

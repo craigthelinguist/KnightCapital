@@ -161,7 +161,7 @@ public class InfoPanel extends JPanel{
 		labelTitle.setHorizontalAlignment(SwingConstants.RIGHT);
 		labelTitle.setPreferredSize(new Dimension(200,40));
 		labelTitle.setMaximumSize(new Dimension(200,40));
-		labelTitle.setFont(new Font("Franklin Gothic Medium", Font.PLAIN, 25));
+		labelTitle.setFont(new Font("Franklin Gothic Medium", Font.PLAIN, 20));
 
 		// layout set up
 		GroupLayout layout = new GroupLayout(panel);
@@ -231,10 +231,10 @@ public class InfoPanel extends JPanel{
 			City city = ((CityTile)tile).getCity();
 			updatePortrait(city.getPortrait());
 			String html = "<html><body style='width: 200px'>";
-			html += this.htmlForOwner(city.getOwner().name);
+			html += this.htmlForName(city.getName());
 			html += "</html>";
 			labelDescription.setText(html);
-			updateTitle(city.getName());
+			updateTitle(city.getOwner().getName(), Player.PLAYER_COLOR_HEX.get(city.getOwner().getSlot()));
 			return;
 		}
 		
@@ -243,7 +243,10 @@ public class InfoPanel extends JPanel{
 		// empty tile
 		if (occupant == null){
 			updatePortrait(tile.getPortrait());
-			updateTitle("Grasslands");
+			String html = "<html><body style='width: 200px'>";
+			html += this.htmlForName("Grasslands");
+			html += "</html>";
+			labelDescription.setText(html);
 			return;
 		}
 		
@@ -252,12 +255,14 @@ public class InfoPanel extends JPanel{
 			Party party = (Party) occupant;
 			this.updatePortrait(party.getPortrait());
 			String html = "<html><body style='width: 200px'>";
-			html += this.htmlForOwner(party.getOwner().name);
-			html += this.htmlForMovesLeft(party);
-			html += this.htmlForHealthiness(party);
+			html += this.htmlForName(party.getHero().getName());
+			if (mainframe == null || party.ownedBy(mainframe.getPlayer())){
+				html += this.htmlForMovesLeft(party);
+				html += this.htmlForHealthiness(party);
+			}
 			html += "</html>";
 			labelDescription.setText(html);
-			updateTitle(party.getHero().getName());
+			updateTitle(party.getOwner().getName(), Player.PLAYER_COLOR_HEX.get(party.getOwner().getSlot()));
 			this.portraitListener.enable();
 			this.selectedParty = party;
 			return;
@@ -266,7 +271,10 @@ public class InfoPanel extends JPanel{
 		// item on tile
 		if (occupant instanceof ItemIcon){
 			ItemIcon itemIcon = (ItemIcon) occupant;
-			updateTitle("Item");
+			String html = "<html><body style='width: 200px'>";
+			html += this.htmlForName("Item");
+			html += "</html>";
+			labelDescription.setText(html);
 			updatePortrait(itemIcon.getPortrait());
 			return;
 		}
@@ -274,12 +282,15 @@ public class InfoPanel extends JPanel{
 		// decor icon on tile
 		if (occupant instanceof DecorIcon){
 			DecorIcon decorIcon = (DecorIcon) occupant;
-			updateTitle("Scenery");
+			String html = "<html><body style='width: 200px'>";
+			html += this.htmlForName("Scenery");
+			html += "</html>";
+			labelDescription.setText(html);
 			updatePortrait(decorIcon.getPortrait());
 			return;
 		}
 
-		// shouldn't get down to here.
+		// shouldn't get down to here unless you've forgotten a case
 		throw new RuntimeException("Drawing info for unknown tile occupant: " + occupant.getClass().toString());
 		
 	}
@@ -289,7 +300,11 @@ public class InfoPanel extends JPanel{
 	 * @param titleText: string that should be the title.
 	 */
 	private void updateTitle(String titleText){
-		String title = "<html><font color='yellow'>"+titleText+"</font></html>";
+		updateTitle(titleText, "white");
+	}
+	
+	private void updateTitle(String titleText, String hexcolor){
+		String title = "<html><font color='"+hexcolor+"'>"+titleText+"</font></html>";
 		labelTitle.setText(title);
 	}
 	
@@ -306,12 +321,12 @@ public class InfoPanel extends JPanel{
 	
 	/**
 	 * Helper method.
-	 * Generate some html for a line that says who the owner of the thing is.
+	 * Generate some html for a line that displays the name of the thing being displayed.
 	 * @param ownerName: string that is the owner of the thing being displayed in this InfoPanel
 	 * @return html string
 	 */
-	private String htmlForOwner(String ownerName){
-		return "<font color='yellow'>"+ownerName+"</font><br/>";
+	private String htmlForName(String ownerName){
+		return "<font color='white'>"+ownerName+"</font><br/>";
 	}
 	
 	/**
@@ -322,7 +337,21 @@ public class InfoPanel extends JPanel{
 	 */
 	private String htmlForHealthiness(Party party){
 		int healthiness = party.healthiness();
-		return "<font color='yellow'>Health: </font><font color='white'>" + healthiness + "%</font><br/></html>";
+		String colour = null;
+		if (healthiness == 100){
+			colour = "#00FF00";
+		}
+		else if (healthiness >= 67){
+			colour = "#ADFF2F";
+		}
+		else if (healthiness >= 34){
+			colour = "yellow";
+		}
+		else if (healthiness >= 1){
+			colour = "orange";
+		}
+		else colour = "red";
+		return "<font color='white'>Health: </font><font color='"+colour+"'>" + healthiness + "%</font><br/></html>";
 	}
 	
 	/**
@@ -332,15 +361,20 @@ public class InfoPanel extends JPanel{
 	 * @return an html string containing formatted info about party movement
 	 */
 	private String htmlForMovesLeft(Party party){
-		StringBuilder html = new StringBuilder("<font color='yellow'>Moves: </font>");
+		StringBuilder html = new StringBuilder("<font color='white'>Moves: </font>");
 		int moves = party.getMovePoints();
 		int totalMoves = party.getHero().get(Stat.MOVEMENT);
+		String colour = null;
 		if (moves == 0){
-			html.append("<font color='red'>" + moves + "/" + totalMoves + "</font><br/>");
+			colour = "red";
+		}
+		else if (moves < party.getHero().get(Stat.MOVEMENT)){
+			colour = "yellow";
 		}
 		else{
-			html.append("<font color='white'>" + moves + "/" + totalMoves + "</font><br/>");
+			colour = "#00FF00";
 		}
+		html.append("<font color='"+colour+"'>" + moves + "/" + totalMoves + "</font><br/>");
 		return html.toString();
 	}
 	
@@ -373,13 +407,14 @@ public class InfoPanel extends JPanel{
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 		
-		
 		Tile tile = TileFactory.newGrassTile(0, 0);
-		Player player = new Player("Defenders of Light", Player.BLUE);
+		Player player = new Player("Defenders of Light", Player.GREEN);
 		HeroStats stats_hero = new HeroStats(60,10,80,0,6,10,AttackType.MELEE);
 		Hero hero = new Hero("Tom Kazansky","archer",player,stats_hero);
+		hero.damage(0);
 		Party party = Party.newEmptyParty(player);
 		party.addUnit(hero); 
+		party.addMovementPoints(5);
 		party.setOwner(player);
 		tile.setIcon(party);
 		
@@ -387,7 +422,7 @@ public class InfoPanel extends JPanel{
 		Tile tile3 = TileFactory.newRockTile(0, 0);
 		Tile tile4 = TileFactory.newTreeTile(0, 0);
 		
-		ip.updateInfo(tile4);
+		ip.updateInfo(tile);
 		
 		ip.repaint();
 		
