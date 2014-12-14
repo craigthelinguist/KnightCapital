@@ -383,7 +383,12 @@ public class InfoPanel extends JPanel{
 		party.setOwner(player);
 		tile.setIcon(party);
 		
-		ip.updateInfo(tile);
+		Tile tile2 = TileFactory.newBushTile(0, 0);
+		Tile tile3 = TileFactory.newRockTile(0, 0);
+		Tile tile4 = TileFactory.newTreeTile(0, 0);
+		
+		ip.updateInfo(tile4);
+		
 		ip.repaint();
 		
 	}

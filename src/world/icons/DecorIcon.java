@@ -35,17 +35,17 @@ public class DecorIcon extends WorldIcon{
 		// And if the icon is passable or not
 
 		if(type == TREE) {
-			name = "tree_icon_";
+			name = "tree_icon";
 			max = 3;
 			passable = false;
 		}
 		else if(type == ROCK) {
-			name = "rock_icon_";
+			name = "rock_icon";
 			max = 2;
 			passable = false;
 		}
 		else if(type == BUSH) {
-			name = "bush_icon_";
+			name = "bush_icon";
 			max = 3;
 			passable = false;
 		}
@@ -56,13 +56,13 @@ public class DecorIcon extends WorldIcon{
 		// Using the max variation defined above, we can randomly select an image from the specified range
 		// to give the world map a less uniform look, getting rid of some of the tough to look at tiling textures
 		int random = 1 + (int)(Math.random() * max);
-		name = name + random; // set name and random
+		String fullname = name + "_" + random; // set name and random
 
 		// Add portrait to icon
 		animations.addImage("portrait", Constants.PORTRAITS, ImageLoader.load(Constants.PORTRAITS + name));
 
 		// Add each of the directional images needed for file
-		animations.addDirectedImages(Constants.DECOR_ICONS, name, null);
+		animations.addDirectedImages(Constants.DECOR_ICONS, fullname, null);
 
 		// Set init image
 		animations.setImage("north");
