@@ -37,7 +37,7 @@ public class TownPanel extends JPanel{
 
 	// components
 	private TownExchangePanel panel_exchange;
-	private TownButtonPanel panel_buttons;
+	private TownButtonPanel panel_buttons;	
 
 	protected TownPanel(TownController townController, TownGui gui) {
 		this.controller = townController;
