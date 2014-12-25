@@ -14,9 +14,6 @@ import java.util.Set;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 import controllers.WorldController;
-import GUI.world.GameDialog;
-import GUI.world.InventoryPanel;
-import GUI.world.MainFrame;
 import player.Player;
 import renderer.Camera;
 import tools.Geometry;

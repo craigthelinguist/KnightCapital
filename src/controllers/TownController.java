@@ -10,6 +10,7 @@ import game.units.creatures.Unit;
 import game.units.stats.HeroStats;
 import game.units.stats.Stat;
 import game.units.stats.UnitStats;
+import gui.town.TownGui;
 
 import java.awt.Dimension;
 import java.awt.Point;
@@ -18,7 +19,6 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 
-import GUI.town.TownGui;
 import player.Player;
 import renderer.Camera;
 import storage.generators.TemporaryLoader;

@@ -12,6 +12,8 @@ import game.units.stats.AttackType;
 import game.units.stats.HeroStats;
 import game.units.stats.Stat;
 import game.units.stats.UnitStats;
+import gui.world.GameDialog;
+import gui.world.GameFrame;
 
 import java.awt.Point;
 import java.awt.event.KeyEvent;
@@ -45,9 +47,6 @@ import world.tiles.PassableTile;
 import world.tiles.Tile;
 import world.tiles.TileFactory;
 import world.towns.City;
-import GUI.EscapeDialog.EscapeDialog;
-import GUI.world.GameDialog;
-import GUI.world.MainFrame;
 
 /**
  * A WorldController. This is the glue between the model (World) and the view (gui, renderer). It responds to mouse, key, and button presses
@@ -62,7 +61,7 @@ public class WorldController implements Serializable{
 	private boolean isServer;
 	
 	// view
-	private MainFrame gui;
+	private GameFrame gui;
 
 	// model
 	private final World world;
@@ -95,7 +94,7 @@ public class WorldController implements Serializable{
 		world = w;
 		player = p;
 		camera = WorldRenderer.getCentreOfWorld(w);
-		gui = new MainFrame();
+		gui = new GameFrame();
 		gui.setController(this);
 		selected = null;
 		highlightedTiles = new HashSet<>();
@@ -126,6 +125,7 @@ public class WorldController implements Serializable{
 			notifier();
 			gui.redraw();
 		}
+		
 		else if (code == PAN_DOWN){
 			camera.panDown();
 			notifier();
@@ -142,7 +142,8 @@ public class WorldController implements Serializable{
 			gui.redraw();
 		}
 		else if(code == KeyEvent.VK_ESCAPE){
-			new EscapeDialog(gui,this);
+			// TODO
+			//new EscapeDialog(gui,this);
 	    }
 
 
@@ -426,7 +427,7 @@ public class WorldController implements Serializable{
 	 * Get the gui attached to this controller.
 	 * @return
 	 */
-	public MainFrame getGui(){
+	public GameFrame getGui(){
 		return gui;
 	}
 
