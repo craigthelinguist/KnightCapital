@@ -51,7 +51,7 @@ public class MenuPanel extends JPanel {
 
 	/**
 	 * Create and return a button. When you click the button it brings up a new EscapeDialog, where you can save, load, exit, etc.
-	 * @return JButtno
+	 * @return JButton
 	 */
 	private JButton menuButton(){
 		JButton button = new JButton("Menu");

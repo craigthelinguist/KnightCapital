@@ -62,7 +62,7 @@ public class WorldGen {
 		w.setIcon(rock, 6, 3);
 		w.setIcon(bush, 9, 3);
 
-		new WorldController(w, p, true);
+		new WorldController(w, p);
 	}
 
 	public static void main(String[] gabe) {

@@ -21,7 +21,7 @@ public class EscapeDialog extends JDialog {
 	private GameFrame main;
 	
 	public EscapeDialog(GameFrame gameframe){
-		super(gameframe, true);
+		super(gameframe.getWindow(), true);
 		main = gameframe;
 		gameframe.enableCloseDialog();
 		setupContents();
@@ -144,7 +144,7 @@ public class EscapeDialog extends JDialog {
 		button.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				main.dispose();
+				main.getWindow().dispose();
 				System.exit(0);
 			}
 		});
