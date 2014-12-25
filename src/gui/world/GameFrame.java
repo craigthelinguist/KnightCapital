@@ -9,13 +9,19 @@ import java.awt.KeyboardFocusManager;
 import java.awt.event.KeyEvent;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
+import main.GameWindow;
 import player.Player;
 import world.tiles.Tile;
 import controllers.WorldController;
 
-public class GameFrame extends JFrame{
+public class GameFrame extends JPanel{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	// state
 	private boolean closeDialogEnabled = false;
 	private boolean active = true;
@@ -27,12 +33,14 @@ public class GameFrame extends JFrame{
 
 	// controller
 	private WorldController controller;
-
-	public GameFrame(){
+	private GameWindow window;
+	
+	public GameFrame(GameWindow window){
+		this.setEnabled(false);
+		
+		this.window = window;
 		
 		// set up layout and display
-		this.setExtendedState(this.MAXIMIZED_BOTH);
-		this.setUndecorated(true); //true means borderless window
 		this.setLayout(new BorderLayout());
 		
 		// set up components
@@ -46,12 +54,7 @@ public class GameFrame extends JFrame{
 		// set up key dispatcher
 		KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
 		manager.addKeyEventDispatcher(new WorldKeyDispatcher());
-
-		// finish up
-		this.setResizable(true);
-		this.pack();
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setVisible(true);
+		
 	}
 	
 	/**
@@ -112,7 +115,11 @@ public class GameFrame extends JFrame{
 	 * @param msg: the message to display.
 	 */
 	public void makeGameDialog(String msg) {
-		new GameDialog(this,msg);
+		new GameDialog(this.window,msg);
+	}
+	
+	public JFrame getWindow(){
+		return this.window;
 	}
 
 	/**
@@ -122,26 +129,7 @@ public class GameFrame extends JFrame{
 	public Player getPlayer(){
 		return controller.getPlayer();
 	}
-	
-	/**
-	 * Deactive this MainFrame and make it invisible.
-	 */
-	public void suspend() {
-		this.setVisible(false);
-		this.active = false;
-	}
-
-	/**
-	 * Activate this MainFrame and make it visible.
-	 */
-	public void awake(){
-		this.setExtendedState(this.MAXIMIZED_BOTH);
-		this.active = true;
-		this.closeDialogEnabled = false;
-		this.setVisible(true);
-	}
-
-	
+		
 	private class WorldKeyDispatcher implements KeyEventDispatcher {
 		@Override
 		public boolean dispatchKeyEvent(KeyEvent e) {

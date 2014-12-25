@@ -71,7 +71,6 @@ public class World {
 	 */
 	public void endTurn(){
 
-
 		// if you've cycled through all players, it is a new day
 		currentPlayer = (currentPlayer+1)%players.length;
 		if (currentPlayer == 0){

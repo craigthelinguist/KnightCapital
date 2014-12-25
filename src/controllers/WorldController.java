@@ -27,6 +27,7 @@ import java.util.Set;
 
 import javax.swing.SwingUtilities;
 
+import main.GameWindow;
 import networking.Client;
 import networking.Server;
 import player.Player;
@@ -56,13 +57,6 @@ import world.towns.City;
  */
 public class WorldController implements Serializable{
 
-	// networking shit
-	private Client client;	
-	private boolean isServer;
-	
-	// view
-	private GameFrame gui;
-
 	// model
 	private final World world;
 
@@ -89,56 +83,50 @@ public class WorldController implements Serializable{
 	private static final int PAN_RIGHT = KeyEvent.VK_RIGHT;
 	private static final int PAN_LEFT = KeyEvent.VK_LEFT;
 
-	public WorldController(World w, Player p, Boolean isServer){
-		this.isServer= isServer;
+	// view
+	private GameFrame gui;
+	
+	public WorldController(World w, Player p, GameFrame gameframe){
 		world = w;
 		player = p;
 		camera = WorldRenderer.getCentreOfWorld(w);
-		gui = new GameFrame();
-		gui.setController(this);
+		gui = gameframe;
 		selected = null;
 		highlightedTiles = new HashSet<>();
 	}
-
-
+	
 	/**
 	 * Player has pushed a key. Perform any actions and update/redraw game-state if necessary.
 	 * @param ke: details about the key event
 	 */
 	public void keyPressed(KeyEvent ke){
-
+		
 		int code = ke.getKeyCode();
 		if (code == ROTATE_CW){
 			camera.rotateClockwise();
 			world.rotateOccupants(true);
-			notifier();
 			gui.redraw();
 		}
 		else if (code == ROTATE_CCW){
 			camera.rotateCounterClockwise();
 			world.rotateOccupants(false);
-			notifier();
 			gui.redraw();
 		}
 		else if (code == PAN_UP){
 			camera.panUp();
-			notifier();
 			gui.redraw();
 		}
 		
 		else if (code == PAN_DOWN){
 			camera.panDown();
-			notifier();
 			gui.redraw();
 		}
 		else if (code == PAN_RIGHT){
 			camera.panRight();
-			notifier();
 			gui.redraw();
 		}
 		else if (code == PAN_LEFT){
 			camera.panLeft();
-			notifier();
 			gui.redraw();
 		}
 		else if(code == KeyEvent.VK_ESCAPE){
@@ -158,28 +146,15 @@ public class WorldController implements Serializable{
 	 * @param panel: what they clicked on (inventory, world, etc.)
 	 */
 	public void mousePressed(MouseEvent me){
-
+		
 		// get info about the mouse click
 		Point ptIso = new Point(me.getX(),me.getY());
 		Point ptCartesian = Geometry.isometricToCartesian(ptIso, camera, world.dimensions);
 		Tile clickedTile = world.getTile(ptCartesian);
 		Tile selectedTile = world.getTile(selected);
 
-		// double clicked a city; enter town view
-		if (leftClicked(me) && selectedTile != null
-				&& clickedTile instanceof CityTile && selectedTile instanceof CityTile
-				&& doubleClicked() && ((CityTile)(clickedTile)).getCity().ownedBy(player) )
-		{
-			CityTile c1 = (CityTile)clickedTile;
-			CityTile c2 = (CityTile)selectedTile;
-			if (c1.getCity() == c2.getCity()){
-				startTownView(c1.getCity());
-			}
-			this.lastMouse = System.currentTimeMillis();
-		}
-
 		// left-clicked the selection; deselect
-		else if (selected != null && leftClicked(me) && selectedTile == clickedTile){
+		if (selected != null && leftClicked(me) && selectedTile == clickedTile){
 			deselect();
 			gui.updateInfo(null);
 			gui.redraw();
@@ -236,7 +211,7 @@ public class WorldController implements Serializable{
 					Party party = (Party)occupant;
 					if (party.hasFullInventory() && clickedTile.occupant() instanceof ItemIcon
 							&& clickedTile.canStandOn(party)){
-						new GameDialog(gui,"Inventory full! You cannot pick up more items!");
+						new GameDialog(gui.getWindow(),"Inventory full! You cannot pick up more items!");
 					}
 				}
 			}
@@ -360,46 +335,6 @@ public class WorldController implements Serializable{
 	}
 
 	/**
-	 * Ends the current town session. Also awakens this WorldController and its attached
-	 * gui so they now respond to events.
-	 * @param exit: the exit point of the town.
-	 */
-	public void endTownView(Point exit){
-		awake();
-		deselect();
-		Tile tile = world.getTile(exit.x,exit.y);
-		gui.updateInfo(tile); // update gui info panel with exit point
-		gui.redraw();
-	}
-
-	/**
-	 * Opens a new town session with the specified city. Suspends this WorldController
-	 * and its attached gui and the program's control flow passes to the
-	 * TownController that this method makes.
-	 * @param city: the city that you will be viewing through the TownController.
-	 */
-	public void startTownView(City city){
-		suspend();
-		new TownController(city,this);
-	}
-
-	/**
-	 * Awaken this controller. Its attached gui will now draw information and respond
-	 * to events.
-	 */
-	private void awake(){
-		gui.awake();
-	}
-
-	/**
-	 * Make this controller inactive until awakened. Its attached gui will also become
-	 * unresponsive.
-	 */
-	private void suspend(){
-		gui.suspend();
-	}
-
-	/**
 	 * Return the world being controlled by this controller.
 	 * @return: world
 	 */
@@ -438,88 +373,6 @@ public class WorldController implements Serializable{
 	public Tile getSelectedTile(){
 		return world.getTile(selected);
 	}
-
-	public void notifier(){
-		if(client!=null)client.notifyThread();
-		if(client == null)System.out.println("still not initiated");
-	}
-
-	public static void main(String[] args) throws IOException{
-		aaron_main(args);
-	}
-
-	public static void aaron_main(String[] args){
-		/*Loading items*/
-		Buff[] buffsAmulet = new Buff[]{ Buff.newTempBuff(Stat.DAMAGE,5) };
-		PassiveItem amulet = new PassiveItem("amulet", "amulet",
-				"An amulet that grants sickening gains.\n +5 Damage",
-				buffsAmulet,Target.HERO);
-
-		Buff[] buffsWeapon = new Buff[]{ Buff.newPermaBuff(Stat.DAMAGE,5), Buff.newTempBuff(Stat.ARMOUR, 10) };
-		PassiveItem weapon = new PassiveItem("weapon", "weapon",
-				"A powerful weapon crafted by the mighty Mizza +5 Damage",
-				buffsWeapon,Target.HERO);
-
-		Buff[] buffsArrows= new Buff[]{ Buff.newPermaBuff(Stat.DAMAGE,1) };
-		PassiveItem arrows = new PassiveItem("poisonarrow", "poisonarrow",
-				"Poisonous arrows whose feathers were made from the hairs of Mizza. All archers in party gain +1 damage",
-				buffsArrows, Target.PARTY);
-
-
-
-		ItemIcon itemIcon = new ItemIcon(amulet);
-
-		ItemIcon itemIcon2 = new ItemIcon(weapon);
-
-		ItemIcon itemIcon3 = new ItemIcon(arrows);
-
-
-		/*Loading the playey*/
-		Player p = new Player("Neuromancers",1);
-		World w = TemporaryLoader.loadWorld("world_temporary.txt",p);
-		HeroStats stats_hero = new HeroStats(60,10,80,0,6,10,AttackType.MELEE);
-		Hero hero = new Hero("Molly Millions","ovelia",p,stats_hero);
-
-		/*
-		members[0][0] = hero;
-		Party party = new Party(hero, p, members);
-		party.refresh();*/
-
-		/*load a party*/
-		Unit u3 = new Unit("Knight","knight",p,new UnitStats(100,25,40,1,AttackType.MELEE));
-		Unit u4 = new Unit("Archer","archer",p,new UnitStats(60,15,70,0,AttackType.RANGED));
-		Unit u5 = new Unit("Archer","archer",p,new UnitStats(60,15,70,0,AttackType.RANGED));
-		Unit u6 = new Unit("Knight","knight",p,new UnitStats(100,25,40,1,AttackType.MELEE));
-		Creature[][] members2 = Party.newEmptyPartyArray();
-		members2[0][0] = u3;
-		members2[1][0] = u6;
-		members2[1][2] = hero;
-		members2[0][1] = u4;
-		members2[1][1] = u5;
-		Party party = new Party(hero,p,members2);
-		party.refresh();
-		
-		Hero h2 = new Hero("Big Gaben","knight",p,new HeroStats(140,35,55,5,8,6,AttackType.MELEE));
-		Creature[][] members = Party.newEmptyPartyArray();
-		members[0][0] = h2;
-		Party party2 = new Party(h2,p,members);
-		party2.refresh();
-		
-		
-
-		party.addItem(arrows);
-		w.getTile(0,0).setIcon(party);
-		w.getTile(0,1).setIcon(party2);
-		w.getTile(1,1).setIcon(itemIcon); //place a floor item on this tile
-		w.getTile(1,2).setIcon(itemIcon2);
-		w.getTile(1,3).setIcon(itemIcon2);
-		w.getTile(1,4).setIcon(itemIcon);
-		w.getTile(1,6).setIcon(itemIcon2);
-		w.getTile(8,8).setIcon(itemIcon3);
-
-		new WorldController(w,p,true);
-	}
-	
 }
 
 
