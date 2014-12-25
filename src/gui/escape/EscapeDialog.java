@@ -3,7 +3,7 @@ package gui.escape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import gui.world.GameFrame;
+import gui.world.WorldPanel;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
@@ -18,9 +18,9 @@ import javax.swing.JPanel;
  */
 public class EscapeDialog extends JDialog {
 
-	private GameFrame main;
+	private WorldPanel main;
 	
-	public EscapeDialog(GameFrame gameframe){
+	public EscapeDialog(WorldPanel gameframe){
 		super(gameframe.getWindow(), true);
 		main = gameframe;
 		gameframe.enableCloseDialog();

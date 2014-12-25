@@ -13,7 +13,7 @@ import game.units.stats.HeroStats;
 import game.units.stats.Stat;
 import game.units.stats.UnitStats;
 import gui.world.GameDialog;
-import gui.world.GameFrame;
+import gui.world.WorldPanel;
 
 import java.awt.Point;
 import java.awt.event.KeyEvent;
@@ -84,9 +84,9 @@ public class WorldController implements Serializable{
 	private static final int PAN_LEFT = KeyEvent.VK_LEFT;
 
 	// view
-	private GameFrame gui;
+	private WorldPanel gui;
 	
-	public WorldController(World w, Player p, GameFrame gameframe){
+	public WorldController(World w, Player p, WorldPanel gameframe){
 		world = w;
 		player = p;
 		camera = WorldRenderer.getCentreOfWorld(w);
@@ -362,7 +362,7 @@ public class WorldController implements Serializable{
 	 * Get the gui attached to this controller.
 	 * @return
 	 */
-	public GameFrame getGui(){
+	public WorldPanel getGui(){
 		return gui;
 	}
 

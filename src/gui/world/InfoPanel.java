@@ -68,9 +68,9 @@ public class InfoPanel extends JPanel{
 	private PortraitListener portraitListener = new PortraitListener();
 	
 	// GameFrame to which this info panel belongs
-	private GameFrame gameFrame;
+	private WorldPanel gameFrame;
 
-	public InfoPanel(GameFrame GameFrame) {
+	public InfoPanel(WorldPanel GameFrame) {
 		
 		// set fields, parameters
 		this.gameFrame = GameFrame;

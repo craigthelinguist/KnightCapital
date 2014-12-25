@@ -14,13 +14,13 @@ import javax.swing.JPanel;
 
 public class MenuPanel extends JPanel {
 	
-	private GameFrame main;
+	private WorldPanel main;
 	
 	// components
 	private JLabel labelDay;
 	private JLabel labelGold;
 	
-	public MenuPanel(GameFrame gameframe){
+	public MenuPanel(WorldPanel gameframe){
 		
 		// fields
 		main = gameframe;

@@ -1,5 +1,7 @@
 package main;
 
+import java.awt.BorderLayout;
+
 import game.effects.Buff;
 import game.items.PassiveItem;
 import game.items.Target;
@@ -10,9 +12,11 @@ import game.units.stats.AttackType;
 import game.units.stats.HeroStats;
 import game.units.stats.Stat;
 import game.units.stats.UnitStats;
-import gui.world.GameFrame;
+import gui.MainMenu.MainMenu;
+import gui.world.WorldPanel;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 import player.Player;
 import storage.generators.TemporaryLoader;
@@ -23,15 +27,13 @@ import controllers.WorldController;
 
 public class GameWindow extends JFrame{
 	
+	private JPanel current;
+	
 	public GameWindow(){
 		this.setExtendedState(this.MAXIMIZED_BOTH);
 		this.setUndecorated(true); //true means borderless window
-		
-		GameFrame gameframe = new GameFrame(this);
-		WorldController controller = makeController(gameframe);
-		gameframe.setController(controller);
-		gameframe.setEnabled(true);
-		this.add(gameframe);
+	
+		setupMainMenu();
 		
 		// finish up
 		this.setResizable(true);
@@ -40,11 +42,30 @@ public class GameWindow extends JFrame{
 		this.setVisible(true);
 	}
 	
+	private void setupMainMenu(){
+		MainMenu mainMenu = new MainMenu(this);
+		current = mainMenu;
+		this.add(mainMenu, BorderLayout.CENTER);
+	}
+	
+	public void newWorldScene(World world) {
+		WorldPanel gameframe = new WorldPanel(this);
+		WorldController wc = new WorldController(world,world.getPlayers()[0],gameframe);
+		gameframe.setController(wc);
+		gameframe.setEnabled(true);
+		this.remove(current);
+		this.current = gameframe;
+		this.add(current, BorderLayout.CENTER);
+		this.revalidate();
+	}
+	
 	public static void main(String[] args){
 		new GameWindow();
 	}
 	
-	private WorldController makeController(GameFrame gameframe){
+	
+	
+	private WorldController makeController(WorldPanel gameframe){
 		/*Loading items*/
 		Buff[] buffsAmulet = new Buff[]{ Buff.newTempBuff(Stat.DAMAGE,5) };
 		PassiveItem amulet = new PassiveItem("amulet", "amulet",
@@ -115,6 +136,5 @@ public class GameWindow extends JFrame{
 
 		return new WorldController(w,p,gameframe);
 	}
-	
-	
+
 }

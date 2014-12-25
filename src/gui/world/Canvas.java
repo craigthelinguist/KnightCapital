@@ -20,9 +20,9 @@ import controllers.WorldController;
 public class Canvas extends JPanel{
 
 	private WorldController controller;
-	private GameFrame main;
+	private WorldPanel main;
 			
-	public Canvas(GameFrame gameframe){
+	public Canvas(WorldPanel gameframe){
 		this.main = gameframe;
 	}
 	

@@ -15,7 +15,7 @@ import game.units.stats.UnitStats;
 import gui.reusable.CustomButton;
 import gui.reusable.ItemPanel;
 import gui.reusable.PartyPanel;
-import gui.world.GameFrame;
+import gui.world.WorldPanel;
 
 import java.awt.Color;
 import java.awt.Dimension;

@@ -16,7 +16,7 @@ import player.Player;
 import world.tiles.Tile;
 import controllers.WorldController;
 
-public class GameFrame extends JPanel{
+public class WorldPanel extends JPanel{
 	
 	/**
 	 * 
@@ -35,7 +35,7 @@ public class GameFrame extends JPanel{
 	private WorldController controller;
 	private GameWindow window;
 	
-	public GameFrame(GameWindow window){
+	public WorldPanel(GameWindow window){
 		this.setEnabled(false);
 		
 		this.window = window;

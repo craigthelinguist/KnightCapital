@@ -13,13 +13,13 @@ import world.tiles.Tile;
 public class GamePanel extends JPanel {
 
 	// main
-	private GameFrame main;
+	private WorldPanel main;
 	
 	// components
 	private InfoPanel info;
 	// minimap
 	
-	public GamePanel(GameFrame gameframe){
+	public GamePanel(WorldPanel gameframe){
 		main = gameframe;
 		this.setPreferredSize(new Dimension(main.getWidth(), 200));
 		this.info = new InfoPanel(main);

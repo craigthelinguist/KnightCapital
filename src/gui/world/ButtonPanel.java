@@ -4,9 +4,9 @@ import javax.swing.JPanel;
 
 public class ButtonPanel extends JPanel {
 
-	private GameFrame main;
+	private WorldPanel main;
 	
-	public ButtonPanel(GameFrame gameframe){
+	public ButtonPanel(WorldPanel gameframe){
 		main = gameframe;
 	}
 	
