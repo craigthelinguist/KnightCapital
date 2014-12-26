@@ -246,12 +246,13 @@ public class WorldController implements Serializable{
 	 * @param button: the button they clicked.
 	 */
 	public void buttonPressed(String button){
-		if (button.equals("EndTurn")){
+		if (button.equals("End Turn")){
 			world.endTurn();
 			deselect();
 			gui.updateInfo(null);
-			gui.redraw();
+			gui.updateDay(world.getDay());
 			gui.makeGameDialog("Day " + world.getDay());
+			gui.redraw();
 		}
 	}
 

@@ -18,9 +18,7 @@ import controllers.WorldController;
 
 public class WorldPanel extends JPanel{
 	
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 	// state
 	private boolean closeDialogEnabled = false;
@@ -155,6 +153,10 @@ public class WorldPanel extends JPanel{
 		canvas.repaint();
 		// TODO Auto-generated method stub
 		
+	}
+
+	public void updateDay(int day) {
+		menuPanel.updateDay(day);
 	}
 	
 }

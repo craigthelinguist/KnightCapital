@@ -12,7 +12,7 @@ import game.units.stats.AttackType;
 import game.units.stats.HeroStats;
 import game.units.stats.Stat;
 import game.units.stats.UnitStats;
-import gui.MainMenu.MainMenu;
+import gui.main.MainMenu;
 import gui.world.WorldPanel;
 
 import javax.swing.JFrame;
@@ -26,14 +26,12 @@ import world.icons.Party;
 import controllers.WorldController;
 
 public class GameWindow extends JFrame{
-	
-	private JPanel current;
-	
+		
 	public GameWindow(){
 		this.setExtendedState(this.MAXIMIZED_BOTH);
 		this.setUndecorated(true); //true means borderless window
 	
-		setupMainMenu();
+		newMainMenuScene();
 		
 		// finish up
 		this.setResizable(true);
@@ -42,29 +40,47 @@ public class GameWindow extends JFrame{
 		this.setVisible(true);
 	}
 	
-	private void setupMainMenu(){
-		MainMenu mainMenu = new MainMenu(this);
-		current = mainMenu;
-		this.add(mainMenu, BorderLayout.CENTER);
+	/**
+	 * Change the current scene to the specified one.
+	 * @param newPanel: the scene to display.
+	 */
+	private void changePanel(JPanel newPanel){
+		getContentPane().removeAll();
+		getContentPane().add(newPanel, BorderLayout.CENTER);
+		getContentPane().doLayout();
+		revalidate();
+		update(getGraphics());
 	}
 	
+	/**
+	 * Create a new scene for the Main Menu and display it on this GameWindow.
+	 */
+	public void newMainMenuScene(){
+		MainMenu mainMenu = new MainMenu(this);
+		changePanel(mainMenu);
+	}
+	
+	/**
+	 * Create a new scene for the specified World and display it on this GameWindow.
+	 * @param world: world to display.
+	 */
 	public void newWorldScene(World world) {
 		WorldPanel gameframe = new WorldPanel(this);
 		WorldController wc = new WorldController(world,world.getPlayers()[0],gameframe);
 		gameframe.setController(wc);
+		changePanel(gameframe);
 		gameframe.setEnabled(true);
-		this.remove(current);
-		this.current = gameframe;
-		this.add(current, BorderLayout.CENTER);
-		this.revalidate();
 	}
 	
 	public static void main(String[] args){
 		new GameWindow();
 	}
 	
-	
-	
+	/**
+	 * Test method. Create a custom world and return a WorldController for it.
+	 * @param gameframe: the view to attach controller to.
+	 * @return WorldController
+	 */
 	private WorldController makeController(WorldPanel gameframe){
 		/*Loading items*/
 		Buff[] buffsAmulet = new Buff[]{ Buff.newTempBuff(Stat.DAMAGE,5) };

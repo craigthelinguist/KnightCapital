@@ -1,4 +1,4 @@
-package gui.MainMenu;
+package gui.main;
 
 import gui.reusable.CustomButton;
 

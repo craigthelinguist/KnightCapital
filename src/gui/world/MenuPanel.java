@@ -33,6 +33,7 @@ public class MenuPanel extends JPanel {
 		JButton buttonChatLog = chatButton();
 		JButton buttonObjectives = objectivesButton();
 		JButton buttonPlayers = playersButton();
+		JButton buttonEndTurn = endTurnButton();
 		this.labelDay = dayLabel(1);
 		this.labelGold = goldLabel(100);
 		
@@ -42,6 +43,7 @@ public class MenuPanel extends JPanel {
 		this.add(buttonChatLog);
 		this.add(buttonObjectives);
 		this.add(buttonPlayers);
+		this.add(buttonEndTurn);
 		this.add(labelDay);
 		this.add(labelGold);
 		
@@ -106,6 +108,21 @@ public class MenuPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				
+			}
+		});
+		return button;
+	}
+
+	/**
+	 * Create and return a button. When you click the button it ends the player's turn.
+	 * @return JButton
+	 */
+	private JButton endTurnButton(){
+		JButton button = new JButton("End Turn");
+		button.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent arg0){
+				main.buttonPressed("End Turn");
 			}
 		});
 		return button;
