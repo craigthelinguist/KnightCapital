@@ -1,5 +1,6 @@
 package gui.world;
 
+import gui.escape.EscapeDialog;
 import gui.world.Canvas;
 import gui.world.GameDialog;
 
@@ -8,6 +9,7 @@ import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
 import java.awt.event.KeyEvent;
 
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -18,11 +20,8 @@ import controllers.WorldController;
 
 public class WorldPanel extends JPanel{
 	
-	
-	private static final long serialVersionUID = 1L;
-	// state
-	private boolean closeDialogEnabled = false;
-	private boolean active = true;
+	// current escape dialog
+	private JDialog currentDialog = null;
 	
 	// components
 	private Canvas canvas;
@@ -75,22 +74,6 @@ public class WorldPanel extends JPanel{
 	}
 
 	/**
-	 * Enable close dialog. While close dialog is enabled, the only key events that should fire are those in the
-	 * close dialog.
-	 */
-	public void enableCloseDialog(){
-		this.closeDialogEnabled = true;
-	}
-	
-	/**
-	 * Disable close dialog. While close dialog is disabled, the only key events that should fire are those
-	 * in MainFrame.
-	 */
-	public void disableCloseDialog(){
-		this.closeDialogEnabled = false;
-	}
-
-	/**
 	 * Update InfoPanel to display information about the specified tile and its contents.
 	 * @param tile: whose info you'll display
 	 */
@@ -103,26 +86,53 @@ public class WorldPanel extends JPanel{
 	 * @param button: name of the button event that fired
 	 */
 	protected void buttonPressed(String button) {
-		if (closeDialogEnabled) return;
+		if (currentDialog != null) return;
 		controller.buttonPressed(button);
 	}
-	
 
 	/**
 	 * Create a new game dialog attached to this frame.
 	 * @param msg: the message to display.
 	 */
-	public void makeGameDialog(String msg) {
-		new GameDialog(this.window,msg);
+	public void startGameDialog(String msg) {
+		new GameDialog(this,msg);
+	}
+
+	/**
+	 * Start a new EscapeDialog.
+	 */
+	public void startEscapeDialog(){
+		new EscapeDialog(this);
 	}
 	
+	/**
+	 * End the current EscapeDialog.
+	 */
+	public void endCurrentDialog(){
+		this.currentDialog.dispose();
+		this.currentDialog = null;
+	}
+	
+	/**
+	 * Set the current dialog of this WorldPanel. This should be done by the Dialog itself when the
+	 * it gets constructed.
+	 * @param d: the dialog
+	 */
+	public void setCurrentDialog(JDialog d){
+		this.currentDialog = d;
+	}
+	
+	/**
+	 * Get the window that this WorldPanel is attached to.
+	 * @return GameWindow, a subclass of JFrame.
+	 */
 	public JFrame getWindow(){
 		return this.window;
 	}
 
 	/**
 	 * Return the player to whom this view belongs.
-	 * @return Player.
+	 * @return Player
 	 */
 	public Player getPlayer(){
 		return controller.getPlayer();
@@ -130,33 +140,48 @@ public class WorldPanel extends JPanel{
 		
 	private class WorldKeyDispatcher implements KeyEventDispatcher {
 		@Override
-		public boolean dispatchKeyEvent(KeyEvent e) {
-
-			System.out.println("key press");
-
-
-			if (closeDialogEnabled || !active){
-				return false;
+		public boolean dispatchKeyEvent(KeyEvent ke) {
+			
+			// only respond to key presses
+			if (ke.getID() != KeyEvent.KEY_PRESSED) return false;
+			
+			// if a dialog is up and you upsh escape, kill the dialog
+			int code = ke.getKeyCode();
+			if (currentDialog != null){
+				if (code == KeyEvent.VK_ESCAPE){
+					currentDialog.dispose();
+					currentDialog = null;
+					return false;
+				}
 			}
-
-
-			if (e.getID() == KeyEvent.KEY_PRESSED){
-				controller.keyPressed(e);
-			}
-
+			
+			// otherwise pass on event to controller.
+			controller.keyPressed(ke);
 			return false;
 		}
 	}
 
-
+	/**
+	 * Redraw the canvas.
+	 */
 	public void redraw() {
 		canvas.repaint();
-		// TODO Auto-generated method stub
-		
 	}
 
+	/**
+	 * Update the day being displayed in the menuPanel.
+	 * @param day: new day to display.
+	 */
 	public void updateDay(int day) {
 		menuPanel.updateDay(day);
+	}
+	
+	/**
+	 * Update the gold being displayed in the menuPanel.
+	 * @param gold: gold to be displayed.
+	 */
+	public void updateGold(int gold){
+		menuPanel.updateGold(gold);
 	}
 	
 }

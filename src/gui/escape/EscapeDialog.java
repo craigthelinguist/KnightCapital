@@ -22,8 +22,8 @@ public class EscapeDialog extends JDialog {
 	
 	public EscapeDialog(WorldPanel gameframe){
 		super(gameframe.getWindow(), true);
+		gameframe.setCurrentDialog(this);
 		main = gameframe;
-		gameframe.enableCloseDialog();
 		setupContents();
 		this.setUndecorated(true);
 		this.setLocationRelativeTo(gameframe);
@@ -71,6 +71,7 @@ public class EscapeDialog extends JDialog {
 		vertical.addComponent(buttonLoad);
 		vertical.addComponent(buttonEndScenario);
 		vertical.addComponent(buttonQuitGame);
+		
 	}
 	
 	/**
@@ -83,7 +84,7 @@ public class EscapeDialog extends JDialog {
 		button.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				EscapeDialog.this.dispose();
+				main.endCurrentDialog();
 			}
 		});
 		return button;

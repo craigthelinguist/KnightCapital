@@ -60,7 +60,7 @@ public class MenuPanel extends JPanel {
 		button.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				new EscapeDialog(main);
+				main.startEscapeDialog();
 			}
 		});
 		return button;

@@ -27,8 +27,12 @@ import tools.ImageLoader;
 
 public class GameDialog extends JDialog{
 
-	public GameDialog(JFrame main, String message){
-		super(main,true); // true arg makes this Dialog the focus
+	private WorldPanel main;
+	
+	public GameDialog(WorldPanel worldPanel, String message){
+		super(worldPanel.getWindow(),true); // true arg makes this Dialog the focus
+		main = worldPanel;
+		worldPanel.setCurrentDialog(this);
 		GameDialog gameDialog = this;
 		gameDialog.setLayout(new BorderLayout());
 		gameDialog.setUndecorated(true); //true means borderless window
@@ -45,7 +49,7 @@ public class GameDialog extends JDialog{
 		contentPane.setBackground(Color.BLACK);
 		
 		gameDialog.setSize(300,250);
-		gameDialog.setLocationRelativeTo(main);
+		gameDialog.setLocationRelativeTo(worldPanel);
 		gameDialog.setResizable(false);
 		gameDialog.setVisible(true);
 	}
@@ -98,27 +102,12 @@ public class GameDialog extends JDialog{
 		button.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e){
-				GameDialog.this.dispose();
+				main.endCurrentDialog();
 			}
 		});
 		
 		return button;
 		
 	}
-	
-	/**
-	 * Test method for the dialog
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		JFrame frame = new JFrame();
-		frame.setSize(400,400);
-		frame.pack();
-		frame.setVisible(true);
-		new GameDialog(frame, "hello world. How are yuo? this is my test for a raelly long string. FTP");
-		frame.dispose();
-		System.exit(0);
-	}
-
 	
 }

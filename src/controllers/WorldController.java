@@ -12,6 +12,7 @@ import game.units.stats.AttackType;
 import game.units.stats.HeroStats;
 import game.units.stats.Stat;
 import game.units.stats.UnitStats;
+import gui.escape.EscapeDialog;
 import gui.world.GameDialog;
 import gui.world.WorldPanel;
 
@@ -91,6 +92,8 @@ public class WorldController implements Serializable{
 		player = p;
 		camera = WorldRenderer.getCentreOfWorld(w);
 		gui = gameframe;
+		gui.updateDay(w.getDay());
+		gui.updateGold(p.getGold());
 		selected = null;
 		highlightedTiles = new HashSet<>();
 	}
@@ -130,8 +133,7 @@ public class WorldController implements Serializable{
 			gui.redraw();
 		}
 		else if(code == KeyEvent.VK_ESCAPE){
-			// TODO
-			//new EscapeDialog(gui,this);
+			gui.startEscapeDialog();
 	    }
 
 
@@ -211,7 +213,7 @@ public class WorldController implements Serializable{
 					Party party = (Party)occupant;
 					if (party.hasFullInventory() && clickedTile.occupant() instanceof ItemIcon
 							&& clickedTile.canStandOn(party)){
-						new GameDialog(gui.getWindow(),"Inventory full! You cannot pick up more items!");
+						gui.startGameDialog("Inventory full! You cannot pick up more items!");
 					}
 				}
 			}
@@ -251,7 +253,8 @@ public class WorldController implements Serializable{
 			deselect();
 			gui.updateInfo(null);
 			gui.updateDay(world.getDay());
-			gui.makeGameDialog("Day " + world.getDay());
+			gui.updateGold(player.getGold());
+			gui.startGameDialog("Day " + world.getDay());
 			gui.redraw();
 		}
 	}
@@ -374,6 +377,5 @@ public class WorldController implements Serializable{
 	public Tile getSelectedTile(){
 		return world.getTile(selected);
 	}
+
 }
-
-
