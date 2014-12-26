@@ -10,5 +10,5 @@
 * [World map](http://i.imgur.com/p993GaB.png)
 * [Party screen](http://i.imgur.com/p993GaB.png)
 
-##Inspriation
+##Inspiration
 * [Knight Capital Playlist](https://www.youtube.com/playlist?list=PLaa73SKaPheGWTmF8CjEsOCMg5xwLHuUr)
