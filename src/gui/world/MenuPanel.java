@@ -48,6 +48,7 @@ public class MenuPanel extends JPanel {
 		this.add(labelGold);
 		
 		// formatting
+		this.setOpaque(false);
 		this.setVisible(true);
 	}
 

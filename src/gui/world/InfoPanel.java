@@ -6,10 +6,12 @@ import game.units.stats.AttackType;
 import game.units.stats.HeroStats;
 import game.units.stats.Stat;
 import gui.party.PartyDialog;
+import gui.reusable.DeadListener;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
@@ -19,13 +21,16 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
 
+import javax.swing.BoxLayout;
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 
 import player.Player;
 import tools.Constants;
@@ -54,7 +59,7 @@ public class InfoPanel extends JPanel{
 	private final Dimension PORTRAIT_BOX_SIZE = new Dimension(PORTRAIT_SIZE.width+20,PORTRAIT_SIZE.height);
 	
 	// bg image of info panel
-	private BufferedImage backgroundImage;
+	private BufferedImage background;
 
 	private Party selectedParty = null;
 	private Tile lastSelectedTile = null;
@@ -62,164 +67,110 @@ public class InfoPanel extends JPanel{
 	// contents of the info panel
 	private ImageIcon iconPortrait = new ImageIcon();
 	private JLabel labelPortrait = new JLabel(iconPortrait);
-	private JLabel labelTitle = new JLabel();
-	private JLabel labelDescription = new JLabel();
+	private JLabel title = new JLabel();
+	private JLabel subtitle = new JLabel();
+	private JLabel description = new JLabel();
+	
+	private static final int TEXT_PANEL_WD = 270;
+	
 
 	private PortraitListener portraitListener = new PortraitListener();
 	
 	// GameFrame to which this info panel belongs
 	private WorldPanel gameFrame;
 
-	public InfoPanel(WorldPanel GameFrame) {
+	public InfoPanel(WorldPanel GameFrame, BufferedImage background) {
+
 		
 		// set fields, parameters
 		this.gameFrame = GameFrame;
-		this.setPreferredSize(new Dimension(375,200));
-		this.setBackground(Color.BLACK);
+		this.background = background;
 		
-		// panel that displays the contents of this InfoPanel
-		JPanel panel = this.setupContents();
-	
-		// a wrapper for keeping the panel centred vertically
-		this.setLayout(new GridBagLayout());
-		this.add(panel, new GridBagConstraints());
+		// make components
+		JPanel portrait = this.portraitPanel();
+		JPanel buffer = this.bufferPanel();
+		JPanel text = this.textPanel();
 		
-		// mouse listener for the portrait
-		this.labelPortrait.addMouseListener(portraitListener);
+		// borders, layout, formatting
+		this.setBackground(Color.ORANGE);
+		this.setOpaque(false);
+		this.setLayout(new FlowLayout(FlowLayout.LEADING,0,0));
+		this.setBorder(new EmptyBorder(10,10,25,25));
 		
-	}
-	
-	/**
-	 * PortraitListener responds to mouse events that involve the portrait in the InfoPanel. If you hover over
-	 * a portrait it should lighten up, and if you mouse off the portrait it will go back to normal colour.
-	 * If you click on a portrait it should take you to a new PartyDialog.
-	 * @author craigthelinguist
-	 */
-	private class PortraitListener implements MouseListener{
-
-		private boolean active = false;
+		// add components
+		this.add(portrait);
+		this.add(buffer);
+		this.add(text);
 		
-		@Override
-		public void mouseClicked(MouseEvent arg0) {
-			if (!active) return;
-			InfoPanel.this.displayPartyDialog(selectedParty);
-		}
-
-		@Override
-		public void mouseEntered(MouseEvent arg0) {
-			if (!active) return;
-			System.out.println("We in");
-			BufferedImage currentImage = (BufferedImage) InfoPanel.this.iconPortrait.getImage();
-			BufferedImage lightened = ImageManipulation.lighten(currentImage, 55);
-			updatePortrait(lightened);
-			InfoPanel.this.repaint();
-		}
-
-		@Override
-		public void mouseExited(MouseEvent arg0) {
-			if (!active) return;
-			System.out.println("We out");
-			Party party = InfoPanel.this.selectedParty;
-			updatePortrait(party.getPortrait());
-			InfoPanel.this.repaint();
-		}
-
-		@Override
-		public void mousePressed(MouseEvent arg0) {}
-
-		@Override
-		public void mouseReleased(MouseEvent arg0) {}
-		
-		/**
-		 * Enable the PortraitListener. It will now respond to events.
-		 */
-		public void enable(){
-			this.active = true;
-		}
-		
-		/**
-		 * Disable the PortraitListener. It will no longer respond to events.
-		 */
-		public void disable(){
-			this.active = false;
-		}
-		
-		/**
-		 * Check whether this PortraitListener is currently responding to events.
-		 * @return boolean
-		 */
-		public boolean isActive(){
-			return active;
-		}
+		// add listeners
+		this.addMouseListener(DeadListener.get());
+		this.addMouseMotionListener(DeadListener.get());
 		
 	}
 	
-	/**
-	 * Create and return the JPanel that contains the contents of the InfoPanel.
-	 * @return JPanel
-	 */
-	private JPanel setupContents(){
-
-		// set up panel
+	@Override
+	protected void paintComponent(Graphics g){
+		g.drawImage(this.background, 0,0, getWidth(), getHeight(), this);
+	}
+	
+	private JPanel portraitPanel(){
+		this.labelPortrait = new JLabel();
+		labelPortrait.setPreferredSize(new Dimension(66,100));
 		JPanel panel = new JPanel();
+		panel.setLayout(new BorderLayout());
 		panel.setBackground(Color.BLACK);
-
-		// the portrait
-		labelPortrait.setPreferredSize(PORTRAIT_BOX_SIZE);
-		labelPortrait.setMinimumSize(PORTRAIT_BOX_SIZE);
-		
-		// text containing moves left, health, etc.
-		labelDescription.setPreferredSize(new Dimension(200,150));
-		labelDescription.setFont(new Font("Franklin Gothic Medium", Font.PLAIN, 16));
-
-		// text containing name/title
-		labelTitle.setHorizontalAlignment(SwingConstants.RIGHT);
-		labelTitle.setPreferredSize(new Dimension(200,40));
-		labelTitle.setMaximumSize(new Dimension(200,40));
-		labelTitle.setFont(new Font("Franklin Gothic Medium", Font.PLAIN, 20));
-
-		// layout set up
-		GroupLayout layout = new GroupLayout(panel);
-		panel.setLayout(layout);
-		GroupLayout.SequentialGroup horizontal = layout.createSequentialGroup();
-		GroupLayout.SequentialGroup vertical = layout.createSequentialGroup();
-		layout.setHorizontalGroup(horizontal);
-		layout.setVerticalGroup(vertical);
-		layout.setAutoCreateContainerGaps(true);
-		layout.setAutoCreateGaps(true);
-		
-		// horizontal
-		horizontal
-			.addComponent(labelPortrait)
-			.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-				.addComponent(labelDescription)
-				.addComponent(labelTitle)
-			)
-		;
-		
-		// vertical
-		vertical
-			.addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
-				.addComponent(labelPortrait)
-				.addGroup(layout.createSequentialGroup()
-					.addComponent(labelDescription)
-					.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING))
-						.addComponent(labelTitle)
-				)
-			)
-		;
-		
+		panel.addMouseListener(new PortraitListener());
+		panel.add(labelPortrait, BorderLayout.CENTER);
 		return panel;
 	}
 
-	@Override
-	protected void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		// paint the background image and scale it to fill the entire space
-		g.drawImage(backgroundImage, 0, 0, 375, 200, this);
-		labelPortrait.paintComponents(g);
+	private JPanel bufferPanel(){
+		JPanel buffer = new JPanel();
+		buffer.setPreferredSize(new Dimension(25,0));
+		return buffer;
+	}
+	
+	private JPanel textPanel(){
+		JPanel panel = new JPanel();
+		panel.setPreferredSize(new Dimension(TEXT_PANEL_WD,150));
+		panel.setBackground(Color.BLACK);
+		
+		panel.setBorder(new EmptyBorder(10,15,10,10));
+		
+		this.title = new JLabel();
+		title.setPreferredSize(new Dimension(TEXT_PANEL_WD,0));
+		title.setFont(new Font("Franklin Gothic Medium", Font.PLAIN, 20));
+		title.setBackground(Color.YELLOW);
+		
+		this.subtitle = new JLabel();
+		subtitle.setPreferredSize(new Dimension(TEXT_PANEL_WD,0));
+		subtitle.setFont(new Font("Franklin Gothic Medium", Font.PLAIN, 17));
+		title.setBackground(Color.DARK_GRAY);
+		
+		this.description = new JLabel();
+		description.setPreferredSize(new Dimension(TEXT_PANEL_WD,0));
+		description.setFont(new Font("Franklin Gothic Medium", Font.PLAIN, 15));
+		title.setBackground(Color.CYAN);
+		
+		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+		panel.add(title);
+		panel.add(subtitle);
+		panel.add(description);
+	
+		return panel;
 	}
 
+	/**
+	 * Update the ImageIcon to display the specified image. Update labelPortrait to display
+	 * the newly-updated ImageIcon.
+	 * @param img: the new image to be displayed
+	 */
+	private void updatePortrait(BufferedImage img){
+		iconPortrait.setImage(img);
+		labelPortrait.setIcon(iconPortrait);
+		labelPortrait.setHorizontalAlignment(SwingConstants.LEFT);
+	}
+	
 	/**
 	 * Update the information being displayed in this panel to show whatever is on the given tile.
 	 * @param tile: tile whose info you'll display.
@@ -241,15 +192,12 @@ public class InfoPanel extends JPanel{
 		this.lastSelectedTile = tile;
 		this.resetInfo();
 		
-		// city tile selected, draw some info about the city
+		// city tile selected, display info about the city
 		if (tile instanceof CityTile){
 			City city = ((CityTile)tile).getCity();
 			updatePortrait(city.getPortrait());
-			String html = "<html><body style='width: 200px'>";
-			html += this.htmlForName(city.getName());
-			html += "</html>";
-			labelDescription.setText(html);
-			updateTitle(city.getOwner().getName(), Player.PLAYER_COLOR_HEX.get(city.getOwner().getSlot()));
+			updateTitle(city.getName());
+			updateSubtitle(city.getOwner().getName(), Player.PLAYER_COLOR_HEX.get(city.getOwner().getSlot()));
 			return;
 		}
 		
@@ -258,10 +206,10 @@ public class InfoPanel extends JPanel{
 		// empty tile
 		if (occupant == null){
 			updatePortrait(tile.getPortrait());
-			String html = "<html><body style='width: 200px'>";
+			String html = "<html><body style='width: 200px'><br/>";
 			html += this.htmlForName("Grasslands");
 			html += "</html>";
-			labelDescription.setText(html);
+			subtitle.setText(html);
 			return;
 		}
 		
@@ -269,15 +217,16 @@ public class InfoPanel extends JPanel{
 		if (occupant instanceof Party){
 			Party party = (Party) occupant;
 			this.updatePortrait(party.getPortrait());
-			String html = "<html><body style='width: 200px'>";
-			html += this.htmlForName(party.getHero().getName());
+			String html = "<html><body style='width: 200px'><br/>";
 			if (gameFrame == null || party.ownedBy(gameFrame.getPlayer())){
 				html += this.htmlForMovesLeft(party);
 				html += this.htmlForHealthiness(party);
 			}
 			html += "</html>";
-			labelDescription.setText(html);
-			updateTitle(party.getOwner().getName(), Player.PLAYER_COLOR_HEX.get(party.getOwner().getSlot()));
+			description.setText(html);
+
+			updateSubtitle(party.getOwner().getName(),Player.PLAYER_COLOR_HEX.get(party.getOwner().getSlot()));
+			updateTitle(party.getHero().getName());
 			this.portraitListener.enable();
 			this.selectedParty = party;
 			return;
@@ -286,10 +235,7 @@ public class InfoPanel extends JPanel{
 		// item on tile
 		if (occupant instanceof ItemIcon){
 			ItemIcon itemIcon = (ItemIcon) occupant;
-			String html = "<html><body style='width: 200px'>";
-			html += this.htmlForName("Item");
-			html += "</html>";
-			labelDescription.setText(html);
+			updateSubtitle("Item", "white");
 			updatePortrait(itemIcon.getPortrait());
 			return;
 		}
@@ -297,10 +243,7 @@ public class InfoPanel extends JPanel{
 		// decor icon on tile
 		if (occupant instanceof DecorIcon){
 			DecorIcon decorIcon = (DecorIcon) occupant;
-			String html = "<html><body style='width: 200px'>";
-			html += this.htmlForName("Scenery");
-			html += "</html>";
-			labelDescription.setText(html);
+			updateSubtitle("Scenery", "white");
 			updatePortrait(decorIcon.getPortrait());
 			return;
 		}
@@ -319,20 +262,15 @@ public class InfoPanel extends JPanel{
 	}
 	
 	private void updateTitle(String titleText, String hexcolor){
-		String title = "<html><font color='"+hexcolor+"'>"+titleText+"</font></html>";
-		labelTitle.setText(title);
+		String html = "<html><font color='"+hexcolor+"'>"+titleText+"</font></html>";
+		title.setText(html);
 	}
 	
-	/**
-	 * Update the ImageIcon to display the specified image. Update labelPortrait to display
-	 * the newly-updated ImageIcon.
-	 * @param img: the new image to be displayed
-	 */
-	private void updatePortrait(BufferedImage img){
-		iconPortrait.setImage(img);
-		labelPortrait.setIcon(iconPortrait);
-		labelPortrait.setHorizontalAlignment(SwingConstants.LEFT);
+	private void updateSubtitle(String subtitleText, String hexcolor){
+		String html = "<html><font color='"+hexcolor+"'>"+subtitleText+"</font></html>";
+		subtitle.setText(html);
 	}
+	
 	
 	/**
 	 * Helper method.
@@ -408,39 +346,67 @@ public class InfoPanel extends JPanel{
 	 */
 	private void resetInfo() {
 		labelPortrait.setIcon(null);
-		labelTitle.setText("");
-		labelDescription.setText("");
+		title.setText("<html><br/></html>");
+		subtitle.setText("<html><br/></html>");
+		description.setText("");
 		portraitListener.disable();
 		selectedParty = null;
 	}
-	
-	public static void main(String[] args){
-		JFrame frame = new JFrame();
-		InfoPanel ip = new InfoPanel(null);
-		frame.add(ip);
-		frame.pack();
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setVisible(true);
+
+	/**
+	 * PortraitListener responds to mouse events that involve the portrait in the InfoPanel. If you hover over
+	 * a portrait it should lighten up, and if you mouse off the portrait it will go back to normal colour.
+	 * If you click on a portrait it should take you to a new PartyDialog.
+	 * @author craigthelinguist
+	 */
+	private class PortraitListener implements MouseListener{
+
+		private boolean active = false;
 		
-		Tile tile = TileFactory.newGrassTile(0, 0);
-		Player player = new Player("Defenders of Light", Player.GREEN);
-		HeroStats stats_hero = new HeroStats(60,10,80,0,6,10,AttackType.MELEE);
-		Hero hero = new Hero("Tom Kazansky","archer",player,stats_hero);
-		hero.damage(0);
-		Party party = Party.newEmptyParty(player);
-		party.addUnit(hero); 
-		party.addMovementPoints(5);
-		party.setOwner(player);
-		tile.setIcon(party);
+		@Override
+		public void mouseClicked(MouseEvent arg0) {
+			if (!active) return;
+			InfoPanel.this.displayPartyDialog(selectedParty);
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent arg0) {
+			if (!active) return;
+			BufferedImage currentImage = (BufferedImage) InfoPanel.this.iconPortrait.getImage();
+			BufferedImage lightened = ImageManipulation.lighten(currentImage, 55);
+			updatePortrait(lightened);
+			InfoPanel.this.repaint();
+		}
+
+		@Override
+		public void mouseExited(MouseEvent arg0) {
+			
+			if (!active) return;
+			Party party = InfoPanel.this.selectedParty;
+			updatePortrait(party.getPortrait());
+			InfoPanel.this.repaint();
+		}
+
+		public void mousePressed(MouseEvent arg0) {}
+
+		@Override
+		public void mouseReleased(MouseEvent arg0) {}
 		
-		Tile tile2 = TileFactory.newBushTile(0, 0);
-		Tile tile3 = TileFactory.newRockTile(0, 0);
-		Tile tile4 = TileFactory.newTreeTile(0, 0);
+		/**
+		 * Enable the PortraitListener. It will now respond to events.
+		 */
+		public void enable(){
+			this.active = true;
+		}
 		
-		ip.updateInfo(tile);
-		
-		ip.repaint();
+		/**
+		 * Disable the PortraitListener. It will no longer respond to events.
+		 */
+		public void disable(){
+			this.active = false;
+		}
 		
 	}
+	
 
 }
