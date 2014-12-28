@@ -6,6 +6,7 @@ import game.units.stats.AttackType;
 import game.units.stats.HeroStats;
 import game.units.stats.Stat;
 import gui.party.PartyDialog;
+import gui.reusable.DeadListener;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -87,6 +88,9 @@ public class InfoPanel extends JPanel{
 		// mouse listener for the portrait
 		this.labelPortrait.addMouseListener(portraitListener);
 		
+		this.addMouseListener(DeadListener.get());
+		this.addMouseMotionListener(DeadListener.get());
+		
 	}
 	
 	/**
@@ -108,7 +112,6 @@ public class InfoPanel extends JPanel{
 		@Override
 		public void mouseEntered(MouseEvent arg0) {
 			if (!active) return;
-			System.out.println("We in");
 			BufferedImage currentImage = (BufferedImage) InfoPanel.this.iconPortrait.getImage();
 			BufferedImage lightened = ImageManipulation.lighten(currentImage, 55);
 			updatePortrait(lightened);
@@ -118,7 +121,6 @@ public class InfoPanel extends JPanel{
 		@Override
 		public void mouseExited(MouseEvent arg0) {
 			if (!active) return;
-			System.out.println("We out");
 			Party party = InfoPanel.this.selectedParty;
 			updatePortrait(party.getPortrait());
 			InfoPanel.this.repaint();
@@ -142,14 +144,6 @@ public class InfoPanel extends JPanel{
 		 */
 		public void disable(){
 			this.active = false;
-		}
-		
-		/**
-		 * Check whether this PortraitListener is currently responding to events.
-		 * @return boolean
-		 */
-		public boolean isActive(){
-			return active;
 		}
 		
 	}

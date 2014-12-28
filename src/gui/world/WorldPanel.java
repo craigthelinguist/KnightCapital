@@ -57,7 +57,8 @@ public class WorldPanel extends JPanel{
 		manager.addKeyEventDispatcher(new WorldKeyDispatcher());
 		CanvasListener mouselistener = new CanvasListener();
 		this.addMouseListener(mouselistener);
-		this.addMouseMotionListener(mouselistener);	
+		this.addMouseMotionListener(mouselistener);
+		
 	}
 
 	/**
@@ -201,9 +202,14 @@ public class WorldPanel extends JPanel{
 		private boolean click = false;
 		private Point lastDrag = null;
 		
+		private boolean notOnChildComponent(MouseEvent e){
+			return e.getSource() != WorldPanel.this;
+		}
+		
 		@Override
 		public void mouseDragged(MouseEvent e) {
 			if (!click) return;
+			if (notOnChildComponent(e)) return;
 			if (lastDrag != null){
 				controller.mouseDragged(lastDrag, new Point(e.getX(), e.getY()));
 			}
@@ -212,6 +218,7 @@ public class WorldPanel extends JPanel{
 
 		@Override
 		public void mouseMoved(MouseEvent e) {
+			if (notOnChildComponent(e)) return;
 			if (controller != null){
 				controller.mouseMoved(e);
 			}
@@ -219,6 +226,7 @@ public class WorldPanel extends JPanel{
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
+			if (notOnChildComponent(e)) return;
 			controller.mousePressed(e);	
 		}
 
@@ -230,11 +238,13 @@ public class WorldPanel extends JPanel{
 
 		@Override
 		public void mousePressed(MouseEvent e) {
+			if (notOnChildComponent(e)) return;
 			this.click = true;
 		}
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
+			if (notOnChildComponent(e)) return;
 			this.click = false;
 			this.lastDrag = null;
 		}

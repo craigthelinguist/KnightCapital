@@ -1,5 +1,7 @@
 package gui.world;
 
+import gui.reusable.DeadListener;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -27,6 +29,8 @@ public class MiniMap extends JPanel {
 		interior.setPreferredSize(new Dimension(200, 200));
 		
 		this.add(interior, BorderLayout.CENTER);
+		this.addMouseMotionListener(DeadListener.get());
+		this.addMouseListener(DeadListener.get());
 	}
 	
 	@Override
