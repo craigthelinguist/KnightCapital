@@ -26,7 +26,6 @@ public class WorldPanel extends JPanel{
 	
 	// components
 	private Canvas canvas;
-	private GamePanel gamePanel;
 	private MenuPanel menuPanel;
 
 	// controller
@@ -44,8 +43,6 @@ public class WorldPanel extends JPanel{
 		// set up components
 		canvas = new Canvas(this);
 		this.add(canvas, BorderLayout.CENTER);
-		gamePanel = new GamePanel(this);
-		this.add(gamePanel, BorderLayout.SOUTH);
 		menuPanel = new MenuPanel(this);
 		this.add(menuPanel, BorderLayout.NORTH);
 		
@@ -79,7 +76,7 @@ public class WorldPanel extends JPanel{
 	 * @param tile: whose info you'll display
 	 */
 	public void updateInfo(Tile tile){
-		gamePanel.updateInfo(tile);
+		canvas.updateInfo(tile);;
 	}
 	
 	/**

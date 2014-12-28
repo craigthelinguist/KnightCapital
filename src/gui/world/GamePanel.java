@@ -23,7 +23,7 @@ public class GamePanel extends JPanel {
 	
 	public GamePanel(WorldPanel gameframe){
 		main = gameframe;
-		this.setPreferredSize(new Dimension(main.getWidth(), 235));
+		this.setPreferredSize(new Dimension(main.getWidth(), 200));
 		
 		
 		this.setBackground(Color.YELLOW);

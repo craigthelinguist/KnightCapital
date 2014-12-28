@@ -1,5 +1,6 @@
 package gui.world;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -11,6 +12,7 @@ import java.awt.event.MouseMotionListener;
 import javax.swing.JPanel;
 
 import renderer.WorldRenderer;
+import world.tiles.Tile;
 import controllers.WorldController;
 
 /**
@@ -21,9 +23,23 @@ public class Canvas extends JPanel{
 
 	private WorldController controller;
 	private WorldPanel main;
+	private GamePanel gamePanel;
 			
 	public Canvas(WorldPanel gameframe){
 		this.main = gameframe;
+		
+		this.setLayout(new BorderLayout());
+		this.gamePanel = new GamePanel(main);
+		this.add(gamePanel, BorderLayout.SOUTH);
+		
+	}
+	
+	/**
+	 * Update InfoPanel to display information about the specified tile and its contents.
+	 * @param tile: whose info you'll display
+	 */
+	public void updateInfo(Tile tile){
+		gamePanel.updateInfo(tile);
 	}
 	
 	/**
@@ -46,6 +62,7 @@ public class Canvas extends JPanel{
 		graphics.fillRect(0,0,getWidth(),getHeight());
 		Dimension resolution = this.getSize();
 		WorldRenderer.render(controller, graphics, resolution);
+		gamePanel.repaint();
 	}
 	
 	/**
