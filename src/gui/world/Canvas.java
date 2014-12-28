@@ -24,14 +24,35 @@ public class Canvas extends JPanel{
 	private WorldController controller;
 	private WorldPanel main;
 	private GamePanel gamePanel;
-			
+	private MenuPanel menuPanel;		
+	
 	public Canvas(WorldPanel gameframe){
 		this.main = gameframe;
 		
 		this.setLayout(new BorderLayout());
+		
 		this.gamePanel = new GamePanel(main);
 		this.add(gamePanel, BorderLayout.SOUTH);
 		
+		this.menuPanel = new MenuPanel(main);
+		this.add(menuPanel, BorderLayout.NORTH);
+		
+	}
+
+	/**
+	 * Update the day being displayed in the menuPanel.
+	 * @param day: new day to display.
+	 */
+	public void updateDay(int day) {
+		menuPanel.updateDay(day);
+	}
+	
+	/**
+	 * Update the gold being displayed in the menuPanel.
+	 * @param gold: gold to be displayed.
+	 */
+	public void updateGold(int gold){
+		menuPanel.updateGold(gold);
 	}
 	
 	/**

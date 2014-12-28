@@ -26,7 +26,6 @@ public class WorldPanel extends JPanel{
 	
 	// components
 	private Canvas canvas;
-	private MenuPanel menuPanel;
 
 	// controller
 	private WorldController controller;
@@ -43,8 +42,6 @@ public class WorldPanel extends JPanel{
 		// set up components
 		canvas = new Canvas(this);
 		this.add(canvas, BorderLayout.CENTER);
-		menuPanel = new MenuPanel(this);
-		this.add(menuPanel, BorderLayout.NORTH);
 		
 		// set up key dispatcher
 		KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
@@ -171,7 +168,7 @@ public class WorldPanel extends JPanel{
 	 * @param day: new day to display.
 	 */
 	public void updateDay(int day) {
-		menuPanel.updateDay(day);
+		canvas.updateDay(day);
 	}
 	
 	/**
@@ -179,7 +176,7 @@ public class WorldPanel extends JPanel{
 	 * @param gold: gold to be displayed.
 	 */
 	public void updateGold(int gold){
-		menuPanel.updateGold(gold);
+		canvas.updateGold(gold);
 	}
 	
 }
