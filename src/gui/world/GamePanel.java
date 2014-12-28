@@ -2,6 +2,8 @@ package gui.world;
 
 import gui.reusable.CustomButton;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 
@@ -17,13 +19,25 @@ public class GamePanel extends JPanel {
 	
 	// components
 	private InfoPanel info;
-	// minimap
+	private MiniMap minimap;
 	
 	public GamePanel(WorldPanel gameframe){
 		main = gameframe;
-		this.setPreferredSize(new Dimension(main.getWidth(), 200));
+		this.setPreferredSize(new Dimension(main.getWidth(), 235));
+		
+		
+		this.setBackground(Color.YELLOW);
+		this.setOpaque(false);
+		
+		this.setLayout(new BorderLayout());
+		
 		this.info = new InfoPanel(main);
-		this.add(info);
+		this.add(info, BorderLayout.LINE_END);
+		
+		this.minimap = new MiniMap(main);
+		this.add(minimap, BorderLayout.LINE_START);
+		
+		
 	}
 	
 	/**
