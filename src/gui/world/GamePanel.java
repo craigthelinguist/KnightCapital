@@ -23,7 +23,6 @@ public class GamePanel extends JPanel {
 	
 	public GamePanel(WorldPanel gameframe){
 		main = gameframe;
-		this.setPreferredSize(new Dimension(main.getWidth(), 200));
 		
 		
 		this.setBackground(Color.YELLOW);
@@ -31,8 +30,13 @@ public class GamePanel extends JPanel {
 		
 		this.setLayout(new BorderLayout());
 		
+		JPanel infoWrapper = new JPanel();
+		infoWrapper.setLayout(new BorderLayout());
+		infoWrapper.setOpaque(false);
 		this.info = new InfoPanel(main);
-		this.add(info, BorderLayout.LINE_END);
+		infoWrapper.add(info, BorderLayout.SOUTH);
+		this.add(infoWrapper, BorderLayout.LINE_END);
+		
 		
 		this.minimap = new MiniMap(main);
 		this.add(minimap, BorderLayout.LINE_START);

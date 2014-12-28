@@ -82,6 +82,12 @@ public class InfoPanel extends JPanel{
 		JPanel panel = this.setupContents();
 	
 		// a wrapper for keeping the panel centred vertically
+		
+		
+		//this.setLayout(new BorderLayout());
+		//this.add(panel, BorderLayout.CENTER)
+		
+		
 		this.setLayout(new GridBagLayout());
 		this.add(panel, new GridBagConstraints());
 		
@@ -408,33 +414,5 @@ public class InfoPanel extends JPanel{
 		selectedParty = null;
 	}
 	
-	public static void main(String[] args){
-		JFrame frame = new JFrame();
-		InfoPanel ip = new InfoPanel(null);
-		frame.add(ip);
-		frame.pack();
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setVisible(true);
-		
-		Tile tile = TileFactory.newGrassTile(0, 0);
-		Player player = new Player("Defenders of Light", Player.GREEN);
-		HeroStats stats_hero = new HeroStats(60,10,80,0,6,10,AttackType.MELEE);
-		Hero hero = new Hero("Tom Kazansky","archer",player,stats_hero);
-		hero.damage(0);
-		Party party = Party.newEmptyParty(player);
-		party.addUnit(hero); 
-		party.addMovementPoints(5);
-		party.setOwner(player);
-		tile.setIcon(party);
-		
-		Tile tile2 = TileFactory.newBushTile(0, 0);
-		Tile tile3 = TileFactory.newRockTile(0, 0);
-		Tile tile4 = TileFactory.newTreeTile(0, 0);
-		
-		ip.updateInfo(tile);
-		
-		ip.repaint();
-		
-	}
 
 }
