@@ -15,6 +15,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
 
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -23,6 +25,7 @@ import javax.swing.JPanel;
 import main.GameWindow;
 import player.Player;
 import renderer.WorldRenderer;
+import tools.ImageLoader;
 import world.tiles.Tile;
 import controllers.WorldController;
 
@@ -43,10 +46,15 @@ public class WorldPanel extends JPanel{
 		
 		this.window = window;
 		
+		final char s = File.separatorChar;
+		BufferedImage bi1 = ImageLoader.load("assets"+s+"hud_themes"+s+"minimap");
+		BufferedImage bi2 = ImageLoader.load("assets"+s+"hud_themes"+s+"infopanel");
+		InterfaceTheme theme = new InterfaceTheme(bi1, bi2);
+		
 		// set up components
 		this.setLayout(new BorderLayout());
 	
-		this.gamePanel = new GamePanel(this);
+		this.gamePanel = new GamePanel(this, theme);
 		this.add(gamePanel, BorderLayout.SOUTH);
 		
 		this.menuPanel = new MenuPanel(this);
@@ -159,16 +167,9 @@ public class WorldPanel extends JPanel{
 		graphics.fillRect(0,0,getWidth(),getHeight());
 		Dimension resolution = this.getSize();
 		WorldRenderer.render(controller, graphics, resolution);
-		gamePanel.repaint();
+		//gamePanel.repaint();
 	}
 	
-	/**
-	 * Redraw the canvas.
-	 */
-	public void redraw() {
-		this.repaint();
-	}
-
 	/**
 	 * Update the day being displayed in the menuPanel.
 	 * @param day: new day to display.
@@ -250,5 +251,6 @@ public class WorldPanel extends JPanel{
 		}
 		
 	}
+
 	
 }

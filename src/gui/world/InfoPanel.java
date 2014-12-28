@@ -21,6 +21,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
 
 import javax.swing.BoxLayout;
 import javax.swing.GroupLayout;
@@ -58,7 +59,7 @@ public class InfoPanel extends JPanel{
 	private final Dimension PORTRAIT_BOX_SIZE = new Dimension(PORTRAIT_SIZE.width+20,PORTRAIT_SIZE.height);
 	
 	// bg image of info panel
-	private BufferedImage backgroundImage;
+	private BufferedImage background;
 
 	private Party selectedParty = null;
 	private Tile lastSelectedTile = null;
@@ -78,10 +79,12 @@ public class InfoPanel extends JPanel{
 	// GameFrame to which this info panel belongs
 	private WorldPanel gameFrame;
 
-	public InfoPanel(WorldPanel GameFrame) {
+	public InfoPanel(WorldPanel GameFrame, BufferedImage background) {
+
 		
 		// set fields, parameters
 		this.gameFrame = GameFrame;
+		this.background = background;
 		
 		// make components
 		JPanel portrait = this.portraitPanel();
@@ -89,8 +92,8 @@ public class InfoPanel extends JPanel{
 		JPanel text = this.textPanel();
 		
 		// borders, layout, formatting
-		this.setBackground(Color.BLUE);
-		//this.setOpaque(false);
+		this.setBackground(Color.ORANGE);
+		this.setOpaque(false);
 		this.setLayout(new FlowLayout(FlowLayout.LEADING,0,0));
 		this.setBorder(new EmptyBorder(10,10,25,25));
 		
@@ -105,6 +108,10 @@ public class InfoPanel extends JPanel{
 		
 	}
 	
+	@Override
+	protected void paintComponent(Graphics g){
+		g.drawImage(this.background, 0,0, getWidth(), getHeight(), this);
+	}
 	
 	private JPanel portraitPanel(){
 		this.labelPortrait = new JLabel();
@@ -127,7 +134,6 @@ public class InfoPanel extends JPanel{
 		JPanel panel = new JPanel();
 		panel.setPreferredSize(new Dimension(TEXT_PANEL_WD,150));
 		panel.setBackground(Color.BLACK);
-		//panel.setBackground(Color.ORANGE);
 		
 		panel.setBorder(new EmptyBorder(10,15,10,10));
 		

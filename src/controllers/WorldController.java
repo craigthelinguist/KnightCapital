@@ -108,29 +108,29 @@ public class WorldController implements Serializable{
 		if (code == ROTATE_CW){
 			camera.rotateClockwise();
 			world.rotateOccupants(true);
-			gui.redraw();
+			gui.repaint();
 		}
 		else if (code == ROTATE_CCW){
 			camera.rotateCounterClockwise();
 			world.rotateOccupants(false);
-			gui.redraw();
+			gui.repaint();
 		}
 		else if (code == PAN_UP){
 			camera.panUp();
-			gui.redraw();
+			gui.repaint();
 		}
 		
 		else if (code == PAN_DOWN){
 			camera.panDown();
-			gui.redraw();
+			gui.repaint();
 		}
 		else if (code == PAN_RIGHT){
 			camera.panRight();
-			gui.redraw();
+			gui.repaint();
 		}
 		else if (code == PAN_LEFT){
 			camera.panLeft();
-			gui.redraw();
+			gui.repaint();
 		}
 		else if(code == KeyEvent.VK_ESCAPE){
 			gui.startEscapeDialog();
@@ -159,7 +159,7 @@ public class WorldController implements Serializable{
 		if (selected != null && leftClicked(me) && selectedTile == clickedTile){
 			deselect();
 			gui.updateInfo(null);
-			gui.redraw();
+			gui.repaint();
 			this.lastMouse = System.currentTimeMillis();
 		}
 
@@ -168,7 +168,7 @@ public class WorldController implements Serializable{
 			selected = ptCartesian;
 			highlightTiles(clickedTile);
 			gui.updateInfo(clickedTile);
-			gui.redraw();
+			gui.repaint();
 			this.lastMouse = System.currentTimeMillis();
 		}
 
@@ -202,7 +202,7 @@ public class WorldController implements Serializable{
 				selected = ptCartesian;
 				highlightTiles(clickedTile);
 				gui.updateInfo(clickedTile);
-				gui.redraw();
+				gui.repaint();
 				this.lastMouse = System.currentTimeMillis();
 			}
 
@@ -230,7 +230,7 @@ public class WorldController implements Serializable{
 		int x = point.x - lastDrag.x;
 		int y = point.y - lastDrag.y;
 		camera.pan(x,y);
-		gui.redraw();
+		gui.repaint();
 	}
 
 	/**
@@ -255,7 +255,7 @@ public class WorldController implements Serializable{
 			gui.updateDay(world.getDay());
 			gui.updateGold(player.getGold());
 			gui.startGameDialog("Day " + world.getDay());
-			gui.redraw();
+			gui.repaint();
 		}
 	}
 

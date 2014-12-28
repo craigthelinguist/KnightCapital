@@ -6,10 +6,14 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.File;
 
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
+import tools.ImageLoader;
 import world.tiles.Tile;
 
 public class GamePanel extends JPanel {
@@ -21,9 +25,8 @@ public class GamePanel extends JPanel {
 	private InfoPanel info;
 	private MiniMap minimap;
 	
-	public GamePanel(WorldPanel gameframe){
+	public GamePanel(WorldPanel gameframe, InterfaceTheme theme){
 		main = gameframe;
-		
 		
 		this.setBackground(Color.YELLOW);
 		this.setOpaque(false);
@@ -33,12 +36,13 @@ public class GamePanel extends JPanel {
 		JPanel infoWrapper = new JPanel();
 		infoWrapper.setLayout(new BorderLayout());
 		infoWrapper.setOpaque(false);
-		this.info = new InfoPanel(main);
+		
+		this.info = new InfoPanel(main, theme.getInfopanel());
 		infoWrapper.add(info, BorderLayout.SOUTH);
 		this.add(infoWrapper, BorderLayout.LINE_END);
 		
 		
-		this.minimap = new MiniMap(main);
+		this.minimap = new MiniMap(main, theme.getMinimap());
 		this.add(minimap, BorderLayout.LINE_START);
 		
 		
