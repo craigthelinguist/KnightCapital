@@ -11,6 +11,7 @@ import gui.reusable.DeadListener;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
@@ -27,6 +28,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 
 import player.Player;
 import tools.Constants;
@@ -75,25 +77,34 @@ public class InfoPanel extends JPanel{
 		
 		// set fields, parameters
 		this.gameFrame = GameFrame;
-		this.setPreferredSize(new Dimension(375,200));
-		this.setBackground(Color.BLACK);
 		
 		// panel that displays the contents of this InfoPanel
-		JPanel panel = this.setupContents();
-	
-		// a wrapper for keeping the panel centred vertically
 		
 		
-		//this.setLayout(new BorderLayout());
-		//this.add(panel, BorderLayout.CENTER)
+		JPanel portrait = new JPanel();
+		portrait.setPreferredSize(new Dimension(66,100));
+		portrait.setBackground(Color.MAGENTA);
+
 		
+		JPanel buffer = new JPanel();
+		buffer.setPreferredSize(new Dimension(25,0));
+		buffer.setBackground(Color.GREEN);
 		
-		this.setLayout(new GridBagLayout());
-		this.add(panel, new GridBagConstraints());
+		JPanel text = new JPanel();
+		text.setPreferredSize(new Dimension(200,150));
+		text.setBackground(Color.ORANGE);
 		
-		// mouse listener for the portrait
-		this.labelPortrait.addMouseListener(portraitListener);
+
+		this.setBackground(Color.BLUE);
+		//this.setOpaque(false);
+		this.setLayout(new FlowLayout(FlowLayout.LEADING,0,0));
+		this.setBorder(new EmptyBorder(10,10,25,25));
+		this.add(portrait);
+		this.add(buffer);
+		this.add(text);
 		
+
+		//this.labelPortrait.addMouseListener(portraitListener);
 		this.addMouseListener(DeadListener.get());
 		this.addMouseMotionListener(DeadListener.get());
 		
@@ -126,6 +137,7 @@ public class InfoPanel extends JPanel{
 
 		@Override
 		public void mouseExited(MouseEvent arg0) {
+			
 			if (!active) return;
 			Party party = InfoPanel.this.selectedParty;
 			updatePortrait(party.getPortrait());

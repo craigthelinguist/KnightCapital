@@ -6,7 +6,7 @@ import java.awt.event.MouseMotionListener;
 
 /**
  * A MouseListener and MouseMotionListener that doesn't do anything. Used in child components that should be inert
- * to events happening in parent components. It is flyweight; there is only one, static, immutable DeadListener object.
+ * to events happening in parent components. It is flyweight; there is one, static, immutable DeadListener object.
  * @author craigthelinguist
  *
  */
