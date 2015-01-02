@@ -49,18 +49,18 @@ import world.towns.City;
  * This panel holds all of the player's information such as stats, party  etc.
  //TODO JLabels to display player information
  *
- * @author Ewan Moshi
+ * @author Ewan Moshi, Aaron Craig
  *
  */
 public class InfoPanel extends JPanel{
 
 	// graphical constants
-	private final Dimension PORTRAIT_SIZE = Constants.PORTRAIT_DIMENSIONS;
-	private final Dimension PORTRAIT_BOX_SIZE = new Dimension(PORTRAIT_SIZE.width+20,PORTRAIT_SIZE.height);
-	
+	private static final int TEXT_PANEL_WD = 270;
+
 	// bg image of info panel
 	private BufferedImage background;
 
+	// info about current selection
 	private Party selectedParty = null;
 	private Tile lastSelectedTile = null;
 
@@ -71,9 +71,7 @@ public class InfoPanel extends JPanel{
 	private JLabel subtitle = new JLabel();
 	private JLabel description = new JLabel();
 	
-	private static final int TEXT_PANEL_WD = 270;
-	
-
+	// when you mouse over portrait and click on it this listener responds
 	private PortraitListener portraitListener;
 	
 	// GameFrame to which this info panel belongs
@@ -81,7 +79,6 @@ public class InfoPanel extends JPanel{
 
 	public InfoPanel(WorldPanel GameFrame, BufferedImage background) {
 
-		
 		// set fields, parameters
 		this.gameFrame = GameFrame;
 		this.background = background;
@@ -109,10 +106,18 @@ public class InfoPanel extends JPanel{
 	}
 	
 	@Override
-	protected void paintComponent(Graphics g){
+	public void paint(Graphics g){
+		// InfoPanel is responsible for drawing the border/background image. Therefore
+		// its children should be drawn first, and then the border image (so any fancy
+		// overlapping effects are not cut off)
+		this.paintChildren(g);
 		g.drawImage(this.background, 0,0, getWidth(), getHeight(), this);
 	}
 	
+	/**
+	 * Create and return a JPanel. The JPanel displays the portrait of the current selection.
+	 * @return JPanel
+	 */
 	private JPanel portraitPanel(){
 		this.labelPortrait = new JLabel();
 		labelPortrait.setPreferredSize(new Dimension(66,100));
@@ -125,18 +130,27 @@ public class InfoPanel extends JPanel{
 		return panel;
 	}
 
+	/**
+	 * Create and return a JPanel. The JPanel acts as padding between the textPanel and the
+	 * portraitPanel.
+	 * @return JPanel
+	 */
 	private JPanel bufferPanel(){
 		JPanel buffer = new JPanel();
 		buffer.setPreferredSize(new Dimension(25,0));
 		return buffer;
 	}
 	
+	/**
+	 * Create and return a JPanel. The JPanel displays text info about the current selection.
+	 * @return
+	 */
 	private JPanel textPanel(){
 		JPanel panel = new JPanel();
 		panel.setPreferredSize(new Dimension(TEXT_PANEL_WD,150));
 		panel.setBackground(Color.BLACK);
 		
-		panel.setBorder(new EmptyBorder(10,15,10,10));
+		panel.setBorder(new EmptyBorder(20,15,10,10));
 		
 		this.title = new JLabel();
 		title.setPreferredSize(new Dimension(TEXT_PANEL_WD,0));
