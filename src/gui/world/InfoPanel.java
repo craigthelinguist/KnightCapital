@@ -74,7 +74,7 @@ public class InfoPanel extends JPanel{
 	private static final int TEXT_PANEL_WD = 270;
 	
 
-	private PortraitListener portraitListener = new PortraitListener();
+	private PortraitListener portraitListener;
 	
 	// GameFrame to which this info panel belongs
 	private WorldPanel gameFrame;
@@ -119,7 +119,8 @@ public class InfoPanel extends JPanel{
 		JPanel panel = new JPanel();
 		panel.setLayout(new BorderLayout());
 		panel.setBackground(Color.BLACK);
-		panel.addMouseListener(new PortraitListener());
+		this.portraitListener = new PortraitListener();
+		panel.addMouseListener(this.portraitListener);
 		panel.add(labelPortrait, BorderLayout.CENTER);
 		return panel;
 	}
@@ -380,7 +381,6 @@ public class InfoPanel extends JPanel{
 
 		@Override
 		public void mouseExited(MouseEvent arg0) {
-			
 			if (!active) return;
 			Party party = InfoPanel.this.selectedParty;
 			updatePortrait(party.getPortrait());
