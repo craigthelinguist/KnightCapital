@@ -7,8 +7,8 @@
 * [Trello](https://trello.com/)
 
 ##Screenies
-* [World map](http://i.imgur.com/p993GaB.png)
-* [Party screen](http://i.imgur.com/p993GaB.png)
+* [World map](http://i.imgur.com/u0j14Xh.png)
+* [Party screen](http://i.imgur.com/vD0hfwl.png)
 
 ##Inspiration
 * [Knight Capital Playlist](https://www.youtube.com/playlist?list=PLaa73SKaPheGWTmF8CjEsOCMg5xwLHuUr)
