@@ -32,7 +32,6 @@ public class MiniMap extends JPanel {
 			protected void paintComponent(Graphics g){
 				g.setColor(Color.BLACK);
 				g.fillRect(0,0,getWidth(),getHeight());
-				MiniMap.this.paintComponent(g);
 			}
 		};
 		interior.setPreferredSize(new Dimension(200, 200));
@@ -43,8 +42,9 @@ public class MiniMap extends JPanel {
 	}
 	
 	@Override
-	protected void paintComponent(Graphics g){
-		g.drawImage(this.background, 0, 0, getWidth(), getHeight(), this);
+	public void paint(Graphics g){
+		this.paintChildren(g);
+		g.drawImage(this.background, 0,0, getWidth(), getHeight(), this);
 	}
 	
 }
