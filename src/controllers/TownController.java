@@ -10,7 +10,7 @@ import game.units.creatures.Unit;
 import game.units.stats.HeroStats;
 import game.units.stats.Stat;
 import game.units.stats.UnitStats;
-import gui.town.TownGui;
+import gui.town.TownPanel;
 
 import java.awt.Dimension;
 import java.awt.Point;
@@ -42,20 +42,16 @@ public class TownController{
 	protected Item[][] items;
 
 	// gui stuff
-	private TownGui gui;
-	private boolean active = true; //
-
-	// super
-	private WorldController worldController;
+	private TownPanel townPanel;
 
 	/**
 	 * Construct a new session in Town.
 	 * @param city: the city that this session is describing.
 	 * @param controller: the world session that created this session.
 	 */
-	public TownController(City city, WorldController controller){
+	public TownController(City city, TownPanel townPanel){
 		this.city = city;
-
+		this.townPanel = townPanel;
 
 		if (city.getGarrison() == null){
 			Party g = new Party(null,city.getOwner(),Party.newEmptyPartyArray());
@@ -66,8 +62,6 @@ public class TownController{
 			city.setVisitors(v);
 		}
 
-		this.gui = new TownGui(this);
-		this.worldController = controller;
 	}
 
 	/**
@@ -90,10 +84,13 @@ public class TownController{
 	 * Respond to a button press event from the gui.
 	 * @param text: name of the button pressed.
 	 */
-	public void buttonPressed(String text) {
+	public void buttonPressed(String button) {
 
-		text = text.toLowerCase();
+		button = button.toLowerCase();
+		if (button.equals("leave")) townPanel.endTownView();
 
+		
+		/*
 		// end the town session; reactivate world controller
 		if (text.equals("leave")){
 			gui.dispose();
@@ -101,6 +98,7 @@ public class TownController{
 			worldController.endTownView(exit);
 			active = false;
 		}
+		
 
 		// if there is a visiting party, eject them to the world map
 		else if(text.equals("exit city")) {
@@ -123,6 +121,8 @@ public class TownController{
 				this.gui.repaint();
 			}
 		}
+		
+		*/
 
 	}
 

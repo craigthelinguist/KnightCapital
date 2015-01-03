@@ -139,8 +139,15 @@ public class WorldController implements Serializable{
 
 	}
 
-
-
+	private boolean doubleClickedCity
+	(MouseEvent me, Tile selectedTile, Tile clickedTile){
+		return leftClicked(me) && selectedTile != null
+				&& clickedTile instanceof CityTile
+				&& selectedTile instanceof CityTile
+				&& doubleClicked()
+				&& ((CityTile)(clickedTile)).getCity().ownedBy(player);
+	}
+	
 	/**
 	 * Player has clicked on something. Perform any actions depending on the nature of their
 	 * click and update + redraw game-state if necessary.
@@ -155,8 +162,15 @@ public class WorldController implements Serializable{
 		Tile clickedTile = world.getTile(ptCartesian);
 		Tile selectedTile = world.getTile(selected);
 
+		// double clicked a city; enter town view
+		if (doubleClickedCity(me, selectedTile, clickedTile)){
+			CityTile c1 = (CityTile)clickedTile;
+			CityTile c2 = (CityTile)selectedTile;
+			if (c1.getCity() == c2.getCity()) gui.startTownView(c1.getCity());
+		}
+		
 		// left-clicked the selection; deselect
-		if (selected != null && leftClicked(me) && selectedTile == clickedTile){
+		else if (selected != null && leftClicked(me) && selectedTile == clickedTile){
 			deselect();
 			gui.updateInfo(null);
 			gui.repaint();

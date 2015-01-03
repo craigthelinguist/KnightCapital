@@ -1,6 +1,8 @@
 package main;
 
 import java.awt.BorderLayout;
+import java.awt.Graphics;
+import java.awt.image.BufferStrategy;
 
 import game.effects.Buff;
 import game.items.PassiveItem;
@@ -13,6 +15,7 @@ import game.units.stats.HeroStats;
 import game.units.stats.Stat;
 import game.units.stats.UnitStats;
 import gui.main.MainMenu;
+import gui.town.TownPanel;
 import gui.world.WorldPanel;
 
 import javax.swing.JFrame;
@@ -23,15 +26,27 @@ import storage.generators.TemporaryLoader;
 import world.World;
 import world.icons.ItemIcon;
 import world.icons.Party;
+import world.towns.City;
+import controllers.TownController;
 import controllers.WorldController;
 
 public class GameWindow extends JFrame{
-		
+	
+	private enum Mode{
+		MAIN_MENU, IN_GAME;
+	}
+	
+	private Mode mode;
+	
+	// current world controller
+	private WorldController currentWorld;
+	
 	public GameWindow(){
 		this.setExtendedState(this.MAXIMIZED_BOTH);
 		this.setUndecorated(true); //true means borderless window
 	
 		newMainMenuScene();
+		
 		
 		// finish up
 		this.setResizable(true);
@@ -58,6 +73,7 @@ public class GameWindow extends JFrame{
 	public void newMainMenuScene(){
 		MainMenu mainMenu = new MainMenu(this);
 		changePanel(mainMenu);
+		this.mode = Mode.MAIN_MENU;
 	}
 	
 	/**
@@ -65,11 +81,32 @@ public class GameWindow extends JFrame{
 	 * @param world: world to display.
 	 */
 	public void newWorldScene(World world) {
-		WorldPanel gameframe = new WorldPanel(this);
-		WorldController wc = new WorldController(world,world.getPlayers()[0],gameframe);
-		gameframe.setController(wc);
-		changePanel(gameframe);
-		gameframe.setEnabled(true);
+		if (this.currentWorld != null) new IllegalStateException("Creating new world scene but you already have one!");
+		WorldPanel worldPanel = new WorldPanel(this);
+		WorldController wc = new WorldController(world,world.getPlayers()[0],worldPanel);
+		worldPanel.setController(wc);
+		changePanel(worldPanel);
+		this.mode = Mode.IN_GAME;
+		this.currentWorld = wc;
+		worldPanel.setEnabled(true);
+	}
+	
+	public void switchToTownScene(City city){
+		if (this.currentWorld == null) new IllegalStateException("Switching world->town but there's no world controller!");
+		WorldPanel worldPanel = currentWorld.getGui();
+		worldPanel.setEnabled(false);
+		TownPanel townPanel = new TownPanel(this, city);
+		changePanel(townPanel);
+		TownController townController = new TownController(city, townPanel);
+		townPanel.setController(townController);
+		townPanel.setEnabled(true);
+	}
+	
+	public void switchToWorldScene(){
+		if (this.currentWorld == null) new IllegalStateException("Switching world->town but there's no world controller!");
+		WorldPanel worldPanel = currentWorld.getGui();
+		changePanel(currentWorld.getGui());
+		worldPanel.setEnabled(true);
 	}
 	
 	public static void main(String[] args){
@@ -78,10 +115,10 @@ public class GameWindow extends JFrame{
 	
 	/**
 	 * Test method. Create a custom world and return a WorldController for it.
-	 * @param gameframe: the view to attach controller to.
+	 * @param worldPanel: the view to attach controller to.
 	 * @return WorldController
 	 */
-	private WorldController makeController(WorldPanel gameframe){
+	private WorldController makeController(WorldPanel worldPanel){
 		/*Loading items*/
 		Buff[] buffsAmulet = new Buff[]{ Buff.newTempBuff(Stat.DAMAGE,5) };
 		PassiveItem amulet = new PassiveItem("amulet", "amulet",
@@ -150,7 +187,7 @@ public class GameWindow extends JFrame{
 		w.getTile(1,6).setIcon(itemIcon2);
 		w.getTile(8,8).setIcon(itemIcon3);
 
-		return new WorldController(w,p,gameframe);
+		return new WorldController(w,p,worldPanel);
 	}
 
 }

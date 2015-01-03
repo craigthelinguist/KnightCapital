@@ -1,24 +1,15 @@
 	package gui.town;
 
-import gui.reusable.PartyPanel;
-
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.image.BufferedImage;
-
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import main.GameWindow;
+
 import controllers.TownController;
-import tools.Constants;
-import tools.ImageLoader;
-import world.icons.Party;
+import controllers.WorldController;
+import world.towns.City;
 
 /**
  * Main panl for the Town GUI
@@ -27,41 +18,42 @@ import world.icons.Party;
  */
 public class TownPanel extends JPanel{
 
-	// constants
-	private final static String FILEPATH = Constants.GUI_TOWN;
-	private final static String BACKDROP = "city_splash";
-
 	// controller and top-level view
-	private TownController controller;
-	private BufferedImage splash;
-	private TownGui gui;
+	private TownController townController;
 
 	// components
-	private TownExchangePanel panel_exchange;
-	private TownButtonPanel panel_buttons;	
-
-	protected TownPanel(TownController townController, TownGui gui) {
-		this.controller = townController;
-		this.gui = gui;
-		this.splash = ImageLoader.load(FILEPATH + BACKDROP, ".jpg");
-		this.setPreferredSize(new Dimension(splash.getWidth(),splash.getHeight()));
-
-		panel_exchange = new TownExchangePanel(townController, gui);
-		panel_buttons = new TownButtonPanel(new Dimension(10,10),townController);
-
-		BorderLayout bl = new BorderLayout();
-		this.setLayout(bl);
-		this.add(panel_exchange,bl.SOUTH);
-
-		panel_buttons.setOpaque(false);
-		this.add(panel_buttons,BorderLayout.WEST);
-
+	private ButtonPanel buttonPanel;
+	
+	// master
+	private GameWindow window;
+	
+	public TownPanel(GameWindow window, City city) {
+		
+		// set up fields and state
+		this.setEnabled(false);
+		this.window = window;
+		
+		// set layout, add components
+		this.setLayout(new BorderLayout());
+		this.buttonPanel = new ButtonPanel(this,city);
+		this.add(buttonPanel, BorderLayout.WEST);
+		
+	}
+	
+	public void setController(TownController tc){
+		if (townController != null) throw new RuntimeException("This TownPanel already has a TownController!");
+		this.townController = tc;
+		buttonPanel.setController(tc);
+		this.setEnabled(true);
 	}
 
 	@Override
 	protected void paintComponent(Graphics g){
-		g.drawImage(splash,0,0,null);
-		panel_exchange.repaint();
+		g.fillRect(0,0,getWidth(),getHeight());
 	}
-
+	
+	public void endTownView() {
+		this.setEnabled(false);
+		window.switchToWorldScene();
+	}
 }
