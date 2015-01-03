@@ -47,7 +47,6 @@ public class GameWindow extends JFrame{
 	
 		newMainMenuScene();
 		
-		
 		// finish up
 		this.setResizable(true);
 		this.pack();
@@ -91,17 +90,26 @@ public class GameWindow extends JFrame{
 		worldPanel.setEnabled(true);
 	}
 	
+	/**
+	 * Switch from World scene to Town scene. Creates the TownPanel.
+	 * @param city : city that you'll be viewing in the Town scene.
+	 * @throws IllegalStateException : if there isn't a World scene to switch from.
+	 */
 	public void switchToTownScene(City city){
 		if (this.currentWorld == null) new IllegalStateException("Switching world->town but there's no world controller!");
 		WorldPanel worldPanel = currentWorld.getGui();
 		worldPanel.setEnabled(false);
 		TownPanel townPanel = new TownPanel(this, city);
 		changePanel(townPanel);
-		TownController townController = new TownController(city, townPanel);
+		TownController townController = new TownController(townPanel, currentWorld.getWorld(), city);
 		townPanel.setController(townController);
 		townPanel.setEnabled(true);
 	}
 	
+	/**
+	 * Switch from Town scene to World scene.
+	 * @throws IllegalStateException : if there isn't a WorldPanel to switch to.
+	 */
 	public void switchToWorldScene(){
 		if (this.currentWorld == null) new IllegalStateException("Switching world->town but there's no world controller!");
 		WorldPanel worldPanel = currentWorld.getGui();

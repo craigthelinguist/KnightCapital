@@ -35,11 +35,15 @@ public class TownPanel extends JPanel{
 		
 		// set layout, add components
 		this.setLayout(new BorderLayout());
-		this.buttonPanel = new ButtonPanel(this,city);
+		this.buttonPanel = new ButtonPanel();
 		this.add(buttonPanel, BorderLayout.WEST);
 		
 	}
 	
+	/**
+	 * Set the TownController that this TownPanel should send events to. Enable this TownPanel.
+	 * @param tc : the TownController
+	 */
 	public void setController(TownController tc){
 		if (townController != null) throw new RuntimeException("This TownPanel already has a TownController!");
 		this.townController = tc;
@@ -52,6 +56,9 @@ public class TownPanel extends JPanel{
 		g.fillRect(0,0,getWidth(),getHeight());
 	}
 	
+	/**
+	 * End this town view and switch back to the World.
+	 */
 	public void endTownView() {
 		this.setEnabled(false);
 		window.switchToWorldScene();

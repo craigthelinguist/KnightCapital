@@ -38,9 +38,9 @@ import world.towns.City;
 public class TownController{
 
 	// state stuff
+	private final World world;
 	protected final City city;
-	protected Item[][] items;
-
+	
 	// gui stuff
 	private TownPanel townPanel;
 
@@ -49,8 +49,9 @@ public class TownController{
 	 * @param city: the city that this session is describing.
 	 * @param controller: the world session that created this session.
 	 */
-	public TownController(City city, TownPanel townPanel){
+	public TownController(TownPanel townPanel, World world, City city){
 		this.city = city;
+		this.world = world;
 		this.townPanel = townPanel;
 
 		if (city.getGarrison() == null){
@@ -65,72 +66,47 @@ public class TownController{
 	}
 
 	/**
-	 * Return the party garrisoned in the city.
-	 * @return: party
-	 */
-	public Party getGarrison(){
-		return city.getGarrison();
-	}
-
-	/**
-	 * Return the party visiting this city.
-	 * @return: party
-	 */
-	public Party getVisitors(){
-		return city.getVisitors();
-	}
-
-	/**
 	 * Respond to a button press event from the gui.
 	 * @param text: name of the button pressed.
 	 */
 	public void buttonPressed(String button) {
 
-		button = button.toLowerCase();
-		if (button.equals("leave")) townPanel.endTownView();
-
-		
-		/*
-		// end the town session; reactivate world controller
-		if (text.equals("leave")){
-			gui.dispose();
-			Point exit = getExitPoint();
-			worldController.endTownView(exit);
-			active = false;
-		}
-		
-
-		// if there is a visiting party, eject them to the world map
-		else if(text.equals("exit city")) {
-
-			// check there's a party to kick out
-			Party visitors = city.getVisitors();
-			if (visitors == null || visitors.isEmpty()) return;
-
-			// find tile to put them on
-			World world = worldController.getWorld();
-			Point pt = getExitPoint();
-
-			// check tile exists, kick them onto world map
-			if (pt.x >= 0 && pt.y >= 0 && pt.x < world.NUM_TILES_ACROSS && pt.y < world.NUM_TILES_DOWN){
-				Tile tile = world.getTile(pt);
-				if (!tile.canStandOn(visitors)) return;
-				tile.setIcon(visitors);
-				city.setVisitors(Party.newEmptyParty(city.getOwner()));
-				visitors = city.getVisitors();
-				this.gui.repaint();
-			}
-		}
-		
-		*/
-
+		if (button.equals("Leave")) townPanel.endTownView();
+		else if (button.equals("Eject")) ejectVisitors();
+		else if (button.equals("Train")) {}
+		else if (button.equals("Production")) {}
+			
 	}
 
 	/**
-	 * Get the point in the world map's array that is the exit tile for the city.
-	 * @return: a point.
+	 * Eject the visiting party onto the world map. If there is no visiting party or the visiting party
+	 * has no space to be ejected onto the world map, this method does nothing.
 	 */
-	private Point getExitPoint(){
+	private void ejectVisitors(){
+
+		// check there's a party to kick out
+		Party visitors = city.getVisitors();
+		if (visitors == null || visitors.isEmpty()) return;
+		
+		// find tile to put them on
+		Point pt = getExitPoint(world);
+		if (!world.pointWithinWorld(pt)) return;
+		
+		// eject party
+		Tile tile = world.getTile(pt);
+		if (!tile.canStandOn(visitors)) return;
+		tile.setIcon(visitors);
+		city.setVisitors(Party.newEmptyParty(city.getOwner()));
+		visitors = city.getVisitors();
+		townPanel.repaint();
+		
+	}
+	
+	/**
+	 * Get the point in the world map's array that is the exit tile for the city.
+	 * @return Point
+	 */
+	private Point getExitPoint(World world){
 		Tile tile = city.getEntryTile();
 		Point pt = tile.asPoint();
 		pt.y = pt.y + 1;

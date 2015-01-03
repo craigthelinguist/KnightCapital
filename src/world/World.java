@@ -116,6 +116,15 @@ public class World {
 		}
 		else return tiles[x][y];
 	}
+	
+	/**
+	 * Return true if the specified point is contained within this World.
+	 * @param pt : point to check.
+	 * @return bool
+	 */
+	public boolean pointWithinWorld(Point pt){
+		return pt.x > 0 && pt.y > 0 && pt.x < this.NUM_TILES_ACROSS && pt.y < this.NUM_TILES_DOWN;
+	}
 
 	/**
 	 * Get the specified tile in the world (in cartesian coordinates).

@@ -26,99 +26,61 @@ import controllers.TownController;
  *
  */
 public class ButtonPanel extends JPanel{
-
-	private TownController controller;
-	private TownPanel townPanel;
 	
-	protected ButtonPanel(TownPanel gui, City city) {
-		
-		// fields
-		this.townPanel = gui;
+	private JButton[] buttons;
+	
+	protected ButtonPanel() {
 		
 		// set layout, appearance
+		this.setEnabled(false);
 		this.setLayout(new FlowLayout());
 		this.setOpaque(false);
 		
 		// add components
-		this.add(leaveButton());
-		this.add(ejectButton());
-		this.add(trainButton());
-		this.add(productionButton());
+		buttons = makeButtons();
+		for (JButton button : buttons){
+			this.add(button);
+		}
 		
 	}
-
-	/**
-	 * Make and return a JButton. When clicked, takes you to a more detailed view that
-	 * lets you construct buildings, research technologies, and produce items.
-	 * @return JButton
-	 */
-	private JButton productionButton(){
-		JButton button = new JButton("Production");
-		button.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent event) {
-				
-			}
-		});
-		return button;
+	
+	private JButton[] makeButtons() {
+		return new JButton[]{
+			new JButton("Leave"),
+			new JButton("Eject"),
+			new JButton("Train"),
+			new JButton("Production")
+		};
 	}
 
-	/**
-	 * Make and return a JButton. When clicked prompts you with a dialog that asks you
-	 * to select a unit to train.
-	 * @return JButton
-	 */
-	private JButton trainButton() {
-		JButton button = new JButton("Train");
-		button.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent event) {
-				
-			}
-		});
-		return button;
-	}
+	private class ButtonListener implements ActionListener{
 
-	/**
-	 * Make and return a JButton. When clicked will eject the visiting party if
-	 * there is space.
-	 * @return JButton
-	 */
-	private JButton ejectButton() {
-		JButton button = new JButton("Eject");
-		button.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent event) {
-				
-			}
-		});
-		return button;
+		private TownController controller;
+		
+		public ButtonListener(TownController tc){
+			controller = tc;
+		}
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			JButton button = (JButton)e.getSource();
+			controller.buttonPressed(button.getText());
+		}
+		
 	}
-
-	/**
-	 * Make and return a JButton. When clicked will leave the Town scene and return
-	 * to the World scene.
-	 * @return JButton
-	 */
-	private JButton leaveButton() {
-		JButton button = new JButton("Leave");
-		button.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent event) {
-				ButtonPanel.this.townPanel.endTownView();
-			}
-		});
-		return button;
-	}
-
+	
 	/**
 	 * Attach a TownController to this panel and activate it.
 	 * @param tc: TownController this panel should interact with.
+	 * @throws IllegalStateException : if this panel is already enabled.
 	 */
 	protected void setController(TownController tc){
-		if (this.controller != null)
-			throw new RuntimeException("Setting controller for TownButtonPanel which already has a controller!");
-		this.controller = tc;
+		if (this.isEnabled())
+			throw new IllegalStateException("Setting controller for TownButtonPanel which already has a controller!");
+		ButtonListener bl = new ButtonListener(tc);
+		for (JButton button : buttons){
+			button.addActionListener(bl);
+		}
 		this.setEnabled(true);
 	}
 	
