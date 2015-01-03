@@ -27,6 +27,7 @@ import player.Player;
 import renderer.WorldRenderer;
 import tools.ImageLoader;
 import world.tiles.Tile;
+import world.towns.City;
 import controllers.WorldController;
 
 public class WorldPanel extends JPanel{
@@ -250,6 +251,12 @@ public class WorldPanel extends JPanel{
 			this.lastDrag = null;
 		}
 		
+	}
+
+
+	public void startTownView(City city) {
+		this.setEnabled(false);
+		window.switchToTownScene(city);
 	}
 
 	

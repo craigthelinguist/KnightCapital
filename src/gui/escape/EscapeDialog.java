@@ -111,7 +111,7 @@ public class EscapeDialog extends JDialog {
 	 * @return JButton
 	 */
 	private JButton loadButton(){
-		JButton button = new JButton("Return");
+		JButton button = new JButton("Load");
 		button.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
