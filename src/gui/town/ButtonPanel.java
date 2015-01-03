@@ -1,23 +1,12 @@
 package gui.town;
 
-import gui.reusable.CustomButton;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import tools.Constants;
-import tools.ImageLoader;
-import world.towns.City;
 import controllers.TownController;
 
 /**
@@ -44,6 +33,10 @@ public class ButtonPanel extends JPanel{
 		
 	}
 	
+	/**
+	 * Make and return an array of all the buttons on this panel.
+	 * @return JButton[]
+	 */
 	private JButton[] makeButtons() {
 		return new JButton[]{
 			new JButton("Leave"),
@@ -53,6 +46,26 @@ public class ButtonPanel extends JPanel{
 		};
 	}
 
+	/**
+	 * Attach a TownController to this panel and activate it.
+	 * @param tc: TownController this panel should interact with.
+	 * @throws IllegalStateException : if this panel is already enabled.
+	 */
+	protected void setController(TownController tc){
+		if (this.isEnabled())
+			throw new IllegalStateException("Setting controller for TownButtonPanel which already has a controller!");
+		ButtonListener bl = new ButtonListener(tc);
+		for (JButton button : buttons){
+			button.addActionListener(bl);
+		}
+		this.setEnabled(true);
+	}
+
+	/**
+	 * Basic ButtonListener that sends the name of the Button that was pushed to the
+	 * controller.
+	 * @author craigthelinguist
+	 */
 	private class ButtonListener implements ActionListener{
 
 		private TownController controller;
@@ -67,21 +80,6 @@ public class ButtonPanel extends JPanel{
 			controller.buttonPressed(button.getText());
 		}
 		
-	}
-	
-	/**
-	 * Attach a TownController to this panel and activate it.
-	 * @param tc: TownController this panel should interact with.
-	 * @throws IllegalStateException : if this panel is already enabled.
-	 */
-	protected void setController(TownController tc){
-		if (this.isEnabled())
-			throw new IllegalStateException("Setting controller for TownButtonPanel which already has a controller!");
-		ButtonListener bl = new ButtonListener(tc);
-		for (JButton button : buttons){
-			button.addActionListener(bl);
-		}
-		this.setEnabled(true);
 	}
 	
 }

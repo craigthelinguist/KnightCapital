@@ -166,7 +166,7 @@ public class WorldController implements Serializable{
 		if (doubleClickedCity(me, selectedTile, clickedTile)){
 			CityTile c1 = (CityTile)clickedTile;
 			CityTile c2 = (CityTile)selectedTile;
-			if (c1.getCity() == c2.getCity()) gui.startTownView(c1.getCity());
+			if (c1.getCity() == c2.getCity()) gui.switchToTownView(c1.getCity());
 		}
 		
 		// left-clicked the selection; deselect

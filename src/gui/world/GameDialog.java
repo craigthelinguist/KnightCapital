@@ -22,6 +22,8 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 
+import main.GameWindow;
+
 import tools.Constants;
 import tools.ImageLoader;
 
@@ -29,8 +31,8 @@ public class GameDialog extends JDialog{
 
 	private WorldPanel main;
 	
-	public GameDialog(WorldPanel worldPanel, String message){
-		super(worldPanel.getWindow(),true); // true arg makes this Dialog the focus
+	public GameDialog(GameWindow window, WorldPanel worldPanel, String message){
+		super(window,true); // true arg makes this Dialog the focus
 		main = worldPanel;
 		worldPanel.setCurrentDialog(this);
 		GameDialog gameDialog = this;

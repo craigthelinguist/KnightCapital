@@ -81,7 +81,7 @@ public class WorldPanel extends JPanel{
 	}
 
 	/**
-	 * All button presses should be sent up to the controller. Nothing happens if CloseDialog is enabled.
+	 * Pass the button event to the controller. Does nothing if CloseDialog is enabled.
 	 * @param button: name of the button event that fired
 	 */
 	protected void buttonPressed(String button) {
@@ -94,14 +94,14 @@ public class WorldPanel extends JPanel{
 	 * @param msg: the message to display.
 	 */
 	public void startGameDialog(String msg) {
-		new GameDialog(this,msg);
+		new GameDialog(window,this,msg);
 	}
 
 	/**
 	 * Start a new EscapeDialog.
 	 */
 	public void startEscapeDialog(){
-		new EscapeDialog(this);
+		new EscapeDialog(window,this);
 	}
 	
 	/**
@@ -121,14 +121,6 @@ public class WorldPanel extends JPanel{
 		this.currentDialog = d;
 	}
 	
-	/**
-	 * Get the window that this WorldPanel is attached to.
-	 * @return GameWindow, a subclass of JFrame.
-	 */
-	public JFrame getWindow(){
-		return this.window;
-	}
-
 	/**
 	 * Return the player to whom this view belongs.
 	 * @return Player
@@ -168,7 +160,6 @@ public class WorldPanel extends JPanel{
 		graphics.fillRect(0,0,getWidth(),getHeight());
 		Dimension resolution = this.getSize();
 		WorldRenderer.render(controller, graphics, resolution);
-		//gamePanel.repaint();
 	}
 	
 	/**
@@ -196,7 +187,7 @@ public class WorldPanel extends JPanel{
 	}
 
 	/**
-	 * Responds to mouse clicks.
+	 * Responds to mouse clicks on the canvas (but not for anything else on WorldPanel).
 	 * @author craigthelinguist
 	 */
 	class CanvasListener implements MouseListener, MouseMotionListener{
@@ -253,8 +244,11 @@ public class WorldPanel extends JPanel{
 		
 	}
 
-
-	public void startTownView(City city) {
+	/**
+	 * End the current World view and open up a new Town view for the specified city.
+	 * @param city : city to look at.
+	 */
+	public void switchToTownView(City city) {
 		this.setEnabled(false);
 		window.switchToTownScene(city);
 	}

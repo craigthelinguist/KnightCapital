@@ -10,6 +10,8 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 
+import main.GameWindow;
+
 /**
  * In-game, when you push escape a dialog comes up with some buttons like Load, save,
  * exit, etc. this class encapsulates that dialog.
@@ -19,9 +21,11 @@ import javax.swing.JPanel;
 public class EscapeDialog extends JDialog {
 
 	private WorldPanel main;
+	private GameWindow window;
 	
-	public EscapeDialog(WorldPanel gameframe){
-		super(gameframe.getWindow(), true);
+	public EscapeDialog(GameWindow window, WorldPanel gameframe){
+		super(window, true);
+		this.window = window;
 		gameframe.setCurrentDialog(this);
 		main = gameframe;
 		setupContents();
@@ -145,7 +149,7 @@ public class EscapeDialog extends JDialog {
 		button.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				main.getWindow().dispose();
+				window.dispose();
 				System.exit(0);
 			}
 		});

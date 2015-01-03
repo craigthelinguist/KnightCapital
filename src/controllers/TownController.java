@@ -39,7 +39,7 @@ public class TownController{
 
 	// state stuff
 	private final World world;
-	protected final City city;
+	private final City city;
 	
 	// gui stuff
 	private TownPanel townPanel;
@@ -71,7 +71,7 @@ public class TownController{
 	 */
 	public void buttonPressed(String button) {
 
-		if (button.equals("Leave")) townPanel.endTownView();
+		if (button.equals("Leave")) townPanel.switchToWorldView();
 		else if (button.equals("Eject")) ejectVisitors();
 		else if (button.equals("Train")) {}
 		else if (button.equals("Production")) {}
